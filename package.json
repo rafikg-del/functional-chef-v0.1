@@ -1,0 +1,42 @@
+{
+  "name": "functional-chef",
+  "version": "0.1.0",
+  "private": true,
+  "description": "IA cuisinière EBM-driven — moteur de prescription nutritionnelle ciblée par bottleneck physiopathologique",
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "db:reset": "supabase db reset",
+    "db:seed": "psql $DATABASE_URL -f supabase/seed/01_bottlenecks.sql -f supabase/seed/02_biomarkers.sql -f supabase/seed/03_biomarker_thresholds.sql -f supabase/seed/04_culinary_levers.sql -f supabase/seed/05_lever_bottleneck_map.sql -f supabase/seed/06_bioavailability_synergies.sql",
+    "test:cases": "tsx scripts/test-validation-cases.ts"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.27.3",
+    "@supabase/ssr": "^0.5.1",
+    "@supabase/supabase-js": "^2.45.0",
+    "next": "14.2.13",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "zod": "^3.23.8",
+    "clsx": "^2.1.1",
+    "tailwind-merge": "^2.5.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.16.5",
+    "@types/react": "^18.3.5",
+    "@types/react-dom": "^18.3.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.45",
+    "tailwindcss": "^3.4.10",
+    "typescript": "^5.5.4",
+    "tsx": "^4.19.0",
+    "eslint": "^8.57.0",
+    "eslint-config-next": "14.2.13"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}

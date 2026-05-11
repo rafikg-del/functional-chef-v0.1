@@ -53,7 +53,7 @@ export function selectLevers({
       selected: [],
       excluded: [],
       warnings: [
-        'Aucun bottleneck dominant détecté. Sélection de leviers impossible sans cible physiopathologique. Préciser l''intent ou enrichir le profil patient.',
+        "Aucun bottleneck dominant détecté. Sélection de leviers impossible sans cible physiopathologique. Préciser l'intent ou enrichir le profil patient.",
       ],
     };
   }

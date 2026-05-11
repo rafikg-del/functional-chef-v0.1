@@ -257,7 +257,7 @@ function assignDominance(
       dominant: null,
       co_dominant: null,
       rationale:
-        'Aucun bottleneck déclenché. Soit le terrain est physiologique, soit les biomarqueurs renseignés sont insuffisants pour conclure. Sortie générique non personnalisée non recommandée — préciser l''intent ou enrichir le profil.',
+        "Aucun bottleneck déclenché. Soit le terrain est physiologique, soit les biomarqueurs renseignés sont insuffisants pour conclure. Sortie générique non personnalisée non recommandée — préciser l'intent ou enrichir le profil.",
     };
   }
 

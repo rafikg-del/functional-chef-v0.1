@@ -43,7 +43,7 @@ export function ResearchAgentOutput({ result }: Props) {
       </section>
 
       <section>
-        <p className="label">Critères d'entrée</p>
+        <p className="label">Critères d&apos;entrée</p>
         <div className="overflow-x-auto border border-ink-200 rounded-sm">
           <table className="w-full text-sm">
             <thead className="bg-ink-50 text-left">
@@ -75,7 +75,7 @@ export function ResearchAgentOutput({ result }: Props) {
       </section>
 
       <section>
-        <p className="label">Points d'impact biologiques</p>
+        <p className="label">Points d&apos;impact biologiques</p>
         <div className="grid md:grid-cols-2 gap-4 mt-3">
           {brief.biological_impact_points.map((point, index) => (
             <div key={`${point.pathway}-${index}`} className="card">
@@ -141,7 +141,7 @@ export function ResearchAgentOutput({ result }: Props) {
       </section>
 
       <section>
-        <p className="label">Recettes prêtes à l'emploi</p>
+        <p className="label">Recettes prêtes à l&apos;emploi</p>
         <div className="space-y-6 mt-3">
           {brief.recipes.map((recipe) => (
             <article key={recipe.title} className="card">

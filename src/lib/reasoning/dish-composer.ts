@@ -21,7 +21,7 @@
  *   - API error → propagate (caller decides retry policy)
  */
 
-import { anthropic, selectModel } from '../anthropic/client';
+import { getAnthropicClient, selectModel } from '../anthropic/client';
 import {
   SYSTEM_PROMPT,
   buildUserMessage,
@@ -67,6 +67,7 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
   const triggeredCount = input.classification.scores.filter((s) => s.triggered).length;
   const useComplex = triggeredCount >= 3;
   const model = selectModel({ complex: useComplex });
+  const anthropic = getAnthropicClient();
 
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();

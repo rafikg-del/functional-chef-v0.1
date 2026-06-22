@@ -165,7 +165,7 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
           placeholder='[{"title":"...", "pmid":"...", "abstract":"..."}]'
         />
         <p className="text-xs text-ink-500 mt-2">
-          Sans bibliographie fournie, l'agent produit une draft avec références à vérifier, sans inventer de PMID/DOI.
+          Sans bibliographie fournie, l&apos;agent produit une draft avec références à vérifier, sans inventer de PMID/DOI.
         </p>
       </div>
 

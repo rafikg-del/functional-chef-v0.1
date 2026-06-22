@@ -12,7 +12,7 @@
  * prescription engine.
  */
 
-import { anthropic, MODELS } from '../anthropic/client';
+import { getAnthropicClient, MODELS } from '../anthropic/client';
 import type { ResearchAgentInput, ResearchAgentOutput } from './types';
 import { validateResearchAgentOutput } from './types';
 
@@ -205,6 +205,7 @@ Produis une fiche complète au format JSON strict. Elle doit suivre la structure
 
 export async function runResearchAgent(input: ResearchAgentInput): Promise<ResearchAgentResult> {
   const model = MODELS.COMPLEX;
+  const anthropic = getAnthropicClient();
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();
 

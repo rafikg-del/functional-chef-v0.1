@@ -48,7 +48,7 @@ export default function ResearchAgentPage() {
               Problématique → bottleneck → leviers → recettes
             </h1>
             <p className="text-ink-600 leading-relaxed max-w-3xl mb-8">
-              Cet agent produit une fiche de curation scientifique à partir d'une problématique
+              Cet agent produit une fiche de curation scientifique à partir d&apos;une problématique
               santé ou quotidienne. La sortie est une draft expert-review : elle sert à enrichir
               le référentiel, pas à remplacer la classification patient déterministe.
             </p>

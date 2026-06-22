@@ -18,6 +18,9 @@ export default function HomePage() {
             <Link href="/consultation" className="hover:text-ink-900 transition-colors">
               Consultation
             </Link>
+            <Link href="/research-agent" className="hover:text-ink-900 transition-colors">
+              Research Agent
+            </Link>
             <a
               href="https://github.com"
               className="hover:text-ink-900 transition-colors"
@@ -50,6 +53,9 @@ export default function HomePage() {
           <div className="flex flex-wrap gap-4">
             <Link href="/consultation" className="btn-primary">
               Lancer une consultation
+            </Link>
+            <Link href="/research-agent" className="btn-ghost">
+              Analyser une problématique
             </Link>
             <a href="#methode" className="btn-ghost">
               Méthode

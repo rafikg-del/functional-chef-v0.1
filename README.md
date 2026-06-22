@@ -61,6 +61,22 @@ OUTPUT
     → Effets attendus : postprandial 2-4h | court terme 4 sem | long terme 12 sem
 ```
 
+### Research Agent — curation bottleneck
+
+Un flux séparé est disponible pour transformer une problématique santé / quotidien
+en draft scientifique avant intégration dans le référentiel :
+
+- UI : `/research-agent`
+- API : `POST /api/research-agent`
+- Input : `problem`, contexte optionnel, littérature optionnelle (`title`, `pmid`,
+  `doi`, `abstract`, `key_findings`)
+- Output : fiche structurée `bottleneck → critères d'entrée → points d'impact
+  biologiques → leviers ingrédients → recettes`
+
+Garde-fou : ce flux ne classifie pas un patient et ne persiste pas de consultation.
+Sans bibliographie fournie, il marque les références comme `reference_to_verify`
+au lieu d'inventer des PMID/DOI.
+
 ---
 
 ## Structure du repo

@@ -11,7 +11,9 @@
     "type-check": "tsc --noEmit",
     "db:reset": "supabase db reset",
     "db:seed": "psql $DATABASE_URL -f supabase/seed/01_bottlenecks.sql -f supabase/seed/02_biomarkers.sql -f supabase/seed/03_biomarker_thresholds.sql -f supabase/seed/04_culinary_levers.sql -f supabase/seed/05_lever_bottleneck_map.sql -f supabase/seed/06_bioavailability_synergies.sql",
-    "test:cases": "tsx scripts/test-validation-cases.ts"
+    "test:cases": "tsx scripts/test-validation-cases.ts",
+    "validate": "tsx scripts/test-validation-cases.ts",
+    "agent:validate": "tsx scripts/agent-validate-and-fix.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.27.3",

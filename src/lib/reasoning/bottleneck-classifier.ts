@@ -142,10 +142,10 @@ function evaluateThreshold(
     return null;
   }
 
-  // High-side breach
+  // High-side breach (>= : seuil inclusif — ex. ballonnements 7/j, tour de taille 0.55)
   if (
     threshold.alert_threshold_high !== null &&
-    observed > threshold.alert_threshold_high
+    observed >= threshold.alert_threshold_high
   ) {
     return {
       biomarker_id: biomarkerId,

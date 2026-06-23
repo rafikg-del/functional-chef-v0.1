@@ -1,0 +1,17 @@
+{
+  "external_id": "patient-002",
+  "label": "Cas B — INFLAM isolé",
+  "age": 62,
+  "sex": "M",
+  "biomarker_values": {
+    "CRP_US": 2.4,
+    "OMEGA_INDEX": 4.5,
+    "AA_EPA_RATIO": 12,
+    "NLR": 2.8,
+    "HOMA_IR": 1.2
+  },
+  "clinical_signals": {},
+  "expected_dominant": "INFLAM",
+  "intent": "Dîner anti-inflammaging",
+  "meal_type": "dinner"
+}

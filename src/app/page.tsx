@@ -18,6 +18,9 @@ export default function HomePage() {
             <Link href="/consultation" className="hover:text-ink-900 transition-colors">
               Consultation
             </Link>
+            <Link href="/training" className="hover:text-ink-900 transition-colors">
+              Entraînement
+            </Link>
             <a
               href="https://github.com"
               className="hover:text-ink-900 transition-colors"

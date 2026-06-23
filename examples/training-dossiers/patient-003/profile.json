@@ -1,0 +1,19 @@
+{
+  "external_id": "patient-003",
+  "label": "Cas C — DYSBIOSE",
+  "age": 35,
+  "sex": "F",
+  "biomarker_values": {
+    "CRP_US": 1.1,
+    "HOMA_IR": 1.4
+  },
+  "clinical_signals": {
+    "BRISTOL_SCORE": 6,
+    "BLOATING_FREQ": 7,
+    "FIBER_INTAKE": 12,
+    "ABX_LIFETIME": 5
+  },
+  "expected_dominant": "DYSBIOSE",
+  "intent": "Repas pro-microbiote post-antibiothérapie",
+  "meal_type": "lunch"
+}

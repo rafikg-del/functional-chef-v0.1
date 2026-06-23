@@ -21,3 +21,8 @@ coverage/
 
 next-env.d.ts
 *.tsbuildinfo
+
+# Données d'entraînement importées (PHI potentiel)
+data/training/batches/
+data/training/exports/
+!data/training/.gitkeep

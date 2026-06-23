@@ -8,6 +8,17 @@ import type { ResearchAgentOutput as ResearchAgentOutputType } from '@/lib/resea
 
 interface ResearchAgentResponse {
   brief: ResearchAgentOutputType;
+  literature_search?: {
+    query: string;
+    pmids: string[];
+    papers?: {
+      title: string;
+      pmid?: string;
+      year?: number;
+      journal?: string;
+    }[];
+    warnings: string[];
+  };
   meta?: {
     model: string;
     input_tokens?: number;

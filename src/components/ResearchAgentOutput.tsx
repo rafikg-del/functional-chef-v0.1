@@ -6,6 +6,17 @@ import type { ResearchAgentOutput } from '@/lib/research/types';
 interface Props {
   result: {
     brief: ResearchAgentOutput;
+    literature_search?: {
+      query: string;
+      pmids: string[];
+      papers?: {
+        title: string;
+        pmid?: string;
+        year?: number;
+        journal?: string;
+      }[];
+      warnings: string[];
+    };
     meta?: {
       model: string;
       input_tokens?: number;
@@ -41,6 +52,40 @@ export function ResearchAgentOutput({ result }: Props) {
           </div>
         </div>
       </section>
+
+      {result.literature_search && (
+        <section>
+          <p className="label">Littérature PubMed importée</p>
+          <div className="card">
+            <p className="text-xs font-mono text-ink-500 break-words">
+              Query: {result.literature_search.query}
+            </p>
+            {result.literature_search.papers && result.literature_search.papers.length > 0 ? (
+              <ul className="mt-4 divide-y divide-ink-100">
+                {result.literature_search.papers.map((paper) => (
+                  <li key={paper.pmid ?? paper.title} className="py-3">
+                    <p className="text-sm font-medium text-ink-900">{paper.title}</p>
+                    <p className="text-xs text-ink-500 mt-1">
+                      {paper.journal ?? 'Journal NR'}
+                      {paper.year ? ` · ${paper.year}` : ''}
+                      {paper.pmid ? ` · PMID:${paper.pmid}` : ''}
+                    </p>
+                  </li>
+                ))}
+              </ul>
+            ) : (
+              <p className="text-sm text-ink-600 mt-4">Aucun abstract importé.</p>
+            )}
+            {result.literature_search.warnings.length > 0 && (
+              <ul className="mt-4 space-y-1 text-xs text-saffron-800">
+                {result.literature_search.warnings.map((warning) => (
+                  <li key={warning}>· {warning}</li>
+                ))}
+              </ul>
+            )}
+          </div>
+        </section>
+      )}
 
       <section>
         <p className="label">Critères d&apos;entrée</p>

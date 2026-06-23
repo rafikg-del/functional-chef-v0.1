@@ -68,14 +68,15 @@ en draft scientifique avant intégration dans le référentiel :
 
 - UI : `/research-agent`
 - API : `POST /api/research-agent`
-- Input : `problem`, contexte optionnel, littérature optionnelle (`title`, `pmid`,
-  `doi`, `abstract`, `key_findings`)
+- Input : `problem`, contexte optionnel, recherche PubMed automatique optionnelle,
+  littérature manuelle optionnelle (`title`, `pmid`, `doi`, `abstract`, `key_findings`)
 - Output : fiche structurée `bottleneck → critères d'entrée → points d'impact
   biologiques → leviers ingrédients → recettes`
 
 Garde-fou : ce flux ne classifie pas un patient et ne persiste pas de consultation.
-Sans bibliographie fournie, il marque les références comme `reference_to_verify`
-au lieu d'inventer des PMID/DOI.
+Sans bibliographie fournie ni résultat PubMed, il marque les références comme
+`reference_to_verify` au lieu d'inventer des PMID/DOI. La recherche PubMed utilise
+NCBI E-utilities et renvoie les PMID importés dans la réponse pour audit.
 
 ---
 

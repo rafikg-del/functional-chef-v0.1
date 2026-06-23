@@ -14,6 +14,7 @@
 
 import { getAnthropicClient, MODELS } from '../anthropic/client';
 import type { ResearchAgentInput, ResearchAgentOutput } from './types';
+import type { PubMedSearchResult } from './pubmed';
 import { validateResearchAgentOutput } from './types';
 
 export class ResearchAgentError extends Error {
@@ -29,6 +30,7 @@ export class ResearchAgentError extends Error {
 
 export interface ResearchAgentResult {
   brief: ResearchAgentOutput;
+  literature_search?: PubMedSearchResult;
   meta: {
     model: string;
     input_tokens?: number;

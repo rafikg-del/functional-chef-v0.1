@@ -11,8 +11,10 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { runResearchAgent, ResearchAgentError } from '@/lib/research/research-agent';
+import { searchPubMedLiterature } from '@/lib/research/pubmed';
+import type { LiteratureEvidenceInput } from '@/lib/research/types';
 
-export const maxDuration = 90;
+export const maxDuration = 120;
 
 const LiteratureSchema = z.object({
   title: z.string().min(3),
@@ -40,7 +42,34 @@ const RequestSchema = z.object({
     })
     .optional(),
   literature: z.array(LiteratureSchema).max(12).optional(),
+  literature_search: z
+    .object({
+      enabled: z.boolean().default(false),
+      query: z.string().optional(),
+      max_results: z.number().int().min(1).max(12).default(6),
+    })
+    .optional(),
 });
+
+function mergeLiterature(
+  manual: LiteratureEvidenceInput[] = [],
+  fetched: LiteratureEvidenceInput[] = []
+): LiteratureEvidenceInput[] {
+  const byKey = new Map<string, LiteratureEvidenceInput>();
+
+  for (const paper of [...manual, ...fetched]) {
+    const key =
+      paper.pmid?.toLowerCase() ??
+      paper.doi?.toLowerCase() ??
+      paper.url?.toLowerCase() ??
+      paper.title.toLowerCase();
+    if (!byKey.has(key)) {
+      byKey.set(key, paper);
+    }
+  }
+
+  return Array.from(byKey.values()).slice(0, 12);
+}
 
 export async function POST(req: NextRequest) {
   let payload: unknown;
@@ -59,7 +88,38 @@ export async function POST(req: NextRequest) {
   }
 
   try {
-    const result = await runResearchAgent(parsed.data);
+    const { literature_search, ...agentInput } = parsed.data;
+    let fetchedLiterature;
+
+    if (literature_search?.enabled) {
+      try {
+        fetchedLiterature = await searchPubMedLiterature({
+          problem: parsed.data.problem,
+          target_bottleneck_name: parsed.data.target_bottleneck_name,
+          query: literature_search.query,
+          max_results: literature_search.max_results,
+        });
+      } catch (err) {
+        fetchedLiterature = {
+          query: literature_search.query ?? parsed.data.problem,
+          pmids: [],
+          papers: [],
+          warnings: [
+            `Recherche PubMed indisponible: ${err instanceof Error ? err.message : 'erreur inconnue'}`,
+          ],
+        };
+      }
+    }
+
+    const result = await runResearchAgent({
+      ...agentInput,
+      literature: mergeLiterature(agentInput.literature, fetchedLiterature?.papers),
+    });
+
+    if (fetchedLiterature) {
+      result.literature_search = fetchedLiterature;
+    }
+
     return NextResponse.json(result);
   } catch (err) {
     if (err instanceof ResearchAgentError) {

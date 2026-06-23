@@ -5,6 +5,11 @@ import type { ResearchAgentOutput } from '@/lib/research/types';
 
 interface ResearchAgentResponse {
   brief: ResearchAgentOutput;
+  literature_search?: {
+    query: string;
+    pmids: string[];
+    warnings: string[];
+  };
   meta?: {
     model: string;
     input_tokens?: number;
@@ -40,6 +45,9 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
   const [mealType, setMealType] = useState('dinner');
   const [literatureJson, setLiteratureJson] = useState('');
   const [includeLiteratureExample, setIncludeLiteratureExample] = useState(false);
+  const [autoPubMed, setAutoPubMed] = useState(true);
+  const [pubMedQuery, setPubMedQuery] = useState('');
+  const [maxPubMedResults, setMaxPubMedResults] = useState(6);
 
   async function handleSubmit() {
     onLoadingChange(true);
@@ -69,6 +77,11 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
             language: 'fr',
           },
           literature,
+          literature_search: {
+            enabled: autoPubMed,
+            query: pubMedQuery || undefined,
+            max_results: maxPubMedResults,
+          },
         }),
       });
 
@@ -138,6 +151,52 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
           onChange={(e) => setDailyContext(e.target.value)}
           className="input-field"
         />
+      </div>
+
+      <div>
+        <div className="card p-4 space-y-4">
+          <label className="flex items-start gap-3">
+            <input
+              type="checkbox"
+              checked={autoPubMed}
+              onChange={(e) => setAutoPubMed(e.target.checked)}
+              className="mt-1"
+            />
+            <span>
+              <span className="block text-sm font-medium text-ink-900">
+                Recherche PubMed automatique
+              </span>
+              <span className="block text-xs text-ink-500 mt-1">
+                Récupère quelques abstracts via NCBI E-utilities et les injecte dans la synthèse.
+              </span>
+            </span>
+          </label>
+
+          {autoPubMed && (
+            <div className="grid md:grid-cols-[1fr_160px] gap-4">
+              <div>
+                <label className="label">Requête PubMed optionnelle</label>
+                <input
+                  value={pubMedQuery}
+                  onChange={(e) => setPubMedQuery(e.target.value)}
+                  className="input-field"
+                  placeholder="Vide = requête construite depuis la problématique"
+                />
+              </div>
+              <div>
+                <label className="label">Nombre d&apos;abstracts</label>
+                <input
+                  type="number"
+                  min={1}
+                  max={12}
+                  value={maxPubMedResults}
+                  onChange={(e) => setMaxPubMedResults(Number(e.target.value))}
+                  className="input-field biomarker-value"
+                />
+              </div>
+            </div>
+          )}
+        </div>
       </div>
 
       <div>

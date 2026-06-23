@@ -38,6 +38,11 @@ export interface ResearchAgentInput {
   context?: ResearchAgentContext;
   literature?: LiteratureEvidenceInput[];
   target_bottleneck_name?: string;
+  literature_search?: {
+    enabled?: boolean;
+    query?: string;
+    max_results?: number;
+  };
 }
 
 export interface BiomarkerEntryCriterion {

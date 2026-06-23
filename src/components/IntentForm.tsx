@@ -32,6 +32,13 @@ const PRESET_CASES = {
     biomarkers: { CRP_US: 1.1, HOMA_IR: 1.4 },
     signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 7, FIBER_INTAKE: 12, ABX_LIFETIME: 5 },
   },
+  caseD: {
+    label: 'Cas D — Charge allostatique (H 42 ans)',
+    age: 42,
+    sex: 'M' as const,
+    biomarkers: { HRV_RMSSD: 18, CORTISOL_PM: 6.2, RESTING_HR: 78, FASTING_GLUCOSE: 0.98 },
+    signals: { PSQI_SCORE: 10, SLEEP_EFFICIENCY: 82, WASO_MIN: 55, CAFFEINE_AFTER_14: 'positive' },
+  },
 };
 
 type PresetKey = keyof typeof PRESET_CASES;

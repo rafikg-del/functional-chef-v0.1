@@ -16,15 +16,16 @@ Functional Chef ne génère pas des recettes. Il traduit un **objectif physiopat
 
 ---
 
-## Trois bottlenecks pilotes (v0.1)
+## Quatre bottlenecks pilotes
 
 | Code | Bottleneck | Critère pivot d'entrée |
 |---|---|---|
+| **ALLOSTATIC_LOAD** | Charge allostatique | HRV RMSSD basse / PSQI élevé / cortisol soir élevé |
 | **IR** | Insulinorésistance fonctionnelle | HOMA-IR 1.5–2.5 / TG/HDL >1.5 / HbA1c 5.4–5.6% |
 | **INFLAM** | Inflammaging | CRP-us 1–3 mg/L persistant / OmegaIndex <6% / AA/EPA >7 |
 | **DYSBIOSE** | Dysbiose | Bristol 1-2 ou 6-7 / ballonnements quotidiens / fibres <15g/j |
 
-Hiérarchie de priorité en cas de triple co-dominance : **IR > INFLAM > DYSBIOSE** (cascade causale amont→aval).
+Hiérarchie de priorité en cas de co-dominance multiple : **ALLOSTATIC_LOAD > IR > INFLAM > DYSBIOSE** (cascade causale amont→aval).
 
 ---
 

@@ -12,7 +12,64 @@
 2. **Inflammaging** — convergence du portfolio, traduction culinaire claire via signature lipidomique + polyphénols.
 3. **Dysbiose** — levier culinaire pur, différenciation maximale vs concurrents.
 
+**Extension v0.2 précoce** :
+0. **Charge allostatique** — bottleneck amont de récupération neuro-endocrine/autonomique. Ajouté comme couche de priorisation avant IR lorsque sommeil, HRV et HPA axis suggèrent une surcharge adaptative qui entretient cravings, instabilité glycémique et inflammation.
+
 **Convention EBM-F tiering** : voir `EBM_TIERING.md`.
+
+---
+
+## Bottleneck #0 — Charge allostatique
+
+### Définition fonctionnelle
+
+Surcharge adaptative neuro-endocrine et autonomique : activation HPA/sympathique persistante, récupération parasympathique insuffisante, sommeil non restaurateur et instabilité énergétique diurne. Cible prioritaire lorsque le terrain de stress/sommeil entretient IR, inflammaging ou dysbiose.
+
+### Priorité dans cascade
+
+**ALLOSTATIC_LOAD > IR > INFLAM > DYSBIOSE**. On restaure la capacité de récupération avant d’empiler des modulateurs métaboliques/inflammatoires.
+
+### Critères d'entrée — biomarqueurs + signaux
+
+| Biomarqueur / signal | Cible fonctionnelle | Seuil d'alerte | Poids |
+|---|---|---|---|
+| HRV RMSSD nocturne | >35 ms ou baseline individuelle | <25 ms | Majeur |
+| PSQI | ≤5 | >8 | Majeur |
+| Cortisol salivaire soir | bas / <3 nmol/L | >5 nmol/L | Majeur |
+| Cortisol AM | 8-18 nmol/L selon contexte | <5 ou >20 | Modéré |
+| DHEA-S | age/sex adjusted | bas, proxy <80 µg/dL | Modéré |
+| Efficacité sommeil | >90% | <85% | Modéré |
+| WASO | <30 min | >45 min | Modéré |
+| Fréquence cardiaque repos | <65 bpm ou baseline | >75 bpm persistant | Modéré |
+| Caféine après 14h / <8h coucher | absent | positive | Modéré |
+
+**Règle de classification** : ≥2 critères majeurs OR ≥1 majeur + ≥3 modérés.
+
+### Architecture plat récupération / charge allostatique
+
+```
+50% végétaux : polyphénols + magnésium + fibres douces (feuilles, crucifères doux, baies/kiwi selon horaire)
+20-30% protéines : signal satiété stable, glycine/collagène ou protéines complètes selon repas
+20% lipides : EVOO/noix/graines, stabilité énergétique et biodisponibilité
+Modulateurs :
+  - arrêt caféine ≥8h avant coucher
+  - dîner non hyperlipidique tardif, éviter alcool
+  - option pré-coucher : glycine 3g OU 2 kiwis 1h avant coucher selon profil IR/reflux
+```
+
+### Anti-patterns
+
+Caféine tardive, alcool comme anxiolytique du soir, dîner hypergras tardif, snack sucré isolé nocturne, restriction calorique agressive sous stress, jeûne tardif si réveils nocturnes/cortisol haut, entraînement intense tardif.
+
+### Leviers ajoutés
+
+| Levier | Nom FR | EBM tier | Référence pivot | Dose/protocole |
+|---|---|---|---|---|
+| L_CAFFEINE_CUTOFF_8H | Arrêt caféine ≥8h avant coucher | T1 | Drake 2013 | Dernière prise ≥8h avant coucher |
+| L_GLYCINE_PRE_BED | Glycine 3g avant coucher | T2 | Bannai 2012 | 3g 30-60 min avant coucher |
+| L_MAGNESIUM_FOOD | Apport Mg alimentaire ≥350mg/j | T2 | Arab 2022 | 300-400mg/j via aliments |
+| L_KIWI_PRE_BED | Deux kiwis 1h avant coucher | T2 | Lin 2011 | 2 kiwis 1h avant coucher, 4 semaines |
+| L_PROTEIN_BREAKFAST_STABLE_ENERGY | Petit-déjeuner protéiné 25-35g | T2 | evidence appetite/cravings | 25-35g protéines au premier repas |
 
 ---
 

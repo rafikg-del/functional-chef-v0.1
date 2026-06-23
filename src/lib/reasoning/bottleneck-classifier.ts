@@ -15,13 +15,14 @@
  *   1. For each (bottleneck × biomarker) threshold, check if patient breaches it
  *   2. Aggregate weighted hits (major / moderate / minor / discriminant)
  *   3. Apply per-bottleneck classification rule:
+ *        - ALLOSTATIC_LOAD : ≥2 majors OR (≥1 major AND ≥3 moderates)
  *        - IR       : ≥3 majors OR (≥2 majors AND ≥3 moderates)
  *        - INFLAM   : CRP_US breach + ≥1 other major
  *        - DYSBIOSE : ≥2 major clinical breaches AND ≥1 historical aggravator
  *   4. Determine dominance:
  *        - 1 triggered  → dominant
  *        - 2 triggered  → co-dominance (highest score = dominant)
- *        - 3 triggered  → priority cascade IR > INFLAM > DYSBIOSE
+ *        - ≥3 triggered → priority cascade ALLOSTATIC_LOAD > IR > INFLAM > DYSBIOSE
  *
  * NOT a black box. Every classification decision is fully traceable
  * via the `evidence` array in BottleneckScore.
@@ -57,6 +58,14 @@ interface RuleInput {
 }
 
 const CLASSIFICATION_RULES: Record<BottleneckId, (i: RuleInput) => boolean> = {
+  /**
+   * ALLOSTATIC_LOAD rule: neuro-endocrine / autonomic overload signature.
+   * Requires either convergent major signals or one major plus several
+   * moderate context markers to avoid over-calling ordinary fatigue.
+   */
+  ALLOSTATIC_LOAD: ({ major_hits, moderate_hits }) =>
+    major_hits >= 2 || (major_hits >= 1 && moderate_hits >= 3),
+
   /**
    * IR rule (spec §1.2): ≥3 critères majeurs OR ≥2 majeurs + ≥3 modérés
    */
@@ -243,7 +252,7 @@ function scoreBottleneck(
  * Spec §6 ÉTAPE 2:
  *   - 1 triggered → dominant
  *   - 2 triggered → co-dominance (higher score = dominant; ties broken by priority_rank)
- *   - 3 triggered → priority cascade IR > INFLAM > DYSBIOSE (causal upstream first)
+ *   - ≥3 triggered → priority cascade (causal upstream first)
  */
 function assignDominance(
   scores: BottleneckScore[],
@@ -285,7 +294,7 @@ function assignDominance(
     };
   }
 
-  // 3 triggered → cascade IR > INFLAM > DYSBIOSE (priority_rank ascending)
+  // ≥3 triggered → cascade by priority_rank ascending (upstream first)
   triggered.sort(
     (a, b) =>
       (priorityMap.get(a.bottleneck_id) ?? 99) -
@@ -293,10 +302,11 @@ function assignDominance(
   );
   triggered[0].is_dominant = true;
   triggered[1].is_co_dominant = true;
+  const deferred = triggered.slice(2).map((s) => s.bottleneck_id).join(' > ');
   return {
     dominant: triggered[0].bottleneck_id,
     co_dominant: triggered[1].bottleneck_id,
-    rationale: `Triple co-dominance: cascade causale appliquée (${triggered[0].bottleneck_id} > ${triggered[1].bottleneck_id} > ${triggered[2].bottleneck_id}). On adresse d'abord la cause amont. Le 3e bottleneck (${triggered[2].bottleneck_id}) sera réévalué en consultation suivante après stabilisation amont.`,
+    rationale: `Co-dominance multiple: cascade causale appliquée (${triggered.map((s) => s.bottleneck_id).join(' > ')}). On adresse d'abord la cause amont. Bottleneck(s) différé(s): ${deferred}.`,
   };
 }
 

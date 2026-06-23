@@ -9,7 +9,7 @@
 // Domain entities (mirror Supabase schema)
 // ───────────────────────────────────────────────────────────
 
-export type BottleneckId = 'IR' | 'INFLAM' | 'DYSBIOSE';
+export type BottleneckId = 'ALLOSTATIC_LOAD' | 'IR' | 'INFLAM' | 'DYSBIOSE';
 export type EBMTier = 'T1' | 'T2' | 'T3';
 export type Sex = 'F' | 'M' | 'O';
 export type ThresholdWeight = 'major' | 'moderate' | 'minor' | 'discriminant';

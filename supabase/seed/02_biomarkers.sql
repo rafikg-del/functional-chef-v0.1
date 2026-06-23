@@ -40,4 +40,15 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('ABX_LIFETIME', 'Cures abx lifetime', 'count', 'clinical', 'Total antibiotic courses in patient history', true),
 ('PPI_CHRONIC', 'IPP chronique >6 mois', 'qualitative', 'clinical', 'Chronic proton pump inhibitor use', true),
 ('FIBER_INTAKE', 'Apport fibres estimé', 'g/day', 'clinical', 'Estimated daily fiber intake', true),
-('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true);
+('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true),
+
+-- Allostatic load / neuro-endocrine recovery
+('CORTISOL_AM', 'Cortisol salivaire matin', 'nmol/L', 'endocrine', 'Morning salivary cortisol. Interpret with sampling time and acute stress context.', false),
+('CORTISOL_PM', 'Cortisol salivaire soir', 'nmol/L', 'endocrine', 'Evening salivary cortisol; high values suggest impaired HPA downshift.', false),
+('DHEA_S', 'DHEA-S', 'µg/dL', 'endocrine', 'DHEA sulfate; low values can reflect reduced anabolic reserve in chronic stress context.', false),
+('HRV_RMSSD', 'HRV RMSSD nocturne', 'ms', 'autonomic', 'Root mean square of successive differences; parasympathetic recovery marker.', false),
+('RESTING_HR', 'Fréquence cardiaque repos', 'bpm', 'autonomic', 'Resting heart rate; autonomic strain proxy when persistently elevated.', false),
+('PSQI_SCORE', 'Pittsburgh Sleep Quality Index', 'score', 'sleep', 'Subjective sleep quality index; higher is worse.', true),
+('SLEEP_EFFICIENCY', 'Efficacité du sommeil', '%', 'sleep', 'Sleep efficiency from wearable, diary or polysomnography.', true),
+('WASO_MIN', 'Wake after sleep onset', 'min', 'sleep', 'Minutes awake after sleep onset.', true),
+('CAFFEINE_AFTER_14', 'Caféine après 14h', 'qualitative', 'clinical', 'Regular caffeine exposure after 14:00 or within 8h of bedtime.', true);

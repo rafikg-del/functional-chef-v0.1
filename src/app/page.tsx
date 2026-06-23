@@ -63,10 +63,16 @@ export default function HomePage() {
           </div>
         </div>
 
-        {/* Side panel — 3 bottlenecks */}
+        {/* Side panel — pilot bottlenecks */}
         <aside className="md:col-span-4 md:pt-2">
-          <p className="label">Trois bottlenecks pilotes</p>
+          <p className="label">Bottlenecks pilotes</p>
           <ul className="space-y-4 mt-2">
+            <li className="border-l-2 border-saffron-500 pl-4">
+              <p className="font-serif text-xl text-ink-900">Charge allostatique</p>
+              <p className="text-sm text-ink-600 mt-1">
+                HRV basse · PSQI élevé · cortisol soir haut
+              </p>
+            </li>
             <li className="border-l-2 border-saffron-500 pl-4">
               <p className="font-serif text-xl text-ink-900">Insulinorésistance</p>
               <p className="text-sm text-ink-600 mt-1">

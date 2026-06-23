@@ -50,3 +50,21 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('DYSBIOSE', 'PPI_CHRONIC',       NULL,  NULL, NULL,  NULL,  'positive', 'moderate', 'IPP >6 mois sans indication forte'),
 ('DYSBIOSE', 'FIBER_INTAKE',      25,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible >25g/j. Alerte <15g/j'),
 ('DYSBIOSE', 'PLANT_DIVERSITY',   30,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible ≥30/sem. Alerte <15/sem');
+
+-- ---------------------------------------------------------------------
+-- ALLOSTATIC_LOAD thresholds
+-- ---------------------------------------------------------------------
+-- These thresholds are screening-oriented and require convergent signals.
+-- Cortisol and DHEA-S must be interpreted with sampling time, age, sex,
+-- medication, shift work and acute stress context.
+INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target_min, functional_target_max, alert_threshold_low, alert_threshold_high, alert_categorical_value, weight, notes) VALUES
+('ALLOSTATIC_LOAD', 'HRV_RMSSD',        35,    NULL, 25,    NULL,  NULL,       'major',    'Low nocturnal RMSSD suggests insufficient parasympathetic recovery; compare to individual baseline when available'),
+('ALLOSTATIC_LOAD', 'PSQI_SCORE',       NULL,  5,    NULL,  8,     NULL,       'major',    'Poor sleep quality; PSQI >5 abnormal, >8 strong functional signal'),
+('ALLOSTATIC_LOAD', 'CORTISOL_PM',      NULL,  3,    NULL,  5,     NULL,       'major',    'Evening cortisol should be low; high value suggests impaired HPA downshift'),
+('ALLOSTATIC_LOAD', 'CORTISOL_AM',      8,     18,   5,     20,    NULL,       'moderate', 'Morning cortisol outside expected band; interpret with sampling time'),
+('ALLOSTATIC_LOAD', 'DHEA_S',           100,   NULL, 80,    NULL,  NULL,       'moderate', 'Low DHEA-S as reduced anabolic reserve proxy; age/sex adjusted interpretation preferred'),
+('ALLOSTATIC_LOAD', 'SLEEP_EFFICIENCY', 90,    NULL, 85,    NULL,  NULL,       'moderate', 'Wearable or diary proxy; <85% suggests fragmented sleep'),
+('ALLOSTATIC_LOAD', 'WASO_MIN',         NULL,  30,   NULL,  45,    NULL,       'moderate', 'Wake after sleep onset; persistent fragmentation marker'),
+('ALLOSTATIC_LOAD', 'RESTING_HR',       NULL,  65,   NULL,  75,    NULL,       'moderate', 'Persistently elevated resting HR suggests autonomic strain'),
+('ALLOSTATIC_LOAD', 'FASTING_GLUCOSE',  NULL,  0.95, NULL,  0.95,  NULL,       'minor',    'Overlap IR; late-day cravings and stress physiology can amplify glycemic instability'),
+('ALLOSTATIC_LOAD', 'CAFFEINE_AFTER_14',NULL,  NULL, NULL,  NULL,  'positive', 'moderate', 'Caffeine after 14:00 or within 8h of bedtime can maintain sympathetic tone and impair sleep');

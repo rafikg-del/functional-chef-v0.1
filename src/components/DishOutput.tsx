@@ -4,6 +4,7 @@ import { EBMBadge } from './EBMBadge';
 import type { ConsultationResult } from '@/lib/reasoning/types';
 
 const BOTTLENECK_LABEL: Record<string, string> = {
+  ALLOSTATIC_LOAD: 'Charge allostatique',
   IR: 'Insulinorésistance',
   INFLAM: 'Inflammaging',
   DYSBIOSE: 'Dysbiose',

@@ -8,6 +8,12 @@ import type {
 
 const bottlenecks: Bottleneck[] = [
   {
+    id: 'ALLOSTATIC_LOAD',
+    name: 'allostatic_load',
+    display_name_fr: 'Charge allostatique',
+    priority_rank: 0,
+  },
+  {
     id: 'IR',
     name: 'insulin_resistance',
     display_name_fr: 'Insulinorésistance fonctionnelle',
@@ -49,6 +55,16 @@ function threshold(
 }
 
 const thresholds: BiomarkerThreshold[] = [
+  threshold('ALLOSTATIC_LOAD', 'HRV_RMSSD', 'major', 25, null),
+  threshold('ALLOSTATIC_LOAD', 'PSQI_SCORE', 'major', null, 8),
+  threshold('ALLOSTATIC_LOAD', 'CORTISOL_PM', 'major', null, 5),
+  threshold('ALLOSTATIC_LOAD', 'CORTISOL_AM', 'moderate', 5, 20),
+  threshold('ALLOSTATIC_LOAD', 'DHEA_S', 'moderate', 80, null),
+  threshold('ALLOSTATIC_LOAD', 'SLEEP_EFFICIENCY', 'moderate', 85, null),
+  threshold('ALLOSTATIC_LOAD', 'WASO_MIN', 'moderate', null, 45),
+  threshold('ALLOSTATIC_LOAD', 'RESTING_HR', 'moderate', null, 75),
+  threshold('ALLOSTATIC_LOAD', 'CAFFEINE_AFTER_14', 'moderate', null, null, 'positive'),
+
   threshold('IR', 'HOMA_IR', 'major', null, 1.5),
   threshold('IR', 'FASTING_INSULIN', 'major', null, 8),
   threshold('IR', 'HBA1C', 'major', null, 5.4),
@@ -123,6 +139,15 @@ const cases: {
     expectedCoDominant: null,
   },
   {
+    name: 'Case D — ALLOSTATIC_LOAD isolée',
+    profile: patient(
+      { HRV_RMSSD: 18, CORTISOL_PM: 6.2, RESTING_HR: 78, FASTING_GLUCOSE: 0.9 },
+      { PSQI_SCORE: 10, SLEEP_EFFICIENCY: 82, WASO_MIN: 55, CAFFEINE_AFTER_14: 'positive' }
+    ),
+    expectedDominant: 'ALLOSTATIC_LOAD',
+    expectedCoDominant: null,
+  },
+  {
     name: 'Triple trigger — cascade IR > INFLAM > DYSBIOSE',
     profile: patient(
       {
@@ -138,6 +163,25 @@ const cases: {
     ),
     expectedDominant: 'IR',
     expectedCoDominant: 'INFLAM',
+  },
+  {
+    name: 'Quad trigger — cascade ALLOSTATIC_LOAD > IR > INFLAM > DYSBIOSE',
+    profile: patient(
+      {
+        HRV_RMSSD: 18,
+        CORTISOL_PM: 6.5,
+        HOMA_IR: 2.3,
+        TG_HDL_RATIO: 2.1,
+        FASTING_GLUCOSE: 1.05,
+        TRIGLYCERIDES: 1.5,
+        ALT: 32,
+        CRP_US: 2.8,
+        OMEGA_INDEX: 4.2,
+      },
+      { PSQI_SCORE: 10, BRISTOL_SCORE: 6, BLOATING_FREQ: 8, ABX_LIFETIME: 6 }
+    ),
+    expectedDominant: 'ALLOSTATIC_LOAD',
+    expectedCoDominant: 'IR',
   },
 ];
 

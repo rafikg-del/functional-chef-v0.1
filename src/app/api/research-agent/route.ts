@@ -123,13 +123,14 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (err) {
     if (err instanceof ResearchAgentError) {
+      const isConfigurationError = err.message.includes('ANTHROPIC_API_KEY missing');
       return NextResponse.json(
         {
-          error: 'Research agent failure',
+          error: isConfigurationError ? 'Research agent not configured' : 'Research agent failure',
           message: err.message,
           raw_response: err.raw_response,
         },
-        { status: 502 }
+        { status: isConfigurationError ? 503 : 502 }
       );
     }
 

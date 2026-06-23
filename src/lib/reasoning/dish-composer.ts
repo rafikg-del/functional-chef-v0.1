@@ -67,13 +67,13 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
   const triggeredCount = input.classification.scores.filter((s) => s.triggered).length;
   const useComplex = triggeredCount >= 3;
   const model = selectModel({ complex: useComplex });
-  const anthropic = getAnthropicClient();
 
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();
 
   let response;
   try {
+    const anthropic = getAnthropicClient();
     response = await anthropic.messages.create({
       model,
       max_tokens: 4096,

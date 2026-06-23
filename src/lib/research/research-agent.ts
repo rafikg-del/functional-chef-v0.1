@@ -207,12 +207,12 @@ Produis une fiche complète au format JSON strict. Elle doit suivre la structure
 
 export async function runResearchAgent(input: ResearchAgentInput): Promise<ResearchAgentResult> {
   const model = MODELS.COMPLEX;
-  const anthropic = getAnthropicClient();
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();
 
   let response;
   try {
+    const anthropic = getAnthropicClient();
     response = await anthropic.messages.create({
       model,
       max_tokens: 6000,

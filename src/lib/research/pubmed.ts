@@ -36,16 +36,51 @@ function clampResultCount(value: number | undefined): number {
 function buildQuery(input: PubMedSearchInput): string {
   if (input.query?.trim()) return input.query.trim();
 
-  const target = input.target_bottleneck_name?.trim();
+  const target = input.target_bottleneck_name?.trim() ?? '';
   const problem = input.problem.trim();
-  const nutritionFilter =
-    '(diet[Title/Abstract] OR dietary[Title/Abstract] OR nutrition[Title/Abstract] OR food[Title/Abstract] OR meal[Title/Abstract] OR ingredient*[Title/Abstract] OR polyphenol*[Title/Abstract] OR protein[Title/Abstract] OR fiber[Title/Abstract])';
-  const evidenceFilter =
-    '(clinical trial[Publication Type] OR randomized[Title/Abstract] OR systematic review[Publication Type] OR meta-analysis[Publication Type] OR cohort[Title/Abstract] OR biomarker*[Title/Abstract] OR mechanism*[Title/Abstract])';
+  const haystack = `${target} ${problem}`.toLowerCase();
+  const concepts = new Set<string>();
 
-  return [target ? `(${target})` : undefined, `(${problem})`, nutritionFilter, evidenceFilter]
-    .filter(Boolean)
-    .join(' AND ');
+  function includesAny(words: string[]): boolean {
+    return words.some((word) => haystack.includes(word));
+  }
+
+  if (includesAny(['charge allostatique', 'allostatic', 'stress', 'hrv', 'rmssd', 'cortisol'])) {
+    concepts.add('"allostatic load"[Title/Abstract]');
+    concepts.add('stress[Title/Abstract]');
+    concepts.add('cortisol[Title/Abstract]');
+    concepts.add('"heart rate variability"[Title/Abstract]');
+  }
+  if (includesAny(['sommeil', 'sleep', 'insomnie', 'réveil', 'reveil', 'sleep fragmentation'])) {
+    concepts.add('sleep[Title/Abstract]');
+    concepts.add('insomnia[Title/Abstract]');
+    concepts.add('"sleep quality"[Title/Abstract]');
+  }
+  if (includesAny(['glycine'])) concepts.add('glycine[Title/Abstract]');
+  if (includesAny(['magnésium', 'magnesium', 'mg'])) concepts.add('magnesium[Title/Abstract]');
+  if (includesAny(['inflammation', 'inflammaging', 'crp'])) {
+    concepts.add('inflammation[Title/Abstract]');
+    concepts.add('"C-reactive protein"[Title/Abstract]');
+  }
+  if (includesAny(['microbiote', 'microbiome', 'dysbiose', 'dysbiosis', 'bristol'])) {
+    concepts.add('microbiome[Title/Abstract]');
+    concepts.add('dysbiosis[Title/Abstract]');
+  }
+  if (includesAny(['insuline', 'insulin', 'glycémie', 'glycemie', 'glucose', 'craving', 'sucre'])) {
+    concepts.add('insulin[Title/Abstract]');
+    concepts.add('glucose[Title/Abstract]');
+    concepts.add('"insulin resistance"[Title/Abstract]');
+  }
+
+  if (concepts.size === 0) {
+    concepts.add(problem);
+    if (target) concepts.add(target);
+  }
+
+  const nutritionFilter =
+    '(diet[Title/Abstract] OR dietary[Title/Abstract] OR nutrition[Title/Abstract] OR food[Title/Abstract] OR supplement*[Title/Abstract] OR ingredient*[Title/Abstract] OR polyphenol*[Title/Abstract] OR protein[Title/Abstract] OR fiber[Title/Abstract] OR glycine[Title/Abstract] OR magnesium[Title/Abstract])';
+
+  return [`(${Array.from(concepts).join(' OR ')})`, nutritionFilter].join(' AND ');
 }
 
 function decodeXml(text: string): string {

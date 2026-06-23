@@ -253,6 +253,11 @@ export interface ComposerInput {
   classification: ClassificationResult;
   selected_levers: SelectedLever[];
   excluded_levers?: { lever_id: string; reason: string }[];
+  llm?: {
+    provider?: 'anthropic' | 'grok';
+    model?: string;
+    grok_api_key?: string;
+  };
 }
 
 // ───────────────────────────────────────────────────────────

@@ -74,6 +74,9 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
   let response;
   try {
     response = await generateText({
+      provider: input.llm?.provider,
+      model: input.llm?.model,
+      grok_api_key: input.llm?.grok_api_key,
       complex: useComplex,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,

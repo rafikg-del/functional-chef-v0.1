@@ -63,3 +63,10 @@ Lors de la création d'un **nouveau module pédagogique** (ex. DU-MFL, TP nutrit
 | `npm run validate` | Tests cas-pivot + pipeline |
 | `npm run agent:validate` | Validation + type-check + instructions agent |
 | `npm run type-check` | Compilation TypeScript seule |
+| `npm run test:training` | Import + entraînement sur exemples |
+
+## Entraînement multi-dossiers patients
+
+Page `/training` — upload dossiers/ZIP, batch classifier, export JSONL.
+
+Format par patient : `dossier-patient/profile.json` (voir `examples/training-dossiers/`).

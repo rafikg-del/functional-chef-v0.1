@@ -113,7 +113,7 @@ function parsePubMedXml(xml: string): LiteratureEvidenceInput[] {
   const articleBlocks = xml.match(/<PubmedArticle\b[\s\S]*?<\/PubmedArticle>/gi) ?? [];
 
   return articleBlocks
-    .map((block) => {
+    .map((block): LiteratureEvidenceInput | null => {
       const pmid = firstTag(block, 'PMID');
       const title = firstTag(block, 'ArticleTitle');
       if (!pmid || !title) return null;

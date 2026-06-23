@@ -133,13 +133,18 @@ export async function POST(req: NextRequest) {
       const isConfigurationError =
         err.message.includes('ANTHROPIC_API_KEY missing') ||
         err.message.includes('GROK_API_KEY missing');
+      const isInvalidGrokKey = err.message.includes('Grok API key invalid');
       return NextResponse.json(
         {
-          error: isConfigurationError ? 'Research agent not configured' : 'Research agent failure',
+          error: isConfigurationError
+            ? 'Research agent not configured'
+            : isInvalidGrokKey
+            ? 'Invalid Grok API key'
+            : 'Research agent failure',
           message: err.message,
           raw_response: err.raw_response,
         },
-        { status: isConfigurationError ? 503 : 502 }
+        { status: isConfigurationError ? 503 : isInvalidGrokKey ? 401 : 502 }
       );
     }
 

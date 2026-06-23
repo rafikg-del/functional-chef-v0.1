@@ -55,6 +55,22 @@ function configuredProvider(requested?: LLMProvider, grokApiKey?: string): LLMPr
   return 'anthropic';
 }
 
+function normalizeApiKey(value: string | undefined): string | undefined {
+  if (!value) return undefined;
+
+  const trimmed = value.trim().replace(/^["']|["']$/g, '');
+  const bearerMatch = trimmed.match(/^Bearer\s+(.+)$/i);
+  return bearerMatch ? bearerMatch[1].trim() : trimmed;
+}
+
+function isInvalidApiKeyResponse(status: number, bodyText: string): boolean {
+  return (
+    status === 400 &&
+    (bodyText.toLowerCase().includes('incorrect api key') ||
+      bodyText.toLowerCase().includes('invalid api key'))
+  );
+}
+
 async function generateWithAnthropic(input: GenerateTextInput): Promise<GenerateTextResult> {
   const model = input.model ?? selectModel({ complex: Boolean(input.complex) });
   const anthropic = getAnthropicClient();
@@ -81,7 +97,9 @@ async function generateWithAnthropic(input: GenerateTextInput): Promise<Generate
 }
 
 async function generateWithGrok(input: GenerateTextInput): Promise<GenerateTextResult> {
-  const apiKey = input.grok_api_key ?? process.env.GROK_API_KEY ?? process.env.XAI_API_KEY;
+  const apiKey = normalizeApiKey(
+    input.grok_api_key ?? process.env.GROK_API_KEY ?? process.env.XAI_API_KEY
+  );
   if (!apiKey) {
     throw new Error('GROK_API_KEY missing in environment or request');
   }
@@ -108,6 +126,11 @@ async function generateWithGrok(input: GenerateTextInput): Promise<GenerateTextR
 
   const bodyText = await response.text();
   if (!response.ok) {
+    if (isInvalidApiKeyResponse(response.status, bodyText)) {
+      throw new Error(
+        'Grok API key invalid. Vérifie que tu as copié une clé API xAI active depuis https://console.x.ai et non une clé d’un autre service.'
+      );
+    }
     throw new Error(`Grok API error (${response.status}): ${bodyText.slice(0, 800)}`);
   }
 

@@ -58,9 +58,31 @@ function configuredProvider(requested?: LLMProvider, grokApiKey?: string): LLMPr
 function normalizeApiKey(value: string | undefined): string | undefined {
   if (!value) return undefined;
 
-  const trimmed = value.trim().replace(/^["']|["']$/g, '');
-  const bearerMatch = trimmed.match(/^Bearer\s+(.+)$/i);
-  return bearerMatch ? bearerMatch[1].trim() : trimmed;
+  let cleaned = value
+    .trim()
+    .replace(/[\u200B-\u200D\uFEFF]/g, '')
+    .replace(/^export\s+/i, '')
+    .replace(/^["'`]|["'`]$/g, '');
+
+  const assignmentMatch = cleaned.match(/^(?:GROK_API_KEY|XAI_API_KEY)\s*=\s*(.+)$/i);
+  if (assignmentMatch) {
+    cleaned = assignmentMatch[1].trim().replace(/^["'`]|["'`]$/g, '');
+  }
+
+  const bearerMatch = cleaned.match(/^Bearer\s+(.+)$/i);
+  if (bearerMatch) {
+    cleaned = bearerMatch[1].trim().replace(/^["'`]|["'`]$/g, '');
+  }
+
+  const xaiTokenMatch = cleaned.match(/xai-[A-Za-z0-9_-]+/);
+  if (xaiTokenMatch) return xaiTokenMatch[0];
+
+  return cleaned.replace(/\s+/g, '');
+}
+
+function keyFingerprint(apiKey: string): string {
+  if (apiKey.length <= 8) return `prefix=${apiKey.slice(0, 4)}, length=${apiKey.length}`;
+  return `prefix=${apiKey.slice(0, 4)}, suffix=${apiKey.slice(-4)}, length=${apiKey.length}`;
 }
 
 function isInvalidApiKeyResponse(status: number, bodyText: string): boolean {
@@ -128,7 +150,7 @@ async function generateWithGrok(input: GenerateTextInput): Promise<GenerateTextR
   if (!response.ok) {
     if (isInvalidApiKeyResponse(response.status, bodyText)) {
       throw new Error(
-        'Grok API key invalid. Vérifie que tu as copié une clé API xAI active depuis https://console.x.ai et non une clé d’un autre service.'
+        `Grok API key invalid. Clé reçue par le serveur: ${keyFingerprint(apiKey)}. Vérifie que c’est une clé API xAI active depuis https://console.x.ai et non une clé d’un autre service.`
       );
     }
     throw new Error(`Grok API error (${response.status}): ${bodyText.slice(0, 800)}`);

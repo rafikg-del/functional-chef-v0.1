@@ -201,9 +201,9 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
           </div>
           <p className="text-xs text-ink-500">
             La clé Grok saisie ici est transmise uniquement à cette requête serveur et n&apos;est pas persistée.
-            Utilise une clé API xAI créée sur console.x.ai. Tu peux coller `xai-...` ou `Bearer xai-...`;
-            les espaces et guillemets seront ignorés. En production, tu peux aussi utiliser `GROK_API_KEY`
-            ou `XAI_API_KEY`.
+            Utilise une clé API xAI créée sur console.x.ai. Tu peux coller `xai-...`,
+            `Bearer xai-...` ou `XAI_API_KEY=xai-...`; les espaces et guillemets seront ignorés.
+            En production, tu peux aussi utiliser `GROK_API_KEY` ou `XAI_API_KEY`.
           </p>
         </div>
       </div>

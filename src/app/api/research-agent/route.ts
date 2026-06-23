@@ -31,6 +31,13 @@ const LiteratureSchema = z.object({
 const RequestSchema = z.object({
   problem: z.string().min(10),
   target_bottleneck_name: z.string().optional(),
+  llm: z
+    .object({
+      provider: z.enum(['anthropic', 'grok']).optional(),
+      model: z.string().optional(),
+      grok_api_key: z.string().min(10).optional(),
+    })
+    .optional(),
   context: z
     .object({
       population: z.string().optional(),
@@ -123,7 +130,9 @@ export async function POST(req: NextRequest) {
     return NextResponse.json(result);
   } catch (err) {
     if (err instanceof ResearchAgentError) {
-      const isConfigurationError = err.message.includes('ANTHROPIC_API_KEY missing');
+      const isConfigurationError =
+        err.message.includes('ANTHROPIC_API_KEY missing') ||
+        err.message.includes('GROK_API_KEY missing');
       return NextResponse.json(
         {
           error: isConfigurationError ? 'Research agent not configured' : 'Research agent failure',

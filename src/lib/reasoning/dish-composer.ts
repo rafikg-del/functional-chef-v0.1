@@ -21,7 +21,7 @@
  *   - API error → propagate (caller decides retry policy)
  */
 
-import { getAnthropicClient, selectModel } from '../anthropic/client';
+import { generateText } from '../llm/generate-text';
 import {
   SYSTEM_PROMPT,
   buildUserMessage,
@@ -43,6 +43,7 @@ export class ComposerError extends Error {
 export interface ComposerOutput {
   dish: ComposedDish;
   meta: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;
@@ -66,23 +67,21 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
   // Triple co-dominance or unusual patterns → use Opus
   const triggeredCount = input.classification.scores.filter((s) => s.triggered).length;
   const useComplex = triggeredCount >= 3;
-  const model = selectModel({ complex: useComplex });
 
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();
 
   let response;
   try {
-    const anthropic = getAnthropicClient();
-    response = await anthropic.messages.create({
-      model,
+    response = await generateText({
+      complex: useComplex,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userMessage }],
+      user: userMessage,
     });
   } catch (err) {
     throw new ComposerError(
-      `Anthropic API error: ${err instanceof Error ? err.message : 'unknown'}`,
+      `LLM API error: ${err instanceof Error ? err.message : 'unknown'}`,
       undefined,
       err
     );
@@ -90,13 +89,7 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
 
   const latency_ms = Date.now() - t0;
 
-  // Extract text from response content blocks
-  const textBlock = response.content.find((b) => b.type === 'text');
-  if (!textBlock || textBlock.type !== 'text') {
-    throw new ComposerError('No text block in Anthropic response', JSON.stringify(response.content));
-  }
-
-  const rawText = textBlock.text;
+  const rawText = response.text;
   const cleaned = stripFences(rawText);
 
   // Parse JSON
@@ -122,9 +115,10 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
   return {
     dish: parsed,
     meta: {
-      model,
-      input_tokens: response.usage?.input_tokens,
-      output_tokens: response.usage?.output_tokens,
+      provider: response.provider,
+      model: response.model,
+      input_tokens: response.input_tokens,
+      output_tokens: response.output_tokens,
       latency_ms,
     },
   };

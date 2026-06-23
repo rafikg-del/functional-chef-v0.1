@@ -72,6 +72,9 @@ en draft scientifique avant intégration dans le référentiel :
   littérature manuelle optionnelle (`title`, `pmid`, `doi`, `abstract`, `key_findings`)
 - Output : fiche structurée `bottleneck → critères d'entrée → points d'impact
   biologiques → leviers ingrédients → recettes`
+- LLM : Anthropic par défaut, ou Grok/xAI via `LLM_PROVIDER=grok` +
+  `GROK_API_KEY`/`XAI_API_KEY`. La page `/research-agent` permet aussi de saisir
+  une clé Grok pour une requête ponctuelle sans la persister.
 
 Garde-fou : ce flux ne classifie pas un patient et ne persiste pas de consultation.
 Sans bibliographie fournie ni résultat PubMed, il marque les références comme

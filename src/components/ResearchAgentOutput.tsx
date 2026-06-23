@@ -18,6 +18,7 @@ interface Props {
       warnings: string[];
     };
     meta?: {
+      provider?: string;
       model: string;
       input_tokens?: number;
       output_tokens?: number;
@@ -250,6 +251,7 @@ export function ResearchAgentOutput({ result }: Props) {
 
       {meta && (
         <footer className="text-xs text-ink-400 font-mono pt-4 border-t border-ink-100 flex flex-wrap gap-4">
+          {meta.provider && <span>{meta.provider}</span>}
           <span>{meta.model}</span>
           {meta.input_tokens && (
             <span>

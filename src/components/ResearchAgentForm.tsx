@@ -11,6 +11,7 @@ interface ResearchAgentResponse {
     warnings: string[];
   };
   meta?: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;
@@ -48,6 +49,9 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
   const [autoPubMed, setAutoPubMed] = useState(true);
   const [pubMedQuery, setPubMedQuery] = useState('');
   const [maxPubMedResults, setMaxPubMedResults] = useState(6);
+  const [llmProvider, setLlmProvider] = useState<'anthropic' | 'grok'>('grok');
+  const [grokApiKey, setGrokApiKey] = useState('');
+  const [llmModel, setLlmModel] = useState('');
 
   async function handleSubmit() {
     onLoadingChange(true);
@@ -69,6 +73,11 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
         body: JSON.stringify({
           problem,
           target_bottleneck_name: targetBottleneck || undefined,
+          llm: {
+            provider: llmProvider,
+            model: llmModel || undefined,
+            grok_api_key: llmProvider === 'grok' ? grokApiKey || undefined : undefined,
+          },
           context: {
             population,
             daily_context: dailyContext,
@@ -87,7 +96,7 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
 
       const body = await res.json().catch(() => ({}));
       if (!res.ok) {
-        throw new Error(body.error || body.message || `HTTP ${res.status}`);
+        throw new Error(body.message || body.error || `HTTP ${res.status}`);
       }
 
       onResult(body as ResearchAgentResponse);
@@ -151,6 +160,50 @@ export function ResearchAgentForm({ onResult, onError, onLoadingChange }: Props)
           onChange={(e) => setDailyContext(e.target.value)}
           className="input-field"
         />
+      </div>
+
+      <div>
+        <div className="card p-4 space-y-4">
+          <div className="grid md:grid-cols-3 gap-4">
+            <div>
+              <label className="label">Fournisseur LLM</label>
+              <select
+                value={llmProvider}
+                onChange={(e) => setLlmProvider(e.target.value as 'anthropic' | 'grok')}
+                className="input-field"
+              >
+                <option value="grok">Grok / xAI</option>
+                <option value="anthropic">Anthropic</option>
+              </select>
+            </div>
+            <div>
+              <label className="label">Modèle optionnel</label>
+              <input
+                value={llmModel}
+                onChange={(e) => setLlmModel(e.target.value)}
+                className="input-field"
+                placeholder={llmProvider === 'grok' ? 'grok-4.3' : 'claude-opus-4-7'}
+              />
+            </div>
+            {llmProvider === 'grok' && (
+              <div>
+                <label className="label">Clé Grok / xAI</label>
+                <input
+                  type="password"
+                  value={grokApiKey}
+                  onChange={(e) => setGrokApiKey(e.target.value)}
+                  className="input-field"
+                  placeholder="xai-..."
+                  autoComplete="off"
+                />
+              </div>
+            )}
+          </div>
+          <p className="text-xs text-ink-500">
+            La clé Grok saisie ici est transmise uniquement à cette requête serveur et n&apos;est pas persistée.
+            En production, tu peux aussi utiliser `GROK_API_KEY` ou `XAI_API_KEY`.
+          </p>
+        </div>
       </div>
 
       <div>

@@ -20,6 +20,7 @@ interface ResearchAgentResponse {
     warnings: string[];
   };
   meta?: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;

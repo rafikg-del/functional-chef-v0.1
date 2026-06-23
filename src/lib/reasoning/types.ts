@@ -268,6 +268,7 @@ export interface ConsultationResult {
   dish: ComposedDish;
   warnings: string[];
   llm_meta?: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;

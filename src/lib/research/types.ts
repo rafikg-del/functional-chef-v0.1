@@ -38,6 +38,11 @@ export interface ResearchAgentInput {
   context?: ResearchAgentContext;
   literature?: LiteratureEvidenceInput[];
   target_bottleneck_name?: string;
+  llm?: {
+    provider?: 'anthropic' | 'grok';
+    model?: string;
+    grok_api_key?: string;
+  };
   literature_search?: {
     enabled?: boolean;
     query?: string;

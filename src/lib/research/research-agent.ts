@@ -12,7 +12,7 @@
  * prescription engine.
  */
 
-import { getAnthropicClient, MODELS } from '../anthropic/client';
+import { generateText } from '../llm/generate-text';
 import type { ResearchAgentInput, ResearchAgentOutput } from './types';
 import type { PubMedSearchResult } from './pubmed';
 import { validateResearchAgentOutput } from './types';
@@ -32,6 +32,7 @@ export interface ResearchAgentResult {
   brief: ResearchAgentOutput;
   literature_search?: PubMedSearchResult;
   meta: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;
@@ -206,35 +207,31 @@ Produis une fiche complète au format JSON strict. Elle doit suivre la structure
 }
 
 export async function runResearchAgent(input: ResearchAgentInput): Promise<ResearchAgentResult> {
-  const model = MODELS.COMPLEX;
+  const model = input.llm?.model;
   const userMessage = buildUserMessage(input);
   const t0 = Date.now();
 
   let response;
   try {
-    const anthropic = getAnthropicClient();
-    response = await anthropic.messages.create({
+    response = await generateText({
+      provider: input.llm?.provider,
       model,
+      grok_api_key: input.llm?.grok_api_key,
       max_tokens: 6000,
       temperature: 0.2,
       system: SYSTEM_PROMPT,
-      messages: [{ role: 'user', content: userMessage }],
+      user: userMessage,
     });
   } catch (err) {
     throw new ResearchAgentError(
-      `Anthropic API error: ${err instanceof Error ? err.message : 'unknown'}`,
+      `LLM API error: ${err instanceof Error ? err.message : 'unknown'}`,
       undefined,
       err
     );
   }
 
   const latency_ms = Date.now() - t0;
-  const textBlock = response.content.find((b) => b.type === 'text');
-  if (!textBlock || textBlock.type !== 'text') {
-    throw new ResearchAgentError('No text block in Anthropic response', JSON.stringify(response.content));
-  }
-
-  const cleaned = stripFences(textBlock.text);
+  const cleaned = stripFences(response.text);
   let parsed: unknown;
   try {
     parsed = JSON.parse(cleaned);
@@ -252,9 +249,10 @@ export async function runResearchAgent(input: ResearchAgentInput): Promise<Resea
   return {
     brief: parsed,
     meta: {
-      model,
-      input_tokens: response.usage?.input_tokens,
-      output_tokens: response.usage?.output_tokens,
+      provider: response.provider,
+      model: response.model,
+      input_tokens: response.input_tokens,
+      output_tokens: response.output_tokens,
       latency_ms,
     },
   };

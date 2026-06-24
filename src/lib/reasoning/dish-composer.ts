@@ -21,7 +21,7 @@
  *   - API error → propagate (caller decides retry policy)
  */
 
-import { anthropic, selectModel } from '../anthropic/client';
+import { getAnthropicClient, selectModel } from '../anthropic/client';
 import {
   SYSTEM_PROMPT,
   buildUserMessage,
@@ -73,7 +73,7 @@ export async function composeDish(input: ComposerInput): Promise<ComposerOutput>
 
   let response;
   try {
-    response = await anthropic.messages.create({
+    response = await getAnthropicClient().messages.create({
       model,
       max_tokens: 4096,
       system: SYSTEM_PROMPT,

@@ -1,0 +1,269 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "$id": "https://functional-chef.local/schemas/bottleneck-extraction-v1.json",
+  "title": "BottleneckExtraction",
+  "description": "Structured output from the Functional Chef bottleneck extraction sub-agent",
+  "type": "object",
+  "required": [
+    "extraction_meta",
+    "bottleneck",
+    "biomarker_thresholds",
+    "dish_architecture",
+    "lever_mappings",
+    "validation_case",
+    "evidence_gaps",
+    "sql_seed_preview"
+  ],
+  "properties": {
+    "extraction_meta": {
+      "type": "object",
+      "required": [
+        "bottleneck_id_proposed",
+        "book_title",
+        "book_author",
+        "extraction_date",
+        "agent_version",
+        "confidence_overall"
+      ],
+      "properties": {
+        "bottleneck_id_proposed": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,9}$" },
+        "book_title": { "type": "string" },
+        "book_author": { "type": "string" },
+        "book_edition": { "type": ["string", "null"] },
+        "chapters_processed": { "type": "array", "items": { "type": "string" } },
+        "extraction_date": { "type": "string", "format": "date" },
+        "agent_version": { "type": "string" },
+        "confidence_overall": { "enum": ["high", "medium", "low"] }
+      }
+    },
+    "bottleneck": {
+      "type": "object",
+      "required": [
+        "id",
+        "name",
+        "display_name_fr",
+        "description",
+        "priority_rank",
+        "classifier_rule_human",
+        "classifier_rule_formal",
+        "causal_position_rationale"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{1,9}$" },
+        "name": { "type": "string" },
+        "display_name_fr": { "type": "string" },
+        "display_name_en": { "type": "string" },
+        "description": { "type": "string" },
+        "priority_rank": { "type": "integer", "minimum": 4 },
+        "classifier_rule_human": { "type": "string" },
+        "classifier_rule_formal": { "type": "string" },
+        "causal_position_rationale": { "type": "string" }
+      }
+    },
+    "biomarkers_new": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["id", "name", "category", "is_clinical", "confidence"],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]+$" },
+          "name": { "type": "string" },
+          "unit": { "type": ["string", "null"] },
+          "category": {
+            "enum": [
+              "metabolic",
+              "inflammatory",
+              "lipid",
+              "microbiome",
+              "clinical",
+              "composition",
+              "hepatic",
+              "renal",
+              "endocrine",
+              "oxidative",
+              "methylation",
+              "allostatic"
+            ]
+          },
+          "description": { "type": "string" },
+          "is_clinical": { "type": "boolean" },
+          "source_pages": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "biomarker_thresholds": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["biomarker_id", "weight", "breach_logic", "confidence"],
+        "properties": {
+          "biomarker_id": { "type": "string" },
+          "functional_target_min": { "type": ["number", "null"] },
+          "functional_target_max": { "type": ["number", "null"] },
+          "alert_threshold_low": { "type": ["number", "null"] },
+          "alert_threshold_high": { "type": ["number", "null"] },
+          "alert_categorical_value": { "type": ["string", "null"] },
+          "weight": { "enum": ["major", "moderate", "minor", "discriminant"] },
+          "breach_logic": { "enum": ["high", "low", "band", "categorical"] },
+          "notes": { "type": "string" },
+          "source_pages": { "type": "array", "items": { "type": "string" } },
+          "confidence": { "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "dish_architecture": {
+      "type": "object",
+      "required": ["vegetables_pct", "protein_pct", "lipid_pct", "anti_patterns"],
+      "properties": {
+        "vegetables_pct": { "type": "number" },
+        "protein_pct": { "type": "number" },
+        "lipid_pct": { "type": "number" },
+        "mandatory_modulators": { "type": "array", "items": { "type": "string" } },
+        "cooking_constraints": { "type": "array", "items": { "type": "string" } },
+        "anti_patterns": { "type": "array", "items": { "type": "string" } },
+        "source_pages": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+    "culinary_levers_new": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "id",
+          "name_fr",
+          "description",
+          "category",
+          "expected_effect",
+          "ebm_tier",
+          "primary_reference",
+          "evidence_type",
+          "confidence"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^L_[A-Z0-9_]+$" },
+          "name_fr": { "type": "string" },
+          "name_en": { "type": "string" },
+          "description": { "type": "string" },
+          "category": {
+            "enum": [
+              "preparation",
+              "ingredient",
+              "timing",
+              "sequence",
+              "cooking",
+              "fermentation",
+              "dose",
+              "avoidance"
+            ]
+          },
+          "expected_effect": { "type": "string" },
+          "ebm_tier": { "enum": ["T1", "T2", "T3"] },
+          "primary_reference": { "type": "string" },
+          "pubmed_ids": { "type": "array", "items": { "type": "string" } },
+          "needs_pmid_verification": { "type": "boolean" },
+          "dose_or_protocol": { "type": "string" },
+          "cooking_constraint": { "type": ["string", "null"] },
+          "contraindications": { "type": "array", "items": { "type": "string" } },
+          "precautions": { "type": "array", "items": { "type": "string" } },
+          "is_universal_star": { "type": "boolean" },
+          "source_pages": { "type": "array", "items": { "type": "string" } },
+          "evidence_type": {
+            "enum": ["meta_rct", "rct", "cohort", "mechanistic", "book_opinion"]
+          },
+          "confidence": { "enum": ["high", "medium", "low"] }
+        }
+      }
+    },
+    "lever_mappings": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "required": ["lever_id", "tier_for_bottleneck", "priority"],
+        "properties": {
+          "lever_id": { "type": "string" },
+          "tier_for_bottleneck": { "enum": ["T1", "T2", "T3"] },
+          "priority": { "type": "integer", "minimum": 1, "maximum": 100 },
+          "bottleneck_specific_note": { "type": "string" },
+          "source_pages": { "type": "array", "items": { "type": "string" } }
+        }
+      }
+    },
+    "bioavailability_synergies": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["molecule_a", "molecule_b", "effect_description", "ebm_tier", "is_synergy"],
+        "properties": {
+          "molecule_a": { "type": "string" },
+          "molecule_b": { "type": "string" },
+          "matrix_required": { "type": ["string", "null"] },
+          "effect_description": { "type": "string" },
+          "effect_magnitude": { "type": ["string", "null"] },
+          "ebm_tier": { "enum": ["T1", "T2", "T3"] },
+          "reference": { "type": "string" },
+          "is_synergy": { "type": "boolean" },
+          "notes": { "type": "string" }
+        }
+      }
+    },
+    "validation_case": {
+      "type": "object",
+      "required": ["label", "expected_bottleneck", "sample_intent"],
+      "properties": {
+        "label": { "type": "string" },
+        "age": { "type": "integer" },
+        "sex": { "enum": ["F", "M", "O"] },
+        "biomarker_values": { "type": "object" },
+        "clinical_signals": { "type": "object" },
+        "expected_bottleneck": { "type": "string" },
+        "expected_co_dominant": { "type": ["string", "null"] },
+        "sample_intent": { "type": "string" }
+      }
+    },
+    "cross_bottleneck_interactions": {
+      "type": "object",
+      "properties": {
+        "overlaps_with_existing": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": ["bottleneck_id", "shared_biomarkers"],
+            "properties": {
+              "bottleneck_id": { "enum": ["IR", "INFLAM", "DYSBIOSE"] },
+              "shared_biomarkers": { "type": "array", "items": { "type": "string" } },
+              "clinical_note": { "type": "string" }
+            }
+          }
+        },
+        "recommended_cascade_position": { "type": "string" }
+      }
+    },
+    "evidence_gaps": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["field", "issue", "severity", "suggested_action"],
+        "properties": {
+          "field": { "type": "string" },
+          "issue": { "type": "string" },
+          "severity": { "enum": ["blocking", "important", "minor"] },
+          "suggested_action": { "type": "string" }
+        }
+      }
+    },
+    "sql_seed_preview": {
+      "type": "object",
+      "required": ["01_bottlenecks_insert"],
+      "properties": {
+        "01_bottlenecks_insert": { "type": "string" },
+        "02_biomarkers_inserts": { "type": "array", "items": { "type": "string" } },
+        "03_thresholds_inserts": { "type": "array", "items": { "type": "string" } },
+        "04_levers_inserts": { "type": "array", "items": { "type": "string" } },
+        "05_lever_map_inserts": { "type": "array", "items": { "type": "string" } }
+      }
+    }
+  }
+}

@@ -15,7 +15,7 @@ const PRESET_CASES = {
     label: 'Cas A — IR isolée (F 48 ans)',
     age: 48,
     sex: 'F' as const,
-    biomarkers: { HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, ALT: 28, WAIST_HEIGHT_RATIO: 0.55, CRP_US: 0.8 },
+    biomarkers: { HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, ALT: 28, WAIST_HEIGHT_RATIO: 0.55, TRIGLYCERIDES: 1.3, CRP_US: 0.8 },
     signals: {},
   },
   caseB: {

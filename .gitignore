@@ -21,3 +21,9 @@ coverage/
 
 next-env.d.ts
 *.tsbuildinfo
+
+# PDF sources (copyright + size) — keep folder via README
+docs/extractions/_sources/*.pdf
+docs/extractions/_sources/**/*.pdf
+docs/extractions/_sources/*.extracted.md
+docs/extractions/_sources/**/*.extracted.md

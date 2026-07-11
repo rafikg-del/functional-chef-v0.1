@@ -1,0 +1,491 @@
+{
+  "extraction_meta": {
+    "bottleneck_id_proposed": "IR",
+    "alternative_considered": "IR_HEP",
+    "recommendation": "enrich_IR_not_new_bottleneck",
+    "book_title": "Hepatic Insulin Resistance and Steatosis in Metabolic Dysfunction-Associated Steatotic Liver Disease",
+    "book_author": "Truong XT, Lee DH",
+    "book_edition": "Diabetes Metab J 2025;49:964-986",
+    "doi": "10.4093/dmj.2025.0644",
+    "document_type": "narrative_review",
+    "chapters_processed": ["p.1-24 (document entier)"],
+    "extraction_date": "2026-07-11",
+    "agent_version": "bottleneck-extraction-v1",
+    "confidence_overall": "medium"
+  },
+  "arbitrage_decision": {
+    "choice": "enrich_IR",
+    "reject_IR_HEP_as_top_level": true,
+    "rationale_fr": "La revue positionne explicitement la MASLD comme manifestation hépatique du syndrome métabolique avec l'IR systémique comme facteur central [p.2-3]. L'IR sélective hépatique (gluconeogenèse insensible à l'insuline + lipogenèse préservée/exagérée) est un phénotype mécanistique au sein de l'IR globale, pas un goulot amont distinct dans la cascade Functional Chef (IR > INFLAM > DYSBIOSE). Le moteur v0.1 intègre déjà ALT>25 comme marqueur modéré de NAFLD silencieuse dans IR. Enrichir IR avec biomarqueurs de stéatose hépatique, signaux DNL/fructose et leviers ciblés capture 90% de la valeur clinique sans fragmenter la classification patient."
+  },
+  "bottleneck": {
+    "id": "IR",
+    "name": "insulin_resistance",
+    "display_name_fr": "Insulinorésistance fonctionnelle (enrichissement phénotype hépatique MASLD)",
+    "display_name_en": "Functional insulin resistance (hepatic MASLD phenotype enrichment)",
+    "description": "Enrichissement proposé : sous-phénotype IR avec stéatose hépatique et IR sélective (échec suppression HGP + DNL/fructose/ChREBP-SREBP1c préservés). Zone grise MASLD : stéatose ≥5% PDFF/MRS sans cirrhose, souvent avec HOMA-IR 1.5-2.5 et ALT discrètement élevée.",
+    "priority_rank": 1,
+    "classifier_rule_human": "Conserver règle IR v0.1. Si IR déclenchée ET ≥1 critère hépatique majeur (stéatose imagerie ou ALT persistante) → tag phénotype hepatic_masld pour sélection leviers DNL/fructose renforcés.",
+    "classifier_rule_formal": "IR_triggered = (major_hits >= 3) OR (major_hits >= 2 AND moderate_hits >= 3); hepatic_phenotype = IR_triggered AND ((LIVER_FAT_PDFF breached) OR (ALT breached AND TG_HDL_RATIO breached)); co_dominant unchanged unless INFLAM/DYSBIOSE also triggered",
+    "causal_position_rationale": "Reste priority_rank=1. Stéatose hépatique = conséquence aval de l'IR systémique + surcharge substrats (FFA, fructose, DNL), pas bottleneck parallèle amont."
+  },
+  "biomarkers_new": [
+    {
+      "id": "LIVER_FAT_PDFF",
+      "name": "Fraction graisseuse hépatique (MRI-PDFF)",
+      "unit": "%",
+      "category": "hepatic",
+      "description": "Proton density fat fraction MRI. Seuil diagnostique SLD ≥5% hépatocytes ou ≥5% PDFF [p.2, ref 5-6]",
+      "is_clinical": false,
+      "source_pages": ["p.2", "p.9", "p.10"],
+      "confidence": "high"
+    },
+    {
+      "id": "LIVER_FAT_MRS",
+      "name": "Contenu lipidique hépatique (¹H-MRS)",
+      "unit": "%",
+      "category": "hepatic",
+      "description": "Seuil SLD >5.56% en spectroscopie [p.2]",
+      "is_clinical": false,
+      "source_pages": ["p.2"],
+      "confidence": "high"
+    },
+    {
+      "id": "HEPATIC_DNL_INDEX",
+      "name": "Indice DNL hépatique (tracer isotopique)",
+      "unit": "%_palmitate_VLDL-TG",
+      "category": "hepatic",
+      "description": "Contribution DNL à palmitate VLDL-TG ou TG intra-hépatique. Lean ~11%, obese-MASLD ~38% [p.10, Smith 2020]. Rare en clinique courante.",
+      "is_clinical": false,
+      "source_pages": ["p.10", "p.11"],
+      "confidence": "medium"
+    },
+    {
+      "id": "FRUCTOSE_INTAKE",
+      "name": "Apport fructose libre estimé",
+      "unit": "g/day",
+      "category": "clinical",
+      "description": "Seuil populationnel obésité >50 g/j fructose [p.17, ref 122-123]. Inclut sucrose, HFCS, SSB.",
+      "is_clinical": true,
+      "source_pages": ["p.17"],
+      "confidence": "medium"
+    },
+    {
+      "id": "FREE_SUGAR_PCT_ENERGY",
+      "name": "Sucres libres (% apport énergétique)",
+      "unit": "%",
+      "category": "clinical",
+      "description": "Recommandations ≤10% (US/EU), ≤5% (UK SACN) [p.17]",
+      "is_clinical": true,
+      "source_pages": ["p.17"],
+      "confidence": "high"
+    }
+  ],
+  "biomarker_thresholds": [
+    {
+      "biomarker_id": "LIVER_FAT_PDFF",
+      "functional_target_min": null,
+      "functional_target_max": 5.0,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 5.0,
+      "alert_categorical_value": null,
+      "weight": "major",
+      "breach_logic": "high",
+      "notes": "SLD/MASLD si ≥5%. Normalisation cible <5.6% après perte poids ~10% [p.10, Lambert 2025]",
+      "source_pages": ["p.2", "p.10"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "LIVER_FAT_MRS",
+      "functional_target_min": null,
+      "functional_target_max": 5.56,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 5.56,
+      "alert_categorical_value": null,
+      "weight": "major",
+      "breach_logic": "high",
+      "notes": "Seuil MRS spécifique revue [p.2]",
+      "source_pages": ["p.2"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "ALT",
+      "functional_target_min": null,
+      "functional_target_max": 22,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 25,
+      "alert_categorical_value": null,
+      "weight": "moderate",
+      "breach_logic": "high",
+      "notes": "Déjà en IR v0.1. Proposer upgrade discriminant si LIVER_FAT indisponible [p.2, spec IR]",
+      "source_pages": ["p.2"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "HOMA_IR",
+      "functional_target_min": null,
+      "functional_target_max": 1.3,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 1.5,
+      "alert_categorical_value": null,
+      "weight": "major",
+      "breach_logic": "high",
+      "notes": "IR systémique — corrélation inverse avec sensibilité insulinique hépatique/DNL [p.10]",
+      "source_pages": ["p.10"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "TG_HDL_RATIO",
+      "functional_target_min": null,
+      "functional_target_max": 1.0,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 1.5,
+      "alert_categorical_value": null,
+      "weight": "major",
+      "breach_logic": "high",
+      "notes": "Dyslipidémie athérogène associée IR hépatique [p.10]",
+      "source_pages": ["p.10"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "TRIGLYCERIDES",
+      "functional_target_min": null,
+      "functional_target_max": 0.8,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 1.2,
+      "alert_categorical_value": null,
+      "weight": "moderate",
+      "breach_logic": "high",
+      "notes": "Hypertriglycéridémie VLDL-TG ↑ en MASLD [p.16]",
+      "source_pages": ["p.16"],
+      "confidence": "medium"
+    },
+    {
+      "biomarker_id": "URIC_ACID",
+      "functional_target_min": null,
+      "functional_target_max": 5.5,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 6.0,
+      "alert_categorical_value": null,
+      "weight": "minor",
+      "breach_logic": "high",
+      "notes": "Proxy métabolisme fructose/KHK → uric acid, stéatose [p.11]",
+      "source_pages": ["p.11"],
+      "confidence": "medium"
+    },
+    {
+      "biomarker_id": "FRUCTOSE_INTAKE",
+      "functional_target_min": null,
+      "functional_target_max": 25,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 50,
+      "alert_categorical_value": null,
+      "weight": "moderate",
+      "breach_logic": "high",
+      "notes": ">50 g/j associé obésité populationnelle [p.17]",
+      "source_pages": ["p.17"],
+      "confidence": "medium"
+    },
+    {
+      "biomarker_id": "FREE_SUGAR_PCT_ENERGY",
+      "functional_target_min": null,
+      "functional_target_max": 5,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 10,
+      "alert_categorical_value": null,
+      "weight": "moderate",
+      "breach_logic": "high",
+      "notes": "Cible UK ≤5%, alerte >10% [p.17]",
+      "source_pages": ["p.17"],
+      "confidence": "high"
+    },
+    {
+      "biomarker_id": "HEPATIC_DNL_INDEX",
+      "functional_target_min": null,
+      "functional_target_max": 15,
+      "alert_threshold_low": null,
+      "alert_threshold_high": 25,
+      "alert_categorical_value": null,
+      "weight": "discriminant",
+      "breach_logic": "high",
+      "notes": "Seuils proposés : lean ~11%, obese-MASLD ~38% [p.10]. Validation médicale requise.",
+      "source_pages": ["p.10"],
+      "confidence": "low"
+    }
+  ],
+  "dish_architecture": {
+    "vegetables_pct": 50,
+    "protein_pct": 25,
+    "lipid_pct": 25,
+    "mandatory_modulators": [
+      "Réduction sucres simples/fructose et SSB — levier T1 sur DNL [p.11, p.17]",
+      "Privilégier AGPI (MUFA/omega-3) vs AG saturés — suppression SREBP1c [p.12-13]",
+      "Séquence repas anti-pic glycémique (existant IR v0.1) — limite push substrat DNL",
+      "Restriction calorique modérée ou jeûne 12-14h si compatible — DNL ↓ 67% après -10% poids [p.10, p.17]",
+      "Légumineuses + fibres >25-30g/j — ↓ DNL, ↑ satiété [p.17]"
+    ],
+    "cooking_constraints": [
+      "Cuisson douce — éviter surcharge AG saturés [p.15, Luukkonen 2018]",
+      "Pas de SSB ni jus de fruits industriels avec repas glucidiques [p.11, p.17]"
+    ],
+    "anti_patterns": [
+      "Boissons sucrées fructose/sucrose (SSB) — DNL hépatique ↑ [p.11, p.17]",
+      "Excès fructose >50 g/j (sucrose, HFCS) [p.17]",
+      "Surplus AG saturés vs AGPI [p.15]",
+      "Hypercalorique riche en sucres simples sans restriction énergétique [p.10]",
+      "Smoothies/jus fruits isolés au petit-déjeuner (déjà anti-pattern IR)"
+    ],
+    "source_pages": ["p.10", "p.11", "p.15", "p.17", "p.18"]
+  },
+  "culinary_levers_new": [
+    {
+      "id": "L_REDUCE_FREE_SUGAR_10PCT",
+      "name_fr": "Limiter sucres libres ≤10% apport énergétique",
+      "name_en": "Limit free sugars to ≤10% of energy intake",
+      "description": "Réduction sucres ajoutés, miel, sirop, jus de fruits. Cible UK ≤5% si MASLD avérée.",
+      "category": "avoidance",
+      "expected_effect": "↓ DNL hépatique, ↓ stéatose (via réduction substrat fructose/glucose)",
+      "ebm_tier": "T2",
+      "primary_reference": "Lambert et al. 2025 J Clin Invest (dietary counseling); EASL-EASD-EASO 2024 guidelines cited [p.17-18]",
+      "pubmed_ids": [],
+      "needs_pmid_verification": true,
+      "dose_or_protocol": "≤10% énergie sucres libres ; viser ≤5% si stéatose confirmée",
+      "cooking_constraint": null,
+      "contraindications": [],
+      "precautions": ["Ne pas confondre avec restriction glucidique totale chez sujet actif"],
+      "is_universal_star": false,
+      "source_pages": ["p.17"],
+      "evidence_type": "cohort",
+      "confidence": "medium"
+    },
+    {
+      "id": "L_FRUCTOSE_AVOIDANCE_50G",
+      "name_fr": "Éviter excès fructose libre (>50 g/j)",
+      "name_en": "Avoid excessive free fructose intake (>50 g/day)",
+      "description": "Cible populationnelle obésité. Inclut sucrose (50% fructose) et HFCS.",
+      "category": "avoidance",
+      "expected_effect": "↓ activation ChREBP/KHK, ↓ DNL, ↓ uric acid/stéatose",
+      "ebm_tier": "T2",
+      "primary_reference": "Geidl-Flueck et al. 2021 J Hepatol RCT; Stanhope et al. 2009 J Clin Invest [p.11, p.17, ref 80-81]",
+      "pubmed_ids": ["33838114", "19381015"],
+      "needs_pmid_verification": false,
+      "dose_or_protocol": "Maintenir <50 g/j fructose libre ; éviter SSB",
+      "cooking_constraint": null,
+      "contraindications": [],
+      "precautions": [],
+      "is_universal_star": false,
+      "source_pages": ["p.11", "p.17"],
+      "evidence_type": "rct",
+      "confidence": "high"
+    },
+    {
+      "id": "L_SAT_FAT_REDUCTION",
+      "name_fr": "Réduire AG saturés alimentaires vs AGPI",
+      "name_en": "Reduce dietary saturated fat vs unsaturated fats",
+      "description": "Substitution graisses saturées par MUFA/omega-3. AGPI ↓ SREBP1c [p.12-13].",
+      "category": "ingredient",
+      "expected_effect": "↓ accumulation TG hépatique vs régime saturé (+55% vs +15% AGPI) [p.15]",
+      "ebm_tier": "T2",
+      "primary_reference": "Luukkonen et al. 2018 Diabetes Care RCT [p.15, ref 100]",
+      "pubmed_ids": ["29903818"],
+      "needs_pmid_verification": false,
+      "dose_or_protocol": "Privilégier EVOO, poisson gras ; limiter graisses saturées exogènes",
+      "cooking_constraint": "Cuisson modérée, éviter fritures répétées AG saturés",
+      "contraindications": [],
+      "precautions": [],
+      "is_universal_star": false,
+      "source_pages": ["p.12", "p.15"],
+      "evidence_type": "rct",
+      "confidence": "high"
+    },
+    {
+      "id": "L_LOW_CARB_MODERATE",
+      "name_fr": "Restriction glucidique modérée (low-carb ciblé DNL)",
+      "name_en": "Moderate carbohydrate restriction targeting DNL",
+      "description": "Low-carb améliore contrôle glycémique et stéatose hépatique en T2DM [p.17].",
+      "category": "dose",
+      "expected_effect": "↓ DNL, ↓ graisse hépatique, ↑ sensibilité insulinique",
+      "ebm_tier": "T1",
+      "primary_reference": "Thomsen et al. 2022 Diabetologia RCT [p.17, ref 115]",
+      "pubmed_ids": ["35037949"],
+      "needs_pmid_verification": false,
+      "dose_or_protocol": "Restriction glucidique modérée sur 24 sem (protocole étude) — adapter au profil",
+      "cooking_constraint": null,
+      "contraindications": ["Grossesse", "T1DM non supervisé"],
+      "precautions": ["Supervision si antidiabétiques hypoglycémiants"],
+      "is_universal_star": false,
+      "source_pages": ["p.17"],
+      "evidence_type": "meta_rct",
+      "confidence": "high"
+    }
+  ],
+  "lever_mappings": [
+    {
+      "lever_id": "L_VINEGAR_PRE_PRANDIAL",
+      "tier_for_bottleneck": "T1",
+      "priority": 1,
+      "bottleneck_specific_note": "↓ postprandial glucose → ↓ push substrat DNL hépatique",
+      "source_pages": ["p.10"]
+    },
+    {
+      "lever_id": "L_FOOD_SEQUENCE",
+      "tier_for_bottleneck": "T1",
+      "priority": 2,
+      "bottleneck_specific_note": "Séquence légumes→protéines→glucides limite pic insuline/portale",
+      "source_pages": ["p.3"]
+    },
+    {
+      "lever_id": "L_EVOO_PRIMARY",
+      "tier_for_bottleneck": "T1",
+      "priority": 5,
+      "bottleneck_specific_note": "AGPI ↓ SREBP1c vs saturés [p.12-13]",
+      "source_pages": ["p.12"]
+    },
+    {
+      "lever_id": "L_FATTY_FISH_2X",
+      "tier_for_bottleneck": "T1",
+      "priority": 8,
+      "bottleneck_specific_note": "Omega-3 ↓ inflammation hépatique/NAFLD",
+      "source_pages": ["p.12"]
+    },
+    {
+      "lever_id": "L_WHOLE_GRAINS",
+      "tier_for_bottleneck": "T1",
+      "priority": 10,
+      "bottleneck_specific_note": "↓ sucres simples vs raffinés — DNL",
+      "source_pages": ["p.10"]
+    },
+    {
+      "lever_id": "L_FIBER_30G",
+      "tier_for_bottleneck": "T1",
+      "priority": 12,
+      "bottleneck_specific_note": "↓ DNL via restriction énergétique indirecte [p.17]",
+      "source_pages": ["p.17"]
+    },
+    {
+      "lever_id": "L_POSTPRANDIAL_WALK",
+      "tier_for_bottleneck": "T1",
+      "priority": 15,
+      "bottleneck_specific_note": "↓ HGP postprandial, captage glucose",
+      "source_pages": ["p.17"]
+    },
+    {
+      "lever_id": "L_FRUCTOSE_AVOIDANCE_50G",
+      "tier_for_bottleneck": "T2",
+      "priority": 5,
+      "bottleneck_specific_note": "Levier spécifique phénotype hépatique MASLD",
+      "source_pages": ["p.11"]
+    },
+    {
+      "lever_id": "L_LOW_CARB_MODERATE",
+      "tier_for_bottleneck": "T1",
+      "priority": 18,
+      "bottleneck_specific_note": "RCT T2DM + stéatose [p.17]",
+      "source_pages": ["p.17"]
+    },
+    {
+      "lever_id": "L_SAT_FAT_REDUCTION",
+      "tier_for_bottleneck": "T2",
+      "priority": 20,
+      "bottleneck_specific_note": "Luukkonen 2018 — saturés pire que sucres pour TG hépatique",
+      "source_pages": ["p.15"]
+    }
+  ],
+  "bioavailability_synergies": [
+    {
+      "molecule_a": "curcumine",
+      "molecule_b": "pipérine + lipide",
+      "matrix_required": "lipid_warm",
+      "effect_description": "Non central dans cette revue ; INFLAM/IR overlap",
+      "effect_magnitude": null,
+      "ebm_tier": "T2",
+      "reference": "Existant Functional Chef",
+      "is_synergy": true,
+      "notes": "Hors scope direct PDF"
+    }
+  ],
+  "validation_case": {
+    "label": "Cas D — IR phénotype hépatique MASLD (H 52 ans)",
+    "age": 52,
+    "sex": "M",
+    "biomarker_values": {
+      "HOMA_IR": 2.0,
+      "TG_HDL_RATIO": 1.7,
+      "ALT": 32,
+      "TRIGLYCERIDES": 1.4,
+      "LIVER_FAT_PDFF": 12.5,
+      "FASTING_INSULIN": 9
+    },
+    "clinical_signals": {
+      "FRUCTOSE_INTAKE": 65,
+      "FREE_SUGAR_PCT_ENERGY": 14
+    },
+    "expected_bottleneck": "IR",
+    "expected_co_dominant": null,
+    "expected_phenotype_tag": "hepatic_masld",
+    "sample_intent": "Déjeuner anti-DNL hépatique : limiter fructose, séquence anti-pic, EVOO + poisson, pas de SSB"
+  },
+  "cross_bottleneck_interactions": {
+    "overlaps_with_existing": [
+      {
+        "bottleneck_id": "IR",
+        "shared_biomarkers": ["HOMA_IR", "TG_HDL_RATIO", "ALT", "TRIGLYCERIDES", "URIC_ACID"],
+        "clinical_note": "Enrichissement, pas nouveau bottleneck"
+      },
+      {
+        "bottleneck_id": "INFLAM",
+        "shared_biomarkers": ["CRP_US", "TRIGLYCERIDES"],
+        "clinical_note": "MASLD/MASH progression avec inflammation — co-dominance possible si CRP-us élevée"
+      }
+    ],
+    "recommended_cascade_position": "Rester dans IR (rank 1). Tag hepatic_masld pour leviers additionnels."
+  },
+  "evidence_gaps": [
+    {
+      "field": "document_type",
+      "issue": "Source = revue narrative 2025, pas RCT primaire. Tiers EBM des leviers doivent reposer sur études citées, pas sur la revue elle-même.",
+      "severity": "important",
+      "suggested_action": "Valider chaque PMID cité ; revue = T3 pour claims mécanistiques"
+    },
+    {
+      "field": "biomarker_thresholds.HEPATIC_DNL_INDEX",
+      "issue": "Seuils proposés extrapolés Smith 2020 — non disponible en routine clinique",
+      "severity": "blocking",
+      "suggested_action": "Réserver discriminant si test isotopique ; sinon PDFF/MRS + ALT"
+    },
+    {
+      "field": "classifier_rule_formal",
+      "issue": "Pas de règle de classification indépendante validée pour IR hépatique isolée sans IR systémique",
+      "severity": "important",
+      "suggested_action": "Ne pas créer IR_HEP top-level ; utiliser tag phénotype"
+    },
+    {
+      "field": "culinary_levers_new.L_LOW_CARB_MODERATE",
+      "issue": "Low-carb peut chevaucher contre-indications et préférences ; protocole étude 24 sem",
+      "severity": "minor",
+      "suggested_action": "Adapter dose_or_protocol au contexte patient Functional Chef"
+    },
+    {
+      "field": "PMID Lambert 2025 JCI e174233",
+      "issue": "Article récent — PMID à vérifier",
+      "severity": "minor",
+      "suggested_action": "Lookup PubMed pour e174233"
+    }
+  ],
+  "sql_seed_preview": {
+    "01_bottlenecks_insert": "-- Pas de nouvel INSERT : enrichir IR existant + doc BOTTLENECK_SPEC v0.2 section phénotype hépatique",
+    "02_biomarkers_inserts": [
+      "INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALUES ('LIVER_FAT_PDFF', 'Fraction graisseuse hépatique (MRI-PDFF)', '%', 'hepatic', 'Proton density fat fraction — seuil SLD ≥5%', false);",
+      "INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALUES ('FRUCTOSE_INTAKE', 'Apport fructose libre estimé', 'g/day', 'clinical', 'Seuil alerte >50 g/j (revue DMJ 2025)', true);"
+    ],
+    "03_thresholds_inserts": [
+      "INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target_max, alert_threshold_high, weight, notes) VALUES ('IR', 'LIVER_FAT_PDFF', 5.0, 5.0, 'major', 'MASLD si ≥5% PDFF');"
+    ],
+    "04_levers_inserts": [
+      "-- Voir culinary_levers_new L_FRUCTOSE_AVOIDANCE_50G, L_LOW_CARB_MODERATE, etc."
+    ],
+    "05_lever_map_inserts": [
+      "INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, priority, bottleneck_specific_note) VALUES ('L_FRUCTOSE_AVOIDANCE_50G', 'IR', 'T2', 5, 'Spécifique phénotype MASLD — Truong 2025');"
+    ]
+  }
+}

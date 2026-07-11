@@ -32,6 +32,13 @@ const PRESET_CASES = {
     biomarkers: { CRP_US: 1.1, HOMA_IR: 1.4 },
     signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 7, FIBER_INTAKE: 12, ABX_LIFETIME: 5 },
   },
+  caseD: {
+    label: 'Cas D — Charge allostatique (H 42 ans)',
+    age: 42,
+    sex: 'M' as const,
+    biomarkers: { HRV_RMSSD: 18, CORTISOL_PM: 6.2, RESTING_HR: 78, FASTING_GLUCOSE: 0.98 },
+    signals: { PSQI_SCORE: 10, SLEEP_EFFICIENCY: 82, WASO_MIN: 55, CAFFEINE_AFTER_14: 'positive' },
+  },
 };
 
 type PresetKey = keyof typeof PRESET_CASES;
@@ -44,6 +51,9 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
   const [signals, setSignals] = useState<Record<string, number | string>>(PRESET_CASES.caseA.signals);
   const [age, setAge] = useState<number | ''>(PRESET_CASES.caseA.age ?? '');
   const [sex, setSex] = useState<'F' | 'M' | 'O' | ''>(PRESET_CASES.caseA.sex ?? '');
+  const [llmProvider, setLlmProvider] = useState<'anthropic' | 'grok'>('grok');
+  const [grokApiKey, setGrokApiKey] = useState('');
+  const [llmModel, setLlmModel] = useState('');
 
   function applyPreset(key: PresetKey) {
     setPreset(key);
@@ -64,6 +74,11 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
         body: JSON.stringify({
           intent,
           meal_type: mealType,
+          llm: {
+            provider: llmProvider,
+            model: llmModel || undefined,
+            grok_api_key: llmProvider === 'grok' ? grokApiKey.trim() || undefined : undefined,
+          },
           patient: {
             age: age || undefined,
             sex: sex || undefined,
@@ -76,7 +91,7 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
       });
       if (!res.ok) {
         const errBody = await res.json().catch(() => ({}));
-        throw new Error(errBody.error || `HTTP ${res.status}`);
+        throw new Error(errBody.message || errBody.error || `HTTP ${res.status}`);
       }
       const data = (await res.json()) as ConsultationResult;
       onResult(data);
@@ -159,6 +174,49 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
             <option value="O">Autre</option>
           </select>
         </div>
+      </div>
+
+      <div className="card p-4 space-y-4">
+        <p className="label">LLM pour composition du plat</p>
+        <div className="grid md:grid-cols-3 gap-4">
+          <div>
+            <label className="label">Fournisseur</label>
+            <select
+              value={llmProvider}
+              onChange={(e) => setLlmProvider(e.target.value as 'anthropic' | 'grok')}
+              className="input-field"
+            >
+              <option value="grok">Grok / xAI</option>
+              <option value="anthropic">Anthropic</option>
+            </select>
+          </div>
+          <div>
+            <label className="label">Modèle optionnel</label>
+            <input
+              value={llmModel}
+              onChange={(e) => setLlmModel(e.target.value)}
+              className="input-field"
+              placeholder={llmProvider === 'grok' ? 'grok-4.3' : 'claude-opus-4-7'}
+            />
+          </div>
+          {llmProvider === 'grok' && (
+            <div>
+              <label className="label">Clé Grok / xAI</label>
+              <input
+                type="password"
+                value={grokApiKey}
+                onChange={(e) => setGrokApiKey(e.target.value)}
+                className="input-field"
+                placeholder="xai-..."
+                autoComplete="off"
+              />
+            </div>
+          )}
+        </div>
+        <p className="text-xs text-ink-500">
+          La clé saisie est transmise uniquement à cette requête. En mode local sans Supabase,
+          le moteur utilise un référentiel embarqué et ne persiste pas la consultation.
+        </p>
       </div>
 
       {/* Biomarkers preview (read-only summary from preset) */}

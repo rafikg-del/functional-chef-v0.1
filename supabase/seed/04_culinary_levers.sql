@@ -396,3 +396,86 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
   ARRAY['Histamine-sensitive : limiter durée de mijotage'],
   false
 );
+
+-- ─── ALLOSTATIC LOAD / RECOVERY LEVERS ──────────────────────────────
+INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expected_effect, ebm_tier, primary_reference, pubmed_ids, dose_or_protocol, cooking_constraint, contraindications, precautions, is_universal_star) VALUES
+(
+  'L_GLYCINE_PRE_BED',
+  'Glycine 3g avant coucher',
+  'Glycine 3g before bedtime',
+  'Glycine alimentaire/supplémentaire prise 30-60 min avant le coucher. Substrat inhibiteur et thermorégulateur, signal de downshift nocturne.',
+  'timing',
+  '↑ qualité subjective du sommeil ; ↓ fatigue liée à restriction de sommeil',
+  'T2',
+  'Bannai 2012 / Kawai 2015',
+  ARRAY['22293292', '22529837'],
+  '3g de glycine 30-60 min avant coucher ; option culinaire : bouillon/collagène riche en glycine si toléré',
+  NULL,
+  NULL,
+  ARRAY['Insuffisance rénale sévère : avis médical sur charge azotée totale'],
+  false
+),
+(
+  'L_MAGNESIUM_FOOD',
+  'Apport magnésium alimentaire ≥350mg/j',
+  'Dietary magnesium ≥350mg/day',
+  'Graines de courge, amandes/noix, cacao non sucré, épinards, légumineuses. Levier alimentaire de soutien neuromusculaire et sommeil, plus prudent que supplémentation isolée.',
+  'ingredient',
+  'Association favorable avec qualité du sommeil ; RCT supplémentation hétérogènes',
+  'T2',
+  'Arab 2022 systematic review',
+  ARRAY['35184264'],
+  'Viser 300-400mg/j via aliments ; inclure 1 source Mg au dîner ou collation du soir',
+  NULL,
+  ARRAY['renal_failure_advanced'],
+  ARRAY['Supplémentation pharmacologique Mg : prudence insuffisance rénale ; ce levier privilégie les aliments'],
+  false
+),
+(
+  'L_KIWI_PRE_BED',
+  'Deux kiwis 1h avant coucher',
+  'Two kiwifruits 1h before bedtime',
+  'Kiwifruit comme collation pré-coucher : matrice glucidique modérée, antioxydants, folates et composés sérotoninergiques. Données humaines initiales sur sommeil.',
+  'timing',
+  '↓ latence d’endormissement ; ↑ durée/efficacité sommeil dans petite étude',
+  'T2',
+  'Lin 2011 clinical study',
+  ARRAY['21669584'],
+  '2 kiwis 1h avant coucher pendant 4 semaines ; adapter si contrainte glycémique ou reflux',
+  NULL,
+  ARRAY['kiwi_allergy'],
+  ARRAY['IR marquée : associer à protéines/lipides ou préférer glycine/Mg'],
+  false
+),
+(
+  'L_CAFFEINE_CUTOFF_8H',
+  'Arrêt caféine ≥8h avant coucher',
+  'Caffeine cutoff ≥8h before bedtime',
+  'Éviter café, thé caféiné, maté, cola/énergisants et pré-workouts en seconde partie de journée. La demi-vie de la caféine maintient un tonus sympathique nocturne chez sujets sensibles.',
+  'avoidance',
+  '↓ fragmentation sommeil ; ↑ durée totale sommeil',
+  'T1',
+  'Drake 2013 J Clin Sleep Med',
+  ARRAY['24235903'],
+  'Dernière prise caféine ≥8h avant l’heure cible de sommeil ; ≥10-12h si métaboliseur lent ou sommeil fragile',
+  NULL,
+  NULL,
+  ARRAY['Sevrage progressif si consommation élevée pour éviter céphalées'],
+  false
+),
+(
+  'L_PROTEIN_BREAKFAST_STABLE_ENERGY',
+  'Petit-déjeuner protéiné 25-35g',
+  'Protein-forward breakfast 25-35g',
+  'Petit-déjeuner ou premier repas riche en protéines complètes, fibres et lipides stables pour réduire creux énergétique et cravings de fin d’après-midi.',
+  'timing',
+  '↑ satiété ; ↓ cravings ; stabilisation énergétique diurne',
+  'T2',
+  'Leidy 2015 / evidence protein breakfast appetite',
+  NULL,
+  '25-35g protéines au premier repas, avec fibres et lipides ; éviter petit-déjeuner sucré isolé',
+  NULL,
+  ARRAY['renal_failure_advanced'],
+  ARRAY['Adapter quantité à poids, activité et fonction rénale'],
+  false
+);

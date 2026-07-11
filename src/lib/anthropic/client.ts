@@ -9,12 +9,20 @@
 
 import Anthropic from '@anthropic-ai/sdk';
 
-const apiKey = process.env.ANTHROPIC_API_KEY;
-if (!apiKey) {
-  throw new Error('ANTHROPIC_API_KEY missing in environment');
-}
+let cachedClient: Anthropic | null = null;
 
-export const anthropic = new Anthropic({ apiKey });
+export function getAnthropicClient(): Anthropic {
+  const apiKey = process.env.ANTHROPIC_API_KEY;
+  if (!apiKey) {
+    throw new Error('ANTHROPIC_API_KEY missing in environment');
+  }
+
+  if (!cachedClient) {
+    cachedClient = new Anthropic({ apiKey });
+  }
+
+  return cachedClient;
+}
 
 export const MODELS = {
   PRIMARY: process.env.ANTHROPIC_MODEL_PRIMARY ?? 'claude-sonnet-4-20250514',

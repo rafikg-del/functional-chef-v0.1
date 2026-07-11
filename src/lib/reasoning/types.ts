@@ -9,7 +9,7 @@
 // Domain entities (mirror Supabase schema)
 // ───────────────────────────────────────────────────────────
 
-export type BottleneckId = 'IR' | 'INFLAM' | 'DYSBIOSE';
+export type BottleneckId = 'ALLOSTATIC_LOAD' | 'IR' | 'INFLAM' | 'DYSBIOSE';
 export type EBMTier = 'T1' | 'T2' | 'T3';
 export type Sex = 'F' | 'M' | 'O';
 export type ThresholdWeight = 'major' | 'moderate' | 'minor' | 'discriminant';
@@ -253,6 +253,11 @@ export interface ComposerInput {
   classification: ClassificationResult;
   selected_levers: SelectedLever[];
   excluded_levers?: { lever_id: string; reason: string }[];
+  llm?: {
+    provider?: 'anthropic' | 'grok';
+    model?: string;
+    grok_api_key?: string;
+  };
 }
 
 // ───────────────────────────────────────────────────────────
@@ -268,6 +273,7 @@ export interface ConsultationResult {
   dish: ComposedDish;
   warnings: string[];
   llm_meta?: {
+    provider?: string;
     model: string;
     input_tokens?: number;
     output_tokens?: number;

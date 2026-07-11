@@ -19,6 +19,12 @@ import { classifyBottlenecks } from '@/lib/reasoning/bottleneck-classifier';
 import { applySafetyFilters } from '@/lib/reasoning/safety-filters';
 import { selectLevers } from '@/lib/reasoning/lever-selector';
 import { composeDish, ComposerError } from '@/lib/reasoning/dish-composer';
+import {
+  LOCAL_BOTTLENECKS,
+  LOCAL_LEVER_MAP,
+  LOCAL_LEVERS,
+  LOCAL_THRESHOLDS,
+} from '@/lib/reasoning/local-reference-data';
 import type {
   Bottleneck,
   BiomarkerThreshold,
@@ -33,6 +39,13 @@ export const maxDuration = 60; // Vercel — Claude API can take up to 30-45s fo
 const RequestSchema = z.object({
   intent: z.string().min(3),
   meal_type: z.enum(['breakfast', 'lunch', 'dinner', 'snack', 'full_day']).default('lunch'),
+  llm: z
+    .object({
+      provider: z.enum(['anthropic', 'grok']).optional(),
+      model: z.string().optional(),
+      grok_api_key: z.string().min(10).optional(),
+    })
+    .optional(),
   patient: z.object({
     age: z.number().int().min(0).max(120).optional(),
     sex: z.enum(['F', 'M', 'O']).optional(),
@@ -76,35 +89,51 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  const { intent, meal_type, patient } = parsed.data;
-  const supabase = createServiceClient();
+  const { intent, meal_type, patient, llm } = parsed.data;
+  const hasSupabaseConfig = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
 
   // ───────────────────────────────────────────────────────
   // Load reference data
   // ───────────────────────────────────────────────────────
-  const [
-    { data: bottlenecks, error: bErr },
-    { data: thresholds, error: tErr },
-    { data: levers, error: lErr },
-    { data: leverMap, error: mErr },
-  ] = await Promise.all([
-    supabase.from('bottlenecks').select('*'),
-    supabase.from('biomarker_thresholds').select('*'),
-    supabase.from('culinary_levers').select('*').eq('active', true),
-    supabase.from('lever_bottleneck_map').select('*'),
-  ]);
+  let bottlenecks: Bottleneck[] = LOCAL_BOTTLENECKS;
+  let thresholds: BiomarkerThreshold[] = LOCAL_THRESHOLDS;
+  let levers: CulinaryLever[] = LOCAL_LEVERS;
+  let leverMap: LeverBottleneckMap[] = LOCAL_LEVER_MAP;
+  let supabase: ReturnType<typeof createServiceClient> | null = null;
 
-  if (bErr || tErr || lErr || mErr) {
-    return NextResponse.json(
-      {
-        error: 'Database error',
-        details: bErr?.message ?? tErr?.message ?? lErr?.message ?? mErr?.message,
-      },
-      { status: 500 }
-    );
-  }
-  if (!bottlenecks || !thresholds || !levers || !leverMap) {
-    return NextResponse.json({ error: 'Database returned empty data' }, { status: 500 });
+  if (hasSupabaseConfig) {
+    supabase = createServiceClient();
+    const [
+      { data: dbBottlenecks, error: bErr },
+      { data: dbThresholds, error: tErr },
+      { data: dbLevers, error: lErr },
+      { data: dbLeverMap, error: mErr },
+    ] = await Promise.all([
+      supabase.from('bottlenecks').select('*'),
+      supabase.from('biomarker_thresholds').select('*'),
+      supabase.from('culinary_levers').select('*').eq('active', true),
+      supabase.from('lever_bottleneck_map').select('*'),
+    ]);
+
+    if (bErr || tErr || lErr || mErr) {
+      return NextResponse.json(
+        {
+          error: 'Database error',
+          details: bErr?.message ?? tErr?.message ?? lErr?.message ?? mErr?.message,
+        },
+        { status: 500 }
+      );
+    }
+    if (!dbBottlenecks || !dbThresholds || !dbLevers || !dbLeverMap) {
+      return NextResponse.json({ error: 'Database returned empty data' }, { status: 500 });
+    }
+
+    bottlenecks = dbBottlenecks as Bottleneck[];
+    thresholds = dbThresholds as BiomarkerThreshold[];
+    levers = dbLevers as CulinaryLever[];
+    leverMap = dbLeverMap as LeverBottleneckMap[];
   }
 
   // ───────────────────────────────────────────────────────
@@ -161,16 +190,25 @@ export async function POST(req: NextRequest) {
       classification,
       selected_levers: selection.selected,
       excluded_levers: safety.excluded,
+      llm,
     });
   } catch (err) {
     if (err instanceof ComposerError) {
+      const isConfigurationError =
+        err.message.includes('ANTHROPIC_API_KEY missing') ||
+        err.message.includes('GROK_API_KEY missing');
+      const isInvalidGrokKey = err.message.includes('Grok API key invalid');
       return NextResponse.json(
         {
-          error: 'Composer failure',
+          error: isConfigurationError
+            ? 'Composer not configured'
+            : isInvalidGrokKey
+            ? 'Invalid Grok API key'
+            : 'Composer failure',
           message: err.message,
           raw_response: err.raw_response,
         },
-        { status: 502 }
+        { status: isConfigurationError ? 503 : isInvalidGrokKey ? 401 : 502 }
       );
     }
     return NextResponse.json(
@@ -186,29 +224,35 @@ export async function POST(req: NextRequest) {
     ...composerOutput.dish.warnings,
   ];
 
-  const { data: persisted, error: persistErr } = await supabase
-    .from('consultations')
-    .insert({
-      intent,
-      meal_type,
-      detected_bottlenecks: classification.scores,
-      selected_levers: selection.selected,
-      output_dish: composerOutput.dish,
-      ebm_summary: composerOutput.dish.ebm_summary,
-      expected_effects: composerOutput.dish.expected_effects,
-      warnings: allWarnings,
-      excluded_levers: safety.excluded,
-      llm_model: composerOutput.meta.model,
-      llm_input_tokens: composerOutput.meta.input_tokens,
-      llm_output_tokens: composerOutput.meta.output_tokens,
-      llm_latency_ms: composerOutput.meta.latency_ms,
-    })
-    .select('id')
-    .single();
+  let persisted: { id: string } | null = null;
+  if (supabase) {
+    const { data, error: persistErr } = await supabase
+      .from('consultations')
+      .insert({
+        intent,
+        meal_type,
+        detected_bottlenecks: classification.scores,
+        selected_levers: selection.selected,
+        output_dish: composerOutput.dish,
+        ebm_summary: composerOutput.dish.ebm_summary,
+        expected_effects: composerOutput.dish.expected_effects,
+        warnings: allWarnings,
+        excluded_levers: safety.excluded,
+        llm_model: composerOutput.meta.model,
+        llm_input_tokens: composerOutput.meta.input_tokens,
+        llm_output_tokens: composerOutput.meta.output_tokens,
+        llm_latency_ms: composerOutput.meta.latency_ms,
+      })
+      .select('id')
+      .single();
 
-  if (persistErr) {
-    // Persist failure is logged but doesn't block response
-    console.error('[compose] persist error:', persistErr);
+    persisted = data;
+    if (persistErr) {
+      // Persist failure is logged but doesn't block response
+      console.error('[compose] persist error:', persistErr);
+    }
+  } else {
+    allWarnings.push('Mode démo local : Supabase non configuré, consultation non persistée.');
   }
 
   const result: ConsultationResult = {

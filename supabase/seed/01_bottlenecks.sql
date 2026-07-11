@@ -4,6 +4,15 @@
 
 INSERT INTO bottlenecks (id, name, display_name_fr, display_name_en, description, priority_rank, classifier_rule) VALUES
 (
+  'ALLOSTATIC_LOAD',
+  'allostatic_load',
+  'Charge allostatique',
+  'Allostatic load',
+  'Surcharge adaptative neuro-endocrine et autonomique : activation HPA/sympathique persistante, récupération parasympathique insuffisante, sommeil non restaurateur et instabilité énergétique. Positionnée en amont car elle amplifie IR, inflammaging et dysbiose.',
+  0,
+  '≥2 critères majeurs OU ≥1 majeur + ≥3 modérés'
+),
+(
   'IR',
   'insulin_resistance',
   'Insulinorésistance fonctionnelle',

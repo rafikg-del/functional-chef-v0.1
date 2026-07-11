@@ -34,7 +34,7 @@ CREATE TABLE biomarkers (
   id          text PRIMARY KEY,             -- e.g. 'HOMA_IR', 'CRP_US', 'OMEGA_INDEX'
   name        text NOT NULL,
   unit        text,
-  category    text CHECK (category IN ('metabolic', 'inflammatory', 'lipid', 'microbiome', 'clinical', 'composition', 'hepatic', 'renal')),
+  category    text CHECK (category IN ('metabolic', 'inflammatory', 'lipid', 'microbiome', 'clinical', 'composition', 'hepatic', 'renal', 'endocrine', 'autonomic', 'sleep')),
   description text,
   is_clinical boolean DEFAULT false,        -- true = subjective/symptom-based (e.g. Bristol)
   created_at  timestamptz DEFAULT now()

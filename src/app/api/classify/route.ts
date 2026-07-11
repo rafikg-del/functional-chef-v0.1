@@ -14,6 +14,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
 import { createServiceClient } from '@/lib/supabase/server';
 import { classifyBottlenecks } from '@/lib/reasoning/bottleneck-classifier';
+import { LOCAL_BOTTLENECKS, LOCAL_THRESHOLDS } from '@/lib/reasoning/local-reference-data';
 import type { Bottleneck, BiomarkerThreshold, PatientProfile } from '@/lib/reasoning/types';
 
 const PatientSchema = z.object({
@@ -59,6 +60,18 @@ export async function POST(req: NextRequest) {
   }
 
   const patient = parsed.data as PatientProfile;
+  const hasSupabaseConfig = Boolean(
+    process.env.NEXT_PUBLIC_SUPABASE_URL && process.env.SUPABASE_SERVICE_ROLE_KEY
+  );
+
+  if (!hasSupabaseConfig) {
+    const result = classifyBottlenecks(patient, LOCAL_BOTTLENECKS, LOCAL_THRESHOLDS);
+    return NextResponse.json({
+      ...result,
+      warnings: ['Mode démo local : Supabase non configuré, référentiel embarqué utilisé.'],
+    });
+  }
+
   const supabase = createServiceClient();
 
   const { data: bottlenecks, error: bErr } = await supabase

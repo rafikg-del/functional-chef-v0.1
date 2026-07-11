@@ -18,6 +18,9 @@ export default function HomePage() {
             <Link href="/consultation" className="hover:text-ink-900 transition-colors">
               Consultation
             </Link>
+            <Link href="/research-agent" className="hover:text-ink-900 transition-colors">
+              Research Agent
+            </Link>
             <a
               href="https://github.com"
               className="hover:text-ink-900 transition-colors"
@@ -51,16 +54,25 @@ export default function HomePage() {
             <Link href="/consultation" className="btn-primary">
               Lancer une consultation
             </Link>
+            <Link href="/research-agent" className="btn-ghost">
+              Analyser une problématique
+            </Link>
             <a href="#methode" className="btn-ghost">
               Méthode
             </a>
           </div>
         </div>
 
-        {/* Side panel — 3 bottlenecks */}
+        {/* Side panel — pilot bottlenecks */}
         <aside className="md:col-span-4 md:pt-2">
-          <p className="label">Trois bottlenecks pilotes</p>
+          <p className="label">Bottlenecks pilotes</p>
           <ul className="space-y-4 mt-2">
+            <li className="border-l-2 border-saffron-500 pl-4">
+              <p className="font-serif text-xl text-ink-900">Charge allostatique</p>
+              <p className="text-sm text-ink-600 mt-1">
+                HRV basse · PSQI élevé · cortisol soir haut
+              </p>
+            </li>
             <li className="border-l-2 border-saffron-500 pl-4">
               <p className="font-serif text-xl text-ink-900">Insulinorésistance</p>
               <p className="text-sm text-ink-600 mt-1">

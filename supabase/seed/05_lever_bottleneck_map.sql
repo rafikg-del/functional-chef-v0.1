@@ -73,3 +73,22 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_FIBER_30G',              'INFLAM',   'T1', 14, 'Effet anti-inflammatoire systémique'),
 ('L_AVOID_ARTIFICIAL_SWEETENERS','DYSBIOSE','T2', 25, 'Suez 2014/2022 : signal défavorable sous-population'),
 ('L_BONE_BROTH',             'DYSBIOSE', 'T3', 45, 'Mécanistique, soutien barrière');
+
+-- ALLOSTATIC_LOAD mappings
+INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, priority, bottleneck_specific_note) VALUES
+-- universal stars remapped for recovery / resilience
+('L_EVOO_PRIMARY',          'ALLOSTATIC_LOAD', 'T2', 30, 'Socle méditerranéen : stabilité énergétique et charge polyphénolique anti-stress indirecte'),
+('L_PLANT_DIVERSITY_30',    'ALLOSTATIC_LOAD', 'T2', 35, 'Diversité micronutritionnelle et polyphénolique, soutien axe gut-brain indirect'),
+('L_FERMENTED_DAILY',       'ALLOSTATIC_LOAD', 'T2', 38, 'Axe gut-brain et immunité bas grade ; données sommeil/stress indirectes'),
+('L_FATTY_FISH_2X',         'ALLOSTATIC_LOAD', 'T2', 20, 'EPA/DHA : modulation inflammation/résilience neurobiologique indirecte'),
+('L_ANTHOCYANIN_BERRIES',   'ALLOSTATIC_LOAD', 'T2', 28, 'Polyphénols et cognition/fatigue ; signal récupération indirect'),
+('L_CRUCIFEROUS_STEAM',     'ALLOSTATIC_LOAD', 'T3', 45, 'Nrf2 / stress oxydatif : plausibilité mécanistique'),
+('L_FIBER_30G',             'ALLOSTATIC_LOAD', 'T2', 32, 'Fibres/SCFA et axe gut-brain ; indirect mais utile comme socle'),
+
+-- targeted allostatic load levers
+('L_CAFFEINE_CUTOFF_8H',            'ALLOSTATIC_LOAD', 'T1', 1,  'Levier prioritaire si sommeil fragmenté ou HRV basse : retirer un frein sympathique nocturne'),
+('L_GLYCINE_PRE_BED',               'ALLOSTATIC_LOAD', 'T2', 5,  'Signal pré-coucher simple, utile pour qualité subjective du sommeil et fatigue'),
+('L_MAGNESIUM_FOOD',                'ALLOSTATIC_LOAD', 'T2', 8,  'Apport alimentaire Mg comme socle de récupération neuromusculaire'),
+('L_KIWI_PRE_BED',                  'ALLOSTATIC_LOAD', 'T2', 15, 'Collation pré-coucher alimentaire, données humaines initiales'),
+('L_PROTEIN_BREAKFAST_STABLE_ENERGY','ALLOSTATIC_LOAD','T2', 18, 'Stabilisation énergie diurne et cravings de fin de journée'),
+('L_POSTPRANDIAL_WALK',             'ALLOSTATIC_LOAD', 'T2', 22, 'Downshift postprandial et stabilité glycémique via activité légère');

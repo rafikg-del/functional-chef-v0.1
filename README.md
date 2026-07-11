@@ -16,15 +16,16 @@ Functional Chef ne génère pas des recettes. Il traduit un **objectif physiopat
 
 ---
 
-## Trois bottlenecks pilotes (v0.1)
+## Quatre bottlenecks pilotes
 
 | Code | Bottleneck | Critère pivot d'entrée |
 |---|---|---|
+| **ALLOSTATIC_LOAD** | Charge allostatique | HRV RMSSD basse / PSQI élevé / cortisol soir élevé |
 | **IR** | Insulinorésistance fonctionnelle | HOMA-IR 1.5–2.5 / TG/HDL >1.5 / HbA1c 5.4–5.6% |
 | **INFLAM** | Inflammaging | CRP-us 1–3 mg/L persistant / OmegaIndex <6% / AA/EPA >7 |
 | **DYSBIOSE** | Dysbiose | Bristol 1-2 ou 6-7 / ballonnements quotidiens / fibres <15g/j |
 
-Hiérarchie de priorité en cas de triple co-dominance : **IR > INFLAM > DYSBIOSE** (cascade causale amont→aval).
+Hiérarchie de priorité en cas de co-dominance multiple : **ALLOSTATIC_LOAD > IR > INFLAM > DYSBIOSE** (cascade causale amont→aval).
 
 ---
 
@@ -60,6 +61,26 @@ OUTPUT
     → Badge EBM-F par levier (T1/T2/T3)
     → Effets attendus : postprandial 2-4h | court terme 4 sem | long terme 12 sem
 ```
+
+### Research Agent — curation bottleneck
+
+Un flux séparé est disponible pour transformer une problématique santé / quotidien
+en draft scientifique avant intégration dans le référentiel :
+
+- UI : `/research-agent`
+- API : `POST /api/research-agent`
+- Input : `problem`, contexte optionnel, recherche PubMed automatique optionnelle,
+  littérature manuelle optionnelle (`title`, `pmid`, `doi`, `abstract`, `key_findings`)
+- Output : fiche structurée `bottleneck → critères d'entrée → points d'impact
+  biologiques → leviers ingrédients → recettes`
+- LLM : Anthropic par défaut, ou Grok/xAI via `LLM_PROVIDER=grok` +
+  `GROK_API_KEY`/`XAI_API_KEY`. La page `/research-agent` permet aussi de saisir
+  une clé Grok pour une requête ponctuelle sans la persister.
+
+Garde-fou : ce flux ne classifie pas un patient et ne persiste pas de consultation.
+Sans bibliographie fournie ni résultat PubMed, il marque les références comme
+`reference_to_verify` au lieu d'inventer des PMID/DOI. La recherche PubMed utilise
+NCBI E-utilities et renvoie les PMID importés dans la réponse pour audit.
 
 ---
 

@@ -61,7 +61,7 @@ Smoothies fruits liquides au réveil, céréales sucrées, pain blanc isolé, ju
 
 Extension du bottleneck IR — pas de bottleneck séparé. Source : Truong & Lee 2025 (DMJ 2025.0644).
 
-**Définition** : IR déclenchée + stéatose hépatique (PDFF/MRS ≥ seuil) ou proxy ALT élevée + TG/HDL élevé. Mécanisme : IR sélective hépatique (gluconeogenèse insensible + DNL/fructose préservés).
+**Définition** : IR déclenchée + stéatose hépatique confirmée par imagerie (PDFF ≥5% ou MRS >5.56%). Pas de proxy ALT/TG-HDL — marqueurs IR systémiques insuffisants pour étiqueter MASLD sans imagerie.
 
 **Biomarqueurs additionnels** :
 

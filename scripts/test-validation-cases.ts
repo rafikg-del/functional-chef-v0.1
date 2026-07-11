@@ -18,12 +18,23 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   { id: '3', bottleneck_id: 'IR', biomarker_id: 'ALT', functional_target_min: null, functional_target_max: 22, alert_threshold_low: null, alert_threshold_high: 25, alert_categorical_value: null, weight: 'moderate' },
   { id: '4', bottleneck_id: 'IR', biomarker_id: 'FASTING_INSULIN', functional_target_min: null, functional_target_max: 6, alert_threshold_low: null, alert_threshold_high: 8, alert_categorical_value: null, weight: 'major' },
   { id: '5', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_PDFF', functional_target_min: null, functional_target_max: 5.0, alert_threshold_low: null, alert_threshold_high: 5.0, alert_categorical_value: null, weight: 'major' },
+  { id: '7', bottleneck_id: 'IR', biomarker_id: 'FRUCTOSE_INTAKE', functional_target_min: null, functional_target_max: 25, alert_threshold_low: null, alert_threshold_high: 50, alert_categorical_value: null, weight: 'moderate' },
+  { id: '8', bottleneck_id: 'IR', biomarker_id: 'FREE_SUGAR_PCT_ENERGY', functional_target_min: null, functional_target_max: 5, alert_threshold_low: null, alert_threshold_high: 10, alert_categorical_value: null, weight: 'moderate' },
   { id: '6', bottleneck_id: 'INFLAM', biomarker_id: 'CRP_US', functional_target_min: null, functional_target_max: 1, alert_threshold_low: null, alert_threshold_high: 1, alert_categorical_value: null, weight: 'major' },
 ];
 
-const CASES: { name: string; patient: PatientProfile; expectDominant: string | null; expectPhenotypes?: string[] }[] = [
+interface TestCase {
+  name: string;
+  patient: PatientProfile;
+  expectDominant: string | null;
+  expectPhenotypes?: string[];
+  mustNotHavePhenotypes?: string[];
+  expectIrEvidenceBiomarkers?: string[];
+}
+
+const CASES: TestCase[] = [
   {
-    name: 'Cas A — IR isolée',
+    name: 'Cas A — IR isolée (sans imagerie, sans hepatic_masld)',
     patient: {
       biomarker_values: { HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, ALT: 28, FASTING_INSULIN: 9, CRP_US: 0.8 },
       clinical_signals: {},
@@ -31,6 +42,7 @@ const CASES: { name: string; patient: PatientProfile; expectDominant: string | n
       context: {},
     },
     expectDominant: 'IR',
+    mustNotHavePhenotypes: ['hepatic_masld'],
   },
   {
     name: 'Cas D — IR phénotype hepatic_masld',
@@ -42,12 +54,13 @@ const CASES: { name: string; patient: PatientProfile; expectDominant: string | n
         LIVER_FAT_PDFF: 12.5,
         FASTING_INSULIN: 9,
       },
-      clinical_signals: { FRUCTOSE_INTAKE: 65 },
+      clinical_signals: { FRUCTOSE_INTAKE: 65, FREE_SUGAR_PCT_ENERGY: 14 },
       exclusions: {},
       context: {},
     },
     expectDominant: 'IR',
     expectPhenotypes: ['hepatic_masld'],
+    expectIrEvidenceBiomarkers: ['FRUCTOSE_INTAKE', 'FREE_SUGAR_PCT_ENERGY'],
   },
 ];
 
@@ -60,14 +73,28 @@ for (const c of CASES) {
   const okPheno =
     c.expectPhenotypes === undefined ||
     JSON.stringify(result.phenotypes ?? []) === JSON.stringify(c.expectPhenotypes);
+  const okNoPheno =
+    c.mustNotHavePhenotypes === undefined ||
+    c.mustNotHavePhenotypes.every((p) => !(result.phenotypes ?? []).includes(p as 'hepatic_masld'));
 
-  if (okDominant && okPheno) {
+  let okEvidence = true;
+  if (c.expectIrEvidenceBiomarkers?.length) {
+    const irEvidence = result.scores.find((s) => s.bottleneck_id === 'IR')?.evidence ?? [];
+    const ids = new Set(irEvidence.map((e) => e.biomarker_id));
+    okEvidence = c.expectIrEvidenceBiomarkers.every((id) => ids.has(id));
+  }
+
+  if (okDominant && okPheno && okNoPheno && okEvidence) {
     console.log(`✓ ${c.name}`);
     passed++;
   } else {
     console.error(`✗ ${c.name}`);
-    console.error(`  expected dominant=${c.expectDominant} phenotypes=${JSON.stringify(c.expectPhenotypes)}`);
+    console.error(`  expected dominant=${c.expectDominant} phenotypes=${JSON.stringify(c.expectPhenotypes)} mustNot=${JSON.stringify(c.mustNotHavePhenotypes)} evidence=${JSON.stringify(c.expectIrEvidenceBiomarkers)}`);
     console.error(`  got dominant=${result.dominant} phenotypes=${JSON.stringify(result.phenotypes)}`);
+    if (!okEvidence) {
+      const irEvidence = result.scores.find((s) => s.bottleneck_id === 'IR')?.evidence.map((e) => e.biomarker_id);
+      console.error(`  IR evidence biomarkers: ${JSON.stringify(irEvidence)}`);
+    }
     failed++;
   }
 }

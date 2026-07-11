@@ -56,7 +56,7 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_FRUCTOSE_AVOIDANCE_50G', 'IR', 'T2', 4, 'Spécifique phénotype MASLD — ↓ ChREBP/DNL [Truong 2025]'),
 ('L_LOW_CARB_MODERATE',      'IR', 'T1', 6, 'RCT T2DM + stéatose — ↓ DNL hépatique'),
 ('L_SAT_FAT_REDUCTION',      'IR', 'T2', 7, 'Luukkonen 2018 — saturés pire que sucres pour TG hépatique'),
-('L_REDUCE_FREE_SUGAR_10PCT','IR', 'T2', 9, '↓ substrat DNL — cible ≤5% si stéatose confirmée'),
+('L_REDUCE_FREE_SUGAR_10PCT','IR', 'T3', 9, '↓ substrat DNL — cible ≤5% si stéatose confirmée. Lambert 2025 PMID à confirmer'),
 
 -- INFLAM-specific
 ('L_TURMERIC_PIPERINE_LIPID', 'INFLAM',   'T2', 22, 'Curcuma + pipérine + lipide chaud'),

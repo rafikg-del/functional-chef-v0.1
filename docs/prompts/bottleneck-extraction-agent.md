@@ -1,7 +1,47 @@
 # Prompt — Sous-agent d'extraction bottleneck depuis un livre
 
-> **Usage** : copier le bloc **SYSTEM PROMPT** ci-dessous comme instruction système du sous-agent.
-> Fournir ensuite le bloc **USER MESSAGE** rempli + le contenu du livre (texte intégral, chapitre(s), ou extraits paginés).
+## Où est le sous-agent ? (discussion séparée)
+
+Le sous-agent **existe** dans le repo :
+
+```
+.cursor/agents/bottleneck-extraction.md
+```
+
+Il a **sa propre fenêtre de contexte** — le livre entier et le JSON d'extraction ne saturent pas le chat principal.
+
+### 3 façons de l'utiliser
+
+| Mode | Comment | Quand |
+|---|---|---|
+| **Subagent background** (recommandé) | Dans Agent : `/bottleneck-extraction` + ton message (livre, chapitres) | Extraction longue ; le parent reçoit un résumé + chemins fichiers |
+| **Side chat** (fil visible à part) | Dans Agent : `/side` puis coller livre + « extrais le bottleneck X » | Tu veux une **discussion séparée** que tu peux relire et @-mentionner |
+| **Cloud Agent** (VM distante) | Agents Window → New Agent, ou `/in-cloud` | Livre très long, tu veux continuer à coder en local |
+
+### Invocation rapide (subagent)
+
+```
+/bottleneck-extraction
+
+Bottleneck : Charge allostatique (ALLO)
+Livre : [Titre], [Auteur], Ch. 7-9
+
+[p.142] ...
+[p.143] ...
+```
+
+### Où vont les résultats
+
+Le sous-agent écrit dans `docs/extractions/{BOTTLENECK_ID}/` :
+- `{date}-extraction.json` — données structurées
+- `{date}-report.md` — rapport + gaps médicaux
+
+Le chat principal ne reçoit qu'un **résumé court** + les chemins.
+
+---
+
+> **Note** : le bloc **SYSTEM PROMPT** ci-dessous est la spec détaillée lue par le sous-agent.
+> Tu peux aussi l'utiliser manuellement si tu crées un agent custom ailleurs.
 
 ---
 

@@ -55,7 +55,29 @@ Modulateurs T1 obligatoires :
 
 ### Anti-patterns
 
-Smoothies fruits liquides au réveil, céréales sucrées, pain blanc isolé, jus de fruits, fruits secs en collation isolée, riz blanc fraîchement cuit sans accompagnement protéique, grignotage continu.
+Smoothies fruits liquides au réveil, céréales sucrées, pain blanc isolé, jus de fruits, fruits secs en collation isolée, riz blanc fraîchement cuit sans accompagnement protéique, grignotage continu, boissons sucrées (SSB) et excès fructose >50 g/j si phénotype hépatique.
+
+### Phénotype hépatique MASLD (enrichissement v0.2)
+
+Extension du bottleneck IR — pas de bottleneck séparé. Source : Truong & Lee 2025 (DMJ 2025.0644).
+
+**Définition** : IR déclenchée + stéatose hépatique (PDFF/MRS ≥ seuil) ou proxy ALT élevée + TG/HDL élevé. Mécanisme : IR sélective hépatique (gluconeogenèse insensible + DNL/fructose préservés).
+
+**Biomarqueurs additionnels** :
+
+| Biomarqueur | Cible | Alerte | Poids |
+|---|---|---|---|
+| LIVER_FAT_PDFF | <5% | ≥5% | Majeur |
+| LIVER_FAT_MRS | <5.56% | >5.56% | Majeur |
+| FRUCTOSE_INTAKE | <25 g/j | >50 g/j | Modéré |
+| FREE_SUGAR_PCT_ENERGY | <5% | >10% | Modéré |
+
+**Tag classifier** : `hepatic_masld` → priorise leviers L_FRUCTOSE_AVOIDANCE_50G, L_LOW_CARB_MODERATE, L_SAT_FAT_REDUCTION, L_REDUCE_FREE_SUGAR_10PCT.
+
+**Modulateurs additionnels** :
+  - Limiter fructose/SSB (<50 g/j fructose libre)
+  - AGPI vs AG saturés (EVOO, poisson gras)
+  - Restriction glucidique modérée si stéatose confirmée (supervision clinique)
 
 ---
 

@@ -36,6 +36,7 @@ import type {
   ClassificationResult,
   PatientProfile,
   ThresholdWeight,
+  IRPhenotype,
 } from './types';
 
 // Weight → numeric points contribution
@@ -301,6 +302,26 @@ function assignDominance(
 }
 
 // ───────────────────────────────────────────────────────────
+// IR hepatic MASLD phenotype (v0.2 enrichment — Truong 2025)
+// ───────────────────────────────────────────────────────────
+
+/**
+ * Tag hepatic_masld when IR is triggered AND hepatic steatosis evidence:
+ *   - LIVER_FAT_PDFF or LIVER_FAT_MRS breached (major), OR
+ *   - ALT + TG_HDL_RATIO both breached (proxy when imaging unavailable)
+ */
+function detectHepaticMasldPhenotype(scores: BottleneckScore[]): IRPhenotype[] {
+  const ir = scores.find((s) => s.bottleneck_id === 'IR');
+  if (!ir?.triggered) return [];
+
+  const hit = new Set(ir.evidence.map((e) => e.biomarker_id));
+  const hasImaging = hit.has('LIVER_FAT_PDFF') || hit.has('LIVER_FAT_MRS');
+  const hasProxy = hit.has('ALT') && hit.has('TG_HDL_RATIO');
+
+  return hasImaging || hasProxy ? ['hepatic_masld'] : [];
+}
+
+// ───────────────────────────────────────────────────────────
 // Public API
 // ───────────────────────────────────────────────────────────
 
@@ -311,5 +332,12 @@ export function classifyBottlenecks(
 ): ClassificationResult {
   const scores = bottlenecks.map((b) => scoreBottleneck(b, thresholds, patient));
   const { dominant, co_dominant, rationale } = assignDominance(scores, bottlenecks);
-  return { scores, dominant, co_dominant, rationale };
+  const phenotypes = detectHepaticMasldPhenotype(scores);
+
+  let finalRationale = rationale;
+  if (phenotypes.includes('hepatic_masld')) {
+    finalRationale += ' Phénotype hepatic_masld : stéatose hépatique / IR sélective — leviers anti-DNL et anti-fructose priorisés.';
+  }
+
+  return { scores, dominant, co_dominant, phenotypes: phenotypes.length ? phenotypes : undefined, rationale: finalRationale };
 }

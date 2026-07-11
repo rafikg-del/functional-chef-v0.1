@@ -34,6 +34,14 @@ const MIN_UNIVERSAL_STARS = 4;
 const MAX_TARGETED_DOMINANT = 4;
 const MAX_TARGETED_CO_DOMINANT = 2;
 
+/** Boost sort priority when IR carries hepatic_masld phenotype */
+const HEPATIC_MASLD_LEVERS = new Set([
+  'L_FRUCTOSE_AVOIDANCE_50G',
+  'L_LOW_CARB_MODERATE',
+  'L_SAT_FAT_REDUCTION',
+  'L_REDUCE_FREE_SUGAR_10PCT',
+]);
+
 interface SelectorInput {
   classification: ClassificationResult;
   available_levers: CulinaryLever[];           // already safety-filtered
@@ -47,6 +55,15 @@ export function selectLevers({
 }: SelectorInput): LeverSelectionResult {
   const warnings: string[] = [];
   const dominant = classification.dominant;
+  const hepaticMasld =
+    dominant === 'IR' &&
+    (classification.phenotypes?.includes('hepatic_masld') ?? false);
+
+  if (hepaticMasld) {
+    warnings.push(
+      'Phénotype hepatic_masld détecté : leviers anti-DNL/fructose priorisés (enrichissement IR v0.2).'
+    );
+  }
 
   if (!dominant) {
     return {
@@ -122,6 +139,11 @@ export function selectLevers({
     .map((l) => ({ lever: l, mapping: getMappingFor(l.id, dominant) }))
     .filter((x) => x.mapping !== undefined)
     .sort((a, b) => {
+      if (hepaticMasld) {
+        const aHep = HEPATIC_MASLD_LEVERS.has(a.lever.id) ? 0 : 1;
+        const bHep = HEPATIC_MASLD_LEVERS.has(b.lever.id) ? 0 : 1;
+        if (aHep !== bHep) return aHep - bHep;
+      }
       const ta = TIER_RANK[a.mapping!.tier_for_bottleneck] ?? 4;
       const tb = TIER_RANK[b.mapping!.tier_for_bottleneck] ?? 4;
       if (ta !== tb) return ta - tb;

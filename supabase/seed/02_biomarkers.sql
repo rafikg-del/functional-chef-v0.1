@@ -16,6 +16,10 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('APO_B', 'Apo B', 'g/L', 'lipid', 'Apolipoprotein B — atherogenic particle count', false),
 ('CGM_SD', 'Variabilité glycémique CGM', 'mg/dL', 'metabolic', 'Standard deviation of CGM glucose values', false),
 
+-- Hepatic / MASLD phenotype (IR enrichment v0.2 — Truong 2025)
+('LIVER_FAT_PDFF', 'Fraction graisseuse hépatique (MRI-PDFF)', '%', 'hepatic', 'Proton density fat fraction. Seuil SLD/MASLD ≥5%', false),
+('LIVER_FAT_MRS', 'Contenu lipidique hépatique (¹H-MRS)', '%', 'hepatic', 'Spectroscopie RM. Seuil SLD >5.56%', false),
+
 -- Inflammatory
 ('CRP_US', 'CRP ultra-sensible', 'mg/L', 'inflammatory', 'High-sensitivity C-reactive protein', false),
 ('OMEGA_INDEX', 'Omega-3 Index', '%', 'inflammatory', 'Erythrocyte EPA+DHA as % of total fatty acids', false),
@@ -40,4 +44,6 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('ABX_LIFETIME', 'Cures abx lifetime', 'count', 'clinical', 'Total antibiotic courses in patient history', true),
 ('PPI_CHRONIC', 'IPP chronique >6 mois', 'qualitative', 'clinical', 'Chronic proton pump inhibitor use', true),
 ('FIBER_INTAKE', 'Apport fibres estimé', 'g/day', 'clinical', 'Estimated daily fiber intake', true),
-('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true);
+('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true),
+('FRUCTOSE_INTAKE', 'Apport fructose libre estimé', 'g/day', 'clinical', 'Sucrose, HFCS, SSB. Seuil alerte populationnel >50 g/j', true),
+('FREE_SUGAR_PCT_ENERGY', 'Sucres libres (% apport énergétique)', '%', 'clinical', 'Cible UK ≤5%, alerte >10% (EASL/US guidelines)', true);

@@ -1,4 +1,22 @@
-# Prompt — Sous-agent d'extraction bottleneck depuis un livre
+# Prompt — Sous-agent d'extraction bottleneck depuis un livre ou PDF
+
+## Entrée PDF / étude scientifique
+
+Tu peux **coller ou glisser un PDF** — trois méthodes :
+
+| Méthode | Étapes |
+|---|---|
+| **Glisser-déposer dans Agent** | Ouvre une side chat (`/side`) → glisse le PDF → `/bottleneck-extraction` + bottleneck cible |
+| **Déposer dans le repo** | Copie dans `docs/extractions/_sources/mon-fichier.pdf` → `/bottleneck-extraction` avec le chemin |
+| **Extraire le texte d'abord** | `npm run pdf:extract -- docs/extractions/_sources/mon-fichier.pdf --from 1 --to 50` |
+
+Voir `docs/extractions/_sources/README.md` pour le détail.
+
+**Études scientifiques** : même pipeline. Le sous-agent priorise design, n=, outcomes et PMID pour le tiering EBM.
+
+**PDF scanné** : si le texte n'est pas extractible → OCR externe requis (signalé en gap bloquant).
+
+---
 
 ## Où est le sous-agent ? (discussion séparée)
 
@@ -18,7 +36,19 @@ Il a **sa propre fenêtre de contexte** — le livre entier et le JSON d'extract
 | **Side chat** (fil visible à part) | Dans Agent : `/side` puis coller livre + « extrais le bottleneck X » | Tu veux une **discussion séparée** que tu peux relire et @-mentionner |
 | **Cloud Agent** (VM distante) | Agents Window → New Agent, ou `/in-cloud` | Livre très long, tu veux continuer à coder en local |
 
-### Invocation rapide (subagent)
+### Invocation rapide — PDF
+
+```
+/bottleneck-extraction
+
+Bottleneck : Charge allostatique (ALLO)
+Source PDF : docs/extractions/_sources/nakamura-stress-metabolism.pdf
+Pages : 142-198
+```
+
+Ou glisse le PDF directement dans le chat + le même message (sans chemin).
+
+### Invocation rapide — texte manuel
 
 ```
 /bottleneck-extraction
@@ -334,26 +364,36 @@ Copier-coller et compléter avant d'envoyer au sous-agent :
 - **Priority rank souhaité (optionnel)** : [ex : 4 — après DYSBIOSE]
 - **Position dans la cascade causale (optionnel)** : [ex : amont de INFLAM, aval de IR]
 
-### Source
+### Source (choisir UNE option)
+
+**Option A — PDF** (recommandé)
+- **Fichier** : [glisser le PDF dans le chat OU `docs/extractions/_sources/nom.pdf`]
+- **Type** : [livre | étude RCT | méta-analyse | chapitre]
+- **Pages à traiter** : [ex : 142-198, ou "document entier"]
+- **Titre / auteurs** : [si connus]
+
+**Option B — Texte déjà extrait**
+- **Fichier** : [ex : `docs/extractions/_sources/nom.extracted.md`]
+
+**Option C — Copier-coller manuel**
 - **Livre** : [Titre], [Auteur], [Édition/Année]
-- **Chapitres / pages à traiter** : [ex : Ch. 7-9, pp. 142-198]
-- **Focus particulier** : [ex : biomarqueurs salivaires cortisol, architecture repas chronobio]
+- **Chapitres / pages** : [ex : Ch. 7-9, pp. 142-198]
+
+- **Focus particulier** : [ex : biomarqueurs cortisol, leviers chronobio, PMID outcomes]
 
 ### Contexte patient cible (optionnel)
 - [ex : adultes 35-55 ans, fatigue chronique, pas de pathologie avérée]
 
-### Contenu du livre
-[Coller ici le texte intégral, ou les extraits paginés.
-Format recommandé :
+### Contenu (Option C uniquement)
+[Coller ici le texte paginé :
 ---
-[p.142] Texte de la page 142...
-[p.143] Texte de la page 143...
+[p.142] ...
 ---
 ]
 
 ### Instructions additionnelles (optionnel)
-- [ex : Prioriser les leviers culinaires actionnables en 30 min]
-- [ex : Ignorer les suppléments, cuisine uniquement]
+- [ex : Cuisine uniquement, pas suppléments]
+- [ex : Étude → extraire PMID et tier EBM strict]
 ```
 
 ---

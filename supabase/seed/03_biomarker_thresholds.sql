@@ -16,7 +16,12 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('IR', 'URIC_ACID',         NULL,  5.5,  NULL,  6.0,   'minor',    'Cible H<5.5 / F<4.5. Proxy fructose/IR'),
 ('IR', 'WAIST_HEIGHT_RATIO', NULL, 0.5,  NULL,  0.55,  'moderate', NULL),
 ('IR', 'APO_B',             NULL,  0.90, NULL,  1.0,   'moderate', NULL),
-('IR', 'CGM_SD',            NULL,  15,   NULL,  20,    'discriminant', 'SD glucose CGM si dispo');
+('IR', 'CGM_SD',            NULL,  15,   NULL,  20,    'discriminant', 'SD glucose CGM si dispo'),
+-- IR hepatic MASLD phenotype (Truong & Lee 2025 DMJ — enrichment, not separate bottleneck)
+('IR', 'LIVER_FAT_PDFF',    NULL,  5.0,  NULL,  5.0,   'major',    'MASLD si ≥5% PDFF. Tag phénotype hepatic_masld'),
+('IR', 'LIVER_FAT_MRS',     NULL,  5.56, NULL,  5.56,  'major',    'MASLD si >5.56% MRS'),
+('IR', 'FRUCTOSE_INTAKE',   NULL,  25,   NULL,  50,    'moderate', 'Excès fructose >50 g/j — activation ChREBP/DNL'),
+('IR', 'FREE_SUGAR_PCT_ENERGY', NULL, 5, NULL, 10,    'moderate', 'Sucres libres >10% énergie — cible ≤5% si MASLD');
 
 -- ---------------------------------------------------------------------
 -- INFLAM (Inflammaging) thresholds

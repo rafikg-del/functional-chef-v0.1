@@ -32,6 +32,20 @@ const PRESET_CASES = {
     biomarkers: { CRP_US: 1.1, HOMA_IR: 1.4 },
     signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 7, FIBER_INTAKE: 12, ABX_LIFETIME: 5 },
   },
+  caseD: {
+    label: 'Cas D — IR phénotype hépatique MASLD (H 52 ans)',
+    age: 52,
+    sex: 'M' as const,
+    biomarkers: {
+      HOMA_IR: 2.0,
+      TG_HDL_RATIO: 1.7,
+      ALT: 32,
+      TRIGLYCERIDES: 1.4,
+      LIVER_FAT_PDFF: 12.5,
+      FASTING_INSULIN: 9,
+    },
+    signals: { FRUCTOSE_INTAKE: 65, FREE_SUGAR_PCT_ENERGY: 14 },
+  },
 };
 
 type PresetKey = keyof typeof PRESET_CASES;
@@ -52,6 +66,11 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
     setSignals(p.signals);
     setAge(p.age ?? '');
     setSex(p.sex ?? '');
+    if (key === 'caseD') {
+      setIntent('Déjeuner anti-DNL hépatique : limiter fructose, séquence anti-pic, pas de SSB');
+    } else if (key === 'caseA') {
+      setIntent('Déjeuner anti-IR ciblé, post-charge glucidique du matin');
+    }
   }
 
   async function handleSubmit() {
@@ -92,7 +111,7 @@ export function IntentForm({ onResult, onError, onLoadingChange }: Props) {
       {/* Preset selector */}
       <div>
         <label className="label">Cas test pré-renseigné</label>
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
           {(Object.keys(PRESET_CASES) as PresetKey[]).map((k) => (
             <button
               key={k}

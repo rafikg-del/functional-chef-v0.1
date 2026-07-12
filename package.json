@@ -10,7 +10,7 @@
     "lint": "next lint",
     "type-check": "tsc --noEmit",
     "db:reset": "supabase db reset",
-    "db:seed": "psql $DATABASE_URL -f supabase/seed/01_bottlenecks.sql -f supabase/seed/02_biomarkers.sql -f supabase/seed/03_biomarker_thresholds.sql -f supabase/seed/04_culinary_levers.sql -f supabase/seed/05_lever_bottleneck_map.sql -f supabase/seed/06_bioavailability_synergies.sql",
+    "db:seed": "tsx scripts/db-seed.ts",
     "test:cases": "tsx scripts/test-validation-cases.ts",
     "pdf:extract": "tsx scripts/extract-pdf.ts"
   },
@@ -27,12 +27,14 @@
   },
   "devDependencies": {
     "@types/node": "^20.16.5",
+    "@types/pg": "^8.20.0",
     "@types/react": "^18.3.5",
     "@types/react-dom": "^18.3.0",
     "autoprefixer": "^10.4.20",
     "eslint": "^8.57.0",
     "eslint-config-next": "14.2.13",
     "pdfjs-dist": "^4.10.38",
+    "pg": "^8.22.0",
     "postcss": "^8.4.45",
     "tailwindcss": "^3.4.10",
     "tsx": "^4.19.0",

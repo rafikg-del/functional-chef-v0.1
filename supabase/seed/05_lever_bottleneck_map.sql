@@ -79,3 +79,124 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_FIBER_30G',              'INFLAM',   'T1', 14, 'Effet anti-inflammatoire systémique'),
 ('L_AVOID_ARTIFICIAL_SWEETENERS','DYSBIOSE','T2', 25, 'Suez 2014/2022 : signal défavorable sous-population'),
 ('L_BONE_BROTH',             'DYSBIOSE', 'T3', 45, 'Mécanistique, soutien barrière');
+
+-- =====================================================================
+-- Seed 05b — Lever × Bottleneck mapping for the 35 new levers (v0.2)
+-- =====================================================================
+
+-- L01: CANNELLE
+('L_CINNAMON_POLYPHENOLS',     'IR',       'T1', 5,  'Allen 2013 méta : ↓ glycémie -25 mg/dL, ↓ HOMA-IR'),
+-- L02: FENUGREC
+('L_FENUGREEK_SEEDS',          'IR',       'T1', 6,  'Galactomannan + 4-hydroxyisoleucine : ↓ HbA1c -0.8%'),
+-- L03: CHIA
+('L_CHIA_SEEDS',               'IR',       'T1', 20, 'Fibre mucilagineuse ↓ vidange gastrique + ALA ω-3'),
+('L_CHIA_SEEDS',               'INFLAM',   'T2', 30, 'ALA ω-3 → modulation inflammation bas grade'),
+-- L04: AVOCAT
+('L_AVOCADO_DAILY',            'IR',       'T1', 22, '↑ MUFA + fibres solubles → ↓ LDL, ↑ sensibilité insulinique'),
+('L_AVOCADO_DAILY',            'INFLAM',   'T2', 25, 'Polyphénols, glutathion, lutéine → ↓ inflammation bas grade'),
+-- L05: OLÉAGINEUX — universal star
+('L_NUTS_MIX_30G',             'IR',       'T1', 12, 'Afshin 2014 méta : ↓ HbA1c, ↓ LDL'),
+('L_NUTS_MIX_30G',             'INFLAM',   'T1', 15, 'PREDIMED : ↓ CRP, ↓ événements CV'),
+('L_NUTS_MIX_30G',             'DYSBIOSE', 'T2', 25, 'Fibres + polyphénols → modulation microbiote'),
+-- L06: CHOCOLAT NOIR
+('L_DARK_CHOCOLATE_20G',       'IR',       'T2', 30, 'Flavanols → ↑ NO → ↑ sensibilité insulinique'),
+('L_DARK_CHOCOLATE_20G',       'INFLAM',   'T2', 25, 'Polyphénols → ↓ inflammation, ↑ HDL'),
+('L_DARK_CHOCOLATE_20G',       'DYSBIOSE', 'T2', 30, 'Polyphénols microbiome → urolithines et métabolites'),
+-- L07: DISTRIBUTION PROTÉINES
+('L_PROTEIN_DISTRIBUTION',     'IR',       'T2', 3,  'Distribution 20-30g/repas → ↑ GLP-1, ↑ satiété'),
+('L_PROTEIN_DISTRIBUTION',     'INFLAM',   'T2', 35, 'Maintien masse maigre → ↓ inflammation bas grade'),
+-- L08: REPAS FAIBLE IG
+('L_LOW_GI_MEAL_PATTERN',      'IR',       'T1', 4,  'Jenkins 1981 / Livesey 2019 : ↓ AUC glucose'),
+-- L09: GINGEMBRE
+('L_GINGER_FRESH',             'INFLAM',   'T2', 15, 'Gingerols → ↓ NF-κB, ↓ CRP'),
+('L_GINGER_FRESH',             'DYSBIOSE', 'T3', 40, 'Modulation microbiote oral/gut, données émergentes'),
+-- L10: AIL CRU
+('L_GARLIC_RAW',               'INFLAM',   'T2', 20, 'Allicine → ↓ CRP, ↓ TNF-α, ↓ PA'),
+('L_GARLIC_RAW',               'DYSBIOSE', 'T2', 25, 'Inuline-like prébiotique. Modulation microbiote'),
+('L_GARLIC_RAW',               'IR',       'T3', 45, 'Effet métabolique indirect via inflammation'),
+-- L11: GRENADE
+('L_POMEGRANATE_JUICE_WEEKLY', 'INFLAM',   'T2', 18, 'Ellagitannins → urolithines → ↓ CRP, ↓ IL-6'),
+('L_POMEGRANATE_JUICE_WEEKLY', 'IR',       'T3', 50, 'Données indirectes'),
+('L_POMEGRANATE_JUICE_WEEKLY', 'DYSBIOSE', 'T3', 40, 'Urolithines = métabolites microbiens, activité prébiotique'),
+-- L12: CERISE ACIDULÉE
+('L_TART_CHERRY',              'INFLAM',   'T2', 20, 'Anthocyanines → ↓ CRP, ↓ IL-6, ↓ uricémie'),
+('L_TART_CHERRY',              'IR',       'T2', 35, '↓ uricémie et inflammation bas grade bénéfique IR'),
+-- L13: CAFÉ FILTRE — universal star
+('L_COFFEE_FILTER',            'IR',       'T2', 15, 'Acides chlorogéniques → ↓ pic glucose, ↓ stéatose'),
+('L_COFFEE_FILTER',            'INFLAM',   'T2', 20, '↓ CRP bas bruit de fond (épidémiologie solide)'),
+('L_COFFEE_FILTER',            'DYSBIOSE', 'T2', 20, '↑ Bifidobactéries, modulation microbiote'),
+-- L14: VITAMINE D ALIMENTS
+('L_VITAMIN_D_FOODS',          'INFLAM',   'T2', 22, 'VDR sur cellules immunitaires → ↓ cytokines'),
+('L_VITAMIN_D_FOODS',          'IR',       'T2', 40, 'Carence vit D associée IR — effet modeste'),
+('L_VITAMIN_D_FOODS',          'DYSBIOSE', 'T3', 45, 'Immunité muqueuse intestinale, données émergentes'),
+-- L15: HERBES AROMATIQUES
+('L_ROSEMARY_HERBS',           'INFLAM',   'T2', 25, 'Acide rosmarinique, carnosol → ↑ Nrf2, ↓ NF-κB'),
+('L_ROSEMARY_HERBS',           'DYSBIOSE', 'T3', 35, 'Polyphénols antimicrobiens sélectifs, données préliminaires'),
+-- L16: PATRON SANS VIANDE
+('L_MEDITERRANEAN_WEEKLY_MEAL','INFLAM',   'T1', 8,  '↓ AGE, TMAO, fer héminique — substitution protéines terrestres'),
+('L_MEDITERRANEAN_WEEKLY_MEAL','IR',       'T2', 22, 'Pattern global protecteur IR'),
+-- L17: FRUITS ENTIERS
+('L_FRUIT_2_DAY',              'INFLAM',   'T1', 12, 'Aune 2017 BMJ : ↓ mortalité CV, ↓ CRP dose-dépendant'),
+('L_FRUIT_2_DAY',              'IR',       'T2', 25, 'Polyphénols + fibres → ↓ charge glycémique repas'),
+('L_FRUIT_2_DAY',              'DYSBIOSE', 'T2', 25, 'Fibres + polyphénols fermentés par microbiote'),
+-- L18: PSYLLIUM
+('L_PSYLLIUM_FIBER',           'DYSBIOSE', 'T1', 2,  'Fibre solubre non-fermentescible → régulation transit Bristol 3-5'),
+('L_PSYLLIUM_FIBER',           'IR',       'T2', 18, '↓ vidange gastrique → ↓ pic glucose postprandial'),
+-- L19: GRAINES DE LIN
+('L_FLAX_SEEDS_GROUND',        'DYSBIOSE', 'T2', 12, 'Lignanes → entérolactone. Fibres S+I. Mucilage'),
+('L_FLAX_SEEDS_GROUND',        'INFLAM',   'T2', 28, 'ALA ω-3 → ↓ inflammation bas grade'),
+('L_FLAX_SEEDS_GROUND',        'IR',       'T2', 30, 'Fibres mucilagineuses → ↓ absorption glucose'),
+-- L20: AVOINE β-GLUCANE
+('L_OATS_BETA_GLUCAN',         'DYSBIOSE', 'T1', 4,  'β-glucane → ↑ butyrate, ↑ Bifidobactéries'),
+('L_OATS_BETA_GLUCAN',         'IR',       'T1', 10, 'β-glucane → ↓ absorption glucose + EFSA health claim LDL'),
+-- L21: FARINE BANANE VERTE
+('L_GREEN_BANANA_FLOUR',       'DYSBIOSE', 'T2', 10, 'Amidon résistant type 2 → ↑ butyrate colique'),
+('L_GREEN_BANANA_FLOUR',       'IR',       'T1', 16, '↓ IG des préparations via substitution farine'),
+-- L22: MISO
+('L_MISO_FERMENTED',           'DYSBIOSE', 'T2', 15, 'Fermentation longue → Lactobacilles, peptides bioactifs'),
+('L_MISO_FERMENTED',           'INFLAM',   'T3', 35, 'Isoflavones aglycones, données épidémiologiques'),
+-- L23: CHOUCROUTE KIMCHI
+('L_KIMCHI_SAUERKRAUT',        'DYSBIOSE', 'T2', 8,  'Lactobacillus + Leuconostoc vivants + isothiocyanates'),
+('L_KIMCHI_SAUERKRAUT',        'INFLAM',   'T3', 30, '↓ marqueurs inflammation, données coréennes'),
+-- L24: KÉFIR
+('L_KEFIR_WATER_DAIRY',        'DYSBIOSE', 'T1', 6,  'Consortium >30 souches : ↑ Lactobacillus spécifiques'),
+('L_KEFIR_WATER_DAIRY',        'INFLAM',   'T2', 25, '↓ TNF-α, modulation immunitaire kéfir-spécifique'),
+-- L25: YAOURTS PROBIOTIQUES
+('L_COCONUT_YOGURT_PROBIOTIC', 'DYSBIOSE', 'T2', 10, 'Souches spécifiques (L. casei, L. rhamnosus, Bifidobacterium)'),
+('L_COCONUT_YOGURT_PROBIOTIC', 'INFLAM',   'T3', 30, 'Immunomodulation souche-dépendante, modest evidence'),
+-- L26: POMME ENTIÈRE
+('L_APPLE_PECTIN',             'DYSBIOSE', 'T2', 15, 'Pectine fermentescible → ↑ butyrate. Quercétine peau'),
+('L_APPLE_PECTIN',             'IR',       'T2', 30, 'Polyphénols + fibres → ↓ LDL, ↓ charge glycémique'),
+-- L27: SALADE CRUE
+('L_DIVERSE_SALAD_RAW',        'DYSBIOSE', 'T2', 16, 'Microbiote phytosphère + enzymes intactes + fibres'),
+('L_DIVERSE_SALAD_RAW',        'INFLAM',   'T2', 20, 'Polyphénols non dénaturés + EVOO + diversification'),
+('L_DIVERSE_SALAD_RAW',        'IR',       'T2', 25, '↓ densité énergétique, ↑ fibres et polyphénols'),
+-- L28: FENÊTRE ALIMENTAIRE — universal star
+('L_MEAL_TIMING_12H',          'IR',       'T1', 2,  'Sutton 2018 CR : ↓ insuline, ↑ sensibilité insulinique circadienne'),
+('L_MEAL_TIMING_12H',          'INFLAM',   'T2', 10, '↓ NF-κB circadien, ↓ perméabilité intestinale nocturne'),
+('L_MEAL_TIMING_12H',          'DYSBIOSE', 'T2', 15, 'Repos digestif nocturne → régénération barrière intestinale'),
+-- L29: ALIMENTATION CONSCIENTE
+('L_SLOW_EATING',              'IR',       'T2', 5,  'Ohkuma 2015 : mastication → ↑ GLP-1, ↓ apport -10%'),
+('L_SLOW_EATING',              'INFLAM',   'T3', 50, '↓ stress alimentaire, effet anti-inflammatoire hypothétique'),
+('L_SLOW_EATING',              'DYSBIOSE', 'T2', 20, 'Mastication → ↑ diversité microbiote via ↑ temps oral'),
+-- L30: HYDRATATION
+('L_HYDRATION_OPTIMAL',        'IR',       'T2', 22, 'Hydratation → fonction endothéliale, tonus vagal'),
+('L_HYDRATION_OPTIMAL',        'DYSBIOSE', 'T2', 22, 'Fonction digestive, concentration urinaire, prévention lithiase'),
+('L_HYDRATION_OPTIMAL',        'INFLAM',   'T3', 40, 'Effet anti-inflammatoire indirect via fonction rénale'),
+-- L31: CHAMPIGNONS
+('L_MUSHROOMS_WEEKLY',         'INFLAM',   'T2', 25, 'β-glucanes → immunomodulation. Ergothionéine antioxydant'),
+('L_MUSHROOMS_WEEKLY',         'DYSBIOSE', 'T3', 30, 'β-glucanes fermentés par microbiote, données émergentes'),
+('L_MUSHROOMS_WEEKLY',         'IR',       'T3', 50, 'Effet indirect sur IR via inflammation et vitamine D'),
+-- L32: ALGUES
+('L_SEAWEED_WEEKLY',           'DYSBIOSE', 'T2', 22, 'Polysaccharides sulfatés → prébiotique Bacteroides'),
+('L_SEAWEED_WEEKLY',           'INFLAM',   'T3', 35, 'Fucoxanthine, fucoïdane → antioxydant, anti-inflammatoire'),
+-- L33: AGRUMES
+('L_CITRUS_POLYPHENOLS',       'INFLAM',   'T2', 20, 'Hespéridine, naringénine → ↓ CRP, ↓ LDL-ox, ↑ NO'),
+('L_CITRUS_POLYPHENOLS',       'IR',       'T2', 30, '↓ LDL-ox, ↑ absorption fer. Polyphénols modulateurs'),
+('L_CITRUS_POLYPHENOLS',       'DYSBIOSE', 'T3', 35, 'Polyphénols agrumes → métabolites microbiens'),
+-- L34: SUBSTITUTION GRAISSES
+('L_SATURATED_FAT_SWAP',       'IR',       'T1', 14, 'Wang 2016 méta : ↓ LDL -8%, ↓ ApoB/ApoA'),
+('L_SATURATED_FAT_SWAP',       'INFLAM',   'T1', 16, 'Substitution saturés → insaturés ↓ inflammation bas grade'),
+-- L35: EVOO CRU FINITION
+('L_EVOO_CRU_FINITION',        'IR',       'T1', 8,  'Préserve polyphénols EVOO thermosensibles >90%'),
+('L_EVOO_CRU_FINITION',        'INFLAM',   'T1', 8,  'Oléocanthal préservé → effet anti-inflammatoire COX-like');

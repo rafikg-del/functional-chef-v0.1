@@ -461,3 +461,639 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
   ARRAY['Surveillance hypoglycémie si sulfamides/insuline'],
   false
 );
+
+-- =====================================================================
+-- Seed 04b — 35 nouveaux leviers v0.2 (extension du référentiel à 63 leviers)
+-- =====================================================================
+
+INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expected_effect, ebm_tier, primary_reference, pubmed_ids, dose_or_protocol, cooking_constraint, contraindications, precautions, is_universal_star) VALUES
+
+-- ─── L01: CANNELLE ──────────────────────────────────────────────────────
+(
+  'L_CINNAMON_POLYPHENOLS',
+  'Cannelle (Ceylan) 1-3 g/jour avec repas glucidique',
+  'Ceylon cinnamon 1-3 g/day with carb meals',
+  'Cannelle de Ceylan (Cinnamomum verum). Polyphénols et composés cinnamaldéhyde. ↑ sensibilité insulinique via IRS-1/PI3K.',
+  'ingredient',
+  '↓ glycémie à jeun -25 mg/dL ; ↓ HOMA-IR',
+  'T1',
+  'Allen 2013 méta / Davis 2017 méta',
+  ARRAY['23818067', '28011956'],
+  '1-3 g/j (½-1 c.c.) saupoudré sur glucides, compote, yaourt, café',
+  'Ajouter après cuisson pour préserver composés volatils',
+  ARRAY['grossesse_high_dose'],
+  ARRAY['Préférer Ceylan (C. verum) — Cassia contient coumarines hépatotoxiques à dose quotidienne'],
+  false
+),
+
+-- ─── L02: FENUGREC ─────────────────────────────────────────────────────
+(
+  'L_FENUGREEK_SEEDS',
+  'Fenugrec (graines trempées ou germées)',
+  'Fenugreek seeds soaked or sprouted',
+  'Galactomannan (fibre solubre) + 4-hydroxyisoleucine. ↓ vidange gastrique + ↑ insuline glucose-dépendante.',
+  'ingredient',
+  '↓ glycémie postprandiale ; ↓ HbA1c -0.8% (méta)',
+  'T1',
+  'Neelakantan 2014 méta',
+  ARRAY['25006949'],
+  '2-5 g/j graines trempées 12h ou germées',
+  'Trempage 12h pour neutraliser amertume partielle',
+  ARRAY['T1DM_non_supervise', 'grossesse'],
+  ARRAY['Goût amer caractéristique — masquer dans curry, dhal, soupe'],
+  false
+),
+
+-- ─── L03: CHIA ─────────────────────────────────────────────────────────
+(
+  'L_CHIA_SEEDS',
+  'Graines de chia 15-30 g/j',
+  'Chia seeds 15-30 g/day',
+  'Salvia hispanica. Fibre solubre mucilagineuse → gel visqueux. ALA ω-3, protéines, magnésium.',
+  'ingredient',
+  '↓ glycémie postprandiale ; ↓ triglycérides ; ↑ ALA',
+  'T2',
+  'Vuksan 2017 RCT / Toscano 2015 méta',
+  ARRAY['28272120'],
+  '15-30 g/j (2-3 c.s.), trempées ≥15 min dans eau/lait végétal',
+  'Trempage obligatoire pour former gel ; consommer hydraté',
+  ARRAY['dysphagie_severe'],
+  ARRAY['Introduire progressivement pour tolérance digestive'],
+  false
+),
+
+-- ─── L04: AVOCAT ───────────────────────────────────────────────────────
+(
+  'L_AVOCADO_DAILY',
+  'Avocat ½-1/jour',
+  'Avocado ½-1 daily',
+  'Persea americana. MUFA, fibres solubles, polyphénols, glutathion, lutéine. Effet satiétogène et lipidique.',
+  'ingredient',
+  '↓ LDL ; ↑ satiété ; ↓ inflammation bas grade',
+  'T2',
+  'Petersen 2021 / Mahmassani 2018 méta',
+  ARRAY['34617419', '29659968'],
+  '½-1 avocat/j (70-150g), en salade, tartine, smoothie',
+  'Consommer cru pour préserver polyphénols et graisses insaturées',
+  NULL,
+  ARRAY['Apport calorique à intégrer (½ avocat ≈ 120 kcal)'],
+  false
+),
+
+-- ─── L05: OLÉAGINEUX ──────────────────────────────────────────────────
+(
+  'L_NUTS_MIX_30G',
+  'Oléagineux mix 30 g/j (noix, amandes, noisettes)',
+  'Mixed nuts 30 g/day (walnuts, almonds, hazelnuts)',
+  'MUFA + ω-3 ALA + arginine + fibres + polyphénols. Effet métabolique et anti-inflammatoire validé PREDIMED.',
+  'ingredient',
+  '↓ LDL -0.15 mmol/L ; ↓ HbA1c ; ↓ CRP',
+  'T1',
+  'Afshin 2014 méta / Salas-Salvadó 2008 PREDIMED',
+  ARRAY['25411245', '18784301'],
+  '30 g/j (1 petite poignée). Mix : 3-4 noix + 8-10 amandes + 8-10 noisettes',
+  'Préférer crus non salés ; torréfaction légère tolérée',
+  ARRAY['allergy_nuts'],
+  ARRAY['Préférer crus (non salés, non torréfiés à haute T°)'],
+  true
+),
+
+-- ─── L06: CHOCOLAT NOIR ────────────────────────────────────────────────
+(
+  'L_DARK_CHOCOLATE_20G',
+  'Chocolat noir ≥85% cacao 20 g/j',
+  'Dark chocolate ≥85% cocoa 20 g/day',
+  'Flavanols (épicatéchine) → ↑ NO ; theobromine ; polyphénols microbiote ; magnésium, fer, zinc.',
+  'ingredient',
+  '↓ PA -5 mmHg ; ↑ sensibilité insulinique ; ↑ HDL',
+  'T2',
+  'Grassi 2005 RCT / Hooper 2012 méta flavanols',
+  ARRAY['15883455', '22869837'],
+  '20 g/j (2 carrés), chocolat noir ≥85% cacao, faible sucre',
+  'Ne pas chauffer excessivement (préserver flavanols)',
+  ARRAY['lithiase_oxalique_moderer'],
+  ARRAY['Choix qualité important (cacao fort, peu sucré). Pas de chocolat au lait.'],
+  false
+),
+
+-- ─── L07: DISTRIBUTION PROTÉINES ───────────────────────────────────────
+(
+  'L_PROTEIN_DISTRIBUTION',
+  'Distribution protéines 20-30 g/repas (3-4 repas)',
+  'Protein distribution 20-30 g per meal (3-4 meals)',
+  'Répartition équilibrée des protéines sur la journée. ↑ GLP-1, ↑ satiété, ↑ thermogenèse, maintien masse maigre.',
+  'timing',
+  '↑ synthèse protéique musculaire ; ↑ satiété ; ↓ grignotage',
+  'T2',
+  'Mamerow 2014 / Schoenfeld 2018 méta',
+  ARRAY['24760976', '29863639'],
+  '20-30g protéines à chaque repas. Combiner sources animales/végétales.',
+  NULL,
+  ARRAY['insuffisance_renale_severe'],
+  ARRAY['Adapter si pathologie rénale. Végétaliens : combiner légumineuses + céréales.'],
+  false
+),
+
+-- ─── L08: REPAS FAIBLE IG ──────────────────────────────────────────────
+(
+  'L_LOW_GI_MEAL_PATTERN',
+  'Composition repas à faible IG (fibres + protéines + lipides à chaque repas glucidique)',
+  'Low-GI meal pattern (fiber + protein + fat with every carb meal)',
+  'Apport systématique de fibres + protéines + lipides avec glucides → ↓ IG composite + ↓ pic glucose.',
+  'preparation',
+  '↓ AUC glucose postprandiale ; ↓ sécrétion insuline',
+  'T1',
+  'Jenkins 1981 / Livesey 2019 méta',
+  ARRAY['6117467', '30983560'],
+  'Ne jamais consommer de glucides seuls. Associer fibres + protéines + lipides à chaque repas contenant des glucides.',
+  NULL,
+  NULL,
+  ARRAY['Ne pas transformer en orthorexie ; viser pattern général'],
+  false
+),
+
+-- ─── L09: GINGEMBRE FRAIS ──────────────────────────────────────────────
+(
+  'L_GINGER_FRESH',
+  'Gingembre frais 5-10 g/j',
+  'Fresh ginger 5-10 g/day',
+  'Gingerols et shogaols → ↓ NF-κB, ↓ TNF-α, ↓ CRP. Antioxydant. Modulation microbiote oral/gut.',
+  'ingredient',
+  '↓ CRP ; ↓ douleurs musculaires post-exercice',
+  'T2',
+  'Mashhadi 2013 / Marx 2021 méta',
+  ARRAY['23515042', '33848235'],
+  '5-10 g/j gingembre frais râpé dans thé, sauté, soupe',
+  'Cuisson douce modérée ; forte chaleur prolongée réduit gingérols',
+  ARRAY['anticoagulants_high_dose'],
+  ARRAY['Prudence pré-opératoire (effet antiplaquettaire modeste)'],
+  false
+),
+
+-- ─── L10: AIL CRU ──────────────────────────────────────────────────────
+(
+  'L_GARLIC_RAW',
+  'Ail cru écrasé 1-3 gousses/j',
+  'Raw crushed garlic 1-3 cloves/day',
+  'Allicine libérée par alliinase après écrasement. ↓ CRP, ↓ TNF-α, ↓ PA. Inuline-like prébiotique.',
+  'ingredient',
+  '↓ PA -8 mmHg ; ↓ CRP ; ↓ LDL',
+  'T2',
+  'Ried 2016 méta / Schwingshackl 2020',
+  ARRAY['27015631'],
+  '1-3 gousses/j. Écraser ou hacher, laisser reposer 10 min avant cuisson',
+  'Laisser reposer 10 min après écrasement pour stabiliser allicine',
+  ARRAY['anticoagulants_high_dose'],
+  ARRAY['Pré-opératoire : modérer 14j avant. Ne pas faire bouillir immédiatement.'],
+  false
+),
+
+-- ─── L11: GRENADE ──────────────────────────────────────────────────────
+(
+  'L_POMEGRANATE_JUICE_WEEKLY',
+  'Grenade (fruit ou jus pur) 150 ml 3-4×/sem',
+  'Pomegranate (fruit or pure juice) 150 ml 3-4×/week',
+  'Ellagitannins → urolithines (métabolites microbiens). ↓ CRP, ↓ IL-6, ↓ oxLDL, ↑ NO.',
+  'ingredient',
+  '↓ CRP ; ↓ oxLDL ; ↓ PA systolique -5 mmHg',
+  'T2',
+  'Sahebkar 2016 méta / Banihani 2017',
+  ARRAY['26412200'],
+  '150 ml jus pur grenade sans sucre ajouté OU ½ fruit frais, 3-4×/sem',
+  'Consommer frais ; jus du commerce souvent sucré',
+  NULL,
+  ARRAY['Vérifier étiquette jus (sans sucre ajouté). Interactions CYP modérées.'],
+  false
+),
+
+-- ─── L12: CERISE ACIDULÉE ──────────────────────────────────────────────
+(
+  'L_TART_CHERRY',
+  'Cerise acidulée (griotte) 200g fruits ou 200ml jus 3-4×/sem',
+  'Tart cherry 200g fruit or 200ml juice 3-4×/week',
+  'Anthocyanines + mélatonine naturelle. ↓ CRP, ↓ IL-6, ↓ uricémie (inhibition xanthine oxydase).',
+  'ingredient',
+  '↓ CRP ; ↓ uricémie ; ↑ durée sommeil',
+  'T2',
+  'Kelley 2018 méta / Howatson 2010 RCT',
+  ARRAY['29685686', '19855314'],
+  '200g fruits entiers ou 200ml jus pur, 3-4×/sem. Privilégier fruits entiers pour fibres.',
+  NULL,
+  NULL,
+  ARRAY['Jus : ≈20g sucre/200ml — adapter si IR sévère. Fruits entiers préférables.'],
+  false
+),
+
+-- ─── L13: CAFÉ FILTRE ──────────────────────────────────────────────────
+(
+  'L_COFFEE_FILTER',
+  'Café filtre 2-3 tasses/j (non sucré)',
+  'Filter coffee 2-3 cups/day (unsweetened)',
+  'Acides chlorogéniques → ↓ pic glucose. Modulation microbiote (↑ Bifidobactéries). Café diterpènes filtrés.',
+  'ingredient',
+  '↓ risque T2D dose-dépendant ; ↓ CRP bas bruit ; ↓ stéatose',
+  'T2',
+  'Poole 2017 BMJ méta / Grosso 2016 méta',
+  ARRAY['28649191', '27619280'],
+  '2-3 tasses/j (240 ml), filtre papier, non sucré. Éviter après 14h.',
+  'Filtre papier obligatoire (cafestol ↗ LDL sans filtre)',
+  ARRAY['reflux_severe', 'anxiete_severe'],
+  ARRAY['Grossesse : limiter <200mg caféine/j. Café non filtré ↑ LDL.'],
+  true
+),
+
+-- ─── L14: VITAMINE D ALIMENTS ──────────────────────────────────────────
+(
+  'L_VITAMIN_D_FOODS',
+  'Aliments riches en vitamine D (poisson gras, œuf, champignons UV)',
+  'Vitamin D-rich foods (fatty fish, eggs, UV-exposed mushrooms)',
+  'Le récepteur VDR exprimé sur cellules immunitaires. ↓ cytokines pro-inflammatoires. Soutien immunité muqueuse.',
+  'ingredient',
+  '↓ supplémentation vit D nécessaire ; modulation immunitaire',
+  'T2',
+  'Martineau 2017 méta / Autier 2014 méta',
+  ARRAY['28202713'],
+  '2-3×/sem : poisson gras (150g) + œuf ×2 + champignons exposés UV',
+  'Champignons exposés au soleil/UV 15 min pour ↑ vit D2',
+  ARRAY['sarcoidose'],
+  ARRAY['L\'alimentation seule ne corrige pas une carence franche — supplémentation si 25-OH-D3 <30 ng/mL'],
+  false
+),
+
+-- ─── L15: HERBES AROMATIQUES ───────────────────────────────────────────
+(
+  'L_ROSEMARY_HERBS',
+  'Herbes aromatiques quotidiennes (romarin, origan, thym, menthe)',
+  'Daily aromatic herbs (rosemary, oregano, thyme, mint)',
+  'Acides rosmarinique, carnosol, carvacrol, thymol → ↑ Nrf2, ↓ NF-κB. Pouvoir antioxydant élevé.',
+  'ingredient',
+  '↓ stress oxydatif ; saveur sans sel ; chélation fer non-héminique',
+  'T3',
+  'Nieto 2018 / Pérez-Fons 2010',
+  ARRAY['30154330'],
+  'Incorporer ≥3 herbes différentes/j. Quantité libre. Fraîches ou séchées.',
+  'Séchées = plus concentrées ; fraîches = plus volatiles — ajouter en fin de cuisson',
+  NULL,
+  ARRAY['Huiles essentielles concentrées ≠ herbes. H.E. CI grossesse, HTA sévère.'],
+  false
+),
+
+-- ─── L16: PATRON SANS VIANDE ───────────────────────────────────────────
+(
+  'L_MEDITERRANEAN_WEEKLY_MEAL',
+  'Pattern : 2×/sem poisson gras + 1-2 jours sans viande',
+  'Pattern: 2×/week fatty fish + 1-2 meat-free days',
+  'Réduction protéines terrestres → marines + végétales ↓ AGE, TMAO, fer héminique. ↑ EPA/DHA.',
+  'timing',
+  '↓ CRP ; ↓ TMAO ; ↓ charge pro-inflammatoire alimentaire',
+  'T2',
+  'Martinez-Gonzalez 2019 PREDIMED-Plus',
+  ARRAY['30924793'],
+  '2× poisson gras/sem + 1-2 jours sans viande (lundi vert, poisson vendredi)',
+  'Petits poissons (sardine, maquereau) pour limiter Hg',
+  ARRAY['allergy_fish'],
+  ARRAY['Allergie poisson : algues Schizochytrium pour DHA. Végétaliens : adapter.'],
+  false
+),
+
+-- ─── L17: FRUITS ENTIERS ───────────────────────────────────────────────
+(
+  'L_FRUIT_2_DAY',
+  'Fruits entiers 2-3 portions/j (pas de jus)',
+  'Whole fruits 2-3 servings/day (no juice)',
+  'Polyphénols + fibres + vitamines + potassium. Relation inverse dose-dépendante mortalité CV et CRP.',
+  'ingredient',
+  '↓ mortalité CV ; ↓ CRP ; ↓ PA',
+  'T1',
+  'Aune 2017 BMJ méta / Muraki 2013',
+  ARRAY['28244348', '23843730'],
+  '2-3 portions/j (1 portion ≈ 150g), entiers, varier couleurs. Baies, kiwi, agrumes, pomme.',
+  'Fruits entiers (pas jus). Peau lavée si bio possible.',
+  NULL,
+  ARRAY['Jus de fruit ≠ fruit (perte fibres, pic glycémique). Fruits secs : portion 30g.'],
+  false
+),
+
+-- ─── L18: PSYLLIUM ─────────────────────────────────────────────────────
+(
+  'L_PSYLLIUM_FIBER',
+  'Psyllium (ispaghula) 5-10 g/j',
+  'Psyllium husk 5-10 g/day',
+  'Fibre solubre visqueuse non-fermentescible. Régularisation transit. ↓ LDL. Précurseur butyrate fermentation lente.',
+  'ingredient',
+  '↓ LDL -8% ; ↑ Bristol 3-5 ; ↓ vidange gastrique',
+  'T1',
+  'McRorie 2015 / Lambeau 2017 méta',
+  ARRAY['26231922', '28675898'],
+  '5-10 g/j (1-2 c.s.), dilué dans >250 ml eau, à distance des médicaments ≥2h',
+  'Mélanger dans eau, boire immédiatement. Hydratation obligatoire.',
+  ARRAY['occlusion_intestinale', 'stenose_oesophagienne'],
+  ARRAY['Hydratation abondante obligatoire. Espacer médicaments ≥2h.'],
+  false
+),
+
+-- ─── L19: GRAINES DE LIN ────────────────────────────────────────────────
+(
+  'L_FLAX_SEEDS_GROUND',
+  'Graines de lin moulues 10-20 g/j',
+  'Ground flax seeds 10-20 g/day',
+  'Lignanes → entérolactone (métabolite microbien). ALA ω-3. Fibres solubles + insolubles. Mucilage.',
+  'ingredient',
+  '↓ LDL -10% ; ↑ satiété ; modulation microbiote',
+  'T2',
+  'Pan 2009 méta / Goyal 2014',
+  ARRAY['19061773'],
+  '10-20 g/j (1-2 c.s.) moulues, à consommer rapidement après mouture',
+  'Moudre au dernier moment (oxydation rapide ALA). Graines entières passent non digérées.',
+  ARRAY['occlusion_intestinale_phase_aigue'],
+  ARRAY['Moudre frais chaque jour ou conserver au congélateur. Graines entières inefficaces.'],
+  false
+),
+
+-- ─── L20: AVOINE β-GLUCANE ─────────────────────────────────────────────
+(
+  'L_OATS_BETA_GLUCAN',
+  'Avoine complète / β-glucane 40-60 g/j',
+  'Whole oats / beta-glucan 40-60 g/day',
+  'β-glucane → gel visqueux ↓ absorption cholestérol + glucose. Fermentation → ↑ butyrate. PréBiotique Bifidobactéries.',
+  'ingredient',
+  '↓ LDL (EFSA health claim) ; ↓ glycémie postprandiale',
+  'T1',
+  'Ho 2016 méta / EFSA 2011 health claim',
+  ARRAY['27702431'],
+  '40-60 g/j flocons avoine complète (≈3-4g β-glucane). Trempage overnight.',
+  'Trempage 12h ↓ phytates, ↑ disponibilité minéraux',
+  ARRAY['celiac_disease_avoine'],
+  ARRAY['Choisir avoine complète (pas instantanée sucrée). Tous les cœliaques tolèrent l\'avoine sans gluten.'],
+  false
+),
+
+-- ─── L21: FARINE BANANE VERTE ──────────────────────────────────────────
+(
+  'L_GREEN_BANANA_FLOUR',
+  'Banane verte / plantain vert (farine 30-50 g/j)',
+  'Green banana / plantain flour 30-50 g/day',
+  'Amidon résistant type 2 encapsulé dans matrice cellulaire → butyrate colique. ↓ IG. PréBiotique.',
+  'ingredient',
+  '↑ butyrate fécal ; ↓ index glycémique repas',
+  'T2',
+  'Cassani 2020 / Langkilde 2002',
+  ARRAY['33158077'],
+  '30-50 g/j, substitution 20-30% farine de blé dans préparations',
+  'Peut être utilisé en pâtisserie, pancakes, porridge',
+  NULL,
+  ARRAY['Texture différente — substituer partiellement. Se conserve comme farine classique.'],
+  false
+),
+
+-- ─── L22: MISO ŔERMENTÉ ────────────────────────────────────────────────
+(
+  'L_MISO_FERMENTED',
+  'Miso (pâte soja fermentée) 1 c.s./jour',
+  'Miso (fermented soybean paste) 1 tbsp/day',
+  'Fermentation longue → levure koji, Lactobacilles, peptides bioactifs, isoflavones aglycones, niacine.',
+  'fermentation',
+  '↑ microbiote diversité ; ↓ risque gastrique (sel modéré)',
+  'T3',
+  'Rios-Hoyo 2016 / Nakanishi 2010',
+  ARRAY['27616673', '21044902'],
+  '1 c.s. (15-20g) non pasteurisé, dilué en fin de cuisson (ne pas bouillir)',
+  'Ne pas faire bouillir après incorporation (préserver ferments)',
+  ARRAY['restriction_sodee_severe'],
+  ARRAY['Rincer rapidement si restriction sodée. Bouillon bouilli ≠ miso vivant.'],
+  false
+),
+
+-- ─── L23: CHOUCROUTE KIMCHI ────────────────────────────────────────────
+(
+  'L_KIMCHI_SAUERKRAUT',
+  'Légumes lactofermentés (choucroute crue, kimchi) 50-100 g/j',
+  'Lacto-fermented vegetables (raw sauerkraut, kimchi) 50-100 g/day',
+  'Lactobacillus + Leuconostoc vivants + fibres prébiotiques + isothiocyanates. ↑ diversité, ↓ inflammation.',
+  'fermentation',
+  '↑ diversité microbiome ; ↓ marqueurs inflammation ; régulation transit',
+  'T2',
+  'Sun 2020 / Han 2020',
+  ARRAY['32566240', '32108597'],
+  '50-100 g/j, choucroute crue non pasteurisée (rayon frais). Rincer si sel excessif.',
+  'Bocal non pasteurisé (rayon frais). Pasteurisé = perte ferments vivants.',
+  ARRAY['histamine_intolerance_severe', 'restriction_sodee_severe'],
+  ARRAY['Vérifier rayon frais — pasteurisé ≠ fermenté vivant. Histamino-sensible : adapter quantité.'],
+  false
+),
+
+-- ─── L24: KÉFIR ────────────────────────────────────────────────────────
+(
+  'L_KEFIR_WATER_DAIRY',
+  'Kéfir (lait ou eau) 150-200 ml/jour',
+  'Kefir (milk or water) 150-200 ml/day',
+  'Consortium levures + lactobacilles >30 souches. ↑ Lactobacillus spécifiques kéfir. ↓ TNF-α, ↑ lactase.',
+  'fermentation',
+  '↑ diversité ; ↓ TNF-α ; ↑ intolérance lactose',
+  'T2',
+  'Kim 2018 méta / Bourrie 2016',
+  ARRAY['29721950', '26898463'],
+  '150-200 ml/j. Varier lait (traditionnel) et eau (si intolérance lactose).',
+  'Vérifier « ferments vivants » sur l\'emballage. Faire maison = optimal.',
+  ARRAY['immunosuppression_severe'],
+  ARRAY['Kéfir commerce souvent pasteurisé après fermentation = ferments morts.'],
+  false
+),
+
+-- ─── L25: YAOURTS PROBIOTIQUES ─────────────────────────────────────────
+(
+  'L_COCONUT_YOGURT_PROBIOTIC',
+  'Yaourts / laits fermentés probiotiques diversifiés',
+  'Diversified probiotic yogurts/fermented milks',
+  'Souches spécifiques (L. casei, L. rhamnosus, Bifidobacterium). Souche-dépendant : diversifier les marques.',
+  'fermentation',
+  '↑ Lactobacillus ; ↓ perméabilité intestinale',
+  'T2',
+  'Burton 2017 méta / Savaiano 2014',
+  ARRAY['28360887'],
+  '1 portion/j (150-200g), tourner 2-3 marques différentes pour diversité souches',
+  'Conserver au frais ; consommer avant DLC',
+  ARRAY['allergy_milk_dairy'],
+  ARRAY['Souche-dépendant — tourner les sources. Attention sucres ajoutés dans versions fruitées.'],
+  false
+),
+
+-- ─── L26: POMME ENTIÈRE ────────────────────────────────────────────────
+(
+  'L_APPLE_PECTIN',
+  'Pomme entière + peau 1-2/j (pectine)',
+  'Whole apple with peel 1-2/day (pectin)',
+  'Pectine (fibre solubre fermentescible) → ↑ butyrate. Polyphénols peau (quercétine, catéchines). Flavonoïdes.',
+  'ingredient',
+  '↓ LDL -5% ; ↑ butyrate ; régulation transit',
+  'T2',
+  'Koutsos 2015 / Hyson 2011 méta',
+  ARRAY['25750143'],
+  '1-2 pommes/j, non pelées. Varier couleurs (Granny Smith = polyphénols élevés).',
+  'Consommer crue avec peau. Compote sans sucre OK si pomme entière impossible.',
+  NULL,
+  ARRAY['Jus = pas de pectine. Peau = maximum polyphénols — bien laver.'],
+  false
+),
+
+-- ─── L27: SALADE CRUE DIVERSIFIÉE ──────────────────────────────────────
+(
+  'L_DIVERSE_SALAD_RAW',
+  'Salade crue diversifiée ≥5 espèces/jour',
+  'Diverse raw salad ≥5 species/day',
+  'Enzymes intactes + polyphénols non dénaturés + microbiote phytosphère. Signaux orosensoriels ↑ satiété.',
+  'preparation',
+  '↑ apport végétaux ; ↑ enzymes vivantes ; ↓ densité énergétique',
+  'T2',
+  'Ludwig 2021 BMJ / D\'Cunha 2024',
+  ARRAY['34049938'],
+  '1 salade/jour avec ≥5 espèces : légumes feuilles + légumes couleur + herbes + oléagineux + vinaigrette EVOO',
+  'Vinaigrette EVOO + citron pour biodisponibilité polyphénols et caroténoïdes',
+  ARRAY['MICI_flare_active'],
+  ARRAY['Introduction progressive si FODMAP-sensible. Pas en phase aiguë MICI.'],
+  false
+),
+
+-- ─── L28: FENÊTRE ALIMENTAIRE ──────────────────────────────────────────
+(
+  'L_MEAL_TIMING_12H',
+  'Fenêtre alimentaire ≤12h/j (time-restricted eating)',
+  'Eating window ≤12h/day (time-restricted eating)',
+  'Alignement rythmes circadiens → ↓ insuline, ↑ sensibilité insulinique, ↓ NF-κB circadien, ↓ perméabilité nocturne.',
+  'timing',
+  '↓ insuline à jeun ; ↓ inflammation ; ↑ qualité sommeil',
+  'T1',
+  'Sutton 2018 CR / Wilkinson 2020 / Currenti 2021 méta',
+  ARRAY['30075275', '31950749', '33996959'],
+  'Toute l\'alimentation dans une fenêtre ≤12h (ex : 8h-20h). Pas de nourriture après le dîner.',
+  NULL,
+  ARRAY['grossesse', 'T1DM_non_supervise', 'tca', 'denutrition'],
+  ARRAY['Ne pas sauter le petit-déjeuner ; décaler le dîner. Adapter si T2D sous insuline.'],
+  true
+),
+
+-- ─── L29: ALIMENTATION CONSCIENTE ──────────────────────────────────────
+(
+  'L_SLOW_EATING',
+  'Repas ≥20 min, mastication complète (≥20×/bouchée)',
+  'Meal ≥20 min, thorough chewing (≥20×/bite)',
+  '↑ signal orexigène précoce (GLP-1, PYY) via mastication prolongée. ↓ apport calorique 10-15%.',
+  'timing',
+  '↓ apport calorique -10% ; ↓ pic glucose ; ↑ satiété',
+  'T2',
+  'Ohkuma 2015 méta / Zhu 2018',
+  ARRAY['26255023'],
+  'Repas ≥20 min, mastiquer ≥20×/bouchée. Pas d\'écran pendant repas.',
+  NULL,
+  ARRAY['trouble_deglutition'],
+  ARRAY['Difficile en pratique — viser progrès progressif. Commencer par 1 repas/j.'],
+  false
+),
+
+-- ─── L30: HYDRATATION ──────────────────────────────────────────────────
+(
+  'L_HYDRATION_OPTIMAL',
+  'Hydratation 30 ml/kg/j, eau prioritaire',
+  'Hydration 30 ml/kg/day, mostly water',
+  'Hydratation cellulaire → fonction endothéliale, tonus vagal, fonction digestive, concentration urinaire.',
+  'dose',
+  '↓ lithiase urinaire ; ↑ fonction cognitive ; régulation appétit',
+  'T2',
+  'Perrier 2013 / Armstrong 2012',
+  ARRAY['24056810'],
+  '30 ml/kg/j (≈2.1L pour 70 kg). ≥70% eau plate. Répartir sur la journée.',
+  NULL,
+  ARRAY['insuffisance_cardiaque_decompensee', 'insuffisance_renale_oligurique'],
+  ARRAY['Adapter à activité, climat. Éviter >1L d\'un coup.'],
+  false
+),
+
+-- ─── L31: CHAMPIGNONS ──────────────────────────────────────────────────
+(
+  'L_MUSHROOMS_WEEKLY',
+  'Champignons variés 200-300 g/sem (shiitake, pleurote, Paris)',
+  'Varied mushrooms 200-300 g/week (shiitake, oyster, button)',
+  'β-glucanes (lentinan) → immunomodulation. Ergostérol → vit D2 (si expo UV). Ergothionéine antioxydant.',
+  'ingredient',
+  '↑ immunité cellulaire ; ↑ vit D alimentaire ; ↓ inflammation',
+  'T3',
+  'Jayachandran 2017 / Chandra 2021',
+  ARRAY['28879373'],
+  '200-300 g/sem, varier ≥3 espèces. Shiitake, pleurote, maitake, champignon de Paris.',
+  'Cuisson nécessaire (chitine). Champignons sauvages : identification impérative.',
+  ARRAY['goutte_aigue'],
+  ARRAY['Goutte : modérer (purines modérées). Champignons sauvages = identification formelle.'],
+  false
+),
+
+-- ─── L32: ALGUES ────────────────────────────────────────────────────────
+(
+  'L_SEAWEED_WEEKLY',
+  'Alques marines 5-15 g/sem (wakame, kombu, nori)',
+  'Seaweed 5-15 g/week (wakame, kombu, nori)',
+  'Iode, fucoxanthine, fucoïdane → antioxydant, anti-inflammatoire. Polysaccharides sulfatés → prébiotique Bacteroides.',
+  'ingredient',
+  '↑ apport iode modéré ; modulation microbiote ; ↓ stress oxydatif',
+  'T3',
+  'Brown 2014 / Teas 2013',
+  ARRAY['24724429'],
+  '5-15 g/sem (1-2 feuilles nori, 1 bande kombu dans cuisson). Pas quotidien.',
+  'Kombu dans cuisson légumineuses (↓ gaz) ; wakame réhydraté en salade',
+  ARRAY['hyperthyroidie_non_controlee'],
+  ARRAY['Teneur iode très variable selon espèce. Introduction progressive. Pas quotidien.'],
+  false
+),
+
+-- ─── L33: AGRUMES ZESTE ────────────────────────────────────────────────
+(
+  'L_CITRUS_POLYPHENOLS',
+  'Agrumes entiers (pamplemousse, orange, citron) — zeste + pulpe',
+  'Whole citrus (grapefruit, orange, lemon) — zest + pulp',
+  'Hespéridine, naringénine, acide ascorbique. ↓ CRP, ↓ LDL-ox, ↑ NO. ↑ fer non-héminique via vit C.',
+  'ingredient',
+  '↓ CRP ; ↓ LDL-ox ; ↑ absorption fer non-héminique',
+  'T2',
+  'Mulvihill 2016 / Tholstrup 2018',
+  ARRAY['27431609'],
+  '1 agrume/j varié : zeste râpé + quartiers. Jus frais pulpe si possible.',
+  'Zeste bien lavé. Jus consommé immédiatement (vit C s\'oxyde).',
+  ARRAY['pamplemousse_interaction_cyp3a4'],
+  ARRAY['Pamplemousse + statines/IEC/anticoagulants : interaction CYP3A4. Préférer orange/citron si doute.'],
+  false
+),
+
+-- ─── L34: SUBSTITUTION GRAISSES ─────────────────────────────────────────
+(
+  'L_SATURATED_FAT_SWAP',
+  'Substitution graisses saturées → insaturées (cuisson, lait, viande)',
+  'Swap saturated → unsaturated fats (cooking, dairy, meat)',
+  'Remplacer beurre, graisse animale, huile palme par EVOO, colza, avocat. ↓ LDL, ↓ ratio ApoB/ApoA.',
+  'avoidance',
+  '↓ LDL -8% ; ↓ ratio ApoB/ApoA ; ↓ événements CV',
+  'T1',
+  'Wang 2016 méta / Guasch-Ferré 2015',
+  ARRAY['27508875', '26041611'],
+  'Cuisson : EVOO ou colza. Beurre → purée oléagineux. Viande rouge : gras retiré.',
+  'Ne pas remplacer par huiles riches en ω-6 raffinées (tournesol, maïs)',
+  NULL,
+  ARRAY['Ne pas confondre substitution (↓ saturés + ↑ insaturés) avec restriction calorique.'],
+  false
+),
+
+-- ─── L35: EVOO CRU FINITION ────────────────────────────────────────────
+(
+  'L_EVOO_CRU_FINITION',
+  'Huile d\'olive extra vierge en finition crue',
+  'Extra virgin olive oil raw finish',
+  'Polyphénols EVOO (oléocanthal, hydroxytyrosol) thermosensibles. Finition préserve >90% vs <50% si cuisson 180°C.',
+  'cooking',
+  '↑ polyphénols dans assiette ; ↑ goût ; ↑ biodisponibilité caroténoïdes',
+  'T2',
+  'Cicerale 2010 / Lozano-Castellón 2020',
+  ARRAY['20122463'],
+  'Filet EVOO cru en finition sur plat chaud. Réserver 1/3 de l\'EVOO quotidien.',
+  'Laisser plat refroidir 1 min avant filet EVOO. Cuisson modérée pour partie cuite.',
+  NULL,
+  ARRAY['Extension de L_EVOO_PRIMARY. Préserve polyphénols que la cuisson détruit.'],
+  false
+);

@@ -44,6 +44,8 @@ const HEPATIC_MASLD_LEVERS = new Set([
 
 /** Boost sort priority when IR carries pcos_adipose phenotype */
 const PCOS_ADIPOSE_LEVERS = new Set([
+  'L_INOSITOL_FOOD',
+  'L_CHROMIUM_SUPP',
   'L_VINEGAR_PRE_PRANDIAL',
   'L_FOOD_SEQUENCE',
   'L_PROTEIN_DISTRIBUTION',

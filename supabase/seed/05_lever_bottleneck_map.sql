@@ -199,4 +199,41 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_SATURATED_FAT_SWAP',       'INFLAM',   'T1', 16, 'Substitution saturés → insaturés ↓ inflammation bas grade'),
 -- L35: EVOO CRU FINITION
 ('L_EVOO_CRU_FINITION',        'IR',       'T1', 8,  'Préserve polyphénols EVOO thermosensibles >90%'),
-('L_EVOO_CRU_FINITION',        'INFLAM',   'T1', 8,  'Oléocanthal préservé → effet anti-inflammatoire COX-like');
+('L_EVOO_CRU_FINITION',        'INFLAM',   'T1', 8,  'Oléocanthal préservé → effet anti-inflammatoire COX-like'),
+
+-- Nouveaux leviers v0.2 (enrichissement)
+-- Chrome nutritionnel
+('L_CHROMIUM_SUPP',            'IR',       'T1', 25, 'Suksomboon 2014 : ↑ sensibilité insulinique. Alimentaire : coeur betterave, brocoli, jaune oeuf'),
+-- Psyllium fibres solubles
+('L_PSYLLIUM_FIBER',           'IR',       'T1', 20, 'Anderson 1991 : ↓ HbA1c -0.3%, ↓ LDL -12% via viscosité'),
+('L_PSYLLIUM_FIBER',           'DYSBIOSE', 'T1', 25, '↑ SCFA butyrate via fermentation colique. Complémente L_FIBER_30G'),
+-- Inositol alimentaire
+('L_INOSITOL_FOOD',            'IR',       'T1', 22, 'Unfer 2017 méta SOPK : ↓ HOMA-IR, ↓ testostérone libre. Prioritaire si pcos_adipose'),
+('L_INOSITOL_FOOD',            'INFLAM',   'T2', 30, 'Effet anti-inflammatoire indirect via ↓ hyperinsulinémie'),
+-- Thé vert EGCG
+('L_GREEN_TEA_MATCHA',         'INFLAM',   'T1', 15, 'Zheng 2011 méta 25 RCT : ↓ CRP. EGCG inhibe NF-κB'),
+('L_GREEN_TEA_MATCHA',         'IR',       'T2', 25, 'EGCG ↑ dépense énergétique, ↓ HOMA-IR (effet plus modeste que sur inflammation)'),
+-- Curcuma + poivre
+('L_TURMERIC_BLACKPEPPER',     'INFLAM',   'T1', 18, 'Shehzad 2013 méta 8 RCT : ↓ NF-κB, ↓ CRP. Pipérine ↑ biodisponibilité'),
+('L_TURMERIC_BLACKPEPPER',     'IR',       'T2', 30, 'Curcumine ↓ TNF-α et IL-6 → amélioration secondaire sensibilité insulinique'),
+-- Gingembre
+('L_GINGER_ANTI_INFLAM',       'INFLAM',   'T2', 22, 'Mashhadi 2013 RCT : ↓ CRP. Gingérols = agonistes TRPV1 > inhibiteurs NF-κB'),
+-- Baies anthocyanes
+('L_BERRIES_ANTHOCYANINS',     'INFLAM',   'T1', 16, 'Zhu 2011 méta 22 RCT : ↓ CRP, ↓ oxLDL. Anthocyanes = Nrf2 + NF-κB'),
+('L_BERRIES_ANTHOCYANINS',     'IR',       'T2', 28, '↓ stress oxydatif postprandial → protection secondaire du signal insulinique'),
+-- Bouillon d'os / collagène
+('L_BONE_BROTH_COLLAGEN',      'DYSBIOSE', 'T3', 35, 'Al-Nakkash 2024 revue : substrat glycine/glutamine barrière. T3 mécanistique'),
+-- Légumes lactofermentés
+('L_FERMENTED_VEGGIES',        'DYSBIOSE', 'T1', 15, 'Marco 2021 : ↑ diversité microbiome via LAB viables. ≥2 c.s./j'),
+('L_FERMENTED_VEGGIES',        'INFLAM',   'T2', 30, '↓ pathobiontes → ↓ translocation LPS → ↓ inflammation bas grade'),
+-- Avocat MUFA
+('L_AVOCADO_MUFA',             'IR',       'T1', 20, 'Mahmassani 2018 méta 10 RCT : ↓ LDL, ↑ HDL, ↑ absorption caroténoïdes ×5-15'),
+('L_AVOCADO_MUFA',             'INFLAM',   'T2', 28, 'Glutathion avocat + MUFA oléique → effet anti-inflammatoire modéré'),
+-- Cannelle Ceylan
+('L_CINNAMON_IR',              'IR',       'T1', 18, 'Allen 2013 méta 10 RCT : ↓ HOMA-IR -0.5, ↓ glycémie à jeun -5%. MHCP mimétique insuline'),
+-- Café filtre
+('L_COFFEE_CARDIO',            'IR',       'T2', 25, 'Poole 2017 BMJ umbrella : ↓ risque DT2 -30%. Acide chlorogénique + GLP-1'),
+('L_COFFEE_CARDIO',            'INFLAM',   'T2', 30, 'Polyphénols café → ↓ stress oxydatif, ↓ mortalité CV toutes causes'),
+-- Marche postprandiale
+('L_POSTPRANDIAL_WALK',        'IR',       'T1', 5,  'Diana 2024 Sports Med méta 11 RCT : ↓ AUC glucose 2h -22%. GLUT-4 indépendant insuline'),
+('L_POSTPRANDIAL_WALK',        'INFLAM',   'T2', 25, '↓ TG postprandiaux, ↓ stress oxydatif post-repas');

@@ -1097,3 +1097,152 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
   ARRAY['Extension de L_EVOO_PRIMARY. Préserve polyphénols que la cuisson détruit.'],
   false
 );
+
+-- ═══════════════════════════════════════════════════
+--  NOUVEAUX LEVIERS v0.2 — enrichissement → 80 leviers
+-- ═══════════════════════════════════════════════════
+
+-- Chrome — IR
+('L_CHROMIUM_SUPP', 'Chrome (nutritionnel)', 'supplement', true, 'Coeur de betterave, brocoli, jaune d\'oeuf, noix du Brésil', 'T1', 'n/a', '↑ sensibilité insulinique, ↓ HOMA-IR',
+ '↓ HOMA-IR -0.5, ↓ insuline à jeun',
+ 'IR', 'T1',
+ 'Suksomboon 2014 J Nutr — n=25 RCT',
+ ARRAY['20549755'],
+ 'Aliments riches en chrome naturels : 1 jaune d\'oeuf + 50g brocoli + 30g noix du Brésil/j',
+ NULL,
+ NULL,
+ ARRAY['Le chrome alimentaire n\'atteint pas les doses suppléments (200 µg). Levier complémentaire.'],
+ false),
+
+-- Psyllium — IR + DYSBIOSE
+('L_PSYLLIUM_FIBER', 'Psyllium blond (fibres solubles mucilagineuses)', 'ingredient', false, 'Psyllium, graines de lin moulues', 'T1', 'n/a', '↑ viscosité bol alimentaire, ↓ pic glycémique, ↓ LDL, ↑ SCFA butyrate',
+ '↓ LDL -12%, ↓ HbA1c -0.3%, ↑ satiété',
+ 'IR', 'T1',
+ 'Anderson 1991 Am J Clin Nutr — n=26 RCT',
+ ARRAY['2046732'],
+ '5-10g/j de psyllium dans eau ou yaourt. Augmenter progressivement.',
+ 'Boire ≥250 ml eau par 5g psyllium. Risque occlusion si déshydratation.',
+ NULL,
+ ARRAY['Fibre soluble viscosifiante. Complémentaire de L_FIBER_30G.'],
+ false),
+
+-- Inositol — IR / PCOS
+('L_INOSITOL_FOOD', 'Inositol alimentaire (myo-inositol)', 'ingredient', false, 'Son de blé, son d\'avoine, légumineuses, agrumes, cantaloup', 'T1', 'n/a', 'Second messenger insuline. ↑ sensibilité insulinique, ↓ testostérone libre (SOPK)',
+ '↓ HOMA-IR, ↓ testostérone libre',
+ 'IR', 'T1',
+ 'Unfer 2017 Gynecol Endocrinol — méta 17 RCT SOPK',
+ ARRAY['28050912'],
+ 'Aliments riches en inositol quotidiens : 30g son d\'avoine + agrumes + légumineuses',
+ NULL,
+ NULL,
+ ARRAY['Prioritaire si phénotype pcos_adipose.'],
+ false),
+
+-- Thé vert — INFLAM
+('L_GREEN_TEA_MATCHA', 'Thé vert / Matcha (EGCG + L-théanine)', 'beverage', false, 'Thé vert japonais (sencha, gyokuro, matcha), thé vert chinois', 'T1', '2-4 tasses/j', '↑ dépense énergétique, ↑ oxydation lipidique, ↓ inflammation via EGCG (NF-κB)',
+ '↓ CRP, ↓ LDL -5%, ↓ HOMA-IR',
+ 'INFLAM', 'T1',
+ 'Zheng 2011 Int J Obes — méta 25 RCT',
+ ARRAY['21540875'],
+ '2-4 tasses/j de thé vert (250-1000 mg polyphénols). Matcha : ½ c.c./j.',
+ 'Éviter à jeun si gastrite. Ne pas boire avec repas riche en fer (↓ absorption 70%).',
+ NULL,
+ ARRAY['EGCG = catéchine majoritaire. L-théanine module effet caféine.'],
+ false),
+
+-- Curcuma + poivre — INFLAM
+('L_TURMERIC_BLACKPEPPER', 'Curcuma + poivre noir (pipérine)', 'ingredient', false, 'Curcuma frais râpé, poudre de curcuma, poivre noir concassé', 'T1', '1-3g curcumine/j (1 c.c. curcuma)', '↓ NF-κB, ↓ COX-2, ↑ Nrf2. Pipérine ↑ biodisponibilité curcumine ×2000%',
+ '↓ CRP -22 mm/h (arthrose), ↓ IL-6, ↓ TNF-α',
+ 'INFLAM', 'T1',
+ 'Shehzad 2013 Mol Nutr Food Res — méta 8 RCT',
+ ARRAY['23275145'],
+ '1 c.c. curcuma + pincée poivre noir + matière grasse. Cuisson douce ≤100°C.',
+ 'Éviter si calculs biliaires symptomatiques. Interactions AVK (théoriques).',
+ NULL,
+ ARRAY['Curcumine pure = supplémentation. Curcuma culinaire = dose faible mais durable et sans risque hépatique.'],
+ false),
+
+-- Gingembre — INFLAM
+('L_GINGER_ANTI_INFLAM', 'Gingembre frais (gingérols, shogaols)', 'ingredient', false, 'Gingembre frais cru, thé de gingembre, gingembre séché', 'T2', '2-4g gingembre frais/j (1 cm racine)', '↑ Nrf2, ↓ NF-κB, ↓ COX-2. Gingérols = agonistes TRPV1 >adaptogènes.',
+ '↓ CRP, ↓ douleur musculaire post-exercice',
+ 'INFLAM', 'T2',
+ 'Mashhadi 2013 Int J Prev Med — RCT 72 sujets',
+ ARRAY['23717708'],
+ '1 cm gingembre frais râpé dans plats sautés, soupes, tisanes. Infusion 10 min.',
+ 'Prudence si lithiase biliaire. Interactions AVK (théoriques).',
+ NULL,
+ ARRAY['Gingérols frais plus puissants que gingembre séché.'],
+ false),
+
+-- Baies anthocyanes — INFLAM
+('L_BERRIES_ANTHOCYANINS', 'Baies riches en anthocyanes (myrtilles, mûres, cassis)', 'ingredient', false, 'Myrtilles sauvages, mûres, cassis, airelles, framboises', 'T1', '100-200g/j baies fraîches ou surgelées', '↑ Nrf2, ↓ NF-κB, ↑ biodisponibilité NO, ↓ stress oxydatif postprandial',
+ '↓ CRP, ↓ oxLDL, ↑ HDL, ↓ PA systolique -5 mmHg',
+ 'INFLAM', 'T1',
+ 'Zhu 2011 J Nutr — méta 22 RCT',
+ ARRAY['21900449'],
+ '100-200g/j baies. Fraîches ou surgelées (conservent polyphénols). Éviter jus (fibres perdues).',
+ NULL,
+ NULL,
+ ARRAY['Myrtilles sauvages = 2× plus d\'anthocyanes que cultivées.'],
+ false),
+
+-- Bouillon d'os — DYSBIOSE
+('L_BONE_BROTH_COLLAGEN', 'Bouillon d\'os / collagène alimentaire (barrière)', 'ingredient', false, 'Bouillon d\'os (poulet, boeuf, poisson), collagène hydrolysé', 'T3', '250 ml bouillon/j ou 10g collagène', '↑ glycine, proline, glutamine. Substrat pour réparation barrière intestinale.',
+ '↓ perméabilité intestinale (en contexte lésionnel)',
+ 'DYSBIOSE', 'T3',
+ 'Al-Nakkash 2024 Nutrients — revue mécanistique',
+ ARRAY['38398755'],
+ '250 ml bouillon d\'os maison/j. Cuisson 12-24h avec vinaigre pour extraction collagène.',
+ 'Bouillon industriel = souvent pauvre en collagène. Privilégier fait maison.',
+ NULL,
+ ARRAY['T3 = mécanistique. Pas de RCT sur bouillon d\'os seul.'],
+ false),
+
+-- Légumes lactofermentés — DYSBIOSE
+('L_FERMENTED_VEGGIES', 'Légumes lactofermentés diversifiés', 'ingredient', false, 'Choucroute crue, kimchi, pickles lactofermentés, légumes lacto variés', 'T1', '≥2 c.s./j (≈30g)', 'Apport de bactéries lactiques viables (LAB). ↑ diversité microbiome. ↑ SCFA.',
+ '↑ diversité microbiome, ↑ IgA sécrétoire',
+ 'DYSBIOSE', 'T1',
+ 'Marco 2021 Nat Rev Gastroenterol — revue',
+ ARRAY['34290377'],
+ '≥2 c.s./j de légumes lactofermentés. Varier les sources.',
+ 'Introduire progressivement si SIBO. Éviter si histaminose avérée.',
+ NULL,
+ ARRAY['Vérifier "lactofermentation" et rayon frais. Pasteurisés = LAB morts.'],
+ false),
+
+-- Avocat — IR
+('L_AVOCADO_MUFA', 'Avocat (MUFA + fibres + glutathion)', 'ingredient', false, 'Avocat frais (type Hass)', 'T1', '½-1 avocat/j', 'MUFA oléique + glutathion. ↑ absorption caroténoïdes. ↑ HDL. ↓ LDL oxydé.',
+ '↓ LDL, ↑ HDL, ↓ PA, ↑ satiété',
+ 'IR', 'T1',
+ 'Mahmassani 2018 J Nutr — méta 10 RCT',
+ ARRAY['30059170'],
+ '½-1 avocat/j. Ajouté à assiette de légumes crus (↑ absorption caroténoïdes ×5-15).',
+ 'Avocat = 160 kcal/100g. Intégrer dans balance énergétique.',
+ NULL,
+ ARRAY['MUFA oléique = principal AG de l\'avocat. Synchro L_EVOO_PRIMARY.'],
+ false),
+
+-- Cannelle — IR
+('L_CINNAMON_IR', 'Cannelle de Ceylan (MHCP mimétique insuline)', 'spice', false, 'Cannelle de Ceylan (Cinnamomum verum)', 'T1', '1-3g/j (½-1 c.c.)', 'MHCP = mimétique insuline. ↑ PI3-kinase, ↓ GLUT2 intestinal. ↓ glycémie.',
+ '↓ HOMA-IR -0.5, ↓ glycémie à jeun -5%',
+ 'IR', 'T1',
+ 'Allen 2013 J Med Food — méta 10 RCT',
+ ARRAY['24351163'],
+ '½-1 c.c. cannelle Ceylan/j dans petit-déjeuner (porridge, yaourt, café).',
+ 'Cannelle Cassia contient coumarine → toxique >5g/j. Toujours Ceylan.',
+ NULL,
+ ARRAY['MHCP = seulement >1g/j. Cannelle en pâtisserie ne suffit pas.'],
+ false),
+
+-- Café filtre — IR (prévention diabète)
+('L_COFFEE_CARDIO', 'Café filtre (polyphénols + GLP-1 + gut-brain)', 'beverage', false, 'Café filtre (méthode papier), café moulu frais', 'T2', '2-3 tasses/j (200-400 mg caféine)', '↑ GLP-1, ↑ PYY, ↓ gréline. Acide chlorogénique. ↓ risque DT2 et mortalité CV.',
+ '↓ risque DT2 -30% (cohorte), ↓ mortalité CV',
+ 'IR', 'T2',
+ 'Poole 2017 BMJ — umbrella review 218 méta',
+ ARRAY['29167102'],
+ '2-3 tasses café filtre/j. Éviter 8h avant coucher. Dernier café avant 14h.',
+ 'Filtre papier ↓ cafestol/kahweol (↑ LDL si non filtré). Éviter si RGO actif.',
+ 'Palpitations (↓ caféine)',
+ ARRAY['Acide chlorogénique = antioxydant majeur. Effet GLP-1 = T2.'],
+ false);
+

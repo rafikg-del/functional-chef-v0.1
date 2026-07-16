@@ -209,7 +209,7 @@ export default function ConsultationDetailPage() {
               <button onClick={handleDownloadPdf} className="btn-ghost !py-2 !px-4 text-sm">
                 📄 Export PDF
               </button>
-              <Link href={`/dashboard/consultations/${params.id}/print`} className="btn-primary !py-2 !px-5 text-sm">
+              <Link href={`/prescription/${params.id}`} className="btn-primary !py-2 !px-5 text-sm">
                 🖨️ Prescription
               </Link>
             </div>

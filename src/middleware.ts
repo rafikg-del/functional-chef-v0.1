@@ -2,6 +2,14 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
+  // Skip auth for print/prescription pages — do this BEFORE any Supabase call
+  if (request.nextUrl.pathname.startsWith('/prescription')) {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+  if (request.nextUrl.pathname.endsWith('/print')) {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
   let response = NextResponse.next({ request: { headers: request.headers } });
 
   const supabase = createServerClient(
@@ -46,6 +54,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify).*)',
+    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify|api/compose|auth).*)',
   ],
 };

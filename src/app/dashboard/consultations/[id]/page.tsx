@@ -205,9 +205,14 @@ export default function ConsultationDetailPage() {
         )}
         {validated && (
           <div className="shrink-0 ml-6 text-right space-y-2">
-            <button onClick={handleDownloadPdf} className="btn-ghost !py-2 !px-4 text-sm w-full">
-              📄 Télécharger le PDF
-            </button>
+            <div className="flex gap-2">
+              <button onClick={handleDownloadPdf} className="btn-ghost !py-2 !px-4 text-sm">
+                📄 Export PDF
+              </button>
+              <Link href={`/dashboard/consultations/${params.id}/print`} className="btn-primary !py-2 !px-5 text-sm">
+                🖨️ Prescription
+              </Link>
+            </div>
             <p className="text-xs text-tier-t1 font-medium">Validée le</p>
             <p className="text-xs text-ink-600">{new Date(c.validated_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
             {c.validated_by && <p className="text-xs text-ink-500">par {c.validated_by}</p>}

@@ -127,8 +127,40 @@ export interface PatientProfile {
   biomarker_values: Record<string, number>;
   /** Clinical signals — numeric (Bristol score, frequency) or categorical ('positive') */
   clinical_signals: Record<string, number | string>;
+  /** Soft signals — clinical context that doesn't trigger alone but adds suspicion */
+  soft_signals?: PatientSoftSignals;
   exclusions: PatientExclusions;
   context: PatientContext;
+}
+
+/** Soft clinical signals — contextual clues for suspicion scoring */
+export interface PatientSoftSignals {
+  // IR
+  fatigue_postprandiale?: boolean;
+  fringales_glucidiques?: boolean;
+  antécédents_familiaux_dt2?: boolean;
+  prise_poids_recente_kg?: number;
+  sopk_connu?: boolean;
+  ovulation_irreguliere?: boolean;
+  lipodystrophie?: boolean;
+
+  // INFLAM
+  douleurs_articulaires_diffuses?: boolean;
+  fatigue_chronique_persistante?: boolean;
+  infections_recurrentes?: boolean;
+  peau_inflammee_eczema_psoriasis?: boolean;
+  intolérance_alcool_recente?: boolean;
+  sueurs_nocturnes?: boolean;
+  gingivite_recurrente?: boolean;
+
+  // DYSBIOSE
+  alternance_constipation_diarrhee?: boolean;
+  flatulences_excessives?: boolean;
+  reflux_gastro_oesophagien?: boolean;
+  nausées_postprandiales?: boolean;
+  selles_molles_matin?: boolean;
+  intolérance_histamine?: boolean;
+  fodmap_sensibilité?: boolean;
 }
 
 // ───────────────────────────────────────────────────────────
@@ -143,6 +175,10 @@ export interface BottleneckScore {
   minor_hits: number;
   discriminant_hits: number;
   triggered: boolean;                      // passed classification rule
+  /** Suspicion score 0-1: clinical context that suggests this bottleneck */
+  suspicion_score: number;
+  /** Which soft signals contributed */
+  suspicion_signals: string[];
   is_dominant: boolean;
   is_co_dominant: boolean;
   evidence: BottleneckEvidence[];
@@ -164,6 +200,9 @@ export interface ClassificationResult {
   phenotypes?: IRPhenotype[];
   inflam_phenotypes?: InflamPhenotype[];
   rationale: string;
+  /** Clinical suspicion level when nothing triggered but soft signals present */
+  suspicion_level?: 'none' | 'surveillance' | 'probable';
+  suspicion_rationale?: string;
 }
 
 export interface SelectedLever {

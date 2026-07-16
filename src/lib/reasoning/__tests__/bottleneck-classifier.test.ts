@@ -662,4 +662,64 @@ describe('bottleneck-classifier', () => {
       expect(result.dominant).toBeNull();
     });
   });
+
+  // =====================================
+  // SUSPICION SCORE ET SOFT SIGNALS
+  // =====================================
+
+  describe('Suspicion clinique (soft signals)', () => {
+    it('IR probable — soft signals évocateurs sans trigger biologique', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { HOMA_IR: 1.4, TG_HDL_RATIO: 1.0 },
+        clinical_signals: {},
+        soft_signals: {
+          fatigue_postprandiale: true,
+          fringales_glucidiques: true,
+          antécédents_familiaux_dt2: true,
+          prise_poids_recente_kg: 5,
+        },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(result.dominant).toBeNull();
+      expect(result.suspicion_level).toBe('probable');
+      const ir = result.scores.find(s => s.bottleneck_id === 'IR');
+      expect(ir?.suspicion_score).toBeGreaterThanOrEqual(0.6);
+      expect(ir?.suspicion_signals.length).toBeGreaterThanOrEqual(3);
+    });
+
+    it('DYSBIOSE surveillance — signes modérés', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {},
+        clinical_signals: { BRISTOL_SCORE: 5, BLOATING_FREQ: 1 },
+        soft_signals: {
+          alternance_constipation_diarrhee: true,
+          flatulences_excessives: true,
+          selles_molles_matin: true,
+        },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(result.dominant).toBeNull();
+      const dys = result.scores.find(s => s.bottleneck_id === 'DYSBIOSE');
+      expect(dys?.suspicion_score).toBeGreaterThanOrEqual(0.5);
+      expect(['surveillance', 'probable']).toContain(result.suspicion_level);
+    });
+
+    it('Aucune suspicion sans soft signals', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { HOMA_IR: 1.0, CRP_US: 0.5 },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(result.suspicion_level).toBe('none');
+      for (const s of result.scores) {
+        expect(s.suspicion_score).toBe(0);
+      }
+    });
+  });
 });

@@ -35,6 +35,7 @@ import type {
   BiomarkerThreshold,
   ClassificationResult,
   PatientProfile,
+  PatientSoftSignals,
   ThresholdWeight,
   IRPhenotype,
   InflamPhenotype,
@@ -86,6 +87,77 @@ const CLASSIFICATION_RULES: Record<BottleneckId, (i: RuleInput) => boolean> = {
   DYSBIOSE: ({ major_hits, moderate_hits }) =>
     major_hits >= 2 && moderate_hits >= 1,
 };
+
+// ───────────────────────────────────────────────────────────
+// Soft signals → suspicion scoring
+// ───────────────────────────────────────────────────────────
+
+interface SoftSignalRule {
+  signal: string;                      // key in PatientSoftSignals
+  bottleneck: BottleneckId;
+  /** 0-1: weight of this signal for suspicion */
+  weight: number;
+  label: string;                       // display label
+}
+
+const SOFT_SIGNAL_RULES: SoftSignalRule[] = [
+  // IR
+  { signal: 'fatigue_postprandiale', bottleneck: 'IR', weight: 0.20, label: 'Fatigue postprandiale' },
+  { signal: 'fringales_glucidiques', bottleneck: 'IR', weight: 0.20, label: 'Fringales glucidiques' },
+  { signal: 'antécédents_familiaux_dt2', bottleneck: 'IR', weight: 0.15, label: 'ATCD familiaux DT2' },
+  { signal: 'prise_poids_recente_kg', bottleneck: 'IR', weight: 0.06, label: 'Prise poids récente' },
+  { signal: 'sopk_connu', bottleneck: 'IR', weight: 0.25, label: 'SOPK connu' },
+  { signal: 'ovulation_irreguliere', bottleneck: 'IR', weight: 0.15, label: 'Ovulation irrégulière' },
+  { signal: 'lipodystrophie', bottleneck: 'IR', weight: 0.20, label: 'Lipodystrophie' },
+  // INFLAM
+  { signal: 'douleurs_articulaires_diffuses', bottleneck: 'INFLAM', weight: 0.15, label: 'Douleurs articulaires diffuses' },
+  { signal: 'fatigue_chronique_persistante', bottleneck: 'INFLAM', weight: 0.20, label: 'Fatigue chronique persistante' },
+  { signal: 'infections_recurrentes', bottleneck: 'INFLAM', weight: 0.20, label: 'Infections récurrentes' },
+  { signal: 'peau_inflammee_eczema_psoriasis', bottleneck: 'INFLAM', weight: 0.15, label: 'Peau inflammatoire (eczéma/psoriasis)' },
+  { signal: 'intolérance_alcool_recente', bottleneck: 'INFLAM', weight: 0.10, label: 'Intolérance alcool récente' },
+  { signal: 'sueurs_nocturnes', bottleneck: 'INFLAM', weight: 0.15, label: 'Sueurs nocturnes' },
+  { signal: 'gingivite_recurrente', bottleneck: 'INFLAM', weight: 0.10, label: 'Gingivite récurrente' },
+  // DYSBIOSE
+  { signal: 'alternance_constipation_diarrhee', bottleneck: 'DYSBIOSE', weight: 0.25, label: 'Alternance constipation/diarrhée' },
+  { signal: 'flatulences_excessives', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Flatulences excessives' },
+  { signal: 'reflux_gastro_oesophagien', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'RGO' },
+  { signal: 'nausées_postprandiales', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Nausées postprandiales' },
+  { signal: 'selles_molles_matin', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'Selles molles matin' },
+  { signal: 'intolérance_histamine', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Intolérance histamine' },
+  { signal: 'fodmap_sensibilité', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Sensibilité FODMAP' },
+];
+
+/**
+ * Compute suspicion score (0-1) for a bottleneck based on soft signals.
+ */
+function computeSuspicion(
+  bottleneckId: BottleneckId,
+  soft_signals: PatientSoftSignals | undefined
+): { score: number; signals: string[] } {
+  if (!soft_signals) return { score: 0, signals: [] };
+
+  let total = 0;
+  const activated: string[] = [];
+
+  for (const rule of SOFT_SIGNAL_RULES) {
+    if (rule.bottleneck !== bottleneckId) continue;
+
+    const val = (soft_signals as any)[rule.signal];
+    if (val === undefined || val === false) continue;
+
+    if (rule.signal === 'prise_poids_recente_kg') {
+      const kg = val as number;
+      const contrib = Math.min(kg * rule.weight, 0.5); // cap at 0.5 from weight alone
+      total += contrib;
+      if (contrib > 0.05) activated.push(`${rule.label}: +${kg}kg`);
+    } else {
+      total += rule.weight;
+      activated.push(rule.label);
+    }
+  }
+
+  return { score: Math.min(total, 1.0), signals: activated };
+}
 
 // ───────────────────────────────────────────────────────────
 // Threshold breach detection
@@ -223,6 +295,8 @@ function scoreBottleneck(
     evidence,
   });
 
+  const suspicion = computeSuspicion(bottleneck.id, patient.soft_signals);
+
   return {
     bottleneck_id: bottleneck.id,
     score,
@@ -231,6 +305,8 @@ function scoreBottleneck(
     minor_hits,
     discriminant_hits,
     triggered,
+    suspicion_score: suspicion.score,
+    suspicion_signals: suspicion.signals,
     is_dominant: false, // assigned in next step
     is_co_dominant: false,
     evidence,
@@ -396,5 +472,24 @@ export function classifyBottlenecks(
     finalRationale += ' Blocage fonctionnel du fer (TSAT <20%) : carence fonctionnelle en fer par séquestration. Précautions : décaler thé/café des repas, modérer curcumine haute dose.';
   }
 
-  return { scores, dominant, co_dominant, phenotypes: phenotypes.length ? phenotypes : undefined, inflam_phenotypes: inflam_phenotypes.length ? inflam_phenotypes : undefined, rationale: finalRationale };
+  // Suspicion level
+  const maxSuspicion = Math.max(...scores.map(s => s.suspicion_score));
+  const suspicionSignals = scores
+    .filter(s => s.suspicion_score > 0)
+    .map(s => `${s.bottleneck_id}: ${s.suspicion_signals.join(', ')}`);
+
+  let suspicion_level: 'none' | 'surveillance' | 'probable' = 'none';
+  let suspicion_rationale = '';
+  if (maxSuspicion >= 0.7) {
+    suspicion_level = 'probable';
+    suspicion_rationale = `Fort faisceau clinique : ${suspicionSignals.join(' ; ')}. Envisager bilan biologique de confirmation.`;
+  } else if (maxSuspicion >= 0.4) {
+    suspicion_level = 'surveillance';
+    suspicion_rationale = `Suspicion clinique modérée : ${suspicionSignals.join(' ; ')}. Recommander surveillance et bilan si persistance.`;
+  }
+  if (suspicion_level !== 'none') {
+    finalRationale += ` — ${suspicion_rationale}`;
+  }
+
+  return { scores, dominant, co_dominant, phenotypes: phenotypes.length ? phenotypes : undefined, inflam_phenotypes: inflam_phenotypes.length ? inflam_phenotypes : undefined, suspicion_level, suspicion_rationale, rationale: finalRationale };
 }

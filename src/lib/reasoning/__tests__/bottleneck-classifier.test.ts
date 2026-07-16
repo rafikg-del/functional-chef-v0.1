@@ -40,6 +40,8 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   // IR hepatic MASLD thresholds (v0.2 enrichment)
   { id: 't10', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_PDFF', functional_target_min: null, functional_target_max: 5, alert_threshold_low: null, alert_threshold_high: 5, alert_categorical_value: null, weight: 'major' },
   { id: 't11', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_MRS', functional_target_min: null, functional_target_max: 5.56, alert_threshold_low: null, alert_threshold_high: 5.56, alert_categorical_value: null, weight: 'major' },
+  // IR — α-HB discriminant for hepatic_masld (Zhang 2026)
+  { id: 't11b', bottleneck_id: 'IR', biomarker_id: 'A_HYDROXYBUTYRATE', functional_target_min: null, functional_target_max: null, alert_threshold_low: null, alert_threshold_high: 12, alert_categorical_value: null, weight: 'discriminant' },
   // IR — SHBG (SOPK/pcos_adipose enrichment)
   { id: 't12', bottleneck_id: 'IR', biomarker_id: 'SHBG', functional_target_min: 50, functional_target_max: null, alert_threshold_low: 30, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
   // INFLAM — TSAT (functional iron blockade enrichment)
@@ -379,6 +381,29 @@ describe('bottleneck-classifier', () => {
       const result = classify(patient);
       expect(result.dominant).toBe('IR');
       expect(result.phenotypes).toContain('hepatic_masld');
+    });
+
+    it('α-hydroxybutyrate >12 µmol/L seul ne suffit pas pour hepatic_masld (discriminant, pas imagerie)', () => {
+      // α-HB est un discriminant — il contribue au score mais ne tagge pas hepatic_masld
+      // sans imagerie (PDFF ou MRS)
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 2.2, TG_HDL_RATIO: 1.6, FASTING_INSULIN: 10,
+          A_HYDROXYBUTYRATE: 15, // >12 → discriminant breach
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      // Pas d'imagerie → pas de tag hepatic_masld
+      expect(result.phenotypes?.includes('hepatic_masld')).toBeFalsy();
+      // Mais le discriminant apparaît dans les preuves
+      const ir = irScore(result);
+      expect(ir.evidence.some(e => e.biomarker_id === 'A_HYDROXYBUTYRATE')).toBe(true);
+      expect(ir.discriminant_hits).toBeGreaterThanOrEqual(1);
     });
   });
 

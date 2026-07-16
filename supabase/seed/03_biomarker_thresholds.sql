@@ -21,7 +21,9 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('IR', 'LIVER_FAT_PDFF',    NULL,  5.0,  NULL,  5.0,   'major',    'MASLD si ≥5% PDFF. Tag phénotype hepatic_masld'),
 ('IR', 'LIVER_FAT_MRS',     NULL,  5.56, NULL,  5.56,  'major',    'MASLD si >5.56% MRS'),
 ('IR', 'FRUCTOSE_INTAKE',   NULL,  25,   NULL,  50,    'moderate', 'Excès fructose >50 g/j — activation ChREBP/DNL'),
-('IR', 'FREE_SUGAR_PCT_ENERGY', NULL, 5, NULL, 10,    'moderate', 'Sucres libres >10% énergie — cible ≤5% si MASLD');
+('IR', 'FREE_SUGAR_PCT_ENERGY', NULL, 5, NULL, 10,    'moderate', 'Sucres libres >10% énergie — cible ≤5% si MASLD'),
+-- α-hydroxybutyrate — discriminant pour hepatic_masld (Zhang 2026 Front Nutr PMID 42440805)
+('IR', 'A_HYDROXYBUTYRATE',  NULL,  NULL, NULL, 12,    'discriminant', 'α-HB >12 µmol/L = dysfonction glycogénique hépatique. Discriminant pour phénotype hepatic_masld.');
 
 -- ---------------------------------------------------------------------
 -- INFLAM (Inflammaging) thresholds

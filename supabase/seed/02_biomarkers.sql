@@ -51,4 +51,6 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('SHBG', 'SHBG (Sex Hormone Binding Globulin)', 'nmol/L', 'hormonal', 'Transporteur des hormones sexuelles. Basse dans l\'hyperinsulinémie, SOPK, péri-ménopause. Cible >50 nmol/L.', false),
 ('TSAT', 'Coefficient de saturation de la transferrine', '%', 'iron', 'Rapport fer sérique / capacité totale de fixation. Cible 20-40%. Bas = carence fonctionnelle ou absolue.', false),
 ('I_FABP', 'I-FABP (Intestinal Fatty Acid Binding Protein)', 'pg/mL', 'microbiome', 'Marqueur de lésion entérocytaire. Élevé si souffrance de la barrière intestinale. Cible <2000 pg/mL.', false),
-('LBP', 'LBP (Lipopolysaccharide Binding Protein)', 'µg/mL', 'microbiome', 'Marqueur indirect de translocation endotoxinique (LPS). Élevé si voie leak active. Cible <10 µg/mL.', false);
+('LBP', 'LBP (Lipopolysaccharide Binding Protein)', 'µg/mL', 'microbiome', 'Marqueur indirect de translocation endotoxinique (LPS). Élevé si voie leak active. Cible <10 µg/mL.', false),
+-- α-HB (alpha-hydroxybutyrate) — nouveau marqueur IR/MASLD (PMID 42440805, 2026)
+('A_HYDROXYBUTYRATE', 'α-hydroxybutyrate', 'µmol/L', 'metabolic', 'Métabolite précoce de dysfonction glycogénique hépatique. Élevé dans T2DM avec MASLD. Discriminant pour le phénotype hepatic_masld. Source: Zhang 2026 Front Nutr.', false);

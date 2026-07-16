@@ -5,6 +5,7 @@ import { createClient } from '@/lib/supabase/client';
 import { useParams, useRouter } from 'next/navigation';
 import Link from 'next/link';
 import { EBMBadge } from '@/components/EBMBadge';
+import { generateConsultationPdf } from '@/lib/pdf/generate-consultation-pdf';
 
 const MOCK_DETAIL: Record<string, any> = {
   'mock-001': {
@@ -123,6 +124,11 @@ export default function ConsultationDetailPage() {
     setValidating(false);
   }
 
+  function handleDownloadPdf() {
+    const doc = generateConsultationPdf(consultation, profile?.full_name);
+    doc.save(`functional-chef-${consultation.id?.slice(0, 8) || 'consultation'}.pdf`);
+  }
+
   if (loading) {
     return (
       <div className="text-center py-20">
@@ -173,27 +179,35 @@ export default function ConsultationDetailPage() {
           </div>
         </div>
 
-        {/* Validation button */}
+        {/* Validation + Export buttons */}
         {!validated && (
-          <div className="shrink-0 ml-6">
-            <button
-              onClick={handleValidate}
-              disabled={validating}
-              className="btn-primary !py-2.5 !px-5 text-sm"
-            >
-              {validating ? 'Validation...' : '✅ Valider la consultation'}
-            </button>
+          <div className="shrink-0 ml-6 space-y-2">
+            <div className="flex gap-2">
+              <button onClick={handleDownloadPdf} className="btn-ghost !py-2.5 !px-4 text-sm">
+                📄 Export PDF
+              </button>
+              <button
+                onClick={handleValidate}
+                disabled={validating}
+                className="btn-primary !py-2.5 !px-5 text-sm"
+              >
+                {validating ? 'Validation...' : '✅ Valider'}
+              </button>
+            </div>
             <textarea
               value={validationNote}
               onChange={(e) => setValidationNote(e.target.value)}
               placeholder="Note de validation (optionnelle)"
-              className="input-field mt-2 text-xs"
+              className="input-field text-xs"
               rows={2}
             />
           </div>
         )}
         {validated && (
-          <div className="shrink-0 ml-6 text-right">
+          <div className="shrink-0 ml-6 text-right space-y-2">
+            <button onClick={handleDownloadPdf} className="btn-ghost !py-2 !px-4 text-sm w-full">
+              📄 Télécharger le PDF
+            </button>
             <p className="text-xs text-tier-t1 font-medium">Validée le</p>
             <p className="text-xs text-ink-600">{new Date(c.validated_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
             {c.validated_by && <p className="text-xs text-ink-500">par {c.validated_by}</p>}

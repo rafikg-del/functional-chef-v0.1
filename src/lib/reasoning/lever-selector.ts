@@ -42,6 +42,18 @@ const HEPATIC_MASLD_LEVERS = new Set([
   'L_REDUCE_FREE_SUGAR_10PCT',
 ]);
 
+/** Boost sort priority when IR carries pcos_adipose phenotype */
+const PCOS_ADIPOSE_LEVERS = new Set([
+  'L_VINEGAR_PRE_PRANDIAL',
+  'L_FOOD_SEQUENCE',
+  'L_PROTEIN_DISTRIBUTION',
+  'L_LOW_GI_MEAL_PATTERN',
+  'L_NUTS_MIX_30G',
+  'L_EVOO_PRIMARY',
+  'L_MEAL_TIMING_12H',
+  'L_WHOLE_GRAINS',
+]);
+
 interface SelectorInput {
   classification: ClassificationResult;
   available_levers: CulinaryLever[];           // already safety-filtered
@@ -58,10 +70,25 @@ export function selectLevers({
   const hepaticMasld =
     dominant === 'IR' &&
     (classification.phenotypes?.includes('hepatic_masld') ?? false);
+  const pcosAdipose =
+    dominant === 'IR' &&
+    (classification.phenotypes?.includes('pcos_adipose') ?? false);
+  const ironBlockade =
+    classification.inflam_phenotypes?.includes('functional_iron_blockade') ?? false;
 
   if (hepaticMasld) {
     warnings.push(
       'Phénotype hepatic_masld détecté : leviers anti-DNL/fructose priorisés (enrichissement IR v0.2).'
+    );
+  }
+  if (pcosAdipose) {
+    warnings.push(
+      'Phénotype pcos_adipose (SOPK/péri-ménopause) : leviers insulinosensibilisateurs et anti-androgéniques priorisés. SHBG basse + acide urique + obésité abdominale. Cibler l\'hyperinsulinémie primaire.'
+    );
+  }
+  if (ironBlockade) {
+    warnings.push(
+      'Blocage fonctionnel du fer (TSAT <20%) : fer piégé en intracellulaire. Décaler thé/café des repas ≥1h, associer vit C aux repas riches en fer non-héminique. Éviter curcumine haute dose prolongée.'
     );
   }
 
@@ -143,6 +170,11 @@ export function selectLevers({
         const aHep = HEPATIC_MASLD_LEVERS.has(a.lever.id) ? 0 : 1;
         const bHep = HEPATIC_MASLD_LEVERS.has(b.lever.id) ? 0 : 1;
         if (aHep !== bHep) return aHep - bHep;
+      }
+      if (pcosAdipose) {
+        const aPcos = PCOS_ADIPOSE_LEVERS.has(a.lever.id) ? 0 : 1;
+        const bPcos = PCOS_ADIPOSE_LEVERS.has(b.lever.id) ? 0 : 1;
+        if (aPcos !== bPcos) return aPcos - bPcos;
       }
       const ta = TIER_RANK[a.mapping!.tier_for_bottleneck] ?? 4;
       const tb = TIER_RANK[b.mapping!.tier_for_bottleneck] ?? 4;

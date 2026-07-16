@@ -54,4 +54,11 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('DYSBIOSE', 'ABX_LIFETIME',      NULL,  3,    NULL,  3,     NULL,       'moderate', 'Aggravant si >3 cures lifetime'),
 ('DYSBIOSE', 'PPI_CHRONIC',       NULL,  NULL, NULL,  NULL,  'positive', 'moderate', 'IPP >6 mois sans indication forte'),
 ('DYSBIOSE', 'FIBER_INTAKE',      25,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible >25g/j. Alerte <15g/j'),
-('DYSBIOSE', 'PLANT_DIVERSITY',   30,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible ≥30/sem. Alerte <15/sem');
+('DYSBIOSE', 'PLANT_DIVERSITY',   30,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible ≥30/sem. Alerte <15/sem'),
+-- Enrichissement SOPK/péri-ménopause pour IR
+('IR', 'SHBG',              50,    NULL, 30,    NULL,  NULL,       'moderate', 'SHBG basse <30 nmol/L = marqueur d\'hyperinsulinémie. Surtout chez F. Active la priorisation SOPK.'),
+-- Enrichissement blocage fonctionnel du fer pour INFLAM
+('INFLAM', 'TSAT',            20,    NULL, 20,    NULL,  NULL,       'moderate', 'TSAT <20% = carence fonctionnelle ou absolue. [Hauck 2025]'),
+-- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
+('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
+('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

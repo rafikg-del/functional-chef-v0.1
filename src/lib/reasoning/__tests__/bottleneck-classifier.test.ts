@@ -35,11 +35,15 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   { id: 't05', bottleneck_id: 'IR', biomarker_id: 'HBA1C', functional_target_min: null, functional_target_max: 5.4, alert_threshold_low: null, alert_threshold_high: 5.4, alert_categorical_value: null, weight: 'major' },
   { id: 't06', bottleneck_id: 'IR', biomarker_id: 'FASTING_GLUCOSE', functional_target_min: null, functional_target_max: 0.95, alert_threshold_low: null, alert_threshold_high: 1.10, alert_categorical_value: null, weight: 'moderate' },
   { id: 't07', bottleneck_id: 'IR', biomarker_id: 'TRIGLYCERIDES', functional_target_min: null, functional_target_max: 0.80, alert_threshold_low: null, alert_threshold_high: 1.2, alert_categorical_value: null, weight: 'moderate' },
-  { id: 't08', bottleneck_id: 'IR', biomarker_id: 'ACIDE_URIQUE', functional_target_min: null, functional_target_max: 5.5, alert_threshold_low: null, alert_threshold_high: 6, alert_categorical_value: null, weight: 'minor' },
+  { id: 't08', bottleneck_id: 'IR', biomarker_id: 'URIC_ACID', functional_target_min: null, functional_target_max: 5.5, alert_threshold_low: null, alert_threshold_high: 6, alert_categorical_value: null, weight: 'minor' },
   { id: 't09', bottleneck_id: 'IR', biomarker_id: 'WAIST_HEIGHT_RATIO', functional_target_min: null, functional_target_max: 0.5, alert_threshold_low: null, alert_threshold_high: 0.55, alert_categorical_value: null, weight: 'moderate' },
   // IR hepatic MASLD thresholds (v0.2 enrichment)
   { id: 't10', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_PDFF', functional_target_min: null, functional_target_max: 5, alert_threshold_low: null, alert_threshold_high: 5, alert_categorical_value: null, weight: 'major' },
   { id: 't11', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_MRS', functional_target_min: null, functional_target_max: 5.56, alert_threshold_low: null, alert_threshold_high: 5.56, alert_categorical_value: null, weight: 'major' },
+  // IR — SHBG (SOPK/pcos_adipose enrichment)
+  { id: 't12', bottleneck_id: 'IR', biomarker_id: 'SHBG', functional_target_min: 50, functional_target_max: null, alert_threshold_low: 30, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
+  // INFLAM — TSAT (functional iron blockade enrichment)
+  { id: 't13', bottleneck_id: 'INFLAM', biomarker_id: 'TSAT', functional_target_min: 20, functional_target_max: null, alert_threshold_low: 20, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
 
   // INFLAM thresholds
   { id: 't20', bottleneck_id: 'INFLAM', biomarker_id: 'CRP_US', functional_target_min: null, functional_target_max: 1, alert_threshold_low: null, alert_threshold_high: 1, alert_categorical_value: null, weight: 'major' },
@@ -396,6 +400,117 @@ describe('bottleneck-classifier', () => {
       const inflam = inflamScore(result);
       expect(inflam.discriminant_hits).toBe(1);
       expect(inflam.triggered).toBe(false); // CRP 0.7 < 1 → pas de breach major
+    });
+  });
+
+  // =====================================
+  // PHÉNOTYPE PCOS_ADIPOSE
+  // =====================================
+
+  describe('Phénotype pcos_adipose (SOPK/péri-ménopause)', () => {
+    it('IR déclenché + F + SHBG bas + uricémie haute + waist haut → pcos_adipose tagué', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, FASTING_INSULIN: 9,
+          SHBG: 22, URIC_ACID: 6.5,
+          WAIST_HEIGHT_RATIO: 0.58,
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+        sex: 'F',
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      expect(result.phenotypes).toContain('pcos_adipose');
+    });
+
+    it('IR déclenché + F + SHBG bas + uricémie haute mais waist normal → pcos_adipose (2/3 critères)', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, FASTING_INSULIN: 9,
+          SHBG: 25, URIC_ACID: 6.8,
+          WAIST_HEIGHT_RATIO: 0.48,
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+        sex: 'F',
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      expect(result.phenotypes).toBeDefined();
+      expect(result.phenotypes).toContain('pcos_adipose');
+    });
+
+    it('IR déclenché + H (pas F) → pas de pcos', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, FASTING_INSULIN: 9,
+          SHBG: 25, URIC_ACID: 6.5,
+          WAIST_HEIGHT_RATIO: 0.58,
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+        sex: 'M',
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      expect(result.phenotypes).toBeUndefined();
+    });
+
+    it('IR + F + 1 seul critère /3 → pas de pcos', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, FASTING_INSULIN: 9,
+          SHBG: 25,
+          WAIST_HEIGHT_RATIO: 0.48,
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+        sex: 'F',
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      expect(result.phenotypes).toBeUndefined();
+    });
+  });
+
+  // =====================================
+  // PHÉNOTYPE FUNCTIONAL_IRON_BLOCKADE
+  // =====================================
+
+  describe('Phénotype functional_iron_blockade', () => {
+    it('INFLAM + TSAT <20% → tagué', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { CRP_US: 2.5, OMEGA3_INDEX: 4.5, TSAT: 15 },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('INFLAM');
+      expect(result.inflam_phenotypes).toContain('functional_iron_blockade');
+    });
+
+    it('INFLAM + TSAT normal → pas de tag', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { CRP_US: 2.5, OMEGA3_INDEX: 4.5, TSAT: 25 },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+
+      const result = classify(patient);
+      expect(result.dominant).toBe('INFLAM');
+      expect(result.inflam_phenotypes).toBeUndefined();
     });
   });
 

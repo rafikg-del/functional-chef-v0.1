@@ -37,6 +37,7 @@ import type {
   PatientProfile,
   ThresholdWeight,
   IRPhenotype,
+  InflamPhenotype,
 } from './types';
 
 // Weight → numeric points contribution
@@ -320,6 +321,54 @@ function detectHepaticMasldPhenotype(scores: BottleneckScore[]): IRPhenotype[] {
   return hasImaging ? ['hepatic_masld'] : [];
 }
 
+/**
+ * Tag pcos_adipose when IR is triggered in a female patient with
+ * hyperinsulinemia/adiposity markers :
+ *   - Sex = F
+ *   - SHBG <30 nmol/L (moderate breach) AND/OR
+ *   - Acide urique ≥6.0 mg/dL (≈350 µmol/L)
+ *   - Waist/height ratio ≥0.55 (abdominal obesity)
+ *
+ * This identifies the adipo-androgenic SOPK/péri-menopause sub-phenotype
+ * where the bottleneck is hyperinsulinemia driving SHBG down + VAT up.
+ */
+function detectPcosAdiposePhenotype(
+  scores: BottleneckScore[],
+  patient: PatientProfile
+): IRPhenotype[] {
+  const ir = scores.find((s) => s.bottleneck_id === 'IR');
+  if (!ir?.triggered) return [];
+  if (patient.sex !== 'F') return [];
+
+  const hit = new Set(ir.evidence.map((e) => e.biomarker_id));
+  const shbgLow = hit.has('SHBG');
+  const uricHigh = hit.has('URIC_ACID');
+  const waistHigh = hit.has('WAIST_HEIGHT_RATIO');
+
+  // Need at least 2 of 3 markers to tag the phenotype
+  let markers = 0;
+  if (shbgLow) markers++;
+  if (uricHigh) markers++;
+  if (waistHigh) markers++;
+
+  return markers >= 2 ? ['pcos_adipose'] : [];
+}
+
+/**
+ * Tag functional_iron_blockade when INFLAM is triggered AND
+ * TSAT <20% (moderate breach) indicating iron trapping
+ * despite normal/elevated ferritin.
+ */
+function detectFunctionalIronBlockade(scores: BottleneckScore[]): InflamPhenotype[] {
+  const inflam = scores.find((s) => s.bottleneck_id === 'INFLAM');
+  if (!inflam?.triggered) return [];
+
+  const hit = new Set(inflam.evidence.map((e) => e.biomarker_id));
+  const tsatLow = hit.has('TSAT');
+
+  return tsatLow ? ['functional_iron_blockade'] : [];
+}
+
 // ───────────────────────────────────────────────────────────
 // Public API
 // ───────────────────────────────────────────────────────────
@@ -331,12 +380,21 @@ export function classifyBottlenecks(
 ): ClassificationResult {
   const scores = bottlenecks.map((b) => scoreBottleneck(b, thresholds, patient));
   const { dominant, co_dominant, rationale } = assignDominance(scores, bottlenecks);
-  const phenotypes = detectHepaticMasldPhenotype(scores);
+  const irPhenotypes = detectHepaticMasldPhenotype(scores);
+  const pcosPhenotypes = detectPcosAdiposePhenotype(scores, patient);
+  const phenotypes = [...irPhenotypes, ...pcosPhenotypes];
+  const inflam_phenotypes = detectFunctionalIronBlockade(scores);
 
   let finalRationale = rationale;
   if (phenotypes.includes('hepatic_masld')) {
     finalRationale += ' Phénotype hepatic_masld (stéatose confirmée par imagerie hépatique) : leviers anti-DNL et anti-fructose priorisés.';
   }
+  if (phenotypes.includes('pcos_adipose')) {
+    finalRationale += ' Phénotype pcos_adipose (SOPK/péri-ménopause) : SHBG basse, acide urique élevé, obésité abdominale. Leviers anti-androgéniques et insulinosensibilisateurs priorisés.';
+  }
+  if (inflam_phenotypes.includes('functional_iron_blockade')) {
+    finalRationale += ' Blocage fonctionnel du fer (TSAT <20%) : carence fonctionnelle en fer par séquestration. Précautions : décaler thé/café des repas, modérer curcumine haute dose.';
+  }
 
-  return { scores, dominant, co_dominant, phenotypes: phenotypes.length ? phenotypes : undefined, rationale: finalRationale };
+  return { scores, dominant, co_dominant, phenotypes: phenotypes.length ? phenotypes : undefined, inflam_phenotypes: inflam_phenotypes.length ? inflam_phenotypes : undefined, rationale: finalRationale };
 }

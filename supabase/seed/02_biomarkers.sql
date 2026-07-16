@@ -46,4 +46,9 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('FIBER_INTAKE', 'Apport fibres estimé', 'g/day', 'clinical', 'Estimated daily fiber intake', true),
 ('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true),
 ('FRUCTOSE_INTAKE', 'Apport fructose libre estimé', 'g/day', 'clinical', 'Sucrose, HFCS, SSB. Seuil alerte populationnel >50 g/j', true),
-('FREE_SUGAR_PCT_ENERGY', 'Sucres libres (% apport énergétique)', '%', 'clinical', 'Cible UK ≤5%, alerte >10% (EASL/US guidelines)', true);
+('FREE_SUGAR_PCT_ENERGY', 'Sucres libres (% apport énergétique)', '%', 'clinical', 'Cible UK ≤5%, alerte >10% (EASL/US guidelines)', true),
+-- New v0.2 enrichment biomarkers — SOPK, iron blockade, leaky gut
+('SHBG', 'SHBG (Sex Hormone Binding Globulin)', 'nmol/L', 'hormonal', 'Transporteur des hormones sexuelles. Basse dans l\'hyperinsulinémie, SOPK, péri-ménopause. Cible >50 nmol/L.', false),
+('TSAT', 'Coefficient de saturation de la transferrine', '%', 'iron', 'Rapport fer sérique / capacité totale de fixation. Cible 20-40%. Bas = carence fonctionnelle ou absolue.', false),
+('I_FABP', 'I-FABP (Intestinal Fatty Acid Binding Protein)', 'pg/mL', 'microbiome', 'Marqueur de lésion entérocytaire. Élevé si souffrance de la barrière intestinale. Cible <2000 pg/mL.', false),
+('LBP', 'LBP (Lipopolysaccharide Binding Protein)', 'µg/mL', 'microbiome', 'Marqueur indirect de translocation endotoxinique (LPS). Élevé si voie leak active. Cible <10 µg/mL.', false);

@@ -10,7 +10,8 @@
 // ───────────────────────────────────────────────────────────
 
 export type BottleneckId = 'IR' | 'INFLAM' | 'DYSBIOSE';
-export type IRPhenotype = 'hepatic_masld';
+export type IRPhenotype = 'hepatic_masld' | 'pcos_adipose';
+export type InflamPhenotype = 'functional_iron_blockade';
 export type EBMTier = 'T1' | 'T2' | 'T3';
 export type Sex = 'F' | 'M' | 'O';
 export type ThresholdWeight = 'major' | 'moderate' | 'minor' | 'discriminant';
@@ -159,8 +160,9 @@ export interface ClassificationResult {
   scores: BottleneckScore[];
   dominant: BottleneckId | null;
   co_dominant: BottleneckId | null;
-  /** Sub-phenotypes when dominant bottleneck is IR (v0.2 hepatic enrichment) */
+  /** Sub-phenotypes */
   phenotypes?: IRPhenotype[];
+  inflam_phenotypes?: InflamPhenotype[];
   rationale: string;
 }
 

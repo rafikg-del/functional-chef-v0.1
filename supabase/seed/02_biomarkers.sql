@@ -53,4 +53,10 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('I_FABP', 'I-FABP (Intestinal Fatty Acid Binding Protein)', 'pg/mL', 'microbiome', 'Marqueur de lésion entérocytaire. Élevé si souffrance de la barrière intestinale. Cible <2000 pg/mL.', false),
 ('LBP', 'LBP (Lipopolysaccharide Binding Protein)', 'µg/mL', 'microbiome', 'Marqueur indirect de translocation endotoxinique (LPS). Élevé si voie leak active. Cible <10 µg/mL.', false),
 -- α-HB (alpha-hydroxybutyrate) — nouveau marqueur IR/MASLD (PMID 42440805, 2026)
-('A_HYDROXYBUTYRATE', 'α-hydroxybutyrate', 'µmol/L', 'metabolic', 'Métabolite précoce de dysfonction glycogénique hépatique. Élevé dans T2DM avec MASLD. Discriminant pour le phénotype hepatic_masld. Source: Zhang 2026 Front Nutr.', false);
+('A_HYDROXYBUTYRATE', 'α-hydroxybutyrate', 'µmol/L', 'metabolic', 'Métabolite précoce de dysfonction glycogénique hépatique. Élevé dans T2DM avec MASLD. Discriminant pour le phénotype hepatic_masld. Source: Zhang 2026 Front Nutr.', false),
+-- HOMOCYSTEINE — marqueur standard toxico-nutritionnel
+('HOMOCYSTEINE', 'Homocystéine totale', 'µmol/L', 'nutritionnel', 'Acide aminé soufré. Élevé = déficit B6/B9/B12 ou stress oxydatif. Facteur de risque CV indépendant. Cible <15 µmol/L.', false),
+-- GGT (gamma-glutamyl transférase, déjà présent? — ici comme marqueur explicite stress oxydatif)
+('GGT', 'Gamma-GT', 'U/L', 'hepatique', 'Enzyme de conjugaison du glutathion. Élevé = stress oxydatif hépatique, surcharge métabolique, alcool. Cible <40 U/L chez H, <30 U/L chez F. Marqueur prédictif de diabète.', false),
+-- Ferritine (haute — marqueur inflammatoire, déjà présent mais non listé explicitement)
+('FERRITIN_HIGH', 'Ferritine haute (inflammatoire)', 'ng/mL', 'iron', 'Ferritine >200 ng/mL = marqueur inflammatoire si TSAT normal. Distinguer surcharge vraie (TSAT >45%) de blocage fonctionnel (TSAT <20%).', false);

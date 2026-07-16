@@ -36,6 +36,10 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   { id: '24', bottleneck_id: 'INFLAM', biomarker_id: 'NLR', functional_target_min: null, functional_target_max: 2, alert_threshold_low: null, alert_threshold_high: 2.5, alert_categorical_value: null, weight: 'moderate' },
   { id: '26', bottleneck_id: 'INFLAM', biomarker_id: 'FIBRINOGEN', functional_target_min: null, functional_target_max: 3.5, alert_threshold_low: null, alert_threshold_high: 4, alert_categorical_value: null, weight: 'moderate' },
   { id: '27', bottleneck_id: 'INFLAM', biomarker_id: 'TSAT', functional_target_min: 20, functional_target_max: null, alert_threshold_low: 20, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
+  // Nouveaux marqueurs INFLAM v0.2
+  { id: '28', bottleneck_id: 'INFLAM', biomarker_id: 'HOMOCYSTEINE', functional_target_min: null, functional_target_max: 15, alert_threshold_low: null, alert_threshold_high: 15, alert_categorical_value: null, weight: 'moderate' },
+  { id: '29', bottleneck_id: 'INFLAM', biomarker_id: 'GGT', functional_target_min: null, functional_target_max: 30, alert_threshold_low: null, alert_threshold_high: 40, alert_categorical_value: null, weight: 'moderate' },
+  { id: '30', bottleneck_id: 'INFLAM', biomarker_id: 'FERRITIN_HIGH', functional_target_min: null, functional_target_max: 200, alert_threshold_low: null, alert_threshold_high: 200, alert_categorical_value: null, weight: 'moderate' },
   // DYSBIOSE thresholds
   { id: '30', bottleneck_id: 'DYSBIOSE', biomarker_id: 'BRISTOL_SCORE', functional_target_min: null, functional_target_max: null, alert_threshold_low: 3, alert_threshold_high: 5, alert_categorical_value: null, weight: 'major' },
   { id: '31', bottleneck_id: 'DYSBIOSE', biomarker_id: 'BLOATING_FREQ', functional_target_min: null, functional_target_max: 2, alert_threshold_low: null, alert_threshold_high: 3, alert_categorical_value: null, weight: 'major' },

@@ -42,6 +42,8 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   { id: 't11', bottleneck_id: 'IR', biomarker_id: 'LIVER_FAT_MRS', functional_target_min: null, functional_target_max: 5.56, alert_threshold_low: null, alert_threshold_high: 5.56, alert_categorical_value: null, weight: 'major' },
   // IR — α-HB discriminant for hepatic_masld (Zhang 2026)
   { id: 't11b', bottleneck_id: 'IR', biomarker_id: 'A_HYDROXYBUTYRATE', functional_target_min: null, functional_target_max: null, alert_threshold_low: null, alert_threshold_high: 12, alert_categorical_value: null, weight: 'discriminant' },
+  // GGT for IR (stress oxydatif hepatique)
+  { id: 't11c', bottleneck_id: 'IR', biomarker_id: 'GGT', functional_target_min: null, functional_target_max: 30, alert_threshold_low: null, alert_threshold_high: 40, alert_categorical_value: null, weight: 'moderate' },
   // IR — SHBG (SOPK/pcos_adipose enrichment)
   { id: 't12', bottleneck_id: 'IR', biomarker_id: 'SHBG', functional_target_min: 50, functional_target_max: null, alert_threshold_low: 30, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
   // INFLAM — TSAT (functional iron blockade enrichment)

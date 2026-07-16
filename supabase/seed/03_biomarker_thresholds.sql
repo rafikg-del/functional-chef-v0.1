@@ -60,7 +60,12 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 -- Enrichissement SOPK/péri-ménopause pour IR
 ('IR', 'SHBG',              50,    NULL, 30,    NULL,  NULL,       'moderate', 'SHBG basse <30 nmol/L = marqueur d\'hyperinsulinémie. Surtout chez F. Active la priorisation SOPK.'),
 -- Enrichissement blocage fonctionnel du fer pour INFLAM
-('INFLAM', 'TSAT',            20,    NULL, 20,    NULL,  NULL,       'moderate', 'TSAT <20% = carence fonctionnelle ou absolue. [Hauck 2025]'),
+('INFLAM', 'TSAT',            20,    NULL, 20,    NULL,  NULL,       'moderate',   'TSAT <20% = carence fonctionnelle ou absolue. [Hauck 2025]'),
+-- Nouveaux marqueurs v0.2 enrichment (HOMOCYSTEINE, GGT, FERRITIN_HIGH)
+('INFLAM', 'HOMOCYSTEINE',    NULL,  15,   NULL,  15,    'moderate',   'Homocystéine >15 = stress oxydatif/déficit B6/B9/B12. Levier: B6, B9, B12, bétaïne, choline (oeufs).'),
+('IR',     'GGT',             NULL,  30,   NULL,  40,    'moderate',   'GGT >40 = stress oxydatif hépatique. Prédicteur diabète (Lee 2006 Diab Care).'),
+('INFLAM', 'GGT',             NULL,  30,   NULL,  40,    'moderate',   'GGT >40 = stress oxydatif systémique. Consommation glutathion.'),
+('INFLAM', 'FERRITIN_HIGH',   NULL,  200,  NULL,  200,   'moderate',   'Ferritine >200 = marqueur inflammatoire si TSAT normal. Distinguer blocage fer (TSAT<20) vs surcharge (TSAT>45).'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

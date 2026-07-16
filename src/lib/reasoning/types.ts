@@ -105,6 +105,9 @@ export interface PatientContext {
   cuisine_pref?: 'mediterranean' | 'french' | 'maghrebi' | 'asian' | 'flexible';
   time_per_meal?: number;          // minutes
   budget?: 'low' | 'medium' | 'high';
+  cooking_skill?: 'debutant' | 'intermediaire' | 'avance';
+  seasonal_pref?: boolean;         // prefer seasonal ingredients
+  meal_prep?: boolean;             // batch cooking / meal prep friendly
   equipment?: string[];             // ['oven', 'steam', 'blender', 'pressure_cooker']
   servings?: number;
   language?: 'fr' | 'en';

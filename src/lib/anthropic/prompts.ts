@@ -143,12 +143,14 @@ Type de repas : ${input.meal_type}
 - Bottleneck dominant : ${dominant ?? 'aucun'}
 - Bottleneck co-dominant : ${co ?? 'aucun'}
 - Rationale : ${input.classification.rationale}
+${input.classification.suspicion_level && input.classification.suspicion_level !== 'none' ? `- Niveau de suspicion clinique : ${input.classification.suspicion_level} (${input.classification.suspicion_rationale ?? 'NR'})` : ''}
 
 ## PROFIL PATIENT
 - Âge : ${input.patient.age ?? 'NR'}
 - Sexe : ${input.patient.sex ?? 'NR'}
 - Biomarqueurs renseignés : ${JSON.stringify(input.patient.biomarker_values)}
 - Signaux cliniques : ${JSON.stringify(input.patient.clinical_signals)}
+- Signaux cliniques souples (soft signals) : ${JSON.stringify(input.patient.soft_signals ?? {})}
 
 ## EXCLUSIONS (filtres durs)
 - Allergies : ${JSON.stringify(exclusions.allergies ?? [])}
@@ -161,6 +163,9 @@ Type de repas : ${input.meal_type}
 - Cuisine préférée : ${context.cuisine_pref ?? 'flexible'}
 - Temps disponible : ${context.time_per_meal ?? 30} min
 - Budget : ${context.budget ?? 'medium'}
+- Niveau en cuisine : ${context.cooking_skill ?? 'intermediaire'}
+- Ingrédients de saison : ${context.seasonal_pref ? 'oui, privilégier' : 'non spécifié'}
+- Batch cooking : ${context.meal_prep ? 'oui, compatible préparation en avance' : 'non spécifié'}
 - Équipement : ${JSON.stringify(context.equipment ?? ['oven', 'stove', 'steam'])}
 - Portions : ${context.servings ?? 2}
 

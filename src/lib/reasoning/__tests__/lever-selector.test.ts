@@ -26,30 +26,30 @@ import type {
 
 const LEVERS: CulinaryLever[] = [
   // Universal stars
-  { id: 'L_EVOO', name_fr: 'Huile d\'olive EVOO', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: 'Anti-inflammatory', active: true },
-  { id: 'L_LEGUMINOUSES', name_fr: 'Légumineuses', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: 'HbA1c -0.48%', dose_or_protocol: '3-4x/sem', primary_reference: 'Sievenpiper 2009', pubmed_ids: ['19465743'], active: true },
-  { id: 'L_RESISTANT_STARCH', name_fr: 'Amidon résistant', category: 'preparation', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ AUC glucose', active: true },
-  { id: 'L_PLANT_DIVERSITY', name_fr: 'Diversité 30 plantes', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ diversité microbiote', active: true },
-  { id: 'L_FERMENTED', name_fr: 'Fermentés', category: 'fermentation', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ diversité +10%', active: true },
-  { id: 'L_FATTY_FISH', name_fr: 'Poisson gras', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ CRP', active: true },
-  { id: 'L_CRUCIFEROUS', name_fr: 'Crucifères vapeur', category: 'cooking', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ Nrf2', active: true },
-  { id: 'L_ANTHOCYANIN', name_fr: 'Baies', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ IL-6', active: true },
+  { id: 'L_EVOO', name_fr: "Huile d'olive EVOO", description: 'Huile d\'olive extra vierge riche en MUFA et polyphénols', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: 'Anti-inflammatory', active: true },
+  { id: 'L_LEGUMINOUSES', name_fr: 'Légumineuses', description: 'Lentilles, pois chiches, haricots — fibres et amidon résistant', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: 'HbA1c -0.48%', dose_or_protocol: '3-4x/sem', primary_reference: 'Sievenpiper 2009', pubmed_ids: ['19465743'], active: true },
+  { id: 'L_RESISTANT_STARCH', name_fr: 'Amidon résistant', description: 'Cuisson puis refroidissement 24h pour former amidon résistant RS3', category: 'preparation', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ AUC glucose', active: true },
+  { id: 'L_PLANT_DIVERSITY', name_fr: 'Diversité 30 plantes', description: '≥30 espèces végétales différentes par semaine', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ diversité microbiote', active: true },
+  { id: 'L_FERMENTED', name_fr: 'Fermentés', description: 'Aliments lactofermentés vivants (choucroute crue, kimchi, kéfir)', category: 'fermentation', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ diversité +10%', active: true },
+  { id: 'L_FATTY_FISH', name_fr: 'Poisson gras', description: 'Saumon, maquereau, sardines, hareng — EPA/DHA', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ CRP', active: true },
+  { id: 'L_CRUCIFEROUS', name_fr: 'Crucifères vapeur', description: 'Brocoli, chou-fleur, chou kale — sulforaphane si cuisson vapeur douce', category: 'cooking', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↑ Nrf2', active: true },
+  { id: 'L_ANTHOCYANIN', name_fr: 'Baies', description: 'Myrtilles, mûres, cassis, framboises — anthocyanes', category: 'ingredient', ebm_tier: 'T1', is_universal_star: true, expected_effect: '↓ IL-6', active: true },
   // IR-specific
-  { id: 'L_VINEGAR', name_fr: 'Vinaigre pré-prandial', category: 'timing', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-20% AUC glucose', active: true },
-  { id: 'L_FOOD_SEQUENCE', name_fr: 'Séquence alimentaire', category: 'sequence', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-29% pic glucose', active: true },
-  { id: 'L_POSTPRANDIAL_WALK', name_fr: 'Marche postprandiale', category: 'timing', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-20% pic glucose', active: true },
-  { id: 'L_WHOLE_GRAINS', name_fr: 'Céréales complètes', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ HbA1c', active: true },
+  { id: 'L_VINEGAR', name_fr: 'Vinaigre pré-prandial', description: '15 ml dilué, 10 min avant repas.', category: 'timing', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-20% AUC glucose', active: true },
+  { id: 'L_FOOD_SEQUENCE', name_fr: 'Séquence alimentaire', description: 'Légumes → protéines → glucides, 10 min entre chaque.', category: 'sequence', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-29% pic glucose', active: true },
+  { id: 'L_POSTPRANDIAL_WALK', name_fr: 'Marche postprandiale', description: '10-15 min après repas, active GLUT-4 indépendant de l\'insuline.', category: 'timing', ebm_tier: 'T1', is_universal_star: false, expected_effect: '-20% pic glucose', active: true },
+  { id: 'L_WHOLE_GRAINS', name_fr: 'Céréales complètes', description: 'Avoine, quinoa, sarrasin, riz complet — fibres et MAG.', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ HbA1c', active: true },
   // INFLAM-specific
-  { id: 'L_CURCUMIN', name_fr: 'Curcuma', category: 'preparation', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ CRP', active: true },
-  { id: 'L_GREEN_TEA', name_fr: 'Thé vert', category: 'ingredient', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ CRP modeste', active: true },
-  { id: 'L_GENTLE_COOKING', name_fr: 'Cuisson douce', category: 'cooking', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ AGE', active: true },
+  { id: 'L_CURCUMIN', name_fr: 'Curcuma', description: 'Curcumine + poivre noir (pipérine) pour biodisponibilité.', category: 'preparation', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ CRP', active: true },
+  { id: 'L_GREEN_TEA', name_fr: 'Thé vert', description: 'EGCG — 2-4 tasses/j, éviter avec repas riches en fer.', category: 'ingredient', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ CRP modeste', active: true },
+  { id: 'L_GENTLE_COOKING', name_fr: 'Cuisson douce', description: '≤120°C — préserve polyphénols, evite AGEs.', category: 'cooking', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ AGE', active: true },
   // DYSBIOSE-specific
-  { id: 'L_PREBIOTIC', name_fr: 'Prébiotiques ciblés', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↑ Bifidobactéries', active: true },
-  { id: 'L_FIBER_30G', name_fr: 'Fibres 30-40g/j', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ Mortalité toutes causes', active: true },
+  { id: 'L_PREBIOTIC', name_fr: 'Prébiotiques ciblés', description: 'Topinambour, ail, oignon, poireau — inuline et FOS.', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↑ Bifidobactéries', active: true },
+  { id: 'L_FIBER_30G', name_fr: 'Fibres 30-40g/j', description: '≥30g/j toutes fibres confondues.', category: 'ingredient', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ Mortalité toutes causes', active: true },
   // Hepatic MASLD levers
-  { id: 'L_FRUCTOSE_AVOIDANCE', name_fr: 'Éviter excès fructose', category: 'avoidance', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ DNL hépatique', active: true },
-  { id: 'L_LOW_CARB', name_fr: 'Low-carb modéré', category: 'dose', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ DNL hépatique', active: true },
-  { id: 'L_SAT_FAT_REDUCTION', name_fr: 'Réduire AG saturés', category: 'ingredient', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ TG hépatique', active: true },
+  { id: 'L_FRUCTOSE_AVOIDANCE', name_fr: 'Éviter excès fructose', description: '<25g/j fructose ajouté. Attention sirops.', category: 'avoidance', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ DNL hépatique', active: true },
+  { id: 'L_LOW_CARB', name_fr: 'Low-carb modéré', description: '≤130g glucides/j, céréales complètes uniquement.', category: 'dose', ebm_tier: 'T1', is_universal_star: false, expected_effect: '↓ DNL hépatique', active: true },
+  { id: 'L_SAT_FAT_REDUCTION', name_fr: 'Réduire AG saturés', description: '<7% apport énergétique. Substituer par MUFA+PUFA.', category: 'ingredient', ebm_tier: 'T2', is_universal_star: false, expected_effect: '↓ TG hépatique', active: true },
 ];
 
 const LEVER_MAP: LeverBottleneckMap[] = [

@@ -3,7 +3,7 @@
 > IA cuisinière EBM-driven — moteur de prescription nutritionnelle ciblée par bottleneck physiopathologique.
 
 **Statut** : scaffold v0.1 (foundation)
-**Stack** : Next.js 14 (App Router) · TypeScript · Supabase (Postgres + pgvector) · Anthropic API (Claude Sonnet 4 / Opus 4.7) · Tailwind CSS · Vercel
+**Stack** : Next.js 14 (App Router) · TypeScript · Supabase (Postgres + pgvector) · Anthropic API (Sonnet 4.6 in dev, Haiku 4.5 on Vercel Hobby, Opus 4.7 for triple co-dominance) · Tailwind CSS · Vercel
 **Auteur** : Dr Rafik Gounane × Claude
 
 ---
@@ -154,6 +154,18 @@ supabase db push
 npm run dev
 # → http://localhost:3000
 ```
+
+---
+
+## Déploiement
+
+### Vercel Hobby (free)
+Function timeout capped at **60s**. Sonnet 4.6 on a full compose takes ~80s and will return `504`. Set `ANTHROPIC_MODEL_PRIMARY=claude-haiku-4-5-20251001` as an env var in the Vercel project — Haiku finishes in ~25-30s with output quality acceptable for MVP / internal review.
+
+### Vercel Pro, self-host, or local dev
+No 60s cap → keep `ANTHROPIC_MODEL_PRIMARY=claude-sonnet-4-6` for best French medical output.
+
+Opus 4.7 (`ANTHROPIC_MODEL_COMPLEX`) is reserved for triple co-dominance (rare; see `dish-composer.ts:67-69`).
 
 ---
 

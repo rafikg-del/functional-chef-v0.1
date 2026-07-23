@@ -2,8 +2,9 @@ import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
 
 export async function middleware(request: NextRequest) {
-  // Skip auth for print/prescription pages — do this BEFORE any Supabase call
-  if (request.nextUrl.pathname.startsWith('/prescription')) {
+  // Skip auth for public pages
+  if (request.nextUrl.pathname.startsWith('/prescription') ||
+      request.nextUrl.pathname.startsWith('/test-parser')) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
   if (request.nextUrl.pathname.endsWith('/print')) {

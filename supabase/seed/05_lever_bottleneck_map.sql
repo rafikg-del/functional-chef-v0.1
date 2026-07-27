@@ -236,4 +236,8 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_COFFEE_CARDIO',            'INFLAM',   'T2', 30, 'Polyphénols café → ↓ stress oxydatif, ↓ mortalité CV toutes causes'),
 -- Marche postprandiale
 ('L_POSTPRANDIAL_WALK',        'IR',       'T1', 5,  'Diana 2024 Sports Med méta 11 RCT : ↓ AUC glucose 2h -22%. GLUT-4 indépendant insuline'),
-('L_POSTPRANDIAL_WALK',        'INFLAM',   'T2', 25, '↓ TG postprandiaux, ↓ stress oxydatif post-repas');
+('L_POSTPRANDIAL_WALK',        'INFLAM',   'T2', 25, '↓ TG postprandiaux, ↓ stress oxydatif post-repas'),
+
+-- Ashwagandha
+('L_ASHWAGANDHA',              'INFLAM',   'T1', 18, 'Fornalik 2026 méta : ↓ cortisol SMD -1.18. ↑ VFC (Smith 2023). Adaptogène HPA.'),
+('L_ASHWAGANDHA',              'IR',       'T2', 30, '↓ cortisol → ↓ glycogénolyse → ↓ glycémie. Effet indirect sur sensibilité insulinique.');

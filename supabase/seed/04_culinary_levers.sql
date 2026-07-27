@@ -1246,3 +1246,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['Acide chlorogénique = antioxydant majeur. Effet GLP-1 = T2.'],
  false);
 
+-- Ashwagandha — INFLAM / stress
+('L_ASHWAGANDHA', 'Ashwagandha (Withania somnifera) — adaptogène', 'supplement', true, 'Extrait standardisé de racine d\'ashwagandha (withanolides ≥5%)', 'T1', '240-600 mg/j extrait normalisé', '↓ cortisol (SMD -1.18), ↑ VFC, ↓ anxiété HAM-A. Adaptogène HPA : régule axe corticotrope.',
+ '↓ cortisol, ↑ VFC (p=0.003), ↑ testostérone hommes (+57 ng/dL)',
+ 'INFLAM', 'T1',
+ 'Fornalik 2026 Planta Med — méta 11 RCT',
+ ARRAY['41740946', '37740662', '31517876', '39348746'],
+ '240-600 mg/j extrait standardisé (withanolides ≥5%). Cure de 8-12 sem. À prendre en continu, pas en épisode aigu.',
+ 'CI: hyperthyroïdie, grossesse/allaitement, lupus (théorique immunostimulant), hémochromatose. Interactions: thyroxine, immunosuppresseurs, benzodiazépines.',
+ 'Sédation diurne possible (débuter dose faible).',
+ ARRAY['Supplément, pas un aliment. T1 sur cortisol (4 méta-analyses convergentes). T2 sur VFC (1 RCT).'],
+ false);
+

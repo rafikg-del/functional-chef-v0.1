@@ -66,6 +66,11 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('IR',     'GGT',             NULL,  30,   NULL,  40,    'moderate',   'GGT >40 = stress oxydatif hépatique. Prédicteur diabète (Lee 2006 Diab Care).'),
 ('INFLAM', 'GGT',             NULL,  30,   NULL,  40,    'moderate',   'GGT >40 = stress oxydatif systémique. Consommation glutathion.'),
 ('INFLAM', 'FERRITIN_HIGH',   NULL,  200,  NULL,  200,   'moderate',   'Ferritine >200 = marqueur inflammatoire si TSAT normal. Distinguer blocage fer (TSAT<20) vs surcharge (TSAT>45).'),
+-- Enrichissement methylation (Ch18 — Pizano 2020)
+('INFLAM', 'MMA',             NULL,  0.4,  NULL,  0.4,   'discriminant', 'MMA >0.4 µmol/L = déficit B12 intracellulaire. Plus sensible que B12 sérique. Corriger B12 avant d\'interpréter homocystéine.'),
+('IR',     'RBC_MAGNESIUM',   NULL,  5.0,  5.0,   6.5,   'moderate',     'Mg érythrocytaire <5.0 mg/dL = carence. Cofacteur COMT, MTHFR, CBS. Important si homocystéine élevée.'),
+('INFLAM', 'RBC_MAGNESIUM',   NULL,  5.0,  5.0,   6.5,   'moderate',     'Mg érythrocytaire bas = inflammation via ↓ activité COMT et ↑ stress oxydatif.'),
+('INFLAM', 'ZN_CU_RATIO',     NULL,  0.8,  0.8,   1.2,   'discriminant', 'Ratio Zn/Cu <0.8 = inflammation chronique. >1.2 = possible carence cuivre.'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

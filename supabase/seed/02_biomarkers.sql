@@ -59,4 +59,10 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 -- GGT (gamma-glutamyl transférase, déjà présent? — ici comme marqueur explicite stress oxydatif)
 ('GGT', 'Gamma-GT', 'U/L', 'hepatique', 'Enzyme de conjugaison du glutathion. Élevé = stress oxydatif hépatique, surcharge métabolique, alcool. Cible <40 U/L chez H, <30 U/L chez F. Marqueur prédictif de diabète.', false),
 -- Ferritine (haute — marqueur inflammatoire, déjà présent mais non listé explicitement)
-('FERRITIN_HIGH', 'Ferritine haute (inflammatoire)', 'ng/mL', 'iron', 'Ferritine >200 ng/mL = marqueur inflammatoire si TSAT normal. Distinguer surcharge vraie (TSAT >45%) de blocage fonctionnel (TSAT <20%).', false);
+('FERRITIN_HIGH', 'Ferritine haute (inflammatoire)', 'ng/mL', 'iron', 'Ferritine >200 ng/mL = marqueur inflammatoire si TSAT normal. Distinguer surcharge vraie (TSAT >45%) de blocage fonctionnel (TSAT <20%).', false),
+-- MMA (methylmalonic acid) — discriminant statut B12 intracellulaire
+('MMA', 'Acide méthylmalonique', 'µmol/L', 'nutritionnel', 'Marqueur précoce et sensible de déficit en B12 intracellulaire, plus fiable que B12 sérique. Élevé si B12 fonctionnelle insuffisante. Cible <0.4 µmol/L.', false),
+-- RBC Magnesium — magnésium érythrocytaire (stock intracellulaire vs sérique)
+('RBC_MAGNESIUM', 'Magnésium érythrocytaire', 'mg/dL', 'mineral', 'Reflet du stock intracellulaire en magnésium, plus fiable que magnésium sérique. Cofacteur COMT, MTHFR, CBS. Cible 5.0-6.5 mg/dL.', false),
+-- Ratio Zinc/Calcium (calculé) — discriminant inflammation et statut zinc
+('ZN_CU_RATIO', 'Ratio Zinc/Cuivre', '', 'calculated', 'Rapport zinc/cuivre sérique. <0.8 = inflammation, >1.2 = possible carence cuivre. Optimal 0.8-1.2.', false);

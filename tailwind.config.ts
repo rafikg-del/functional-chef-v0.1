@@ -44,6 +44,19 @@ const config: Config = {
           t2: '#bc6c25',  // warm ochre — moderate
           t3: '#a4161a',  // muted crimson — low/mechanistic
         },
+        // Sage — Primary-style calm health accent
+        sage: {
+          50:  '#f4f7f4',
+          100: '#e5ede4',
+          200: '#c9d9c7',
+          300: '#a8c2a5',
+          400: '#84a680',
+          500: '#5f8a5c',
+          600: '#4a6f48',
+          700: '#3a5738',
+          800: '#2f4530',
+          900: '#233426',
+        },
       },
       letterSpacing: {
         'editorial': '-0.02em',

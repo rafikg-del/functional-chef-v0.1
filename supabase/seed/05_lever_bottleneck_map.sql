@@ -240,4 +240,8 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Ashwagandha
 ('L_ASHWAGANDHA',              'INFLAM',   'T1', 18, 'Fornalik 2026 méta : ↓ cortisol SMD -1.18. ↑ VFC (Smith 2023). Adaptogène HPA.'),
-('L_ASHWAGANDHA',              'IR',       'T2', 30, '↓ cortisol → ↓ glycogénolyse → ↓ glycémie. Effet indirect sur sensibilité insulinique.');
+('L_ASHWAGANDHA',              'IR',       'T2', 30, '↓ cortisol → ↓ glycogénolyse → ↓ glycémie. Effet indirect sur sensibilité insulinique.'),
+
+-- NAC alimentaire (cystéine → glutathion)
+('L_NAC_FOOD',                 'INFLAM',   'T2', 22, 'Atkuri 2007 : la cystéine est précurseur limitant du GSH. Soutient CBS → ↓ homocystéine + ↑ glutathion.'),
+('L_NAC_FOOD',                 'DYSBIOSE', 'T3', 35, '↑ glutathion muqueux → protection barrière intestinale. Mécanistique.');

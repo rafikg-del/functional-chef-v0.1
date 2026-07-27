@@ -1258,3 +1258,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['Supplément, pas un aliment. T1 sur cortisol (4 méta-analyses convergentes). T2 sur VFC (1 RCT).'],
  false);
 
+-- NAC alimentaire — précurseur glutathion
+('L_NAC_FOOD', 'Aliments riches en cystéine/NAC (précurseurs glutathion)', 'ingredient', false, 'Foie, oeufs, légumineuses, graines de tournesol, son d\'avoine, oignons, ail', 'T1', '≥1 portion/j d\'aliments soufrés', 'La cystéine alimentaire est le précurseur limitant du glutathion. Contrairement au NAC supplémentation, les aliments soufrés apportent la cystéine sous forme alimentaire biodisponible sans surcharge.',
+ '↑ glutathion, ↓ stress oxydatif, soutien CBS/transsulfuration',
+ 'INFLAM', 'T2',
+ 'Atkuri 2007 Curr Opin Clin Nutr — revue mécanistique',
+ ARRAY['17353575'],
+ '≥1 portion/j d\'aliments riches en cystéine : 2 oeufs, 100g foie de volaille, 30g graines de tournesol, ou légumineuses + alliacés.',
+ 'Insuffisance rénale sévère : limiter protéines animales. Pas de CI pour les doses alimentaires.',
+ NULL,
+ ARRAY['Précurseur glutathion alimentaire. T2 (revue mécanistique). Complémentaire de L_CRUCIFEROUS (↑ Nrf2 → ↑ enzymes GSH).'],
+ false);
+

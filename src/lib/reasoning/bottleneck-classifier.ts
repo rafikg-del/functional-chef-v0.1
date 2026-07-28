@@ -125,6 +125,13 @@ const SOFT_SIGNAL_RULES: SoftSignalRule[] = [
   { signal: 'selles_molles_matin', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'Selles molles matin' },
   { signal: 'intolérance_histamine', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Intolérance histamine' },
   { signal: 'fodmap_sensibilité', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Sensibilité FODMAP' },
+  // Medication history
+  { signal: 'medication_statins', bottleneck: 'INFLAM', weight: 0.15, label: 'Statines → ↓ CoQ10, ↓ vit D' },
+  { signal: 'medication_statins', bottleneck: 'IR', weight: 0.10, label: 'Statines → risque diabète de novo' },
+  { signal: 'medication_ppi', bottleneck: 'DYSBIOSE', weight: 0.25, label: 'IPP → ↓ Mg, ↓ B12, dysbiose' },
+  { signal: 'medication_metformin', bottleneck: 'IR', weight: 0.15, label: 'Metformine → ↓ B12, ↓ folate. Majoration IR sous-jacente' },
+  { signal: 'medication_contraceptives', bottleneck: 'INFLAM', weight: 0.20, label: 'Contraceptifs → ↓ B6, ↓ Mg, ↓ Zn, ↓ folate' },
+  { signal: 'medication_diuretics', bottleneck: 'INFLAM', weight: 0.10, label: 'Diurétiques → ↓ K, ↓ Mg, ↓ Zn' },
 ];
 
 /**

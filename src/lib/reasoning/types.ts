@@ -164,6 +164,13 @@ export interface PatientSoftSignals {
   selles_molles_matin?: boolean;
   intolérance_histamine?: boolean;
   fodmap_sensibilité?: boolean;
+
+  // Medication history — déplétion nutritionnelle
+  medication_statins?: boolean;   // ↓ CoQ10, ↓ vit D
+  medication_ppi?: boolean;       // IPP ↓ Mg, ↓ B12, ↓ Ca
+  medication_metformin?: boolean; // ↓ B12, ↓ folate
+  medication_contraceptives?: boolean; // ↓ B6, ↓ Mg, ↓ Zn, ↓ folate
+  medication_diuretics?: boolean; // ↓ K, ↓ Mg, ↓ Zn
 }
 
 // ───────────────────────────────────────────────────────────

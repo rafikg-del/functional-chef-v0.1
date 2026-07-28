@@ -71,6 +71,11 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('IR',     'RBC_MAGNESIUM',   NULL,  5.0,  5.0,   6.5,   'moderate',     'Mg érythrocytaire <5.0 mg/dL = carence. Cofacteur COMT, MTHFR, CBS. Important si homocystéine élevée.'),
 ('INFLAM', 'RBC_MAGNESIUM',   NULL,  5.0,  5.0,   6.5,   'moderate',     'Mg érythrocytaire bas = inflammation via ↓ activité COMT et ↑ stress oxydatif.'),
 ('INFLAM', 'ZN_CU_RATIO',     NULL,  0.8,  0.8,   1.2,   'discriminant', 'Ratio Zn/Cu <0.8 = inflammation chronique. >1.2 = possible carence cuivre.'),
+-- Enrichissement cofacteurs métaboliques (Ch7 — Metabolic Correction)
+('INFLAM', 'B2_RIBOFLAVIN',   NULL,  200,  NULL,  200,   'moderate',     'B2 <200 µg/L = carence → MTHFR ralenti → ↑ homocystéine. Sources : oeufs, abats, amandes.'),
+('INFLAM', 'B6_P5P',          NULL,  30,   NULL,  30,    'moderate',     'B6 active <30 nmol/L = CBS ralenti → transsulfuration bloquée → ↓ glutathion. Sources : volaille, poisson, banane.'),
+('IR',     'COQ10',           NULL,  0.5,  NULL,  0.5,   'moderate',     'CoQ10 <0.5 µmol/L = dysfonction mitochondriale. Statines ↓ CoQ10. Sources : viande, poisson gras, huile d\'olive.'),
+('INFLAM', 'COQ10',           NULL,  0.5,  NULL,  0.5,   'moderate',     'CoQ10 bas = ↑ stress oxydatif mitochondrial. Cofacteur chaîne respiratoire.'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

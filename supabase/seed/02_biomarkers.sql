@@ -65,4 +65,10 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 -- RBC Magnesium — magnésium érythrocytaire (stock intracellulaire vs sérique)
 ('RBC_MAGNESIUM', 'Magnésium érythrocytaire', 'mg/dL', 'mineral', 'Reflet du stock intracellulaire en magnésium, plus fiable que magnésium sérique. Cofacteur COMT, MTHFR, CBS. Cible 5.0-6.5 mg/dL.', false),
 -- Ratio Zinc/Calcium (calculé) — discriminant inflammation et statut zinc
-('ZN_CU_RATIO', 'Ratio Zinc/Cuivre', '', 'calculated', 'Rapport zinc/cuivre sérique. <0.8 = inflammation, >1.2 = possible carence cuivre. Optimal 0.8-1.2.', false);
+('ZN_CU_RATIO', 'Ratio Zinc/Cuivre', '', 'calculated', 'Rapport zinc/cuivre sérique. <0.8 = inflammation, >1.2 = possible carence cuivre. Optimal 0.8-1.2.', false),
+-- B2 (riboflavine) — cofacteur MTHFR
+('B2_RIBOFLAVIN', 'Vitamine B2 (riboflavine)', 'µg/L', 'vitamin', 'Cofacteur MTHFR. Carence → ↓ conversion folate → ↑ homocystéine. Cible >200 µg/L.', false),
+-- B6 (P5P) — cofacteur CBS, transsulfuration, neurotransmetteurs
+('B6_P5P', 'Vitamine B6 active (P5P)', 'nmol/L', 'vitamin', 'Cofacteur CBS (transsulfuration homocystéine → glutathion), AADC (synthèse dopamine/sérotonine). Cible >30 nmol/L.', false),
+-- CoQ10 — ubiquinone, transporteur mitochondrial
+('COQ10', 'Coenzyme Q10 (ubiquinone)', 'µmol/L', 'mitochondrial', 'Transporteur d\'électrons mitochondrial. Statines ↓ CoQ10. Cible >0.5 µmol/L.', false);

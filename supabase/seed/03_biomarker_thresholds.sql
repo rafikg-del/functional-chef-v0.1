@@ -87,6 +87,14 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('INFLAM', 'SAM_SAH_RATIO',   NULL,  4.0,  NULL,  4.0,   'discriminant', 'SAM/SAH <4 = méthylation ralentie. Corrèle avec ↑ homocystéine.'),
 ('INFLAM', 'SODIUM',          NULL,  135,  135,   145,   'minor',        'Na hors norme = dysrégulation hydrosodée.'),
 ('INFLAM', 'POTASSIUM',       NULL,  3.5,  3.5,   5.0,   'minor',        'K hors norme = dysrégulation, possible lien médicamenteux (diurétiques).'),
+-- Marqueurs de charge toxique (NIBLETS — T)
+('INFLAM', 'LEAD_BLOOD',      NULL,  50,   NULL,  50,    'discriminant', 'Plomb >50 µg/L = neurotoxique. Inhibe MTHFR, CBS → ↑ homocystéine.'),
+('INFLAM', 'MERCURY_BLOOD',   NULL,  5,    NULL,  5,     'discriminant', 'Mercure >5 µg/L = neurotoxique. Inhibe sélénoproteïnes → ↓ glutathion.'),
+('INFLAM', 'CADMIUM_BLOOD',   NULL,  1,    NULL,  1,     'discriminant', 'Cadmium >1 µg/L = néphrotoxique. ↑ inflammation rénale.'),
+('INFLAM', 'ARSENIC_URINE',   NULL,  50,   NULL,  50,    'discriminant', 'Arsenic >50 µg/gCr = toxique. Inhibe pyruvate déshydrogénase.'),
+('INFLAM', 'BPA_URINE',       NULL,  2,    NULL,  2,     'discriminant', 'BPA >2 µg/L = perturbateur endocrinien. ↑ stress oxydatif.'),
+('INFLAM', 'OCHRATOXIN',      NULL,  0.5,  NULL,  0.5,   'discriminant', 'Ochratoxine A >0.5 µg/L = mycotoxine. ↑ stress oxydatif rénal.'),
+('INFLAM', 'HIPPURATE',       NULL,  50,   NULL,  50,    'discriminant', 'Acide hippurique >50 = exposition solvants organiques.'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

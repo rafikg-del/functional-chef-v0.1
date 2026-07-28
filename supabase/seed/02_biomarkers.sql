@@ -93,4 +93,14 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 -- HVA (homovanillate) — catabolite dopamine (urinaire)
 ('HVA', 'Acide homovanillique (HVA)', 'µmol/gCr', 'methylation', 'Catabolite final de la dopamine via COMT. Bas si COMT ralenti. Marqueur neuro-métabolique.', false),
 -- VMA (vanilmandélate) — catabolite adrénaline/noradrénaline
-('VMA', 'Acide vanilmandélique (VMA)', 'µmol/gCr', 'methylation', 'Catabolite final des catécholamines via COMT+MAO. Cible <15 µmol/L.', false);
+('VMA', 'Acide vanilmandélique (VMA)', 'µmol/gCr', 'methylation', 'Catabolite final des catécholamines via COMT+MAO. Cible <15 µmol/L.', false),
+-- Métaux lourds — charge toxique
+('LEAD_BLOOD', 'Plomb sanguin', 'µg/L', 'toxic', 'Métal lourd neurotoxique. Inhibe MTHFR, CBS, ALA-D. Cible <50 µg/L (CDC adulte).', false),
+('MERCURY_BLOOD', 'Mercure sanguin', 'µg/L', 'toxic', 'Métal lourd neurotoxique. Se lie au sélénium, inhibe enzymes. Cible <5 µg/L.', false),
+('CADMIUM_BLOOD', 'Cadmium sanguin', 'µg/L', 'toxic', 'Métal lourd néphrotoxique. Présent dans tabac, engrais. Cible <1 µg/L.', false),
+('ARSENIC_URINE', 'Arsenic urinaire total', 'µg/gCr', 'toxic', 'Métalloïde toxique. Eau, riz, fruits de mer. Cible <50 µg/gCr.', false),
+-- Perturbateurs endocriniens
+('BPA_URINE', 'Bisphénol A urinaire', 'µg/L', 'toxic', 'Perturbateur endocrinien. Plastiques, canettes. Cible <2 µg/L.', false),
+-- Mycotoxines
+('OCHRATOXIN', 'Ochratoxine A sérique', 'µg/L', 'toxic', 'Mycotoxine néphrotoxique et immunotoxique. Moisissures alimentaires. Cible <0.5 µg/L.', false),
+('HIPPURATE', 'Acide hippurique urinaire', 'µmol/L', 'toxic', 'Métabolite des solvants organiques (toluène). Marqueur d\'exposition. Cible <50 µmol/L.', false);

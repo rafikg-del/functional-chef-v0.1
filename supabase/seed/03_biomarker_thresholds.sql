@@ -76,6 +76,17 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('INFLAM', 'B6_P5P',          NULL,  30,   NULL,  30,    'moderate',     'B6 active <30 nmol/L = CBS ralenti → transsulfuration bloquée → ↓ glutathion. Sources : volaille, poisson, banane.'),
 ('IR',     'COQ10',           NULL,  0.5,  NULL,  0.5,   'moderate',     'CoQ10 <0.5 µmol/L = dysfonction mitochondriale. Statines ↓ CoQ10. Sources : viande, poisson gras, huile d\'olive.'),
 ('INFLAM', 'COQ10',           NULL,  0.5,  NULL,  0.5,   'moderate',     'CoQ10 bas = ↑ stress oxydatif mitochondrial. Cofacteur chaîne respiratoire.'),
+-- Nouveaux marqueurs Ch8 (Nutrition Assessment) + Ch18 (Methylation)
+('INFLAM', 'IODINE',          NULL,  100,  NULL,  100,   'discriminant', 'Iode urinaire <100 µg/L = carence → ↓ T4. Sources : algues, poisson, sel iodé.'),
+('INFLAM', 'VITAMIN_D',       NULL,  50,   30,    50,    'moderate',     'Vit D <30 ng/mL = carence sévère. <50 = insuffisance. ↑ inflammation, ↓ immunité.'),
+('IR',     'VITAMIN_D',       NULL,  50,   30,    50,    'moderate',     'Vit D basse = ↑ HOMA-IR, ↓ sensibilité insulinique. Supplémentation ↓ risque DT2.'),
+('INFLAM', 'VITAMIN_A',       NULL,  300,  NULL,  300,   'discriminant', 'Rétinol <300 µg/L = carence → immunité muqueuse compromise. Sources : foie, patate douce.'),
+('INFLAM', 'VITAMIN_E',       NULL,  12,   NULL,  12,    'discriminant', 'α-tocophérol <12 mg/L = carence → ↑ peroxydation lipidique.'),
+('INFLAM', 'COPPER',          NULL,  10,   10,    22,    'discriminant', 'Cuivre <10 ou >22 µmol/L. Ratio Zn/Cu plus informatif.'),
+('INFLAM', 'CERULOPLASMIN',   NULL,  20,   20,    60,    'discriminant', 'Céruloplasmine <20 = carence cuivre. >60 = acute phase.'),
+('INFLAM', 'SAM_SAH_RATIO',   NULL,  4.0,  NULL,  4.0,   'discriminant', 'SAM/SAH <4 = méthylation ralentie. Corrèle avec ↑ homocystéine.'),
+('INFLAM', 'SODIUM',          NULL,  135,  135,   145,   'minor',        'Na hors norme = dysrégulation hydrosodée.'),
+('INFLAM', 'POTASSIUM',       NULL,  3.5,  3.5,   5.0,   'minor',        'K hors norme = dysrégulation, possible lien médicamenteux (diurétiques).'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

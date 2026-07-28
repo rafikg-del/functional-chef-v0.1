@@ -71,4 +71,26 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 -- B6 (P5P) — cofacteur CBS, transsulfuration, neurotransmetteurs
 ('B6_P5P', 'Vitamine B6 active (P5P)', 'nmol/L', 'vitamin', 'Cofacteur CBS (transsulfuration homocystéine → glutathion), AADC (synthèse dopamine/sérotonine). Cible >30 nmol/L.', false),
 -- CoQ10 — ubiquinone, transporteur mitochondrial
-('COQ10', 'Coenzyme Q10 (ubiquinone)', 'µmol/L', 'mitochondrial', 'Transporteur d\'électrons mitochondrial. Statines ↓ CoQ10. Cible >0.5 µmol/L.', false);
+('COQ10', 'Coenzyme Q10 (ubiquinone)', 'µmol/L', 'mitochondrial', 'Transporteur d\'électrons mitochondrial. Statines ↓ CoQ10. Cible >0.5 µmol/L.', false),
+-- Iode (iode urinaire) — fonction thyroïdienne
+('IODINE', 'Iode urinaire', 'µg/L', 'thyroid', 'Oligoélément essentiel à la synthèse des hormones thyroïdiennes. Carence fréquente. Cible >100 µg/L.', false),
+-- Vitamine D (25-OH) — immunité, inflammation, calcium
+('VITAMIN_D', '25-hydroxy-vitamine D', 'ng/mL', 'vitamin', 'Immunomodulateur majeur. Carence associée à ↑ inflammation, ↑ IR. Cible 50-80 ng/mL.', false),
+-- Vitamine A (rétinol) — immunité muqueuse, vision, antioxydant
+('VITAMIN_A', 'Vitamine A (rétinol)', 'µg/L', 'vitamin', 'Intégrité épithéliale, immunité muqueuse, différenciation cellulaire. Cible 300-800 µg/L.', false),
+-- Vitamine E (alpha-tocophérol) — antioxydant membranaire
+('VITAMIN_E', 'Vitamine E (alpha-tocophérol)', 'mg/L', 'vitamin', 'Antioxydant liposoluble majeur. Protège membranes des AGEs. Cible >12 mg/L.', false),
+-- Sodium sérique
+('SODIUM', 'Sodium', 'mmol/L', 'electrolyte', 'Électrolyte principal extracellulaire. Marqueur d\'hydratation, fonction surrénale. Cible 135-145 mmol/L.', false),
+-- Potassium sérique
+('POTASSIUM', 'Potassium', 'mmol/L', 'electrolyte', 'Électrolyte intracellulaire. Cofacteur enzymatique. Cible 3.5-5.0 mmol/L.', false),
+-- Cuivre sérique total
+('COPPER', 'Cuivre sérique total', 'µmol/L', 'mineral', 'Cofacteur SOD, céruloplasmine, dopamine β-hydroxylase. À interpréter avec zinc. Cible 10-22 µmol/L.', false),
+-- Céruloplasmine — transporteur cuivre, acute phase
+('CERULOPLASMIN', 'Céruloplasmine', 'mg/dL', 'mineral', 'Transporteur du cuivre. Acute phase reactant. Cible 20-60 mg/dL.', false),
+-- SAM/SAH ratio — ratio méthylation/déméthylation
+('SAM_SAH_RATIO', 'Ratio SAM/SAH', '', 'methylation', 'Ratio S-adénosylméthionine/S-adénosylhomocystéine. Reflet de l\'efficacité de la méthylation. Cible >4.0.', false),
+-- HVA (homovanillate) — catabolite dopamine (urinaire)
+('HVA', 'Acide homovanillique (HVA)', 'µmol/gCr', 'methylation', 'Catabolite final de la dopamine via COMT. Bas si COMT ralenti. Marqueur neuro-métabolique.', false),
+-- VMA (vanilmandélate) — catabolite adrénaline/noradrénaline
+('VMA', 'Acide vanilmandélique (VMA)', 'µmol/gCr', 'methylation', 'Catabolite final des catécholamines via COMT+MAO. Cible <15 µmol/L.', false);

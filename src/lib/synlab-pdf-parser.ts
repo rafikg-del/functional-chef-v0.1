@@ -52,6 +52,21 @@ const BIOMARKER_ALIASES: Record<string, string> = {
   'Créatinine': 'creatinine',
   'GFR (CKD-EPI)': 'gfr',
   'Acide urique': 'uric_acid',
+  // Nouveaux marqueurs
+  'Iode': 'iodine',
+  '25-OH Vitamine D': 'vitamin_d',
+  'Vitamine D': 'vitamin_d',
+  'Vitamine A': 'vitamin_a',
+  'Rétinol': 'vitamin_a',
+  'Vitamine E': 'vitamin_e',
+  'Alpha-tocophérol': 'vitamin_e',
+  'Sodium': 'sodium',
+  'Potassium': 'potassium',
+  'Cuivre': 'copper',
+  'Céruloplasmine': 'ceruloplasmin',
+  'Coenzyme Q10': 'coq10',
+  'CoQ10': 'coq10',
+  'Iode urinaire': 'iodine',
 };
 
 export async function parseSynlabPDF(pdfBuffer: ArrayBuffer): Promise<SynlabExtraction> {

@@ -244,4 +244,9 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- NAC alimentaire (cystéine → glutathion)
 ('L_NAC_FOOD',                 'INFLAM',   'T2', 22, 'Atkuri 2007 : la cystéine est précurseur limitant du GSH. Soutient CBS → ↓ homocystéine + ↑ glutathion.'),
-('L_NAC_FOOD',                 'DYSBIOSE', 'T3', 35, '↑ glutathion muqueux → protection barrière intestinale. Mécanistique.');
+('L_NAC_FOOD',                 'DYSBIOSE', 'T3', 35, '↑ glutathion muqueux → protection barrière intestinale. Mécanistique.'),
+
+-- Sommeil
+('L_SLEEP_HYGIENE',           'INFLAM',   'T1', 8,  'Irwin 2016 : le sommeil régule l\'inflammation via ↓ NF-κB et ↑ activité vagale.'),
+('L_SLEEP_HYGIENE',           'IR',       'T1', 10, '↓ cortisol, ↑ GH → ↓ HOMA-IR. La privation de sommeil ↑ insulinorésistance de 30% en 1 nuit.'),
+('L_SLEEP_HYGIENE',           'DYSBIOSE', 'T2', 20, 'Le sommeil régule le microbiote via axe circadien. Perturbation → dysbiose.');

@@ -1270,3 +1270,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['Précurseur glutathion alimentaire. T2 (revue mécanistique). Complémentaire de L_CRUCIFEROUS (↑ Nrf2 → ↑ enzymes GSH).'],
  false);
 
+-- Sommeil — hygiène et horaires
+('L_SLEEP_HYGIENE', 'Hygiène du sommeil (durée, régularité, environnement)', 'lifestyle', true, 'n/a', 'T1', '7-9h/nuit, coucher avant 23h, régularité ±30 min', '↑ hormones de croissance et réparation (GH), ↓ cortisol, ↓ inflammation, ↓ résistance à l\'insuline, ↑ nettoyage glymphatique du cerveau.',
+ '↓ CRP, ↓ HOMA-IR, ↑ sensibilité insulinique, ↓ cortisol',
+ 'INFLAM', 'T1',
+ 'Irwin 2016 Nat Rev Immunol — revue sommeil-inflammation',
+ ARRAY['27390122'],
+ 'Coucher avant 23h (idéal 22h-22h30). 7-9h de sommeil. Horaire régulier ±30 min. Obscurité totale. Pièce fraîche 18-19°C. Pas d\'écrans 1h avant.',
+ 'Insomnie persistante : avis médical (TCC-i). Pas de CI pour l\'hygiène de base.',
+ NULL,
+ ARRAY['Levier lifestyle le plus puissant pour l\'inflammation. T1 (revue). S\'applique à tous les bottlenecks.'],
+ false);
+

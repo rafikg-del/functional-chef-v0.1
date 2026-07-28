@@ -102,8 +102,13 @@ export function computeProgress(
       );
     }
     if (t.trend === 'improving') {
+      const triggerTarget = ({
+        IR: 'IR < 6 pts (HOMA-IR < 1.5)',
+        INFLAM: 'INFLAM < 6 pts (CRP-us < 1)',
+        DYSBIOSE: 'DYSBIOSE < 8 pts (Bristol 3-4 + fibres ≥ 25g)',
+      } as Record<string, string>)[t.bottleneck_id] ?? `Score < seuil`;
       suggestions.push(
-        `${t.bottleneck_id} en amélioration (${t.delta}) : continuer. Prochain objectif : ramener le score sous le seuil de déclenchement.`
+        `${t.bottleneck_id} en amélioration (${t.delta}) : continuer. Prochain objectif : ${triggerTarget} (actuel : ${t.current_score} pts).`
       );
     }
   }

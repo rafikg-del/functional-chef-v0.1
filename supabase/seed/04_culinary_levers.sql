@@ -1414,3 +1414,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Effets GI fréquents (ballonnements, diarrhée). Tester tolérance avant compétition.',
  ARRAY['Tampon acido-basique. Usage spécialisé sport intensif.'],
  false);
+
+-- Timing carbs post-exercice — fenêtre glycogène
+('L_CARBS_POSTEXERCISE', 'Glucides post-exercice (timing fenêtre glycogène)', 'timing', false, 'Glucides IG élevé : banane, riz blanc, pomme de terre, maltodextrine, glucose. Protéines si carbs sous-optimaux.', 'T1', '1-1.2 g/kg immédiatement post-exercice', 'La fenêtre des 30-60 min post-exercice est critique : GLUT4 transloqué, sensibilité insulinique maximale, glycogène synthase activée. Retarder l\'apport de 2h réduit la resynthèse de moitié.',
+ '↑ glycogène musculaire, ↑ récupération, ↑ performance subséquente',
+ 'IR', 'T3',
+ 'Naderi 2025 Sports Med + Ivy 1988 J Appl Physiol',
+ ARRAY['40221559', '3132449'],
+ '1 banane moyenne + 100g riz blanc dans les 30 min post-effort. Alternative : 500 ml boisson glucidique 6-8%. Ajouter 20g whey si apport glucidique <1 g/kg.',
+ 'CI : DT1 (dose insulinique à adapter). Pas de CI pour sportif sain.',
+ 'La fenêtre est maximale les 30 premières minutes. Après 2h, le taux de resynthèse chute de ~50%.',
+ ARRAY['Fenêtre critique. Synergie protéines si carbs sous-optimaux.'],
+ false);

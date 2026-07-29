@@ -1423,6 +1423,6 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['40221559', '3132449', '24482590'],
  '1 banane moyenne + 100g riz blanc (ou 500ml boisson glucidique 6-8%) dans les 30 min post-effort. Ajouter 20g whey si apport glucidique <1 g/kg. Si objectif perte de poids : glucides post-ex OK tant que déficit calorique global maintenu. Le glucose va au glycogène, pas au gras.',
  'CI : DT1 (dose insulinique à adapter). Pas de CI pour sportif sain. Si obésité avec IR sévère : adapter dose.',
- '⚠️ Compatible perte de poids : GLUT4 ouvert → glucose → glycogène, pas lipogenèse. Le vrai levier perte de poids = déficit calorique global, pas ce repas spécifique. Si une seule séance/j, le glycogène se reconstitue au repas suivant. Si 2 séances/j, indispensable.',
- ARRAY['Fenêtre GLUT4. Pas de stockage adipeux. Compatible perte de poids.'],
+ '⚠️ Compatible perte de poids : GLUT4 ouvert → glucose → glycogène, pas lipogenèse. Même pour 1 séance/j : utile si objectif récupération (↓ cortisol post-exercice via insuline). Si récupération non prioritaire et déficit calorique, le prochain repas suffit. Si 2 séances/j : indispensable.',
+ ARRAY['Fenêtre GLUT4. Pas de stockage adipeux. Compatible perte de poids. ↓ cortisol post-ex.'],
  false);

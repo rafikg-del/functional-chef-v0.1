@@ -103,4 +103,6 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('BPA_URINE', 'Bisphénol A urinaire', 'µg/L', 'toxic', 'Perturbateur endocrinien. Plastiques, canettes. Cible <2 µg/L.', false),
 -- Mycotoxines
 ('OCHRATOXIN', 'Ochratoxine A sérique', 'µg/L', 'toxic', 'Mycotoxine néphrotoxique et immunotoxique. Moisissures alimentaires. Cible <0.5 µg/L.', false),
-('HIPPURATE', 'Acide hippurique urinaire', 'µmol/L', 'toxic', 'Métabolite des solvants organiques (toluène). Marqueur d\'exposition. Cible <50 µmol/L.', false);
+('HIPPURATE', 'Acide hippurique urinaire', 'µmol/L', 'toxic', 'Métabolite des solvants organiques (toluène). Marqueur d\'exposition. Cible <50 µmol/L.', false),
+-- Vitamine C (ascorbate) — cofacteur D5D/D6D, antioxydant
+('VITAMIN_C', 'Vitamine C (acide ascorbique)', 'mg/L', 'vitamin', 'Cofacteur des désaturases D5D/D6D (conversion PUFA). Antioxydant plasmatique majeur. Synergique avec vitamine E. Cible >8 mg/L.', false);

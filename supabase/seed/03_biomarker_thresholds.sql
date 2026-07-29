@@ -95,6 +95,7 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('INFLAM', 'BPA_URINE',       NULL,  2,    NULL,  2,     'discriminant', 'BPA >2 µg/L = perturbateur endocrinien. ↑ stress oxydatif.'),
 ('INFLAM', 'OCHRATOXIN',      NULL,  0.5,  NULL,  0.5,   'discriminant', 'Ochratoxine A >0.5 µg/L = mycotoxine. ↑ stress oxydatif rénal.'),
 ('INFLAM', 'HIPPURATE',       NULL,  50,   NULL,  50,    'discriminant', 'Acide hippurique >50 = exposition solvants organiques.'),
+('INFLAM', 'VITAMIN_C',       NULL,  8,    NULL,  8,     'discriminant', 'Vit C <8 mg/L = carence. Cofacteur D5D/D6D, antioxydant. Synergie vitamine E.'),
 -- Enrichissement voie leak pour DYSBIOSE (discriminants avancés)
 ('DYSBIOSE', 'I_FABP',        NULL,  2000,  NULL,  2000,  NULL,       'discriminant', 'Souffrance entérocytaire >2000 pg/mL'),
 ('DYSBIOSE', 'LBP',           NULL,  10,    NULL,  10,    NULL,       'discriminant', 'Translocation LPS >10 µg/mL');

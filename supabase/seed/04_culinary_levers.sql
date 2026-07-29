@@ -1354,3 +1354,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Les formes actives ne sont pas toujours nécessaires si B12 et folates sanguins normaux.',
  ARRAY['Cofacteurs méthylation. Synergie avec L_NAC_FOOD, L_FLAXSEED.'],
  false);
+
+-- L-carnitine — transport acides gras → mitochondrie
+('L_CARNITINE', 'L-carnitine (transport AG mitochondrial)', 'supplement', false, 'Viande rouge, volaille, poisson, produits laitiers. Supplémentation : 1000 mg 3x/j si besoin.', 'T2', '500-1000 mg 3x/j (max 3000 mg/j)', 'Transporte les acides gras à longue chaîne dans la mitochondrie pour β-oxydation. Synergie avec CoQ10. ⚠️ Le corps synthétise ~95% des besoins — supplémentation rarement nécessaire.',
+ '↑ oxydation lipidique, ↑ ATP mitochondrial',
+ 'IR', 'T2',
+ 'Ch11 (Noland) — Lipidomics',
+ ARRAY['Référence'],
+ '1000 mg 3x/j en cure si déficit avéré. Sources alimentaires : viande rouge 1x/sem, poisson.',
+ 'CI : insuffisance rénale sévère, dialyse. Interaction : anticoagulants (théorique).',
+ 'Supplémentation rarement nécessaire sauf carence avérée (végaliens stricts, dialyse).',
+ ARRAY['Transport AG mitochondrial. Synergie CoQ10.'],
+ false);

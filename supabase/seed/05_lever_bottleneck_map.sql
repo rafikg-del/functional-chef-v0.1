@@ -272,3 +272,6 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 -- B-complex actif (méthylation)
 ('L_B_COMPLEX_ACTIVE',       'INFLAM',   'T2', 20, 'Formes actives B12, B6, folate, B2 = cofacteurs MTHFR, MTR, CBS. ↓ homocystéine.'),
 ('L_B_COMPLEX_ACTIVE',       'IR',       'T3', 32, '↓ homocystéine → ↓ inflammation → ↓ IR indirect.');
+
+-- L-carnitine — transport AG mitochondrial
+('L_CARNITINE',               'IR',       'T2', 30, 'Transport AG → mitochondrie. Synergie CoQ10. 1000 mg 3x/j si carence.');

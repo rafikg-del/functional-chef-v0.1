@@ -1416,13 +1416,13 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  false);
 
 -- Timing carbs post-exercice — fenêtre glycogène
-('L_CARBS_POSTEXERCISE', 'Glucides post-exercice (timing fenêtre glycogène)', 'timing', false, 'Glucides IG élevé : banane, riz blanc, pomme de terre, maltodextrine, glucose. Protéines si carbs sous-optimaux.', 'T1', '1-1.2 g/kg immédiatement post-exercice', 'La fenêtre des 30-60 min post-exercice est critique : GLUT4 transloqué, sensibilité insulinique maximale, glycogène synthase activée. Retarder l\'apport de 2h réduit la resynthèse de moitié.',
- '↑ glycogène musculaire, ↑ récupération, ↑ performance subséquente',
+('L_CARBS_POSTEXERCISE', 'Glucides post-exercice (fenêtre glycogène + perte de poids)', 'timing', false, 'Glucides IG élevé : banane, riz blanc, pomme de terre, maltodextrine, glucose. Protéines si carbs sous-optimaux.', 'T1', '1-1.2 g/kg immédiatement post-exercice', 'La fenêtre des 30-60 min post-exercice est critique : GLUT4 transloqué (indépendant insuline) → glucose → glycogène musculaire, pas stockage adipeux. Compatible perte de poids si déficit calorique maintenu. Si 1 seule séance/j, le glycogène se reconstitue naturellement au prochain repas. Si 2 séances/j, indispensable.',
+ '↑ glycogène musculaire, ↑ récupération, ↓ cortisol post-ex. Compatible perte de poids si déficit maintenu.',
  'IR', 'T3',
- 'Naderi 2025 Sports Med + Ivy 1988 J Appl Physiol',
- ARRAY['40221559', '3132449'],
- '1 banane moyenne + 100g riz blanc dans les 30 min post-effort. Alternative : 500 ml boisson glucidique 6-8%. Ajouter 20g whey si apport glucidique <1 g/kg.',
- 'CI : DT1 (dose insulinique à adapter). Pas de CI pour sportif sain.',
- 'La fenêtre est maximale les 30 premières minutes. Après 2h, le taux de resynthèse chute de ~50%.',
- ARRAY['Fenêtre critique. Synergie protéines si carbs sous-optimaux.'],
+ 'Naderi 2025 Sports Med + Ivy 1988 J Appl Physiol + Ivy 2004',
+ ARRAY['40221559', '3132449', '24482590'],
+ '1 banane moyenne + 100g riz blanc (ou 500ml boisson glucidique 6-8%) dans les 30 min post-effort. Ajouter 20g whey si apport glucidique <1 g/kg. Si objectif perte de poids : glucides post-ex OK tant que déficit calorique global maintenu. Le glucose va au glycogène, pas au gras.',
+ 'CI : DT1 (dose insulinique à adapter). Pas de CI pour sportif sain. Si obésité avec IR sévère : adapter dose.',
+ '⚠️ Compatible perte de poids : GLUT4 ouvert → glucose → glycogène, pas lipogenèse. Le vrai levier perte de poids = déficit calorique global, pas ce repas spécifique. Si une seule séance/j, le glycogène se reconstitue au repas suivant. Si 2 séances/j, indispensable.',
+ ARRAY['Fenêtre GLUT4. Pas de stockage adipeux. Compatible perte de poids.'],
  false);

@@ -278,3 +278,6 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Vitamine C
 ('L_VITAMIN_C',               'INFLAM',   'T2', 21, 'Cofacteur D5D/D6D. Antioxydant plasmatique. Synergie Zn, Vit E. Sources : poivron, kiwi, agrumes, brocoli.');
+
+-- Lait récupération post-exercice
+('L_MILK_RECOVERY',           'IR',       'T3', 34, 'Lait = glucides + protéines + électrolytes. Surpasse boissons sportives pour réhydratation post-exercice. Naderi 2025.');

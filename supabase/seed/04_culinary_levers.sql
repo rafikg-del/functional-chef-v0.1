@@ -1378,3 +1378,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Préférer sources alimentaires. La supplémentation à haute dose (>1000 mg) n\'est utile qu\'en cas de carence ou stress oxydatif élevé.',
  ARRAY['Cofacteur D5D/D6D. Synergie Zn, Vit E. Complémentaire omega-3.'],
  false);
+
+-- Lait — boisson de récupération post-exercice
+('L_MILK_RECOVERY', 'Lait (boisson de récupération post-exercice)', 'beverage', false, 'Lait de vache entier ou demi-écrémé, babeurre, lait ribot', 'T1', '250-500 ml dans les 30 min post-exercice', 'Le lait combine glucides (lactose ~5g/100ml), protéines de haute qualité (caséine + lactosérum ~3.5g/100ml), électrolytes (Na, K, Ca, Mg) et eau. Profil idéal pour la réhydratation post-effort : meilleure rétention hydrique que l\'eau ou boissons sportives.',
+ '↑ glycogène, ↑ synthèse protéique, réhydratation, ↓ dommages musculaires',
+ 'IR', 'T3',
+ 'Naderi 2025 Sports Med (PMID 40221559)',
+ ARRAY['40221559'],
+ '250-500 ml dans les 30 min suivant l\'effort. Option chocolat (glucides + palatabilité). Alternative : lait fermenté (kéfir) si intolérance lactose.',
+ 'CI : intolérance lactose sévère, AVP lait (allergie protéine lait). Végaliens : alternative lait enrichi protéines.',
+ 'Le lait surpasse les boissons sportives commerciales pour la réhydratation post-exercice grâce à son profil électrolytique complet.',
+ ARRAY['Boisson récupération complète. Alternative naturelle aux boissons sportives.'],
+ false);

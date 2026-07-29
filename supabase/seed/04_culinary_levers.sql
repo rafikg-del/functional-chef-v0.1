@@ -1390,3 +1390,27 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Le lait surpasse les boissons sportives commerciales pour la réhydratation post-exercice grâce à son profil électrolytique complet.',
  ARRAY['Boisson récupération complète. Alternative naturelle aux boissons sportives.'],
  false);
+
+-- Créatine — ↑ synthèse glycogène, ↑ performance, récupération
+('L_CREATINE', 'Créatine (récupération post-exercice + performance)', 'supplement', false, 'Viande rouge, poisson. Supplémentation : 3-5 g/j', 'T1', '3-5 g/j (charge : 20 g/j 5-7j puis 3-5 g/j maintenance)', 'La créatine ↑ la synthèse de glycogène musculaire en post-exercice, ↑ force, ↑ masse maigre, ↓ dommages musculaires. Co-ingestion avec caféine potentialise l'effet sur le glycogène.',
+ '↑ glycogène musculaire, ↑ force, ↑ masse maigre, ↓ dommages musculaires',
+ 'IR', 'T3',
+ 'Naderi 2025 Sports Med — revue exhaustive créatine',
+ ARRAY['40221559'],
+ '3-5 g/j maintenance. Charge 20 g/j (4x5g) 5-7j si besoin rapide. Association caféine possible (200-400 mg avant séance).',
+ 'CI : insuffisance rénale sévère (DFG <30). Crohn/colite (gaz, ballonnements).',
+ 'La créatine est le supplément le plus étudié en nutrition sportive. Biodisponible, sûr, même à long terme.',
+ ARRAY['↑ synthèse glycogène post-ex. Synergie caféine.'],
+ false);
+
+-- Bicarbonate de sodium — tampon acido-basique post-exercice
+('L_SODIUM_BICARB', 'Bicarbonate de sodium (tampon acido-basique)', 'supplement', false, 'Bicarbonate de sodium (NaHCO₃)', 'T2', '0.2-0.3 g/kg 60-90 min avant ou post-exercice', 'Tamponne l'acidose métabolique post-exercice intense. ↑ récupération acido-basique, ↑ performance répétée. Effet hyperhydratant (rétention eau + Na).',
+ '↑ récupération acido-basique, ↑ performance haute intensité',
+ 'INFLAM', 'T3',
+ 'Naderi 2025 Sports Med + Gough 2017',
+ ARRAY['40221559', '28530505'],
+ '0.2-0.3 g/kg dans 500 ml eau. Formes entérosolubles possible. À prendre avec repas pour ↓ effets GI.',
+ 'CI : HTA, insuffisance rénale, grossesse. Effets secondaires : ballonnements, diarrhée (fréquents).',
+ 'Effets GI fréquents (ballonnements, diarrhée). Tester tolérance avant compétition.',
+ ARRAY['Tampon acido-basique. Usage spécialisé sport intensif.'],
+ false);

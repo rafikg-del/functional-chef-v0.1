@@ -281,3 +281,8 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Lait récupération post-exercice
 ('L_MILK_RECOVERY',           'IR',       'T3', 34, 'Lait = glucides + protéines + électrolytes. Surpasse boissons sportives pour réhydratation post-exercice. Naderi 2025.');
+
+-- Créatine
+('L_CREATINE',                'IR',       'T3', 33, '↑ synthèse glycogène post-exercice. 5g/j. Naderi 2025 Sports Med.'),
+-- Bicarbonate de sodium
+('L_SODIUM_BICARB',           'INFLAM',   'T3', 40, 'Tampon acido-basique. 0.2-0.3 g/kg post-ex. Gough 2017.');

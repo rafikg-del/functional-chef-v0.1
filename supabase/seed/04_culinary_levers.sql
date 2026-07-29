@@ -1282,3 +1282,39 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['Levier lifestyle le plus puissant pour l\'inflammation. T1 (revue). S\'applique à tous les bottlenecks.'],
  false);
 
+-- Graine de lin moulue — ALA végétal concentré
+('L_FLAXSEED', 'Graine de lin moulue (ALA)', 'ingredient', false, 'Graine de lin brune ou dorée, moulue (toute la graine non digérée)', 'T1', '1 càs/j (7.5g ALA)', '1 càs de graine de lin moulue apporte 7.48g d\'ALA, la plus haute source végétale. Conversion ALA → EPA ~8% chez H, ~21% chez F. Alternative safe au poisson pour véganes.',
+ '↑ EPA/DHA, ↓ inflammation, ↓ LDL',
+ 'INFLAM', 'T2',
+ 'Ch10 (Handbook IFMNT) — données composition et conversion ALA',
+ ARRAY['Référence chapitre'],
+ '1 càs/j moulue. Conservation au frigo (oxydation rapide). À moudre juste avant usage.',
+ 'CI rares : occlusion intestinale (si syndrome de grêle court). Grossesse : dose modérée.',
+ 'Conversion ALA→EPA limitée (8% H, 21% F). Ne remplace pas totalement le poisson.',
+ ARRAY['Source ALA majeure. Alternative vegan.'],
+ false);
+
+-- MCT — triglycérides à chaîne moyenne
+('L_MCT_COCONUT', 'Huile MCT (coco, palmiste)', 'ingredient', true, 'Huile de coco vierge, huile de palmiste, MCT oil raffiné', 'T2', '1 càs/j (15 ml) en progression', 'Les MCT ne nécessitent pas de sels biliaires. Absorption directe → veine porte → β-oxydation rapide. ↑ thermogenèse, ↓ appétit, ↑ cétogenèse.',
+ '↑ satiété, ↓ TG postprandiaux, ↓ IMC modeste',
+ 'IR', 'T2',
+ 'Ch10 (Handbook IFMNT) — MCT métabolisme',
+ ARRAY['Référence chapitre'],
+ 'Débuter 1 càc, progresser vers 1 càs. Prendre avec repas pour éviter malaise GI.',
+ 'CI: insuffisance hépatique, cétose thérapeutique mal encadrée. Effet : diarrhée si dose excessive.',
+ 'Les MCT ne sont pas un remède miracle. Effet modeste sur perte poids.',
+ ARRAY['Énergie rapide sans insuline. Utile en complément jeûne.'],
+ false);
+
+-- Huile d'onagre/bourrache — GLA anti-inflammatoire
+('L_BORAGE_GLA', 'Huile d\'onagre ou bourrache (GLA)', 'supplement', true, 'Huile d\'onagre (Oenothera biennis) ou bourrache (Borago officinalis)', 'T2', '500-1000 mg/j de GLA (2-4g d\'huile)', 'Le GLA (acide γ-linolénique) ↑ DHGL/DGLA → PGE1, antagoniste de PGE2 inflammatoire. Voie distincte des omega-3. Utile dans syndromes inflammatoires, douleur, peau.',
+ '↓ PGE2, ↑ PGE1, ↓ douleur articulaire, amélioration peau',
+ 'INFLAM', 'T2',
+ 'Ch10 (Handbook IFMNT) — voie GLA→PGE1 anti-inflammatoire',
+ ARRAY['Référence chapitre'],
+ '500-1000 mg GLA/j. Cure 8-12 sem. À prendre avec repas.',
+ 'Épilepsie (théorique abaissement seuil). Interaction anticoagulants.',
+ 'Complémentaire des omega-3 (voie différente). Synergie possible.',
+ ARRAY['Voie anti-inflammatoire non ω-3.'],
+ false);
+

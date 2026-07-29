@@ -249,4 +249,15 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 -- Sommeil
 ('L_SLEEP_HYGIENE',           'INFLAM',   'T1', 8,  'Irwin 2016 : le sommeil régule l\'inflammation via ↓ NF-κB et ↑ activité vagale.'),
 ('L_SLEEP_HYGIENE',           'IR',       'T1', 10, '↓ cortisol, ↑ GH → ↓ HOMA-IR. La privation de sommeil ↑ insulinorésistance de 30% en 1 nuit.'),
-('L_SLEEP_HYGIENE',           'DYSBIOSE', 'T2', 20, 'Le sommeil régule le microbiote via axe circadien. Perturbation → dysbiose.');
+('L_SLEEP_HYGIENE',           'DYSBIOSE', 'T2', 20, 'Le sommeil régule le microbiote via axe circadien. Perturbation → dysbiose.'),
+
+-- Graine de lin moulue (ALA végétal)
+('L_FLAXSEED',                'INFLAM',   'T2', 24, '1 càs = 7.48g ALA. Conversion ALA→EPA 8% H, 21% F. Source végétale majeure.'),
+('L_FLAXSEED',                'IR',       'T3', 35, 'ALA → EPA indirect. Effet modeste sur sensibilité insulinique.'),
+
+-- MCT (huile coco/palmiste)
+('L_MCT_COCONUT',             'IR',       'T2', 28, 'Absorption directe sans bile. β-oxydation → ↑ cétogenèse. Énergie sans insuline.'),
+('L_MCT_COCONUT',             'DYSBIOSE', 'T3', 40, 'MCT à dose modérée = substrat fermentation limité. Peut irriter si SIBO.'),
+
+-- Huile d'onagre/bourrache (GLA)
+('L_BORAGE_GLA',              'INFLAM',   'T2', 26, 'GLA → DHGL/DGLA → PGE1. Antagoniste PGE2. Voie anti-inflammatoire non ω-3.');

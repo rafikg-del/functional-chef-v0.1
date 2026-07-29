@@ -1318,3 +1318,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  ARRAY['Voie anti-inflammatoire non ω-3.'],
  false);
 
+
+-- CLA — acide linoléique conjugué (viande herbe, lait cru)
+('L_CLA_GRASSFED', 'CLA — acide linoléique conjugué (viande herbe, lait cru)', 'ingredient', false, 'Viande de ruminants nourris à l\'herbe (bœuf, agneau), produits laitiers crus', 'T2', '≥3 portions/sem ruminants herbe', 'Le CLA est formé par isomérisation bactérienne de l\'acide linoléique dans le rumen. Niveau ++ dans herbe vs grain. Études animales : ↓ masse grasse modeste.',
+ '↓ masse grasse modeste, modulation immunitaire',
+ 'IR', 'T3',
+ 'Ch10 (Handbook IFMNT)',
+ ARRAY['Référence chapitre'],
+ 'Viande herbe 2-3x/sem. Produits laitiers crus si tolérés.',
+ 'CI : aucune aux doses alimentaires.',
+ 'Données principalement animales. Effet humain modeste.',
+ ARRAY['Levier conditionnel. Préférer sources alimentaires.'],
+ false);

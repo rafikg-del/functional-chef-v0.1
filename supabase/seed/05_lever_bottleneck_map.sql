@@ -261,3 +261,5 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Huile d'onagre/bourrache (GLA)
 ('L_BORAGE_GLA',              'INFLAM',   'T2', 26, 'GLA → DHGL/DGLA → PGE1. Antagoniste PGE2. Voie anti-inflammatoire non ω-3.');
+-- CLA (conjugated linoleic acid)
+('L_CLA_GRASSFED', 'IR', 'T3', 38, 'CLA ruminants herbe. Donnees animales surtout. ↓ masse grasse modeste.'),

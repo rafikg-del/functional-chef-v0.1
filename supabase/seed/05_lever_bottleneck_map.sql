@@ -263,3 +263,12 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_BORAGE_GLA',              'INFLAM',   'T2', 26, 'GLA → DHGL/DGLA → PGE1. Antagoniste PGE2. Voie anti-inflammatoire non ω-3.');
 -- CLA (conjugated linoleic acid)
 ('L_CLA_GRASSFED', 'IR', 'T3', 38, 'CLA ruminants herbe. Donnees animales surtout. ↓ masse grasse modeste.'),
+
+-- Whole food baseline (anti-transformation)
+('L_WHOLE_FOOD_BASELINE',    'INFLAM',   'T1', 5,  'Monteiro 2019 : aliments ultra-transformes = ↑ inflammation bas grade. Base incontournable.'),
+('L_WHOLE_FOOD_BASELINE',    'IR',       'T1', 7,  'Aliments ultra-transformes = ↑ glycémie, ↑ insuline, ↑ apport calorique.'),
+('L_WHOLE_FOOD_BASELINE',    'DYSBIOSE', 'T1', 10, 'Additifs, émulsifiants, édulcorants = perturbation microbiome. Base indispensable.'),
+
+-- B-complex actif (méthylation)
+('L_B_COMPLEX_ACTIVE',       'INFLAM',   'T2', 20, 'Formes actives B12, B6, folate, B2 = cofacteurs MTHFR, MTR, CBS. ↓ homocystéine.'),
+('L_B_COMPLEX_ACTIVE',       'IR',       'T3', 32, '↓ homocystéine → ↓ inflammation → ↓ IR indirect.');

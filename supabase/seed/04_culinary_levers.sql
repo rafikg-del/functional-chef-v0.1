@@ -1330,3 +1330,27 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Données principalement animales. Effet humain modeste.',
  ARRAY['Levier conditionnel. Préférer sources alimentaires.'],
  false);
+
+-- Alimentation anti-transformation — base before tout levier spécifique
+('L_WHOLE_FOOD_BASELINE', 'Alimentation anti-transformation (whole food)', 'lifestyle', true, 'n/a', 'T1', 'Éviter aliments <5 ingrédients. Cuisiner au maximum.', 'Les aliments ultra-transformés concentrent calories pauvres en nutriments, perturbent le microbiome et la signalétique de satiété. Base indispensable avant tout levier spécifique.',
+ '↓ inflammation bas grade, ↓ apport calorique, ↑ satiété',
+ 'INFLAM', 'T1',
+ 'Ch2 (Raj) + Monteiro 2019 — classification NOVA',
+ ARRAY['Référence'],
+ 'Règle : <5 ingrédients sur l\'étiquette. Privilégier aliments sans étiquette (frais). Cuisiner > commander.',
+ 'Aucune. Attention aux troubles du comportement alimentaire (orthorexie).',
+ 'Pas de restriction. Pas de régime. C\'est la base.',
+ ARRAY['Fondamental. Conditionne l\'efficacité de tous les autres leviers.'],
+ false);
+
+-- B-complex actif — cofacteurs méthylation sous forme biodisponible
+('L_B_COMPLEX_ACTIVE', 'B-complex actif (méthylfolate, méthylB12, P5P, riboflavine)', 'supplement', false, 'Formes actives : méthylfolate (5-MTHF), méthylcobalamine (B12), P5P (B6), riboflavine-5-phosphate (B2)', 'T2', 'Selon besoin individuel (cf. homocystéine, MMA, B2, B6)', 'Les formes actives contournent les blocages enzymatiques (MTHFR, MTR, CBS). Supérieures aux formes synthétiques (acide folique, cyanocobalamine) pour les polymorphismes.',
+ '↓ homocystéine, ↑ méthylation, ↓ inflammation',
+ 'INFLAM', 'T2',
+ 'Ch7 (Gonzalez) — Metabolic Correction + Ch18 (Pizano) — Méthylation',
+ ARRAY['Référence'],
+ 'Privilégier complexe B avec formes actives. Pas d\'acide folique, pas de cyanocobalamine.',
+ 'CI : rares. Allergies aux excipients. Cancer hormono-dépendant (avis médical).',
+ 'Les formes actives ne sont pas toujours nécessaires si B12 et folates sanguins normaux.',
+ ARRAY['Cofacteurs méthylation. Synergie avec L_NAC_FOOD, L_FLAXSEED.'],
+ false);

@@ -274,4 +274,4 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_B_COMPLEX_ACTIVE',       'IR',       'T3', 32, '↓ homocystéine → ↓ inflammation → ↓ IR indirect.');
 
 -- L-carnitine — transport AG mitochondrial
-('L_CARNITINE',               'IR',       'T2', 30, 'Transport AG → mitochondrie. Synergie CoQ10. 1000 mg 3x/j si carence.');
+('L_CARNITINE',               'IR',       'T2', 30, 'Carnitine 1000 mg 3x/j + CoQ10 400 mg/j. Transport AG → mitochondrie + protection stress oxydatif. Protocole combiné obligatoire Ch11.');

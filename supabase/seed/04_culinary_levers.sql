@@ -1356,13 +1356,13 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  false);
 
 -- L-carnitine — transport acides gras → mitochondrie
-('L_CARNITINE', 'L-carnitine (transport AG mitochondrial)', 'supplement', false, 'Viande rouge, volaille, poisson, produits laitiers. Supplémentation : 1000 mg 3x/j si besoin.', 'T2', '500-1000 mg 3x/j (max 3000 mg/j)', 'Transporte les acides gras à longue chaîne dans la mitochondrie pour β-oxydation. Synergie avec CoQ10. ⚠️ Le corps synthétise ~95% des besoins — supplémentation rarement nécessaire.',
- '↑ oxydation lipidique, ↑ ATP mitochondrial',
+('L_CARNITINE', 'L-carnitine (transport AG mitochondrial)', 'supplement', false, 'Viande rouge, volaille, poisson, produits laitiers', 'T2', '1000 mg 3x/j L-carnitine + 400 mg/j CoQ10. Cure 12 sem.', 'Protocole Ch11 : L-carnitine 1000 mg 3x/j + CoQ10 400 mg/j. La carnitine transporte les AG dans la mitochondrie, le CoQ10 protège la chaîne respiratoire du stress oxydatif. Le corps synthétise ~95% des besoins — supplémentation rarement nécessaire sauf carence.',
+ '↑ oxydation lipidique, ↑ ATP mitochondrial, ↓ stress oxydatif mitochondrial',
  'IR', 'T2',
- 'Ch11 (Noland) — Lipidomics',
+ 'Ch11 (Noland) — Lipidomics : "therapeutic dose L-carnitine 1000 mg 3x/day + CoQ10 400 mg/day"',
  ARRAY['Référence'],
- '1000 mg 3x/j en cure si déficit avéré. Sources alimentaires : viande rouge 1x/sem, poisson.',
- 'CI : insuffisance rénale sévère, dialyse. Interaction : anticoagulants (théorique).',
- 'Supplémentation rarement nécessaire sauf carence avérée (végaliens stricts, dialyse).',
- ARRAY['Transport AG mitochondrial. Synergie CoQ10.'],
+ 'Carnitine 1000 mg 3x/j matin/midi/goûter (pas le soir). CoQ10 400 mg/j avec repas gras. Cure 12 sem.',
+ 'CI : insuffisance rénale sévère (carnitine), anticoagulants (CoQ10 théorique).',
+ 'Protocole combiné obligatoire : CoQ10 prévient les dommages oxydatifs induits par l\'augmentation de β-oxydation.',
+ ARRAY['Protocole combiné Ch11. Synergie mitochondriale obligatoire.'],
  false);

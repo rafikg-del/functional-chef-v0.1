@@ -1366,3 +1366,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Protocole combiné obligatoire : CoQ10 prévient les dommages oxydatifs induits par l\'augmentation de β-oxydation.',
  ARRAY['Protocole combiné Ch11. Synergie mitochondriale obligatoire.'],
  false);
+
+-- Vitamine C — cofacteur D5D/D6D, antioxydant, immunité
+('L_VITAMIN_C', 'Vitamine C (aliments + supplémentation)', 'ingredient', true, 'Poivron rouge, kiwi, agrumes, brocoli, chou kale, baies, acérola, cynorhodon', 'T2', '200-500 mg/j alimentaire ou 500-1000 mg/j supplémentation', 'Cofacteur des désaturases D5D/D6D (conversion ALA → EPA/DHA). Antioxydant plasmatique majeur. Synergique avec vitamine E. ↑ absorption fer non-héminique. ↑ immunité muqueuse.',
+ '↓ stress oxydatif, ↑ conversion PUFA, ↑ immunité',
+ 'INFLAM', 'T2',
+ 'Ch11 (Noland) — D5D/D6D cofactor',
+ ARRAY['Référence'],
+ 'Aliments : 1 poivron rouge (190mg), 1 kiwi (90mg), 1 orange (70mg), brocoli 100g (90mg). Supplémentation : 500-1000 mg/j, max 2000 mg/j.',
+ 'CI : insuffisance rénale sévère, oxalate urinaire élevé, hémochromatose (↑ absorption fer).',
+ 'Préférer sources alimentaires. La supplémentation à haute dose (>1000 mg) n\'est utile qu\'en cas de carence ou stress oxydatif élevé.',
+ ARRAY['Cofacteur D5D/D6D. Synergie Zn, Vit E. Complémentaire omega-3.'],
+ false);

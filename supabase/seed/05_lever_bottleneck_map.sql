@@ -275,3 +275,6 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- L-carnitine — transport AG mitochondrial
 ('L_CARNITINE',               'IR',       'T2', 30, 'Carnitine 1000 mg 3x/j + CoQ10 400 mg/j. Transport AG → mitochondrie + protection stress oxydatif. Protocole combiné obligatoire Ch11.');
+
+-- Vitamine C
+('L_VITAMIN_C',               'INFLAM',   'T2', 21, 'Cofacteur D5D/D6D. Antioxydant plasmatique. Synergie Zn, Vit E. Sources : poivron, kiwi, agrumes, brocoli.');

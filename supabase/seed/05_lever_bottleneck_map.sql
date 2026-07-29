@@ -297,3 +297,11 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_FAST_12H_MITO',           'IR',       'T2', 25, 'Jeûne 12-13h/nuit → AMPK + SIRT1 → biogenèse mitochondriale. ↑ flexibilité métabolique.'),
 ('L_FAST_12H_MITO',           'INFLAM',   'T3', 32, 'Autophagie → ↓ inflammation bas grade.'),
 ('L_FAST_12H_MITO',           'DYSBIOSE', 'T3', 38, 'Jeûne 12h → reposer microbiote → ↓ perméabilité.');
+
+-- Vitamine E mixte
+('L_VITAMIN_E_SUPP',          'INFLAM',   'T2', 24, 'Antioxydant membranaire. 200-400 UI/j tocopherols + tocotrienols. Synergie C, ALA.'),
+-- Grape seed extract
+('L_GRAPESEED_POLY',          'INFLAM',   'T3', 38, 'Proanthocyanidines. Antioxydant puissant. 50-150 mg/j.'),
+('L_GRAPESEED_POLY',          'DYSBIOSE', 'T3', 42, '↓ inflammation intestinale. Protection muqueuse.'),
+-- Luteine + Zeaxanthine
+('L_LUTEIN_EYES',             'INFLAM',   'T3', 39, 'Carotenoides maculaires. Protection retine et inflammation oculaire. 10-20 mg/j luteine.');

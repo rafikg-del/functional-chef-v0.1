@@ -1450,3 +1450,39 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Simple jeûne circadien, pas un jeûne prolongé. Pas de restriction calorique. Compatible tous les jours.',
  ARRAY['↑ biogenèse mitochondriale. Simple : arrêter de manger 12-13h/nuit.'],
  false);
+
+-- Vitamine E 200-400 UI — protection membranes cellulaires
+('L_VITAMIN_E_SUPP', 'Vitamine E mixte (tocophérols + tocotriénols) — protection membranaire', 'supplement', false, 'Noix, graines, huile de carthame, huile de tournesol. Supplémentation : 200-400 UI/j mixte', 'T2', '200-400 UI/j de tocophérols + tocotriénols mélangés', 'La vitamine E est l\'antioxydant liposoluble majeur. Protège les membranes cellulaires de la peroxydation lipidique. Les formes mixtes (tocophérols + tocotriénols) sont supérieures à l\'alpha-tocophérol seul. Synergie avec vitamine C (qui recycle E).',
+ '↓ peroxydation lipidique, ↓ stress oxydatif membranaire',
+ 'INFLAM', 'T2',
+ 'Ch12 (Handbook IFMNT) — protection membranes',
+ ARRAY['Référence chapitre'],
+ '200-400 UI/j de forme mixte (contenant gamma + delta tocophérols et tocotriénols). Prendre avec repas gras.',
+ 'CI : anticoagulants (warfarine) à haute dose >800 UI/j. Précautions avant chirurgie.',
+ 'Les formes mixtes sont plus efficaces que l\'alpha-tocophérol isolé. Synergie avec vit C, ALA, CoQ10.',
+ ARRAY['Antioxydant membranaire. Synergie C, ALA, CoQ10.'],
+ false);
+
+-- Grape seed extract — antioxydant polyphénolique
+('L_GRAPESEED_POLY', 'Extrait de pépins de raisin (polyphénols antioxydants)', 'supplement', false, 'Raisin noir, vin rouge (modéré). Supplémentation : 50-150 mg/j', 'T2', '50-150 mg/j (standardisé en proanthocyanidines)', 'Les proanthocyanidines du pépin de raisin sont parmi les antioxydants les plus puissants. Protègent les membranes, ↓ inflammation intestinale, soutien hépatique.',
+ '↓ stress oxydatif, ↓ inflammation intestinale',
+ 'INFLAM', 'T3',
+ 'Ch12 (Handbook IFMNT) — mention dose 50 mg/j',
+ ARRAY['Référence chapitre'],
+ '50-150 mg/j standardisé en proanthocyanidines (>95%). Avec repas.',
+ 'CI : aucune aux doses recommandées. Interactions anticoagulantes théoriques à haute dose.',
+ 'Complémentaire des autres polyphénols (thé vert, baies).',
+ ARRAY['Polyphénol antioxydant puissant. Compléments alimentaire.'],
+ false);
+
+-- Luteine + Zéaxanthine — protection maculaire
+('L_LUTEIN_EYES', 'Lutéine + Zéaxanthine (protection maculaire)', 'ingredient', false, 'Œuf (jaune), épinard, chou kale, maïs, courge, brocoli', 'T2', '10-20 mg/j lutéine + 2-4 mg/j zéaxanthine', 'La lutéine et la zéaxanthine sont des caroténoïdes concentrés 1000× dans la macula par rapport aux autres tissus. Protègent les photorécepteurs de la lumière bleue et du stress oxydatif. Anti-inflammatoires.',
+ '↓ risque DMLA, protection rétine, ↓ inflammation oculaire',
+ 'INFLAM', 'T3',
+ 'Ch12 (Handbook IFMNT) — caroténoïdes maculaires',
+ ARRAY['Référence chapitre'],
+ '1-2 œufs/j + épinards/kale 100g/j. Supplémentation 10 mg lutéine + 2 mg zéaxanthine si insuffisant.',
+ 'CI : aucune aux doses alimentaires.',
+ 'Biodisponibilité ++ des œufs (lipides). Les suppléments sont efficaces.',
+ ARRAY['Caroténoïdes maculaires. Anti-inflammatoire oculaire.'],
+ false);

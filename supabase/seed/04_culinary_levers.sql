@@ -1426,3 +1426,27 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  '⚠️ Compatible perte de poids : GLUT4 ouvert → glucose → glycogène, pas lipogenèse. Même pour 1 séance/j : utile si objectif récupération (↓ cortisol post-exercice via insuline). Si récupération non prioritaire et déficit calorique, le prochain repas suffit. Si 2 séances/j : indispensable.',
  ARRAY['Fenêtre GLUT4. Pas de stockage adipeux. Compatible perte de poids. ↓ cortisol post-ex.'],
  false);
+
+-- Alpha-lipoic acid — antioxydant mitochondrial, recycle E/C/GSH
+('L_ALA_ANTIOXIDANT', 'Acide alpha-lipoïque (ALA) — antioxydant mitochondrial', 'supplement', false, 'Brocoli, épinard, viande rouge, levure de bière. Supplémentation : 100-600 mg/j', 'T2', '100-600 mg/j (forme R-ALA privilégiée)', 'L'ALA est un antioxydant universel : recycle la vitamine C, la vitamine E et le glutathion. Cofacteur mitochondrial essentiel. Chélation métaux lourds. ↑ sensibilité insulinique.',
+ '↓ stress oxydatif, ↑ glutathion, ↑ sensibilité insulinique',
+ 'INFLAM', 'T2',
+ 'Ch12 (Handbook IFMNT) + Packer 1995',
+ ARRAY['Référence chapitre'],
+ '100-600 mg/j à jeun ou 30 min avant repas. Forme R-ALA (naturelle) plus biodisponible que S-ALA.',
+ 'CI : diabète insuliné (surveillance glycémie). Hypoglycémie possible à haute dose.',
+ 'Synergie puissante avec CoQ10 + L-carnitine pour la protection mitochondriale. Cycle redox : ALA → dihydrolipoate → régénère E, C, GSH.',
+ ARRAY['Antioxydant universel. Synergie CoQ10 + carnitine. ↑ glutathion.'],
+ false);
+
+-- Jeûne 12-13h — biogenèse mitochondriale
+('L_FAST_12H_MITO', 'Jeûne nocturne 12-13h (biogenèse mitochondriale)', 'lifestyle', false, 'n/a (fenêtre de jeûne nocturne)', 'T2', '12-13h entre dernier repas soir et premier repas matin', 'Le jeûne intermittent 12-13h active la biogenèse mitochondriale via AMPK et SIRT1. ↑ densité mitochondriale, ↑ flexibilité métabolique, ↑ autophagie. Simple : dîner à 20h, petit-déjeuner à 8-9h.',
+ '↑ densité mitochondriale, ↑ flexibilité métabolique, ↓ IR',
+ 'IR', 'T2',
+ 'Ch12 (Handbook IFMNT) — biogenèse mitochondriale via IF',
+ ARRAY['Référence chapitre'],
+ 'Dîner avant 20h. Pas de grignotage nocturne. Petit-déjeuner après 8h. Eau, tisane, café sans sucre autorisés.',
+ 'CI : grossesse (avis médical), antécédent de TCA, DT1 (adapter insuline).',
+ 'Simple jeûne circadien, pas un jeûne prolongé. Pas de restriction calorique. Compatible tous les jours.',
+ ARRAY['↑ biogenèse mitochondriale. Simple : arrêter de manger 12-13h/nuit.'],
+ false);

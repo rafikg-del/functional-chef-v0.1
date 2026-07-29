@@ -289,3 +289,11 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Timing carbs post-exercice
 ('L_CARBS_POSTEXERCISE',      'IR',       'T3', 36, 'Fenêtre 30-60 min post-exercice. 1-1.2 g/kg glucides IG élevé. Ivy 1988, Naderi 2025.');
+
+-- Alpha-lipoic acid — antioxydant mitochondrial
+('L_ALA_ANTIOXIDANT',         'INFLAM',   'T2', 23, 'Recycle E, C, GSH. ↑ sensibilité insulinique. Synergie CoQ10 + L-carnitine.'),
+('L_ALA_ANTIOXIDANT',         'IR',       'T3', 34, '↑ sensibilité insulinique via ↓ stress oxydatif mitochondrial.'),
+-- Jeûne 12-13h — biogenèse mitochondriale
+('L_FAST_12H_MITO',           'IR',       'T2', 25, 'Jeûne 12-13h/nuit → AMPK + SIRT1 → biogenèse mitochondriale. ↑ flexibilité métabolique.'),
+('L_FAST_12H_MITO',           'INFLAM',   'T3', 32, 'Autophagie → ↓ inflammation bas grade.'),
+('L_FAST_12H_MITO',           'DYSBIOSE', 'T3', 38, 'Jeûne 12h → reposer microbiote → ↓ perméabilité.');

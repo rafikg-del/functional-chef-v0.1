@@ -305,3 +305,6 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_GRAPESEED_POLY',          'DYSBIOSE', 'T3', 42, '↓ inflammation intestinale. Protection muqueuse.'),
 -- Luteine + Zeaxanthine
 ('L_LUTEIN_EYES',             'INFLAM',   'T3', 39, 'Carotenoides maculaires. Protection retine et inflammation oculaire. 10-20 mg/j luteine.');
+
+-- Phosphatidylsérine — membranes neuronales
+('L_PS_COGNITION',            'INFLAM',   'T3', 37, 'PS 100-200 mg ×2/j prev. 300-600 mg ×2/j post-TBI. Synergie DHA 2-4g/j + PC. Protection membrane neuronale.');

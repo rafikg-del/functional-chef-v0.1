@@ -1486,3 +1486,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Biodisponibilité ++ des œufs (lipides). Les suppléments sont efficaces.',
  ARRAY['Caroténoïdes maculaires. Anti-inflammatoire oculaire.'],
  false);
+
+-- Phosphatidylsérine (PS) — membranes neuronales, cognition
+('L_PS_COGNITION', 'Phosphatidylsérine (PS) — membranes neuronales + cognition', 'supplement', false, 'Œufs, produits laitiers crus, crucifères, abats. Supplémentation : 100-200 mg ×2/j', 'T2', '100-200 mg ×2/j (prévention). 300-600 mg ×2/j (post-TBI)', 'La PS constitue 3-10% des lipides membranaires. Joue un rôle clé dans la signalisation cellule-cellule et la localisation des protéines intracellulaires. DHA et PC stimulent la synthèse de PS. Doses spécifiques selon contexte clinique (Ch12).',
+ '↑ signalisation neuronale, ↓ déclin cognitif, ↑ récupération post-TBI',
+ 'INFLAM', 'T3',
+ 'Ch12 (Handbook IFMNT) — dosages spécifiques PS + DHA + PC',
+ ARRAY['Référence chapitre'],
+ 'Prévention : 100-200 mg ×2/j. Post-TBI : 300-600 mg ×2/j. Synergie DHA 2-4 g/j + PC 1-2 g/j.',
+ 'CI : anticoagulants (théorique). Insuffisance hépatique sévère.',
+ 'La PS est mieux absorbée avec des lipides et en synergie avec DHA. L\'alimentation seule (œufs, crucifères) apporte des précurseurs mais pas assez pour dose thérapeutique.',
+ ARRAY['Membrane neuronale. Synergie DHA + PC. Dosage selon contexte.'],
+ false);

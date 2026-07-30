@@ -140,6 +140,22 @@ const SOFT_SIGNAL_RULES: SoftSignalRule[] = [
   { signal: 'medication_nsaids', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'AINS → ↑ perméabilité intestinale, ↓ prostaglandines protectrices' },
   { signal: 'medication_beta2_agonists', bottleneck: 'INFLAM', weight: 0.10, label: 'β2-agonistes → ↓ Mg, ↓ K' },
   { signal: 'medication_isoniazid', bottleneck: 'INFLAM', weight: 0.15, label: 'Isoniazide → ↓ B6, ↓ B3, ↓ D. Neuropathie si B6 non supplémenté' },
+  // 📖 Table 15.2 — médicaments supplémentaires
+  { signal: 'medication_methotrexate', bottleneck: 'INFLAM', weight: 0.25, label: 'Méthotrexate → antagoniste folate. Carence fonctionnelle en folates.' },
+  { signal: 'medication_antipsychotics', bottleneck: 'INFLAM', weight: 0.15, label: 'Antipsychotiques/tricycliques → ↓ B2 (riboflavine). ↑ excrétion.' },
+  { signal: 'medication_antacids', bottleneck: 'INFLAM', weight: 0.10, label: 'Antiacides Al → ↓ phosphate, ↑ Ca urinaire.' },
+  { signal: 'medication_laxatives', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'Laxatifs → ↓ K, ↓ Ca, ↓ vit D. ↑ perméabilité.' },
+  { signal: 'medication_cholestyramine', bottleneck: 'INFLAM', weight: 0.20, label: 'Cholestyramine → lie A, D, E, K, β-carotène, Fe.' },
+  { signal: 'medication_colchicine', bottleneck: 'DYSBIOSE', weight: 0.15, label: 'Colchicine → ↓ B12. Malabsorption iléale.' },
+  { signal: 'medication_levodopa', bottleneck: 'INFLAM', weight: 0.10, label: 'Lévodopa → ↓ B6. Déplétion cofacteur DOPA décarboxylase.' },
+  { signal: 'medication_penicillamine', bottleneck: 'INFLAM', weight: 0.15, label: 'Pénicillamine → ↓ Cu, ↓ Zn, ↓ B6. Chélateur.' },
+  { signal: 'medication_theophylline', bottleneck: 'INFLAM', weight: 0.10, label: 'Théophylline → ↓ B6. Rare mais documenté.' },
+  { signal: 'medication_tetracyclines', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'Tétracyclines → ↓ Mg, ↓ Fe, ↓ Zn, ↓ Ca. Complexes insolubles.' },
+  { signal: 'medication_tetracyclines', bottleneck: 'INFLAM', weight: 0.10, label: 'Tétracyclines → ↓ Mg, ↓ Fe, ↓ Zn.' },
+  { signal: 'medication_sulfonamides', bottleneck: 'INFLAM', weight: 0.10, label: 'Sulfamides → ↓ Mg, ↓ B12.' },
+  // 💡 ISRS (hors livre)
+  { signal: 'medication_ssri', bottleneck: 'INFLAM', weight: 0.20, label: 'ISRS → ↓ Na (SIADH), ↓ iode (thyroïde), ↓ folate, ↓ mélatonine. PMID 41693783.' },
+  { signal: 'medication_ssri', bottleneck: 'IR', weight: 0.10, label: 'ISRS → prise poids fréquente (+2-5 kg). ↑ risque IR métabolique.' },
 ];
 
 /**

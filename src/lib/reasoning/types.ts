@@ -177,6 +177,20 @@ export interface PatientSoftSignals {
   medication_nsaids?: boolean;         // ↓ Fe, ↓ folate, ↓ B12 (long terme)
   medication_beta2_agonists?: boolean;  // ↓ Mg, ↓ K
   medication_isoniazid?: boolean;       // ↓ B6, ↓ B3, ↓ D
+  // 📖 Table 15.2 — médicaments supplémentaires
+  medication_methotrexate?: boolean;     // ↓ folate (antagoniste direct)
+  medication_antipsychotics?: boolean;   // ↓ B2 (riboflavine)
+  medication_antacids?: boolean;         // ↓ phosphate, ↑ Ca
+  medication_laxatives?: boolean;        // ↓ K, ↓ Ca, ↓ vit D
+  medication_cholestyramine?: boolean;   // ↓ A, D, E, K, β-carotène, Fe
+  medication_colchicine?: boolean;       // ↓ B12
+  medication_levodopa?: boolean;         // ↓ B6
+  medication_penicillamine?: boolean;    // ↓ Cu, Zn, B6
+  medication_theophylline?: boolean;     // ↓ B6
+  medication_tetracyclines?: boolean;    // ↓ Mg, Fe, Zn, Ca
+  medication_sulfonamides?: boolean;     // ↓ Mg, B12
+  // 💡 ISRS (hors livre, connaissances générales)
+  medication_ssri?: boolean;             // ↓ iode, ↓ Na, ↓ folate, ↓ mélatonine
 }
 
 // ───────────────────────────────────────────────────────────

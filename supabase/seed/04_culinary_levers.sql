@@ -1560,15 +1560,15 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  false);
 
 -- Omega-3 haute dose thérapeutique — anti-inflammatoire + neuroprotection
-('L_OMEGA3_HIGH_DOSE', 'Omega-3 (EPA+DHA) haute dose thérapeutique', 'supplement', false, 'Huile de poisson concentrée. Algue si vegan', 'T1', '2000-5000 mg/j EPA+DHA', 'Dose thérapeutique (vs dose entretien 1g/j). ↓ inflammation systémique, ↓ TG, ↑ EPA → résolvines (SPM). DHA 2-4g/j = synthèse PS, protection neurones.',
- '↓ CRP, ↓ TG, ↑ résolvines anti-inflammatoires, ↑ membrane neuronale',
+('L_OMEGA3_HIGH_DOSE', 'Omega-3 (EPA+DHA) haute dose thérapeutique — si besoin', 'supplement', false, 'Huile de poisson concentrée (EPA > DHA). Algue si vegan. 🔄 À utiliser seulement si CRP >1 ou AA/EPA >5 ou oméga-3 index <6%', 'T1', '2000-5000 mg/j EPA+DHA (si besoin thérapeutique). Sinon : 1 g/j entretien', 'Dose thérapeutique conditionnelle : uniquement si inflammation active (CRP élevée, AA/EPA déséquilibré). Génère des résolvines (SPM) qui éteignent l\'inflammation. Dose entretien standard : 1 g/j. Dose thérapeutique : 2-5 g/j.',
+ '↓ CRP, ↓ TG, ↑ résolvines SPM, ↓ AA/EPA ratio. SI BESoin SEULEMENT.',
  'INFLAM', 'T2',
- 'Ch13 (Verkerk) — dose 2000-5000 mg/j EPA+DHA',
+ 'Ch13 (Verkerk) — dose thérapeutique 2000-5000 mg/j si besoin',
  ARRAY['Référence chapitre'],
- '2000-5000 mg/j EPA+DHA. Ratio EPA > DHA pour inflammation. Prendre avec repas gras.',
- 'CI : anticoagulants (surveillance). Chirurgie programmée (arrêt 1 sem).',
- 'Dose thérapeutique différente de la dose entretien (1g/j). Cure 12 sem avant réévaluation.',
- ARRAY['Dose anti-inflammatoire haute. Résolvines. Synergie curcumine.'],
+ 'SI CRP >1 ou AA/EPA >5 : 2000-5000 mg/j EPA+DHA (ratio EPA 2:1 DHA). SINON : 1 g/j entretien. Prendre avec repas gras.',
+ 'CI : anticoagulants (surveillance INR). Chirurgie programmée (arrêt 1 sem).',
+ '⚠️ Haute dose = thérapeutique, pas entretien. Réévaluer après 12 sem. Si CRP normalisée → redescendre à 1 g/j.',
+ ARRAY['Haute dose SI BESoin (CRP↑, AA/EPA↑). Cure 12 sem. Puis retour 1g/j.'],
  false);
 
 -- Rosmarin — antioxydant, phase II

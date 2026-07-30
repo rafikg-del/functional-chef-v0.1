@@ -324,7 +324,7 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_GARLIC_KYOLIC',           'INFLAM',   'T2', 20, 'Ail cru/fermente. Active phase II, chelate metaux lourds. 3-4 gousses/j.'),
 ('L_GARLIC_KYOLIC',           'DYSBIOSE', 'T3', 41, 'Ail = prebiotique + antimicrobien moderation.'),
 -- Omega-3 haute dose
-('L_OMEGA3_HIGH_DOSE',        'INFLAM',   'T2', 15, '2000-5000 mg/j EPA+DHA. Resolvines. Dose therapeutique differente de 1g/j entretien.'),
+('L_OMEGA3_HIGH_DOSE',        'INFLAM',   'T2', 15, 'SI CRP>1 ou AA/EPA>5: 2000-5000 mg/j EPA+DHA. SINON: 1g/j entretien. Resolvines SPM. Cure 12 sem puis reevaluer.');
 ('L_OMEGA3_HIGH_DOSE',        'IR',       'T3', 29, '↓ TG, ↑ EPA membranaire → ↓ IR.'),
 -- Romarin
 ('L_ROSEMARY_DETOX',          'INFLAM',   'T3', 33, '200-500 mg/j extrait. Active phase II. Synergie curcumine.');

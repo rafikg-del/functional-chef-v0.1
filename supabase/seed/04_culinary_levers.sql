@@ -1546,3 +1546,39 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Synergie avec taurine pour la conjugaison biliaire. Avec cysteine + glutamate = glutathion.',
  ARRAY['Conjugaison biliaire + glutathion + sommeil. Synergie taurine.'],
  false);
+
+-- Ail fermenté (Kyolic) — détoxification, métaux lourds, phase II
+('L_GARLIC_KYOLIC', 'Ail fermenté (Kyolic) — détoxification, chélation métaux', 'ingredient', false, 'Ail cru écrasé (plusieurs gousses/j). Ail fermenté vieilli (Kyolic) en supplémentation', 'T2', '3-4 gousses/j cru ou 1-2 g Kyolic aged/j', 'L'ail active les enzymes de phase II (glutathion-S-transférase), chélate les métaux lourds (plomb, mercure, cadmium), ↑ glutathion. Effet antioxydant, anti-inflammatoire, cardioprotecteur.',
+ '↑ phase II, ↓ plomb sanguin, ↑ glutathion',
+ 'INFLAM', 'T2',
+ 'Ch13 (Verkerk) — ail Kyolic pour détox + chélation',
+ ARRAY['Référence chapitre'],
+ '3-4 gousses/j cru écrasé (laisser reposer 10 min avant cuisson). Kyolic : 1-2 g/j.',
+ 'CI : anticoagulants (warfarine) à haute dose. À éviter 1 sem avant chirurgie.',
+ 'L'ail cru écrasé active l'allinase → allicine. Cuire après 10 min d'activation.',
+ ARRAY['Détox phase II. Chélation métaux lourds. Synergie sélénium.'],
+ false);
+
+-- Omega-3 haute dose thérapeutique — anti-inflammatoire + neuroprotection
+('L_OMEGA3_HIGH_DOSE', 'Omega-3 (EPA+DHA) haute dose thérapeutique', 'supplement', false, 'Huile de poisson concentrée. Algue si vegan', 'T1', '2000-5000 mg/j EPA+DHA', 'Dose thérapeutique (vs dose entretien 1g/j). ↓ inflammation systémique, ↓ TG, ↑ EPA → résolvines (SPM). DHA 2-4g/j = synthèse PS, protection neurones.',
+ '↓ CRP, ↓ TG, ↑ résolvines anti-inflammatoires, ↑ membrane neuronale',
+ 'INFLAM', 'T2',
+ 'Ch13 (Verkerk) — dose 2000-5000 mg/j EPA+DHA',
+ ARRAY['Référence chapitre'],
+ '2000-5000 mg/j EPA+DHA. Ratio EPA > DHA pour inflammation. Prendre avec repas gras.',
+ 'CI : anticoagulants (surveillance). Chirurgie programmée (arrêt 1 sem).',
+ 'Dose thérapeutique différente de la dose entretien (1g/j). Cure 12 sem avant réévaluation.',
+ ARRAY['Dose anti-inflammatoire haute. Résolvines. Synergie curcumine.'],
+ false);
+
+-- Rosmarin — antioxydant, phase II
+('L_ROSEMARY_DETOX', 'Romarin (extrait) — antioxydant, activation phase II', 'ingredient', false, 'Romarin frais ou séché (cuisine). Extrait standardisé en acide rosmarinique 6-10%', 'T2', '200-500 mg/j extrait sec (6-10% acide rosmarinique)', 'Le romarin active les enzymes de phase II, antioxydant puissant (acide carnosique, acide rosmarinique). Protège le foie, ↑ bile.',
+ '↑ phase II, ↓ stress oxydatif, ↑ bile',
+ 'INFLAM', 'T3',
+ 'Ch13 (Verkerk) — dose 200-500 mg/j',
+ ARRAY['Référence chapitre'],
+ '1 càc de romarin séché/j en cuisine. Extrait 200-500 mg/j (standardisé 6-10% acide rosmarinique).',
+ 'CI : grossesse (doses élevées). Épilepsie (théorique).',
+ 'Cuisine : synergique avec curcuma et poivre noir.',
+ ARRAY['Antioxydant phase II. Synergie curcumine.'],
+ false);

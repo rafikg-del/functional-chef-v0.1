@@ -328,3 +328,10 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 ('L_OMEGA3_HIGH_DOSE',        'IR',       'T3', 29, '↓ TG, ↑ EPA membranaire → ↓ IR.'),
 -- Romarin
 ('L_ROSEMARY_DETOX',          'INFLAM',   'T3', 33, '200-500 mg/j extrait. Active phase II. Synergie curcumine.');
+
+-- Sauna
+('L_SAUNA_DETOX',             'INFLAM',   'T2', 17, 'Sudation → elimination toxines liposolubles. ↑ glutathion, ↑ HSP70. 10-20 min 1-3x/sem.'),
+-- Chlorella
+('L_CHLORELLA_DETOX',         'INFLAM',   'T3', 34, 'Chele metaux lourds. ↑ glutathion. 3-6 g/j parois brisees.'),
+-- MSM
+('L_MSM_DETOX',               'INFLAM',   'T3', 32, 'Soufre organique → glutathion + phase II. 1-3 g/j. Articulations.');

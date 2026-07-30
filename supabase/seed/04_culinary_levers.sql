@@ -1582,3 +1582,39 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'Cuisine : synergique avec curcuma et poivre noir.',
  ARRAY['Antioxydant phase II. Synergie curcumine.'],
  false);
+
+-- Sauna — détoxification via sudation
+('L_SAUNA_DETOX', 'Sauna (sudation — détoxification)', 'lifestyle', false, 'Sauna sec ou humide. 10-20 min/séance', 'T2', '10-20 min/séance. 1-3×/sem', 'La sudation élimine les toxines liposolubles (BPA, phtalates, métaux lourds) via la sueur. La sauna ↑ glutathion, ↓ stress oxydatif, ↑ HSP70 (choc thermique). Effet similaire exercice intense.',
+ '↓ charge toxique, ↑ glutathion, ↑ HSP70',
+ 'INFLAM', 'T2',
+ 'Ch14 (Verkerk) — sauna + sueur = élimination toxines liposolubles',
+ ARRAY['Référence chapitre'],
+ '10-20 min à 70-90°C (sec) ou 40-50°C (humide). 1-3×/sem. Hydratation avant/après.',
+ 'CI : grossesse (1er trimestre), HTA non contrôlée, insuffisance cardiaque, épilepsie.',
+ 'Commencer doucement 5-10 min puis augmenter. Boire 500 ml eau avant.',
+ ARRAY['Élimination toxines liposolubles. Synergie exercice.'],
+ false);
+
+-- Chlorella — chélation métaux lourds + glutathion
+('L_CHLORELLA_DETOX', 'Chlorella (algue) — chélation métaux lourds + glutathion', 'supplement', false, 'Chlorella (algue d\'eau douce). Supplémentation : 3-6 g/j', 'T2', '3-6 g/j (parois brisées pour assimilation)', 'La chlorella chélate les métaux lourds (plomb, mercure, cadmium) via ses parois cellulaires. ↑ glutathion, ↑ détoxification hépatique. Antioxydant + immunomodulateur.',
+ '↓ métaux lourds, ↑ glutathion, ↓ stress oxydatif',
+ 'INFLAM', 'T3',
+ 'Ch14 (Verkerk) — chlorella ↑ glutathion, chélation métaux',
+ ARRAY['Référence chapitre'],
+ '3-6 g/j de chlorella à parois brisées. Cure 8-12 sem. À prendre avec eau entre les repas.',
+ 'CI : allergie iode (rare), auto-immunité (théorique).',
+ 'Choisir chlorella à parois brisées (biodisponibilité). Synergie ail + NAC.',
+ ARRAY['Chélation métaux. ↑ glutathion. Synergie ail/NAC.'],
+ false);
+
+-- MSM (méthylsulfonylméthane) — soufre organique, glutathion, articulations
+('L_MSM_DETOX', 'MSM (méthylsulfonylméthane) — soufre, glutathion, articulations', 'supplement', false, 'MSM (soufre organique). Supplémentation : 1-3 g/j', 'T2', '1-3 g/j (max 6 g/j)', 'Le MSM fournit du soufre biodisponible pour la synthèse de glutathion et la détoxification de phase II. ↓ inflammation articulaire, ↑ récupération, ↓ stress oxydatif.',
+ '↑ glutathion, ↓ inflammation articulaire, ↓ stress oxydatif',
+ 'INFLAM', 'T3',
+ 'Ch14 (Verkerk) — MSM ↑ glutathion, soufre phase II',
+ ARRAY['Référence chapitre'],
+ '1-3 g/j en cure 8-12 sem. Peut monter à 6 g/j. Poudre dans eau ou gélules.',
+ 'CI : insuffisance rénale sévère. Troubles GI à haute dose (diarrhée).',
+ 'Goût amer. Synergie avec glucosamine/chondroïtine pour articulations.',
+ ARRAY['Soufre organique. ↑ glutathion. Articulations.'],
+ false);

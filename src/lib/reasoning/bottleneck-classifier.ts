@@ -132,6 +132,14 @@ const SOFT_SIGNAL_RULES: SoftSignalRule[] = [
   { signal: 'medication_metformin', bottleneck: 'IR', weight: 0.15, label: 'Metformine → ↓ B12, ↓ folate. Majoration IR sous-jacente' },
   { signal: 'medication_contraceptives', bottleneck: 'INFLAM', weight: 0.20, label: 'Contraceptifs → ↓ B6, ↓ Mg, ↓ Zn, ↓ folate' },
   { signal: 'medication_diuretics', bottleneck: 'INFLAM', weight: 0.10, label: 'Diurétiques → ↓ K, ↓ Mg, ↓ Zn' },
+  // 📖 Nouvelles déplétions Ch15 Table 15.2
+  { signal: 'medication_anticonvulsants', bottleneck: 'INFLAM', weight: 0.20, label: 'Anticonvulsivants → ↓ biotine, ↓ B6, ↓ D, ↓ Ca' },
+  { signal: 'medication_corticosteroids', bottleneck: 'INFLAM', weight: 0.20, label: 'Corticostéroïdes → ↓ Ca, ↓ D, ↓ K, ↓ Zn. ↑ IR' },
+  { signal: 'medication_corticosteroids', bottleneck: 'IR', weight: 0.15, label: 'Corticoïdes → ↑ glycémie, ↑ IR' },
+  { signal: 'medication_nsaids', bottleneck: 'INFLAM', weight: 0.15, label: 'AINS LT → ↓ Fe, ↓ folate, ↓ B12. ↑ inflammation intestinale' },
+  { signal: 'medication_nsaids', bottleneck: 'DYSBIOSE', weight: 0.20, label: 'AINS → ↑ perméabilité intestinale, ↓ prostaglandines protectrices' },
+  { signal: 'medication_beta2_agonists', bottleneck: 'INFLAM', weight: 0.10, label: 'β2-agonistes → ↓ Mg, ↓ K' },
+  { signal: 'medication_isoniazid', bottleneck: 'INFLAM', weight: 0.15, label: 'Isoniazide → ↓ B6, ↓ B3, ↓ D. Neuropathie si B6 non supplémenté' },
 ];
 
 /**

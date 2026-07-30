@@ -171,6 +171,12 @@ export interface PatientSoftSignals {
   medication_metformin?: boolean; // ↓ B12, ↓ folate
   medication_contraceptives?: boolean; // ↓ B6, ↓ Mg, ↓ Zn, ↓ folate
   medication_diuretics?: boolean; // ↓ K, ↓ Mg, ↓ Zn
+  // Nouvelles déplétions médicamenteuses (Ch15 — Table 15.2)
+  medication_anticonvulsants?: boolean; // ↓ biotine, ↓ B6, ↓ D, ↓ Ca
+  medication_corticosteroids?: boolean; // ↓ Ca, ↓ D, ↓ K, ↓ Zn
+  medication_nsaids?: boolean;         // ↓ Fe, ↓ folate, ↓ B12 (long terme)
+  medication_beta2_agonists?: boolean;  // ↓ Mg, ↓ K
+  medication_isoniazid?: boolean;       // ↓ B6, ↓ B3, ↓ D
 }
 
 // ───────────────────────────────────────────────────────────

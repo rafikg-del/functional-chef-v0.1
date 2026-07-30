@@ -308,3 +308,14 @@ INSERT INTO lever_bottleneck_map (lever_id, bottleneck_id, tier_for_bottleneck, 
 
 -- Phosphatidylsérine — membranes neuronales
 ('L_PS_COGNITION',            'INFLAM',   'T3', 37, 'PS 100-200 mg ×2/j prev. 300-600 mg ×2/j post-TBI. Synergie DHA 2-4g/j + PC. Protection membrane neuronale.');
+
+-- Milk thistle — hépatoprotecteur
+('L_MILK_THISTLE',            'INFLAM',   'T2', 19, 'Silymarine 200-600 mg/j. Hepatoprotecteur. ↑ glutathion hepatique. Synergie cruciferes.'),
+-- Whey protein — précurseur glutathion
+('L_WHEY_DETOX',              'INFLAM',   'T2', 22, '20-30 g/j whey non denaturee. Cysteine → glutathion. Alternative NAC.'),
+('L_WHEY_DETOX',              'IR',       'T3', 31, 'Whey peut aider perte poids et ↓ IR. Effet saturete.'),
+-- Taurine — conjugaison biliaire
+('L_TAURINE_DETOX',           'INFLAM',   'T3', 36, '500 mg ×2/j. Conjugaison biliaire (phase II). Antioxydant mitochondrial.'),
+-- Glycine — glutathion + sommeil
+('L_GLYCINE_DETOX',           'INFLAM',   'T3', 35, '500 mg ×2/j detox ou 3g coucher sommeil. Glutathion + conjugaison biliaire.'),
+('L_GLYCINE_DETOX',           'DYSBIOSE', 'T3', 44, 'Glycine → collagene → barriere intestinale. Bouillon d\'os = deja L_BONE_BROTH.');

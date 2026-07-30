@@ -1498,3 +1498,51 @@ INSERT INTO culinary_levers (id, name_fr, name_en, description, category, expect
  'La PS est mieux absorbée avec des lipides et en synergie avec DHA. L\'alimentation seule (œufs, crucifères) apporte des précurseurs mais pas assez pour dose thérapeutique.',
  ARRAY['Membrane neuronale. Synergie DHA + PC. Dosage selon contexte.'],
  false);
+
+-- Milk thistle (silymarin) — hépatoprotecteur, détoxification
+('L_MILK_THISTLE', 'Chardon-Marie (silymarine) — hépatoprotecteur', 'supplement', false, 'Chardon-Marie (Silybum marianum). Supplémentation : 200-600 mg/j silymarine', 'T2', '200-600 mg/j silymarine (standardisé 80%)', 'Hépatoprotecteur : antioxydant, inhibe la liaison des toxines aux membranes hépatiques, ↓ fibrose. Utilisé dans hépatites virales, surcharge alcool, fer, acétaminophène. ↑ glutathion hépatique.',
+ '↓ stress oxydatif hépatique, ↑ glutathion, protection membrane hépatocyte',
+ 'INFLAM', 'T2',
+ 'Ch13 (Verkerk) — dose 200-600 mg/j silymarine',
+ ARRAY['Référence chapitre'],
+ '200-600 mg/j de silymarine (extrait standardisé 80%). Cure 8-12 sem.',
+ 'CI : grossesse/allaitement (données insuffisantes). Interactions : CYP450 (théorique).',
+ 'Complémentaire crucifères (phase II) et NAC/glutathion. Synergie avec zinc et sélénium.',
+ ARRAY['Hépatoprotecteur. Synergie crucifères + NAC.'],
+ false);
+
+-- Whey protein — précurseur glutathion (cysteine), détoxification
+('L_WHEY_DETOX', 'Whey protéine (lactosérum) — précurseur glutathion', 'supplement', false, 'Petit-lait, lactosérum. Supplémentation : 20-30 g/j whey non dénaturée', 'T2', '20-30 g/j de whey non dénaturée (riche en cysteine)', 'La whey est riche en cysteine, acide aminé limitant pour la synthèse de glutathion. ↑ glutathion hépatique et systémique. Effet détoxifiant, aide perte poids. Alternative au NAC pour les patients qui tolèrent mal les suppléments.',
+ '↑ glutathion, ↑ détoxification hépatique, ↓ stress oxydatif',
+ 'INFLAM', 'T2',
+ 'Ch13 (Verkerk) — whey + NAC : précurseurs cysteine → glutathion',
+ ARRAY['Référence chapitre'],
+ '20-30 g/j de whey non dénaturée (microfiltrée, native). Mélanger eau froide (ne pas chauffer).',
+ 'CI : allergie lait, intolérance lactose sévère. Insuffisance rénale (surveillance protides).',
+ 'Alternative alimentaire au NAC. Préférer whey non dénaturée (microfiltrée) pour préserver la cysteine.',
+ ARRAY['Précurseur glutathion alimentaire. Alternative NAC. Synergie sélénium.'],
+ false);
+
+-- Taurine — conjugaison biliaire, détoxification phase II
+('L_TAURINE_DETOX', 'Taurine — conjugaison biliaire (détoxification phase II)', 'supplement', false, 'Fruits de mer, poisson, viande. Supplémentation : 500 mg ×2/j', 'T2', '500 mg ×2/j', 'La taurine conjugue les acides biliaires → élimination des toxines liposolubles via bile. Antioxydant mitochondrial. Protège foie et rétine.',
+ '↑ conjugaison biliaire, ↓ stress oxydatif hépatique',
+ 'INFLAM', 'T3',
+ 'Ch13 (Verkerk) — dose 500 mg ×2/j',
+ ARRAY['Référence chapitre'],
+ '500 mg ×2/j. Prendre avec repas. Cure 8-12 sem.',
+ 'CI : insuffisance rénale sévère. Aucune aux doses recommandées.',
+ 'La taurine est un acide aminé conditionnellement essentiel. Synergie glycine (conjugaison biliaire).',
+ ARRAY['Conjugaison biliaire. Synergie glycine.'],
+ false);
+
+-- Glycine — conjugaison biliaire, glutathion, collagène
+('L_GLYCINE_DETOX', 'Glycine — conjugaison biliaire + glutathion + collagène', 'supplement', false, 'Bouillon d\'os, gélatine, viande, poisson. Supplémentation : 500 mg ×2/j', 'T2', '500 mg ×2/j (ou 3g avant coucher pour sommeil)', 'La glycine conjugue les acides biliaires (phase II). Précurseur du glutathion (avec cysteine + glutamate). ↑ sommeil (neurotransmetteur inhibiteur). ↑ collagène.',
+ '↑ conjugaison biliaire, ↑ glutathion, ↑ sommeil',
+ 'INFLAM', 'T3',
+ 'Ch13 (Verkerk) — dose 500 mg ×2/j',
+ ARRAY['Référence chapitre'],
+ '500 mg ×2/j pour détoxification. 3g avant coucher pour sommeil. Bouillon d\'os 250 ml/j.',
+ 'CI : insuffisance rénale sévère. Aucune aux doses alimentaires.',
+ 'Synergie avec taurine pour la conjugaison biliaire. Avec cysteine + glutamate = glutathion.',
+ ARRAY['Conjugaison biliaire + glutathion + sommeil. Synergie taurine.'],
+ false);

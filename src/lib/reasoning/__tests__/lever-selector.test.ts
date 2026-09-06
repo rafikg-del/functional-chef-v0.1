@@ -105,6 +105,8 @@ function makeScore(bottleneck_id: string, triggered: boolean, score = 0): Bottle
     minor_hits: 0,
     discriminant_hits: 0,
     triggered,
+    suspicion_score: 0,
+    suspicion_signals: [],
     is_dominant: false,
     is_co_dominant: false,
     evidence: [],

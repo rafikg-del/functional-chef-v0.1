@@ -210,8 +210,8 @@ export const PATIENT_PROFILES: PatientTestCase[] = [
     label: 'DYSBIOSE constipation — homme 40 ans',
     description: 'Bristol 1 (constipation sévère), ballonnements 3/sem, fibres 8g/j. SIBO breath test positif.',
     profile: {
-      biomarker_values: { SIBO_BREATH_TEST: 'positif', CALPROTECTIN: 30 },
-      clinical_signals: { BRISTOL_SCORE: 1, BLOATING_FREQ: 3, FIBER_INTAKE: 8, ABX_LIFETIME: 2 },
+      biomarker_values: { CALPROTECTIN: 30 },
+      clinical_signals: { BRISTOL_SCORE: 1, BLOATING_FREQ: 3, FIBER_INTAKE: 8, ABX_LIFETIME: 2, SIBO_BREATH_TEST: 'positif' },
       exclusions: {}, context: {}, sex: 'M', age: 40,
     },
     expected: { dominant: 'DYSBIOSE', dysbiose_triggered: true, min_score_dysbiose: 7 }, // SIBO + Bristol 1 + ballonnements 3 + fibres 8 → assez de moderate + major
@@ -387,8 +387,8 @@ export const PATIENT_PROFILES: PatientTestCase[] = [
     profile: {
       biomarker_values: { CALPROTECTIN: 200 },
       clinical_signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 5, ABX_LIFETIME: 2, FIBER_INTAKE: 15 },
-      exclusions: { IBD: true, Crohn: true },
-      context: { known_IBD: true }, sex: 'M', age: 35,
+      exclusions: { medical: ['MICI_active'] },
+      context: {}, sex: 'M', age: 35,
     },
     expected: { dominant: null, dysbiose_triggered: false }, // Exclu par IBD
   },

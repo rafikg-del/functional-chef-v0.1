@@ -1,6 +1,6 @@
 import { describe, it, expect } from 'vitest';
-import { computeProgress } from '../progress-tracker';
-import type { BottleneckScore, ProgressEntry } from '../types';
+import { computeProgress, type ProgressEntry } from '../progress-tracker';
+import type { BottleneckScore } from '../types';
 
 function makeScore(id: string, score: number): BottleneckScore {
   return {

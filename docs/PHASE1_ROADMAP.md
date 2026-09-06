@@ -146,10 +146,12 @@ Passer de « tiers auto-déclarés » à « tiers validés par un comité scient
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-24** | Protocole de validation (critères d'inclusion, endpoints, méthode) | Document contrôlé | Approuvé par le CS | 🔴 Critique |
+| **LIV-24** | [Protocole de validation](CLINICAL_VALIDATION_PROTOCOL.md) (critères d'inclusion, endpoints, méthode) | Document contrôlé | Approuvé par le CS | 🔴 Critique |
 | **LIV-25** | 10 cas cliniques réels anonymisés (ZOI ou patients du CS) | Tableau anonymisé | Pas de PHI, format structuré (json + PDF) | 🔴 Critique |
 | **LIV-26** | Rapport de validation : résultats du moteur vs jugement clinique pour chaque cas | PDF | Concordance classifier vs médecin documentée pour chaque cas | 🔴 Critique |
 | **LIV-27** | Matrice de concordance : sensibilité, spécificité, VPP, VPN par bottleneck | Tableau | Publiable (même en interne) | 🟡 Important |
+
+**LIV-24** : brouillon contrôlé disponible — [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](CLINICAL_VALIDATION_PROTOCOL.md). Statut : en attente d'approbation CS. Les fixtures synthétiques (`patient-profiles.ts`, `test-validation-cases.ts`) ne constituent **pas** le set LIV-25.
 
 ---
 

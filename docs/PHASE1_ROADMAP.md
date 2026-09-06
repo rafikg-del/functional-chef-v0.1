@@ -147,11 +147,13 @@ Passer de « tiers auto-déclarés » à « tiers validés par un comité scient
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
 | **LIV-24** | [Protocole de validation](CLINICAL_VALIDATION_PROTOCOL.md) (critères d'inclusion, endpoints, méthode) | Document contrôlé | Approuvé par le CS | 🔴 Critique |
-| **LIV-25** | 10 cas cliniques réels anonymisés (ZOI ou patients du CS) | Tableau anonymisé | Pas de PHI, format structuré (json + PDF) | 🔴 Critique |
+| **LIV-25** | 10 cas cliniques réels anonymisés (ZOI ou patients du CS) — [pack](validation/liv25/) | JSON (+ PDF) | Pas de PHI, format structuré ; **DYSBIOSE 1/3 non atteint** (pack partiel) | 🔴 Critique |
 | **LIV-26** | Rapport de validation : résultats du moteur vs jugement clinique pour chaque cas | PDF | Concordance classifier vs médecin documentée pour chaque cas | 🔴 Critique |
 | **LIV-27** | Matrice de concordance : sensibilité, spécificité, VPP, VPN par bottleneck | Tableau | Publiable (même en interne) | 🟡 Important |
 
 **LIV-24** : brouillon contrôlé disponible — [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](CLINICAL_VALIDATION_PROTOCOL.md). Statut : en attente d'approbation CS. Les fixtures synthétiques (`patient-profiles.ts`, `test-validation-cases.ts`) ne constituent **pas** le set LIV-25.
+
+**LIV-25** : cadre versé dans [`docs/validation/liv25/`](validation/liv25/) (README, manifeste, notes). Pack **partiel** : stratum DYSBIOSE dominant **NON ATTEINT (1/3)** — il manque des cas à primauté intestinale. Aucun fixture synthétique ne complète le set.
 
 ---
 

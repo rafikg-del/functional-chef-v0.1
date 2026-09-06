@@ -1,0 +1,71 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-10",
+  "age_band": "50-59",
+  "sex": "M",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 0.63,
+    "FASTING_INSULIN": 4.17,
+    "FASTING_GLUCOSE": 0.72,
+    "HBA1C": 4.9,
+    "CRP_US": 11.14,
+    "OMEGA3_INDEX": 5.93,
+    "AA_EPA_RATIO": 18.97,
+    "APO_B": 0.8,
+    "TG_HDL_RATIO": 1.82,
+    "TRIGLYCERIDES": 0.62,
+    "HOMOCYSTEINE": 23.0,
+    "FERRITIN": 93,
+    "TSAT": 16.2,
+    "NLR": 3.24,
+    "SHBG": 59,
+    "LIVER_FAT_PDFF": 6.0
+  },
+  "clinical_signals": {
+    "GLP1_ACTIVE": "positive",
+    "POST_BARIATRIC": "positive"
+  },
+  "soft_signals": {
+    "fatigue_postprandiale": true
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "IR",
+  "clinician_co_dominant": "INFLAM",
+  "clinician_judgment": {
+    "dominant": "IR",
+    "co_dominant": "INFLAM",
+    "phenotypes": [],
+    "confidence": "haute",
+    "rationale_codes": [
+      "CRP_US",
+      "AA_EPA_RATIO",
+      "HOMOCYSTEINE",
+      "APO_B",
+      "GLP1_ACTIVE"
+    ],
+    "safety_conditions_expected": [
+      "post_bariatric",
+      "glp1_agonist",
+      "unexplained_crp_marked"
+    ]
+  }
+}

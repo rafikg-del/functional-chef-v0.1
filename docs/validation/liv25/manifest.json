@@ -7,7 +7,7 @@
     "path": "docs/CLINICAL_VALIDATION_PROTOCOL.md"
   },
   "pack_status": "partial",
-  "pack_status_note": "Payload tarball/BASE64 absent du message d'agent. Aucun cas inventé. JSON cases/ non versés.",
+  "pack_status_note": "10 JSON anonymisés versés. Tarball gzip tronqué ; reconstruction depuis le mapping fileId officiel. DYSBIOSE dominant 1/3 NON ATTEINT.",
   "phi": {
     "allowed_in_repo": false,
     "rules_ref": "docs/CLINICAL_VALIDATION_PROTOCOL.md#9-anonymisation-et-interdiction-de-phi"
@@ -24,7 +24,30 @@
     "ZOI-VAL-09",
     "ZOI-VAL-10"
   ],
-  "cases_on_disk": [],
+  "cases_on_disk": [
+    "ZOI-VAL-01",
+    "ZOI-VAL-02",
+    "ZOI-VAL-03",
+    "ZOI-VAL-04",
+    "ZOI-VAL-05",
+    "ZOI-VAL-06",
+    "ZOI-VAL-07",
+    "ZOI-VAL-08",
+    "ZOI-VAL-09",
+    "ZOI-VAL-10"
+  ],
+  "clinician_dominant_by_case": {
+    "ZOI-VAL-01": "INFLAM",
+    "ZOI-VAL-02": "DYSBIOSE",
+    "ZOI-VAL-03": "INFLAM",
+    "ZOI-VAL-04": "INFLAM",
+    "ZOI-VAL-05": "none",
+    "ZOI-VAL-06": "none",
+    "ZOI-VAL-07": "none",
+    "ZOI-VAL-08": "IR",
+    "ZOI-VAL-09": "IR",
+    "ZOI-VAL-10": "IR"
+  },
   "stratification_target": {
     "IR_dominant": { "min": 3, "mandatory": true },
     "INFLAM_dominant": { "min": 3, "mandatory": true },
@@ -33,12 +56,16 @@
     "safety_challenge": { "min": 1, "mandatory": true }
   },
   "stratification_status": {
-    "IR_dominant": "unknown_pending_json",
-    "INFLAM_dominant": "unknown_pending_json",
+    "IR_dominant": "MET",
+    "IR_dominant_count": "3/3",
+    "INFLAM_dominant": "MET",
+    "INFLAM_dominant_count": "3/3",
     "DYSBIOSE_dominant": "NOT_MET",
     "DYSBIOSE_dominant_count": "1/3",
-    "co_dominant": "unknown_pending_json",
-    "safety_challenge": "unknown_pending_json"
+    "co_dominant": "MET",
+    "co_dominant_count": "4/1",
+    "safety_challenge": "MET",
+    "safety_challenge_count": "6/1"
   },
   "known_gaps": [
     {

@@ -758,7 +758,7 @@ Les écarts sont listés en annexe de LIV-26.
 |----|----------|------------------|-------------|
 | LIV-18 / 20 | Charte et composition CS | Approbateurs | Préalable |
 | **LIV-24** | Le présent protocole | — | Brouillon → approuvé CS |
-| **LIV-25** | 10 cas anonymisés (json + PDF) — [`docs/validation/liv25/`](validation/liv25/) | Protocole approuvé | **Pack partiel** — DYSBIOSE dominant **1/3 (NON ATTEINT)** ; JSON officiels en attente du tarball anonymisé |
+| **LIV-25** | 10 cas anonymisés (json + PDF) — [`docs/validation/liv25/`](validation/liv25/) | Protocole approuvé | **Pack partiel** — DYSBIOSE dominant **1/3 (NON ATTEINT)** ; 10 JSON anonymisés versés |
 | **LIV-26** | Rapport moteur vs clinicien | LIV-25 + run gelé | Après confrontation |
 | **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN | LIV-26 | Après confrontation |
 | LIV-07 | Plan V&V MDR | Cible qualitative « 10 cas ZOI, concordance >80 % » | Aligné, non substitutif |

@@ -28,17 +28,17 @@ Les valeurs biologiques nécessaires à la classification sont autorisées **uni
 
 | Strate (jugement clinicien) | Cible | Statut de ce pack |
 |-----------------------------|-------|-------------------|
-| Dominant IR | ≥ 3 | À confirmer à la livraison des JSON |
-| Dominant INFLAM | ≥ 3 | À confirmer à la livraison des JSON |
-| **Dominant DYSBIOSE** | **≥ 3** | **NON ATTEINT — 1/3** |
-| Co-dominance | ≥ 1 | À confirmer |
-| Épreuve de sécurité | ≥ 1 | À confirmer |
+| Dominant IR | ≥ 3 | **ATTEINT (3)** — VAL-08, VAL-09, VAL-10 |
+| Dominant INFLAM | ≥ 3 | **ATTEINT (3)** — VAL-01, VAL-03, VAL-04 |
+| **Dominant DYSBIOSE** | **≥ 3** | **NON ATTEINT — 1/3** — seul VAL-02 est dominant ; VAL-01 et VAL-04 n'ont DYSBIOSE qu'en co-dominant |
+| Co-dominance | ≥ 1 | **ATTEINT** — VAL-01, VAL-04, VAL-09, VAL-10 |
+| Épreuve de sécurité | ≥ 1 | **ATTEINT (6)** — VAL-03, VAL-04, VAL-05, VAL-06, VAL-09, VAL-10 |
 
 **Écart connu** : un seul cas à dominant digestif (DYSBIOSE 1/3). Le pack est un **LIV-25 partiel** en attendant au moins deux dossiers supplémentaires à primauté intestinale. On ne complète **pas** avec un fixture synthétique.
 
 Détail : [`EXTRACTION_NOTES.md`](EXTRACTION_NOTES.md) · inventaire : [`manifest.json`](manifest.json).
 
-## Contenu attendu
+## Contenu
 
 ```
 docs/validation/liv25/
@@ -48,4 +48,4 @@ docs/validation/liv25/
   cases/ZOI-VAL-01.json … ZOI-VAL-10.json
 ```
 
-Les fiches `cases/*.json` ne sont versées que depuis le tarball anonymisé officiel (ou la liste fichier équivalente). **Aucun cas n'est inventé.**
+Les fiches `cases/*.json` suivent le gabarit LIV-24 Annexe A. **Aucun cas n'est inventé.** Les JSON ont été reconstruits depuis le mapping officiel du tarball (fileId Drive uniquement) après troncature du flux gzip ; seules les valeurs de labo et les flags structurés sont versés.

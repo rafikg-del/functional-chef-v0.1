@@ -1,0 +1,65 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-01",
+  "age_band": "50-59",
+  "sex": "F",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 0.55,
+    "FASTING_INSULIN": 3.0,
+    "FASTING_GLUCOSE": 0.87,
+    "HBA1C": 5.5,
+    "CRP_US": 1.29,
+    "AA_EPA_RATIO": 20.1,
+    "FERRITIN": 10,
+    "TSAT": 14,
+    "HOMOCYSTEINE": 13.0,
+    "NLR": 2.11,
+    "SHBG": 88
+  },
+  "clinical_signals": {},
+  "soft_signals": {
+    "fatigue_chronique_persistante": true,
+    "sueurs_nocturnes": true,
+    "peau_inflammee_eczema_psoriasis": true,
+    "prise_poids_recente_kg": 9,
+    "flatulences_excessives": true,
+    "alternance_constipation_diarrhee": true
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": [
+      "lactose"
+    ]
+  },
+  "context": {},
+  "clinician_dominant": "INFLAM",
+  "clinician_co_dominant": "DYSBIOSE",
+  "clinician_judgment": {
+    "dominant": "INFLAM",
+    "co_dominant": "DYSBIOSE",
+    "phenotypes": [],
+    "confidence": "haute",
+    "rationale_codes": [
+      "CRP_US",
+      "AA_EPA_RATIO",
+      "HOMOCYSTEINE",
+      "NLR"
+    ],
+    "safety_conditions_expected": []
+  }
+}

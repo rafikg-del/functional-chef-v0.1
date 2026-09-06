@@ -153,7 +153,7 @@ Passer de « tiers auto-déclarés » à « tiers validés par un comité scient
 
 **LIV-24** : brouillon contrôlé disponible — [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](CLINICAL_VALIDATION_PROTOCOL.md). Statut : en attente d'approbation CS. Les fixtures synthétiques (`patient-profiles.ts`, `test-validation-cases.ts`) ne constituent **pas** le set LIV-25.
 
-**LIV-25** : cadre versé dans [`docs/validation/liv25/`](validation/liv25/) (README, manifeste, notes). Pack **partiel** : stratum DYSBIOSE dominant **NON ATTEINT (1/3)** — il manque des cas à primauté intestinale. Aucun fixture synthétique ne complète le set.
+**LIV-25** : pack versé dans [`docs/validation/liv25/`](validation/liv25/) (README, manifeste, notes, 10 JSON). Pack **partiel** : stratum DYSBIOSE dominant **NON ATTEINT (1/3)** — il manque des cas à primauté intestinale. Aucun fixture synthétique ne complète le set.
 
 ---
 

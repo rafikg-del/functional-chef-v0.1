@@ -1,0 +1,67 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-03",
+  "age_band": "50-59",
+  "sex": "M",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": true
+  },
+  "biomarker_values": {
+    "HOMA_IR": 1.55,
+    "FASTING_GLUCOSE": 0.96,
+    "HBA1C": 5.6,
+    "CRP_US": 3.33,
+    "OMEGA3_INDEX": 5.63,
+    "AA_EPA_RATIO": 13.88,
+    "APO_B": 1.48,
+    "TG_HDL_RATIO": 1.69,
+    "TRIGLYCERIDES": 1.2,
+    "NLR": 2.56,
+    "HOMOCYSTEINE": 13.0,
+    "LIVER_FAT_PDFF": 3.35,
+    "FERRITIN": 290,
+    "ALT": 24,
+    "GGT": 37
+  },
+  "clinical_signals": {
+    "PLANT_DIVERSITY": 0
+  },
+  "soft_signals": {
+    "fatigue_postprandiale": false
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "INFLAM",
+  "clinician_co_dominant": null,
+  "clinician_judgment": {
+    "dominant": "INFLAM",
+    "co_dominant": null,
+    "phenotypes": [],
+    "confidence": "haute",
+    "rationale_codes": [
+      "CRP_US",
+      "AA_EPA_RATIO",
+      "OMEGA3_INDEX",
+      "APO_B",
+      "HOMOCYSTEINE"
+    ],
+    "safety_conditions_expected": [
+      "documented_atherosclerosis"
+    ]
+  }
+}

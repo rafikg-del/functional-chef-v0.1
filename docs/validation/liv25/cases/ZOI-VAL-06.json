@@ -1,0 +1,58 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-06",
+  "age_band": "50-59",
+  "sex": "M",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 0.38,
+    "FASTING_GLUCOSE": 0.78,
+    "HBA1C": 5.4,
+    "CRP_US": 0.16,
+    "OMEGA3_INDEX": 6.68,
+    "AA_EPA_RATIO": 11.75,
+    "APO_B": 0.97,
+    "TG_HDL_RATIO": 1.18,
+    "TRIGLYCERIDES": 0.79,
+    "HOMOCYSTEINE": 11.0,
+    "FERRITIN": 254,
+    "TSAT": 28.6,
+    "SHBG": 86
+  },
+  "clinical_signals": {},
+  "soft_signals": {},
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "none",
+  "clinician_co_dominant": null,
+  "clinician_judgment": {
+    "dominant": "none",
+    "co_dominant": null,
+    "phenotypes": [],
+    "confidence": "moyenne",
+    "rationale_codes": [
+      "APO_B",
+      "AA_EPA_RATIO"
+    ],
+    "safety_conditions_expected": [
+      "documented_atherosclerosis"
+    ]
+  }
+}

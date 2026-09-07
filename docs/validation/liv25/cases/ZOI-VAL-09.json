@@ -1,0 +1,66 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-09",
+  "age_band": "60-69",
+  "sex": "M",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 3.21,
+    "FASTING_INSULIN": 15.33,
+    "FASTING_GLUCOSE": 0.99,
+    "TRIGLYCERIDES": 2.54,
+    "LIVER_FAT_PDFF": 10.56,
+    "ALT": 194,
+    "GGT": 83,
+    "OMEGA3_INDEX": 4.23,
+    "AA_EPA_RATIO": 43.97,
+    "HOMOCYSTEINE": 17.0,
+    "FERRITIN": 3074,
+    "TSAT": 28.5,
+    "URIC_ACID": 2.8
+  },
+  "clinical_signals": {},
+  "soft_signals": {
+    "fatigue_postprandiale": true,
+    "antécédents_familiaux_dt2": false
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "IR",
+  "clinician_co_dominant": "INFLAM",
+  "clinician_judgment": {
+    "dominant": "IR",
+    "co_dominant": "INFLAM",
+    "phenotypes": [
+      "hepatic_masld"
+    ],
+    "confidence": "haute",
+    "rationale_codes": [
+      "HOMA_IR",
+      "FASTING_INSULIN",
+      "LIVER_FAT_PDFF",
+      "TRIGLYCERIDES",
+      "AA_EPA_RATIO"
+    ],
+    "safety_conditions_expected": [
+      "chronic_HBV_untreated"
+    ]
+  }
+}

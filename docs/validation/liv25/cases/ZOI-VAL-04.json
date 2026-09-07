@@ -1,0 +1,65 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-04",
+  "age_band": "30-39",
+  "sex": "F",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 0.34,
+    "FASTING_INSULIN": 2.17,
+    "FASTING_GLUCOSE": 0.75,
+    "HBA1C": 5.6,
+    "CRP_US": 9.41,
+    "AA_EPA_RATIO": 33.4,
+    "OMEGA3_INDEX": 6.72,
+    "SHBG": 101,
+    "FERRITIN": 45,
+    "TSAT": 22.2,
+    "HOMOCYSTEINE": 15.0,
+    "APO_B": 0.28,
+    "URIC_ACID": 6.8,
+    "ALT": 18
+  },
+  "clinical_signals": {},
+  "soft_signals": {
+    "fatigue_chronique_persistante": true,
+    "infections_recurrentes": true,
+    "ovulation_irreguliere": true
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "INFLAM",
+  "clinician_co_dominant": "DYSBIOSE",
+  "clinician_judgment": {
+    "dominant": "INFLAM",
+    "co_dominant": "DYSBIOSE",
+    "phenotypes": [],
+    "confidence": "haute",
+    "rationale_codes": [
+      "CRP_US",
+      "AA_EPA_RATIO",
+      "HOMOCYSTEINE",
+      "OMEGA3_INDEX"
+    ],
+    "safety_conditions_expected": [
+      "unexplained_crp_marked"
+    ]
+  }
+}

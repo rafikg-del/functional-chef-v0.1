@@ -1,0 +1,55 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-05",
+  "age_band": "50-59",
+  "sex": "F",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 1.59,
+    "HBA1C": 5.6,
+    "CRP_US": 2.31,
+    "APO_B": 1.15,
+    "HOMOCYSTEINE": 14.0,
+    "GGT": 14,
+    "ALT": 16
+  },
+  "clinical_signals": {},
+  "soft_signals": {
+    "fatigue_chronique_persistante": true
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "none",
+  "clinician_co_dominant": null,
+  "clinician_judgment": {
+    "dominant": "none",
+    "co_dominant": null,
+    "phenotypes": [],
+    "confidence": "moyenne",
+    "rationale_codes": [
+      "CRP_US",
+      "APO_B",
+      "HOMOCYSTEINE"
+    ],
+    "safety_conditions_expected": [
+      "liver_elastography_discordance"
+    ]
+  }
+}

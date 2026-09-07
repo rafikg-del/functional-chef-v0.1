@@ -1,0 +1,61 @@
+{
+  "protocol_version": "0.1",
+  "source_pool": "ZOI",
+  "t0_offset_days": 0,
+  "engine_git_sha": null,
+  "engine_output": null,
+  "secondary_scores": {
+    "levers": [],
+    "safety": []
+  },
+  "case_id": "ZOI-VAL-08",
+  "age_band": "50-59",
+  "sex": "M",
+  "data_completeness": {
+    "IR": true,
+    "INFLAM": true,
+    "DYSBIOSE": false
+  },
+  "biomarker_values": {
+    "HOMA_IR": 1.74,
+    "FASTING_INSULIN": 7.0,
+    "FASTING_GLUCOSE": 1.18,
+    "HBA1C": 5.5,
+    "CRP_US": 0.43,
+    "APO_B": 1.22,
+    "TG_HDL_RATIO": 2.83,
+    "TRIGLYCERIDES": 1.67,
+    "ALT": 28,
+    "GGT": 15,
+    "HOMOCYSTEINE": 13.0,
+    "OMEGA3_INDEX": 7.38,
+    "SHBG": 58
+  },
+  "clinical_signals": {},
+  "soft_signals": {
+    "prise_poids_recente_kg": 3.9,
+    "fringales_glucidiques": false
+  },
+  "exclusions": {
+    "medical": [],
+    "allergies": [],
+    "dietary_pattern": [],
+    "intolerances": []
+  },
+  "context": {},
+  "clinician_dominant": "IR",
+  "clinician_co_dominant": null,
+  "clinician_judgment": {
+    "dominant": "IR",
+    "co_dominant": null,
+    "phenotypes": [],
+    "confidence": "haute",
+    "rationale_codes": [
+      "FASTING_GLUCOSE",
+      "HOMA_IR",
+      "TG_HDL_RATIO",
+      "APO_B"
+    ],
+    "safety_conditions_expected": []
+  }
+}

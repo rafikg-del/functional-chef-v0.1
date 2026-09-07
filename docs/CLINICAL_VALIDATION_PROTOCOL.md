@@ -154,7 +154,7 @@ Deux corpus existent. Ils ne doivent **jamais** être fusionnés dans LIV-26 / L
 | Profils de régression (~30) | `src/lib/reasoning/__tests__/patient-profiles.ts` | **Synthétiques** | Tests unitaires (LIV-39, `clinical-validation.test.ts`) | Non |
 | Cas offline script | `scripts/test-validation-cases.ts` | **Synthétiques** | Smoke test `npm run test:cases` | Non |
 | Seuils / fixtures classifier | `__tests__/bottleneck-classifier.test.ts`, `safety-filters.test.ts`, `lever-selector.test.ts` | **Synthétiques** | Non-régression CI | Non |
-| **Set de validation clinique n=10** | Livrable LIV-25 (json + PDF anonymisés), **hors repo tant que non anonymisés** | **Cas réels** ZOI / CS | Concordance clinicien (ce protocole) | **Oui** |
+| **Set de validation clinique n=10** | Livrable LIV-25 — [`docs/validation/liv25/`](validation/liv25/) (json + PDF anonymisés) | **Cas réels** ZOI / CS | Concordance clinicien (ce protocole) | **Oui** |
 
 **Règles de séparation :**
 
@@ -758,7 +758,7 @@ Les écarts sont listés en annexe de LIV-26.
 |----|----------|------------------|-------------|
 | LIV-18 / 20 | Charte et composition CS | Approbateurs | Préalable |
 | **LIV-24** | Le présent protocole | — | Brouillon → approuvé CS |
-| **LIV-25** | 10 cas anonymisés (json + PDF) | Protocole approuvé | Non commencé — **pas de cas dans ce repo** |
+| **LIV-25** | 10 cas anonymisés (json + PDF) — [`docs/validation/liv25/`](validation/liv25/) | Protocole approuvé | **Pack partiel** — DYSBIOSE dominant **1/3 (NON ATTEINT)** ; 10 JSON anonymisés versés |
 | **LIV-26** | Rapport moteur vs clinicien | LIV-25 + run gelé | Après confrontation |
 | **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN | LIV-26 | Après confrontation |
 | LIV-07 | Plan V&V MDR | Cible qualitative « 10 cas ZOI, concordance >80 % » | Aligné, non substitutif |

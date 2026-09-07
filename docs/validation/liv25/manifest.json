@@ -81,5 +81,64 @@
     "src/lib/reasoning/__tests__/patient-profiles.ts",
     "scripts/test-validation-cases.ts",
     "docs/BOTTLENECK_SPEC.md cas-pivot A/B/C"
-  ]
+  ],
+  "liv26_draft": {
+    "status": "brouillon",
+    "report_path": "docs/validation/liv25/LIV26_CONCORDANCE_DRAFT.md",
+    "cs_signed": false,
+    "engine_git_sha": "f8d0acc03ae69eb61758c5de6dd86dbd9d478eea",
+    "thresholds_source": "supabase/seed/03_biomarker_thresholds.sql",
+    "thresholds_count": 71,
+    "classifier": "src/lib/reasoning/bottleneck-classifier.ts",
+    "run_command": "npm run liv25:concordance",
+    "omega_alias_applied": false,
+    "primary_endpoint": "exact dominant match (engine vs clinician)",
+    "concordance_dominant": {
+      "matches": 7,
+      "n": 10,
+      "pct": 70,
+      "target_c1_pct": 80,
+      "c1_met": false
+    },
+    "concordance_co_dominant": {
+      "matches": 5,
+      "n": 10
+    },
+    "engine_dominant_by_case": {
+      "ZOI-VAL-01": "INFLAM",
+      "ZOI-VAL-02": "none",
+      "ZOI-VAL-03": "IR",
+      "ZOI-VAL-04": "INFLAM",
+      "ZOI-VAL-05": "none",
+      "ZOI-VAL-06": "none",
+      "ZOI-VAL-07": "none",
+      "ZOI-VAL-08": "IR",
+      "ZOI-VAL-09": "IR",
+      "ZOI-VAL-10": "INFLAM"
+    },
+    "engine_co_dominant_by_case": {
+      "ZOI-VAL-01": null,
+      "ZOI-VAL-02": null,
+      "ZOI-VAL-03": "INFLAM",
+      "ZOI-VAL-04": null,
+      "ZOI-VAL-05": null,
+      "ZOI-VAL-06": null,
+      "ZOI-VAL-07": null,
+      "ZOI-VAL-08": null,
+      "ZOI-VAL-09": null,
+      "ZOI-VAL-10": null
+    },
+    "dominant_match_by_case": {
+      "ZOI-VAL-01": true,
+      "ZOI-VAL-02": false,
+      "ZOI-VAL-03": false,
+      "ZOI-VAL-04": true,
+      "ZOI-VAL-05": true,
+      "ZOI-VAL-06": true,
+      "ZOI-VAL-07": true,
+      "ZOI-VAL-08": true,
+      "ZOI-VAL-09": true,
+      "ZOI-VAL-10": false
+    }
+  }
 }

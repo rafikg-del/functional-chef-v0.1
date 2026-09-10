@@ -54,10 +54,10 @@ export default function HomePage() {
               dispositif médical.
             </p>
             <div className="flex flex-wrap gap-4">
-              <Link href="/beta" className="btn-primary text-base !px-7 !py-3">
+              <Link href="/beta" className="btn-primary text-base !px-7 !py-3 w-full sm:w-auto">
                 Rejoindre la beta praticien
               </Link>
-              <Link href="/demo" className="btn-ghost text-base !px-7 !py-3">
+              <Link href="/demo" className="btn-ghost text-base !px-7 !py-3 w-full sm:w-auto">
                 Essayer la démo sans compte
               </Link>
             </div>
@@ -167,11 +167,11 @@ export default function HomePage() {
           avec 3 mois d’accès en échange d’un retour d’usage. File d’attente
           réelle — pas un formulaire factice.
         </p>
-        <div className="flex flex-wrap justify-center gap-4">
-          <Link href="/beta" className="btn-primary text-base !px-8 !py-3">
+        <div className="flex flex-col sm:flex-row flex-wrap justify-center gap-4">
+          <Link href="/beta" className="btn-primary text-base !px-8 !py-3 w-full sm:w-auto">
             M’inscrire à la beta
           </Link>
-          <Link href="/demo" className="btn-ghost text-base !px-8 !py-3">
+          <Link href="/demo" className="btn-ghost text-base !px-8 !py-3 w-full sm:w-auto">
             Essayer la démo sans compte
           </Link>
         </div>

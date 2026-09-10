@@ -45,7 +45,7 @@ Les URLs ci-dessous correspondent au code (`src/app`). Il n’y a pas de bouton 
 | Route | Rôle | Auth |
 |-------|------|------|
 | `/` | Landing + CTA beta | Public |
-| `/demo` | Cas A/B/C, classification **hors-ligne** | Public, **pas** une session prod |
+| `/demo` | Cas A/B/C, classification + aperçu culinaire **sans compte** | Public, **pas** une session prod |
 | `/beta` | Pré-inscription waitlist (table `beta_waitlist`) | Public |
 | `/privacy` | Politique de confidentialité | Public |
 | `/auth` | Connexion / création de compte / Magic Link | Public |
@@ -68,9 +68,9 @@ Documents hors UI (GitHub `docs/`) : `GUIDE_UTILISATION.md`, `FAQ.md`, `NOTE_PAT
 | Élément | Spécification |
 |---------|---------------|
 | **Navigateur** | Chrome 90+, Firefox 90+, Safari 15+, Edge 90+ |
-| **Connexion** | Internet pour composition LLM et compte ; `/demo` fonctionne hors-ligne |
+| **Connexion** | Internet pour composition LLM et compte ; `/demo` fonctionne sans login ni clé Anthropic |
 | **Compte** | Email professionnel **invité** (pas d’auto-inscription ouverte) |
-| **Clé API** | Côté serveur (Anthropic). La démo `/demo` n’en a pas besoin |
+| **Clé API** | Côté serveur (Anthropic). La démo `/demo` n’en a pas besoin (aperçu catalogue / déterministe) |
 
 ### 2.3 Création de compte (praticien invité)
 
@@ -106,7 +106,7 @@ La landing **ne crée pas** de compte. `/beta` enregistre seulement la file d’
 
 ### 3.2 Utiliser un cas test
 
-Pour vous familiariser **sans compte**, ouvrez **`/demo`** (hors-ligne) :
+Pour vous familiariser **sans compte**, ouvrez **`/demo`** :
 
 | Cas | Profil | Bottleneck attendu |
 |-----|--------|-------------------|
@@ -114,7 +114,7 @@ Pour vous familiariser **sans compte**, ouvrez **`/demo`** (hors-ligne) :
 | **B** | H 62 ans, CRP-us 2.4, OmegaIndex 4.5% | INFLAM isolé |
 | **C** | F 35 ans, Bristol 6, ballonnements quotidiens | DYSBIOSE + INFLAM |
 
-`/demo` n’est **pas** une session production : pas de dossier patient, pas de composition Claude, pas d’export PDF tracé.
+`/demo` n’est **pas** une session production : pas de dossier patient, pas d’export PDF tracé. La classification, les leviers T1–T3 et un aperçu de plat sont déterministes (catalogue). Claude n’est utilisé que si `ANTHROPIC_API_KEY` est présent — la démo ne casse pas sinon.
 
 ### 3.3 Lire les résultats
 

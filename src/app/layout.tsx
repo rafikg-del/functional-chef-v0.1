@@ -22,9 +22,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Functional Chef — IA cuisinière EBM-driven',
+  title: 'Functional Chef — aide à la prescription culinaire',
   description:
-    'Moteur de prescription nutritionnelle ciblée par bottleneck physiopathologique. EBM tiering explicite (T1/T2/T3) sur chaque levier mobilisé.',
+    'Traduit des biomarqueurs en proposition culinaire, avec un niveau de preuve T1/T2/T3 sur chaque levier. Outil d’aide à valider par un praticien — pas un dispositif médical.',
 };
 
 export default function RootLayout({

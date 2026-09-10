@@ -57,9 +57,22 @@ export default function HomePage() {
                 Rejoindre la beta praticien
               </Link>
               <Link href="/demo" className="btn-ghost text-base !px-7 !py-3">
-                Tester la démo hors-ligne
+                Essayer la démo (sans compte)
               </Link>
             </div>
+            <ol className="mt-8 grid sm:grid-cols-3 gap-3 text-xs text-ink-600 max-w-xl">
+              {[
+                { n: '1', t: 'Comprendre', d: 'Biomarqueurs → leviers T1–T3 → plat. Aide, pas un DM.' },
+                { n: '2', t: 'Tester 30 s', d: 'Cas A/B/C sur /demo. Classification + aperçu culinaire, sans login.' },
+                { n: '3', t: 'Pré-inscription', d: 'File d’attente réelle (/beta). Invitation ensuite, pas un compte auto.' },
+              ].map((s) => (
+                <li key={s.n} className="border border-ink-200 rounded-sm p-3 bg-white/60">
+                  <p className="font-mono text-[10px] text-saffron-700 mb-1">{s.n}</p>
+                  <p className="font-medium text-ink-800">{s.t}</p>
+                  <p className="mt-1 leading-relaxed">{s.d}</p>
+                </li>
+              ))}
+            </ol>
             <div className="mt-8 flex items-center gap-6 text-xs text-ink-500">
               <span className="flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-tier-t1" />
@@ -213,7 +226,7 @@ export default function HomePage() {
             M’inscrire à la beta
           </Link>
           <Link href="/demo" className="btn-ghost text-base !px-8 !py-3">
-            Voir les cas A / B / C
+            Essayer la démo publique
           </Link>
         </div>
       </section>

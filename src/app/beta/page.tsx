@@ -24,6 +24,7 @@ export default function BetaPage() {
   const [submitted, setSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState('');
+  const [operatorChecklist, setOperatorChecklist] = useState<string[]>([]);
   const [form, setForm] = useState({
     name: '',
     email: '',
@@ -34,6 +35,7 @@ export default function BetaPage() {
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
     setError('');
+    setOperatorChecklist([]);
     setLoading(true);
 
     try {
@@ -49,10 +51,14 @@ export default function BetaPage() {
         }),
       });
 
-      const body = (await res.json().catch(() => ({}))) as { error?: string };
+      const body = (await res.json().catch(() => ({}))) as {
+        error?: string;
+        operator_checklist?: string[];
+      };
 
       if (!res.ok) {
-        setError(body.error || 'Inscription impossible pour le moment.');
+        setError(body.error || 'Inscription impossible pour le moment. Rien n’a été enregistré.');
+        setOperatorChecklist(body.operator_checklist ?? []);
         return;
       }
 
@@ -80,9 +86,9 @@ export default function BetaPage() {
           <p className="text-xs text-ink-500 mb-8">
             En attendant, vous pouvez explorer la{' '}
             <Link href="/demo" className="text-saffron-700 hover:underline">
-              démo hors-ligne
+              démo publique
             </Link>{' '}
-            (cas A/B/C, aucune session).
+            (cas A/B/C, sans compte).
           </p>
           <Link href="/" className="btn-primary">
             ← Retour à l’accueil
@@ -192,8 +198,20 @@ export default function BetaPage() {
           </div>
 
           {error && (
-            <div className="p-3 bg-tier-t3/10 border border-tier-t3/30 rounded-sm">
-              <p className="text-xs text-tier-t3">{error}</p>
+            <div className="p-3 bg-tier-t3/10 border border-tier-t3/30 rounded-sm space-y-2">
+              <p className="text-xs text-tier-t3 leading-relaxed">{error}</p>
+              {operatorChecklist.length > 0 && (
+                <div>
+                  <p className="text-[11px] font-medium text-ink-700 mb-1">
+                    Checklist opérateur (à faire sur Supabase / Vercel) :
+                  </p>
+                  <ol className="list-decimal list-inside text-[11px] text-ink-700 space-y-1">
+                    {operatorChecklist.map((item) => (
+                      <li key={item}>{item}</li>
+                    ))}
+                  </ol>
+                </div>
+              )}
             </div>
           )}
 

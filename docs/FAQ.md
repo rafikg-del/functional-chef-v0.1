@@ -147,7 +147,7 @@ Oui. Le code supporte plusieurs providers. Vous pouvez configurer via les variab
 
 ### Q16. Functional Chef fonctionne-t-il hors-ligne ?
 
-Partiellement. Le moteur de classification (étapes 1-3) est 100% TypeScript et fonctionne hors-ligne. La composition du plat (étape 4) nécessite une connexion internet pour l'appel LLM.
+Partiellement. Le moteur de classification, la sélection des leviers et l’aperçu culinaire de `/demo` sont 100% TypeScript et tournent sans Anthropic ni login. La composition Claude (étape 4, espace praticien ou `/api/demo-compose` si la clé est présente) nécessite une connexion internet.
 
 ### Q17. Comment les données sont-elles protégées lors des appels API ?
 

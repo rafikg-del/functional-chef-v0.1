@@ -3,21 +3,40 @@
  *
  * Practitioner pre-registration. Writes to beta_waitlist via the anon key
  * so RLS INSERT policies are actually exercised. No patient PHI.
+ *
+ * Failures are honest: never fake success. When the table/migration/env
+ * is missing, return a FR message + operator checklist.
  */
 
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@supabase/supabase-js';
-import { parseWaitlistPayload } from '@/lib/beta-waitlist';
+import {
+  explainWaitlistInsertFailure,
+  explainWaitlistUnconfigured,
+  isSupabasePublicConfigured,
+  parseWaitlistPayload,
+} from '@/lib/beta-waitlist';
 
 function createAnonClient() {
-  const url = process.env.NEXT_PUBLIC_SUPABASE_URL;
-  const key = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
-  if (!url || !key || url.includes('YOUR_PROJECT')) {
-    return null;
-  }
-  return createClient(url, key, {
-    auth: { persistSession: false, autoRefreshToken: false },
-  });
+  if (!isSupabasePublicConfigured()) return null;
+  return createClient(
+    process.env.NEXT_PUBLIC_SUPABASE_URL!,
+    process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
+    {
+      auth: { persistSession: false, autoRefreshToken: false },
+    }
+  );
+}
+
+function failureJson(failure: ReturnType<typeof explainWaitlistUnconfigured>) {
+  return NextResponse.json(
+    {
+      error: failure.error,
+      code: failure.code,
+      operator_checklist: failure.operator_checklist,
+    },
+    { status: failure.status }
+  );
 }
 
 export async function POST(req: NextRequest) {
@@ -35,13 +54,7 @@ export async function POST(req: NextRequest) {
 
   const supabase = createAnonClient();
   if (!supabase) {
-    return NextResponse.json(
-      {
-        error:
-          'Pré-inscription indisponible : Supabase n’est pas configuré sur cet environnement.',
-      },
-      { status: 503 }
-    );
+    return failureJson(explainWaitlistUnconfigured());
   }
 
   const { error } = await supabase.from('beta_waitlist').insert({
@@ -53,17 +66,12 @@ export async function POST(req: NextRequest) {
   });
 
   if (error) {
-    if (error.code === '23505') {
-      return NextResponse.json(
-        { error: 'Cet email est déjà pré-inscrit. Nous vous recontacterons.' },
-        { status: 409 }
-      );
-    }
-    console.error('[beta-waitlist] insert failed:', error.message);
-    return NextResponse.json(
-      { error: 'Impossible d’enregistrer l’inscription. Réessayez dans un instant.' },
-      { status: 500 }
-    );
+    const failure = explainWaitlistInsertFailure({
+      code: error.code,
+      message: error.message,
+    });
+    console.error('[beta-waitlist] insert failed:', error.code, error.message);
+    return failureJson(failure);
   }
 
   return NextResponse.json({ ok: true }, { status: 201 });

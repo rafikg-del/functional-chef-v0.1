@@ -1,8 +1,16 @@
 # Guide d'utilisation — Functional Chef
 
 > **Document** : LIV-67 — Guide praticien
-> **Version** : v1.0 — 14 juillet 2026
+> **Version** : v1.1 — 10 septembre 2026
 > **Public** : Médecins fonctionnels, nutritionnistes, diététiciens
+
+---
+
+## Limites / non dispositif médical
+
+> **Functional Chef n’est pas un dispositif médical.**  
+> C’est un outil d’aide à la prescription nutritionnelle. Il ne pose pas de diagnostic. Il ne remplace pas un avis médical. Toute sortie (classification, leviers, plat, PDF) doit être **relue et validée par le praticien** avant transmission au patient.  
+> Périmètre v0.2 : 3 bottlenecks (IR, INFLAM, DYSBIOSE), usage adulte, pas de pédiatrie. Les tiers EBM (T1/T2/T3) sont auto-déclarés, en revue scientifique. Qualification MDR et relecture avocat : **en attente**.
 
 ---
 
@@ -22,35 +30,65 @@ Functional Chef est un **moteur de prescription nutritionnelle ciblée par bottl
 
 ❌ Un générateur de recettes génériques  
 ❌ Un outil de diagnostic médical  
-❌ Un dispositif médical autonome (nécessite validation humaine)  
-❌ Un remplacement du jugement clinique
+❌ Un dispositif médical (non certifié MDR à ce jour)  
+❌ Un remplacement du jugement clinique  
+❌ Un espace patient en libre-service
 
 ---
 
 ## 2. Premiers pas
 
-### 2.1 Configuration requise
+### 2.1 Routes réelles de l’application
+
+Les URLs ci-dessous correspondent au code (`src/app`). Il n’y a pas de bouton « Inscription » sur la landing : la beta passe par une **pré-inscription** puis une **invitation**.
+
+| Route | Rôle | Auth |
+|-------|------|------|
+| `/` | Landing + CTA beta | Public |
+| `/demo` | Cas A/B/C, classification **hors-ligne** | Public, **pas** une session prod |
+| `/beta` | Pré-inscription waitlist (table `beta_waitlist`) | Public |
+| `/privacy` | Politique de confidentialité | Public |
+| `/auth` | Connexion / création de compte / Magic Link | Public |
+| `/auth/callback` | Retour OAuth/Magic Link | — |
+| `/auth/profile` | Profil professionnel (nom, spécialité, RPPS optionnel) | Connecté |
+| `/consent` | Consentement RGPD praticien | Connecté |
+| `/dashboard` | Tableau de bord | Connecté |
+| `/dashboard/consultations` | Liste des consultations | Connecté |
+| `/dashboard/consultations/[id]` | Détail, validation, export PDF | Connecté |
+| `/dashboard/stats` | Statistiques d’activité | Connecté |
+| `/dashboard/settings` | Compte / mot de passe | Connecté |
+| `/dashboard/audit` | Journal d’audit | Connecté |
+| `/consultation` | Nouvelle consultation (intent → plat) | Connecté |
+| `/prescription/[id]` | Vue impression (gabarit ; brancher l’id réel en prod) | Public (à durcir) |
+
+Documents hors UI (GitHub `docs/`) : `GUIDE_UTILISATION.md`, `FAQ.md`, `NOTE_PATIENT.md`, `BETA_LAUNCH_RUNBOOK.md`.
+
+### 2.2 Configuration requise
 
 | Élément | Spécification |
 |---------|---------------|
 | **Navigateur** | Chrome 90+, Firefox 90+, Safari 15+, Edge 90+ |
-| **Connexion** | Internet (appels LLM) |
-| **Compte** | Email professionnel |
-| **Clé API** | Anthropic ou OpenAI (optionnel, la démo fonctionne sans) |
+| **Connexion** | Internet pour composition LLM et compte ; `/demo` fonctionne hors-ligne |
+| **Compte** | Email professionnel **invité** (pas d’auto-inscription ouverte) |
+| **Clé API** | Côté serveur (Anthropic). La démo `/demo` n’en a pas besoin |
 
-### 2.2 Création de compte
+### 2.3 Création de compte (praticien invité)
 
-1. Accédez à **[URL de l'application]**
-2. Cliquez sur **Inscription**
-3. Renseignez votre email professionnel et un mot de passe (8 caractères min.)
-4. Vérifiez votre email via le lien reçu
-5. Complétez votre profil professionnel (nom, spécialité, RPPS optionnel)
-6. Acceptez les conditions d'utilisation et la politique de confidentialité
+1. Ouvrez `/auth` (lien reçu par email d’invitation, ou header « Connexion »)
+2. Onglet **Inscription** : email professionnel + mot de passe (8 caractères min.) **ou** Magic Link
+3. Vérifiez l’email via le lien (`/auth/callback`)
+4. Complétez `/auth/profile` (nom, spécialité, RPPS optionnel)
+5. Acceptez `/consent` (conditions + politique)
+6. Vous arrivez sur `/dashboard`
 
-### 2.3 Connexion
+La landing **ne crée pas** de compte. `/beta` enregistre seulement la file d’attente.
 
-- **Email + mot de passe** : connexion classique
-- **Magic Link** : un lien de connexion unique envoyé par email (pas de mot de passe à retenir)
+### 2.4 Connexion
+
+- **Email + mot de passe** : `/auth` → Connexion
+- **Magic Link** : `/auth` → Magic Link
+- **Google SSO** : si le provider est activé dans Supabase Auth
+- **Déconnexion** : sidebar du dashboard
 
 ---
 
@@ -58,7 +96,7 @@ Functional Chef est un **moteur de prescription nutritionnelle ciblée par bottl
 
 ### 3.1 Créer une consultation
 
-1. Depuis le tableau de bord, cliquez sur **Nouvelle consultation**
+1. Depuis `/dashboard`, cliquez sur **Nouvelle consultation** (lien `/consultation`)
 2. Renseignez les informations du patient :
    - **Biomarqueurs** : HOMA-IR, CRP-us, Omega-3 Index, etc.
    - **Signaux cliniques** : Bristol stool scale, ballonnements
@@ -68,13 +106,15 @@ Functional Chef est un **moteur de prescription nutritionnelle ciblée par bottl
 
 ### 3.2 Utiliser un cas test
 
-Pour vous familiariser avec l'outil, 3 cas préchargés sont disponibles :
+Pour vous familiariser **sans compte**, ouvrez **`/demo`** (hors-ligne) :
 
 | Cas | Profil | Bottleneck attendu |
 |-----|--------|-------------------|
 | **A** | F 48 ans, HOMA-IR 2.1, TG/HDL 1.8 | IR isolée |
 | **B** | H 62 ans, CRP-us 2.4, OmegaIndex 4.5% | INFLAM isolé |
 | **C** | F 35 ans, Bristol 6, ballonnements quotidiens | DYSBIOSE + INFLAM |
+
+`/demo` n’est **pas** une session production : pas de dossier patient, pas de composition Claude, pas d’export PDF tracé.
 
 ### 3.3 Lire les résultats
 
@@ -114,11 +154,11 @@ Chaque levier activé est accompagné d'un badge coloré :
 
 Avant de transmettre le résultat à un patient, le médecin doit valider la consultation :
 
-1. Ouvrez la consultation depuis la **liste des consultations**
+1. Ouvrez `/dashboard/consultations` puis la fiche `/dashboard/consultations/[id]`
 2. Vérifiez l'ensemble des résultats (classification, leviers, plat)
 3. Ajoutez une **note de validation** (optionnelle)
-4. Cliquez sur **✅ Valider**
-5. La validation est horodatée et signée électroniquement dans l'audit trail
+4. Cliquez sur **Valider**
+5. La validation est horodatée. L’export PDF et la vue `/prescription/[id]` viennent ensuite.
 
 ### 3.5 Exporter en PDF
 
@@ -137,14 +177,14 @@ Avant de transmettre le résultat à un patient, le médecin doit valider la con
 
 ## 4. Démo interactive
 
-Une démo est accessible sans authentification à l'adresse **`/demo`** :
+Une démo est accessible **sans authentification** à l'adresse **`/demo`** :
 
-- 3 cas cliniques préchargés modifiables
+- 3 cas cliniques préchargés (A/B/C) + saisie personnalisée
 - Édition en direct des biomarqueurs
 - Classification temps réel (moteur 100% client-side)
-- Aperçu de la prescription culinaire
+- Aperçu d’architecture culinaire **schématique** (pas un plat Claude)
 
-Idéale pour découvrir l'outil sans créer de compte.
+Idéale pour découvrir l’outil sans créer de compte. Pour rejoindre la beta : **`/beta`**.
 
 ---
 
@@ -183,20 +223,22 @@ Les profils patients sont créés automatiquement lors de la première consultat
 
 ### 6.2 Suivi des consultations
 
-Le tableau de bord liste toutes vos consultations avec :
+`/dashboard/consultations` liste vos consultations avec :
 - **Filtres** : toutes / en attente de validation / validées
 - **Recherche** : par intent clinique
 - **Indicateurs** : bottleneck dominant, statut validation, date, modèle LLM
 
+Les listes fictives n’apparaissent que si `NEXT_PUBLIC_USE_MOCK_DATA=true` (interdit en production).
+
 ### 6.3 Statistiques
 
-La page Statistiques affiche :
+`/dashboard/stats` affiche, **à partir de vos vraies consultations** :
 - Nombre total de consultations et consultations du mois
 - Nombre de patients suivis
-- Répartition des bottlenecks diagnostiqués
-- Top leviers les plus prescrits
+- Répartition des bottlenecks
+- Top leviers
 - Activité mensuelle
-- Qualité EBM moyenne (ratio T1/T2/T3 par plat)
+- Qualité EBM moyenne (ratio T1/T2/T3)
 
 ---
 
@@ -217,10 +259,13 @@ La page Statistiques affiche :
 
 ### 7.3 Limites à connaître
 
+Voir aussi l’encadré **Limites / non DM** en tête de ce guide.
+
 - **3 bottlenecks seulement** en v0.2 — ne couvre pas l'intégralité de la médecine fonctionnelle
 - **Pas de gestion pédiatrique** — usage adulte uniquement
-- **Composition LLM dépendante de la clé API** — le moteur de classification fonctionne sans
-- **Pas d'étude de validation clinique** — les tiers EBM sont auto-déclarés (en cours de revue par le comité scientifique)
+- **Composition LLM** côté serveur (clé Anthropic) — `/demo` classifie sans
+- **Pas d'étude de validation clinique publiée** — les tiers EBM sont auto-déclarés (revue CS en cours)
+- **Waitlist ≠ compte** — `/beta` n’ouvre pas `/dashboard`
 
 ---
 
@@ -230,7 +275,7 @@ La page Statistiques affiche :
 |----------|---------------|----------|
 | « Aucun bottleneck déclenché » | Biomarqueurs insuffisants | Ajoutez plus de marqueurs ou utilisez un cas préchargé |
 | La classification semble fausse | Seuils trop stricts pour ce profil | Vérifiez les valeurs, consultez la rationale détaillée |
-| Le plat ne se génère pas | Clé API LLM manquante | Configurez ANTHROPIC_API_KEY ou utilisez la démo |
+| Le plat ne se génère pas | Clé API LLM manquante côté serveur | Utilisez `/demo` pour la classification, ou vérifiez `ANTHROPIC_API_KEY` |
 | Erreur « Session expirée » | Token auth expiré | Reconnectez-vous |
 | Consultation non trouvée | Filtre RLS actif | Seules vos consultations sont visibles |
 | Le PDF ne se télécharge pas | Bloqueur de pop-up | Autorisez les pop-ups pour ce site |
@@ -251,14 +296,16 @@ La page Statistiques affiche :
 
 | Canal | Adresse |
 |-------|---------|
-| **Documentation** | `/docs` |
+| **Guide** | `docs/GUIDE_UTILISATION.md` |
+| **FAQ** | `docs/FAQ.md` (mentions juridiques : pending avocat/CS) |
+| **Runbook beta** | `docs/BETA_LAUNCH_RUNBOOK.md` |
 | **GitHub** | [rafikg-del/functional-chef-v0.1](https://github.com/rafikg-del/functional-chef-v0.1) |
 | **Email support** | support@functional-chef.app |
 | **Signalement bug** | Issues GitHub |
 
 ---
 
-> **Version** : v1.0 — 14 juillet 2026  
-> **Prochaine révision** : 14 janvier 2027  
+> **Version** : v1.1 — 10 septembre 2026  
+> **Prochaine révision** : après relecture avocat / CS  
 > **Rédaction** : Hermes Agent  
 > **Relecture clinique** : Dr Rafik Gounane

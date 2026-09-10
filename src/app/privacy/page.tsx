@@ -19,7 +19,10 @@ export default function PrivacyPage() {
         <h1 className="font-serif text-4xl text-ink-900 mb-2 tracking-editorial">
           Données personnelles et RGPD
         </h1>
-        <p className="text-xs text-ink-500 mb-10">Version v1.0-20260714 · 14 juillet 2026</p>
+        <p className="text-xs text-ink-500 mb-10">
+          Version v1.0-20260714 · 14 juillet 2026 ·{' '}
+          <span className="text-saffron-800">pending avocat/CS — texte non opposable</span>
+        </p>
 
         <div className="prose prose-sm prose-ink max-w-none space-y-6 text-ink-700">
           <section>
@@ -120,8 +123,11 @@ export default function PrivacyPage() {
 
       <footer className="border-t border-ink-200 py-6 text-xs text-ink-500">
         <div className="max-w-3xl mx-auto px-6 flex justify-between">
-          <span>Functional Chef · v1.0-20260714</span>
-          <Link href="/" className="hover:text-ink-700 transition-colors">Accueil</Link>
+          <span>Functional Chef · v1.0-20260714 · pending avocat/CS</span>
+          <div className="flex gap-4">
+            <Link href="/beta" className="hover:text-ink-700 transition-colors">Beta</Link>
+            <Link href="/" className="hover:text-ink-700 transition-colors">Accueil</Link>
+          </div>
         </div>
       </footer>
     </main>

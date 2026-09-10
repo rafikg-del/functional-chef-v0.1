@@ -2,37 +2,90 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
+import { NonDmNotice } from '@/components/NonDmNotice';
+
+const SPECIALTY_OPTIONS = [
+  { value: 'medecin_fonctionnel', label: 'Médecine fonctionnelle / nutritionnelle' },
+  { value: 'medecin_generaliste', label: 'Médecine générale' },
+  { value: 'dieteticien', label: 'Diététicien(ne) / Nutritionniste' },
+  { value: 'naturopathe', label: 'Naturopathe' },
+  { value: 'chercheur', label: 'Chercheur / enseignant' },
+  { value: 'autre', label: 'Autre professionnel de santé' },
+] as const;
+
+const VOLUME_OPTIONS = [
+  { value: '0-5', label: '0-5' },
+  { value: '5-15', label: '5-15' },
+  { value: '15-30', label: '15-30' },
+  { value: '30+', label: '30+' },
+] as const;
 
 export default function BetaPage() {
   const [submitted, setSubmitted] = useState(false);
-  const [form, setForm] = useState({ name: '', email: '', specialty: '', patients_per_week: '' });
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState('');
+  const [form, setForm] = useState({
+    name: '',
+    email: '',
+    specialty: '',
+    patients_per_week: '',
+  });
 
   async function handleSubmit(e: React.FormEvent) {
     e.preventDefault();
-    // Store in localStorage for now (no backend needed for beta signup page)
-    const entries = JSON.parse(localStorage.getItem('fc_beta_signups') || '[]');
-    entries.push({ ...form, timestamp: new Date().toISOString() });
-    localStorage.setItem('fc_beta_signups', JSON.stringify(entries));
-    setSubmitted(true);
+    setError('');
+    setLoading(true);
+
+    try {
+      const res = await fetch('/api/beta-waitlist', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          full_name: form.name,
+          email: form.email,
+          specialty: form.specialty,
+          patients_per_week: form.patients_per_week,
+          source: 'beta_page',
+        }),
+      });
+
+      const body = (await res.json().catch(() => ({}))) as { error?: string };
+
+      if (!res.ok) {
+        setError(body.error || 'Inscription impossible pour le moment.');
+        return;
+      }
+
+      setSubmitted(true);
+    } catch {
+      setError('Réseau indisponible. Vérifiez votre connexion et réessayez.');
+    } finally {
+      setLoading(false);
+    }
   }
 
   if (submitted) {
     return (
       <main className="min-h-screen flex items-center justify-center">
         <div className="max-w-lg mx-auto px-6 text-center">
-          <div className="text-4xl mb-4">✅</div>
+          <p className="label mb-4">Pré-inscription</p>
           <h1 className="font-serif text-3xl text-ink-900 mb-4 tracking-editorial">
-            Inscription confirmée
+            Demande enregistrée
           </h1>
-          <p className="text-sm text-ink-600 mb-6">
-            Merci {form.name} ! Vous êtes pré-inscrit à la beta Functional Chef. 
-            Nous vous contacterons dès l'ouverture du pilote (1er trimestre 2027).
+          <p className="text-sm text-ink-600 mb-6 leading-relaxed">
+            Merci {form.name}. Votre email professionnel est dans la file d’attente
+            beta. Nous vous écrirons pour un accès invité — pas d’ouverture automatique
+            de compte.
           </p>
           <p className="text-xs text-ink-500 mb-8">
-            En attendant, vous pouvez explorer la <Link href="/demo" className="text-saffron-700 hover:underline">démo interactive</Link>.
+            En attendant, vous pouvez explorer la{' '}
+            <Link href="/demo" className="text-saffron-700 hover:underline">
+              démo hors-ligne
+            </Link>{' '}
+            (cas A/B/C, aucune session).
           </p>
           <Link href="/" className="btn-primary">
-            ← Retour à l'accueil
+            ← Retour à l’accueil
           </Link>
         </div>
       </main>
@@ -49,22 +102,30 @@ export default function BetaPage() {
               Beta praticien
             </span>
           </Link>
-          <Link href="/" className="text-sm text-ink-600 hover:text-ink-900 transition-colors">
-            ← Accueil
-          </Link>
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="/demo" className="text-ink-600 hover:text-ink-900 transition-colors">
+              Démo
+            </Link>
+            <Link href="/" className="text-ink-600 hover:text-ink-900 transition-colors">
+              ← Accueil
+            </Link>
+          </div>
         </div>
       </header>
 
       <div className="max-w-xl mx-auto px-6 py-16">
-        <p className="label">Beta 2027</p>
+        <p className="label">File d’attente beta</p>
         <h1 className="font-serif text-4xl text-ink-900 leading-tight tracking-editorial mb-4">
-          Inscription beta praticien
+          Pré-inscription praticien
         </h1>
-        <p className="text-sm text-ink-600 mb-8 leading-relaxed">
-          La beta est limitée à <strong>20 praticiens</strong>. Vous bénéficierez de 3 mois 
-          d'accès gratuit au moteur complet (classification + composition Claude + export PDF) 
-          en échange de votre feedback.
+        <p className="text-sm text-ink-600 mb-6 leading-relaxed">
+          La beta est limitée à <strong>20 praticiens invités</strong>. L’accès complet
+          (classification + composition + export PDF) est ouvert sur invitation, en
+          échange d’un retour d’usage. Ce formulaire n’ouvre pas une session de
+          production.
         </p>
+
+        <NonDmNotice className="mb-8" />
 
         <form onSubmit={handleSubmit} className="space-y-5">
           <div>
@@ -73,6 +134,7 @@ export default function BetaPage() {
               id="name"
               type="text"
               required
+              autoComplete="name"
               value={form.name}
               onChange={(e) => setForm({ ...form, name: e.target.value })}
               className="input-field"
@@ -85,6 +147,7 @@ export default function BetaPage() {
               id="email"
               type="email"
               required
+              autoComplete="email"
               value={form.email}
               onChange={(e) => setForm({ ...form, email: e.target.value })}
               className="input-field"
@@ -101,16 +164,17 @@ export default function BetaPage() {
               className="input-field"
             >
               <option value="">— Sélectionnez —</option>
-              <option value="medecin_fonctionnel">Médecine fonctionnelle / nutritionnelle</option>
-              <option value="medecin_generaliste">Médecine générale</option>
-              <option value="dieteticien">Diététicien(ne) / Nutritionniste</option>
-              <option value="naturopathe">Naturopathe</option>
-              <option value="chercheur">Chercheur / enseignant</option>
-              <option value="autre">Autre professionnel de santé</option>
+              {SPECIALTY_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
           <div>
-            <label className="label" htmlFor="patients_per_week">Patients avec volet nutritionnel / semaine</label>
+            <label className="label" htmlFor="patients_per_week">
+              Patients avec volet nutritionnel / semaine
+            </label>
             <select
               id="patients_per_week"
               required
@@ -119,28 +183,55 @@ export default function BetaPage() {
               className="input-field"
             >
               <option value="">— Sélectionnez —</option>
-              <option value="0-5">0-5</option>
-              <option value="5-15">5-15</option>
-              <option value="15-30">15-30</option>
-              <option value="30+">30+</option>
+              {VOLUME_OPTIONS.map((opt) => (
+                <option key={opt.value} value={opt.value}>
+                  {opt.label}
+                </option>
+              ))}
             </select>
           </div>
+
+          {error && (
+            <div className="p-3 bg-tier-t3/10 border border-tier-t3/30 rounded-sm">
+              <p className="text-xs text-tier-t3">{error}</p>
+            </div>
+          )}
+
           <div className="pt-2">
             <p className="text-[11px] text-ink-500 leading-relaxed mb-4">
-              En soumettant ce formulaire, vous acceptez d'être contacté par email 
-              dans le cadre de la beta. Aucun partage de données avec des tiers.
+              Nous enregistrons uniquement votre nom, email, spécialité et volume
+              d’activité — pas de données patient. En soumettant, vous acceptez d’être
+              contacté pour la beta. Voir la{' '}
+              <Link href="/privacy" className="text-saffron-700 hover:underline">
+                politique de confidentialité
+              </Link>
+              .
             </p>
-            <button type="submit" className="btn-primary w-full text-base !py-3">
-              M'inscrire à la beta →
+            <button
+              type="submit"
+              disabled={loading}
+              className="btn-primary w-full text-base !py-3"
+            >
+              {loading ? 'Enregistrement…' : 'Rejoindre la file d’attente →'}
             </button>
           </div>
         </form>
 
         <div className="mt-10 pt-6 border-t border-ink-200">
           <p className="text-xs text-ink-500 text-center">
-            Une question ? Contactez-nous via 
-            {' '}<a href="https://github.com/rafikg-del/functional-chef-v0.1" className="text-saffron-700 hover:underline" target="_blank" rel="noopener noreferrer">GitHub</a>
-            {' '}ou sur les réseaux.
+            Déjà invité ?{' '}
+            <Link href="/auth" className="text-saffron-700 hover:underline">
+              Connexion espace praticien
+            </Link>
+            {' · '}
+            <a
+              href="https://github.com/rafikg-del/functional-chef-v0.1"
+              className="text-saffron-700 hover:underline"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              GitHub
+            </a>
           </p>
         </div>
       </div>

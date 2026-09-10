@@ -267,8 +267,11 @@ export default function PrescriptionPage() {
       {/* Print toolbar */}
       <div className="print:hidden sticky top-0 z-50 bg-white border-b border-neutral-200 px-6 py-2 flex items-center justify-between text-sm text-neutral-600">
         <div className="flex items-center gap-4">
-          <span className="font-medium text-neutral-800">Prescription médicale</span>
+          <span className="font-medium text-neutral-800">Modèle de prescription</span>
           <span className="text-[11px] font-mono text-neutral-400">{c.document_id}</span>
+          <span className="text-[11px] text-amber-800 bg-amber-50 border border-amber-200 px-2 py-0.5 rounded-sm">
+            Gabarit — pas un dossier patient réel
+          </span>
         </div>
         <button onClick={() => window.print()} className="bg-neutral-900 text-white px-5 py-1.5 rounded-lg text-sm font-medium hover:bg-neutral-800 transition-colors">
           🖨️ Imprimer / Exporter PDF

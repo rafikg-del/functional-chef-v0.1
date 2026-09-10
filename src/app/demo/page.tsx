@@ -1,7 +1,8 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState } from 'react';
 import Link from 'next/link';
+import { NonDmNotice } from '@/components/NonDmNotice';
 
 // Import the actual classifier engine
 import { classifyBottlenecks } from '@/lib/reasoning/bottleneck-classifier';
@@ -37,7 +38,22 @@ const BOTTLENECK_META: Record<string, { label: string; short: string; color: str
   DYSBIOSE: { label: 'Dysbiose intestinale', short: 'DYSBIOSE', color: 'bg-tier-t3' },
 };
 
-type CaseKey = 'A' | 'B' | 'C' | 'D' | 'custom';
+type CaseKey = 'A' | 'B' | 'C' | 'custom';
+
+const CUSTOM_TEMPLATE: PatientProfile = {
+  biomarker_values: {
+    HOMA_IR: 1.2,
+    TG_HDL_RATIO: 1.0,
+    CRP_US: 0.6,
+    OMEGA3_INDEX: 8,
+  },
+  clinical_signals: {
+    BRISTOL_SCORE: 4,
+    FIBER_INTAKE: 25,
+  },
+  exclusions: {},
+  context: {},
+};
 
 const CASES: Record<string, { name: string; patient: PatientProfile }> = {
   A: {
@@ -97,6 +113,15 @@ export default function DemoPage() {
   const [expandedBottleneck, setExpandedBottleneck] = useState<string | null>(null);
 
   function loadCase(key: CaseKey) {
+    if (key === 'custom') {
+      setActiveCase('custom');
+      setBiomarkers({ ...CUSTOM_TEMPLATE.biomarker_values });
+      setClinicalSignals({ ...CUSTOM_TEMPLATE.clinical_signals });
+      setShowResult(false);
+      setResult(null);
+      setEditing(true);
+      return;
+    }
     const c = CASES[key];
     if (!c) return;
     setActiveCase(key);
@@ -104,6 +129,7 @@ export default function DemoPage() {
     setClinicalSignals({ ...c.patient.clinical_signals });
     setShowResult(false);
     setResult(null);
+    setEditing(false);
   }
 
   function runClassifier() {
@@ -119,7 +145,6 @@ export default function DemoPage() {
   }
 
   const scoreColor = (t: boolean) => t ? 'text-tier-t1' : 'text-ink-400';
-  const bgScoreColor = (t: boolean) => t ? 'bg-tier-t1/10 border-tier-t1/30' : 'bg-ink-100/50 border-ink-200';
 
   return (
     <main className="min-h-screen">
@@ -129,20 +154,36 @@ export default function DemoPage() {
           <Link href="/" className="font-serif text-xl tracking-tight text-ink-900">
             Functional Chef
             <span className="text-xs uppercase tracking-widest text-saffron-700 font-medium ml-3">
-              Démo interactive
+              Démo hors-ligne
             </span>
           </Link>
-          <Link href="/" className="text-sm text-ink-600 hover:text-ink-900 transition-colors">
-            ← Accueil
-          </Link>
+          <div className="flex items-center gap-4 text-sm">
+            <Link href="/beta" className="text-saffron-700 hover:text-saffron-800 font-medium">
+              Pré-inscription
+            </Link>
+            <Link href="/" className="text-ink-600 hover:text-ink-900 transition-colors">
+              ← Accueil
+            </Link>
+          </div>
         </div>
       </header>
 
+      <div className="bg-ink-100 border-b border-ink-200">
+        <div className="max-w-6xl mx-auto px-6 py-2 text-xs text-ink-600">
+          Classification 100&nbsp;% dans le navigateur. Aucune session connectée,
+          aucune donnée envoyée à un serveur. Ce n’est pas un espace praticien.
+        </div>
+      </div>
+
       <div className="max-w-6xl mx-auto px-6 py-10">
+        <NonDmNotice className="mb-8" />
         {/* Case selector */}
         <section className="mb-10">
           <p className="label mb-3">Cas cliniques préchargés</p>
-          <p className="text-xs text-ink-500 mb-4">Sélectionnez un cas, ajustez les biomarqueurs, puis lancez la classification.</p>
+          <p className="text-xs text-ink-500 mb-4">
+            Cas A, B et C tournent hors-ligne. Ajustez les biomarqueurs, puis lancez
+            la classification — sans compte, sans clé API.
+          </p>
           <div className="flex flex-wrap gap-3">
             {(['A', 'B', 'C'] as CaseKey[]).map((k) => (
               <button
@@ -227,7 +268,7 @@ export default function DemoPage() {
             Lancer la classification →
           </button>
           <span className="text-xs text-ink-500">
-            Le moteur tourne entièrement dans votre navigateur. Aucune donnée envoyée à un serveur.
+            Moteur déterministe local. Pas de composition Claude, pas d’export PDF, pas de dossier patient.
           </span>
         </section>
 
@@ -310,18 +351,19 @@ export default function DemoPage() {
               </div>
             </section>
 
-            {/* Dish preview (mock) */}
             <section className="mb-10">
-              <p className="label mb-3">Prescription culinaire</p>
+              <p className="label mb-3">Aperçu d’architecture (schéma, pas un plat composé)</p>
               {result.dominant ? (
-                <div className="card !p-6 border-dashed border-2 border-tier-t2/30">
+                <div className="card !p-6 border-dashed border-2 border-ink-300">
                   <div className="flex items-center gap-3 mb-4">
-                    <span className="text-2xl">🍽️</span>
                     <div>
                       <p className="font-serif text-xl text-ink-900">
-                        Plat anti-{BOTTLENECK_META[result.dominant]?.label}
+                        Cible : {BOTTLENECK_META[result.dominant]?.label}
                       </p>
-                      <p className="text-xs text-ink-500">Aperçu généré localement. Connectez votre clé Anthropic pour un vrai plat.</p>
+                      <p className="text-xs text-ink-500">
+                        Schéma pédagogique. La composition réelle (Claude) n’est disponible
+                        que dans l’espace praticien invité — pas ici.
+                      </p>
                     </div>
                   </div>
                   <div className="grid md:grid-cols-2 gap-4 text-sm">
@@ -347,12 +389,13 @@ export default function DemoPage() {
                       </ul>
                     </div>
                   </div>
-                  <div className="mt-4 pt-4 border-t border-ink-200 flex justify-between items-center">
+                  <div className="mt-4 pt-4 border-t border-ink-200 flex flex-col sm:flex-row justify-between gap-3 items-start sm:items-center">
                     <p className="text-xs text-ink-500">
-                      ⚡ Ce résultat est une démonstration. Le vrai moteur utilise Claude API pour composer le plat complet avec liste de courses et protocole de cuisson.
+                      La démo s’arrête à la classification. Pour la composition et l’export PDF,
+                      pré-inscrivez-vous à la beta — un accès invité sera envoyé par email.
                     </p>
                     <Link href="/beta" className="btn-primary text-xs !py-2 !px-4 whitespace-nowrap">
-                      Accéder au moteur complet →
+                      Pré-inscription beta →
                     </Link>
                   </div>
                 </div>
@@ -368,10 +411,10 @@ export default function DemoPage() {
 
         {/* Always-visible CTA */}
         <section className="bg-ink-100/50 border border-ink-200 rounded-sm p-6 text-center">
-          <p className="font-serif text-xl text-ink-900 mb-2">Vous voulez aller plus loin ?</p>
+          <p className="font-serif text-xl text-ink-900 mb-2">Praticien, pas encore invité ?</p>
           <p className="text-sm text-ink-600 mb-4">
-            Inscrivez-vous à la beta praticien pour accéder au moteur complet 
-            (composition Claude, export PDF, dashboard patient) en avant-première.
+            La file d’attente beta enregistre votre email professionnel dans Supabase.
+            L’espace connecté n’est pas ouvert depuis cette démo.
           </p>
           <Link href="/beta" className="btn-primary text-base !px-8 !py-3">
             M'inscrire à la beta →
@@ -381,7 +424,7 @@ export default function DemoPage() {
 
       <footer className="border-t border-ink-200 py-6 text-xs text-ink-500">
         <div className="max-w-6xl mx-auto px-6 flex justify-between">
-          <span>Functional Chef · Démo interactive · Classification 100% locale</span>
+          <span>Functional Chef · Démo hors-ligne · Classification locale · non DM</span>
           <Link href="/" className="hover:text-ink-700 transition-colors">Accueil</Link>
         </div>
       </footer>

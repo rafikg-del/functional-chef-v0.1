@@ -1,71 +1,112 @@
-# Note d'information patient — Functional Chef
+# Note d’information patient — Functional Chef
 
-> **Document** : LIV-69 — Information patient
-> **Version** : v1.0 — 14 juillet 2026
+> **Document** : LIV-69 — Information patient (texte simple)
+> **Version** : v1.1 — 10 septembre 2026
+> **Statut** : brouillon — **pending avocat/CS**
 > **Remis par** : Dr ___________________ le ___ / ___ / ______
 > **Patient** : ___________________
 
 ---
 
-## Qu'est-ce que Functional Chef ?
+## À quoi sert cet outil ?
 
-Functional Chef est un outil informatique utilisé par votre médecin pour vous proposer des **repas personnalisés** en fonction de vos analyses biologiques. C'est un **outil d'aide** — votre médecin conserve l'entière responsabilité de ses prescriptions.
+Votre médecin utilise un logiciel nommé Functional Chef.
 
-## Que fait-il avec mes données ?
+Le logiciel aide à proposer des **repas adaptés** à vos analyses.
 
-Votre médecin saisit dans l'outil :
-- Certains résultats de vos **analyses sanguines** (glycémie, cholestérol, marqueurs de l'inflammation)
-- Des **informations sur votre digestion** (fréquence des ballonnements, aspect des selles)
-- Vos **allergies et régimes alimentaires**
+Ce n’est **pas** un robot qui décide à la place du médecin.
 
-L'outil utilise ces informations pour proposer un plan de repas adapté à votre profil.
+Votre médecin reste responsable de ce qu’il vous prescrit.
+
+Ce n’est **pas** un dispositif médical certifié.
+
+---
+
+## Quelles informations sont utilisées ?
+
+Votre médecin peut saisir :
+
+- des **chiffres d’analyses** (par exemple la glycémie ou un marqueur d’inflammation) ;
+- des **infos sur votre digestion** (ballonnements, aspect des selles) ;
+- vos **allergies** et votre **façon de manger**.
+
+Le logiciel s’en sert pour proposer un plan de repas.
+
+Il ne sert pas à poser un diagnostic.
+
+---
 
 ## Mes données sont-elles protégées ?
 
-Oui. Functional Chef respecte le Règlement Général sur la Protection des Données (RGPD) :
-- **Personne d'autre que votre médecin** ne peut voir vos données
-- **Hébergement en Europe** dans un centre de données sécurisé
-- **Chiffrement** : vos données sont codées, personne ne peut les lire sans autorisation
-- **Aucun partage** avec des tiers à des fins commerciales
+Oui, des précautions sont prises :
 
-## Mes données sont-elles visibles par une intelligence artificielle ?
+- **Seul votre médecin** peut voir vos données dans l’outil.
+- Les serveurs visent l’**Europe**.
+- Les données sont **codées** (chiffrement) pendant le stockage et l’envoi.
+- Elles ne sont **pas vendues**.
 
-Pour générer le plan de repas, l'outil envoie vos **valeurs biologiques (chiffres uniquement)** à un service d'IA :
-- **Aucun nom, prénom, adresse ou identifiant** n'est transmis
-- L'IA reçoit uniquement des chiffres (exemple : « CRP-us : 2.4 mg/L »)
-- Ces données **ne sont pas conservées** par le service d'IA
-- Elles ne servent **pas à entraîner ou améliorer** les modèles d'IA
+---
+
+## Une intelligence artificielle voit-elle mes données ?
+
+Pour écrire le plan de repas, le logiciel envoie des **chiffres** à un service d’IA.
+
+- Votre **nom** n’est pas envoyé.
+- Votre **adresse** n’est pas envoyée.
+- Votre **numéro de sécurité sociale** n’est pas envoyé.
+- L’IA reçoit surtout des nombres (exemple : « CRP-us : 2,4 »).
+- Ces chiffres **ne servent pas** à entraîner l’IA.
+
+---
 
 ## Quels sont mes droits ?
 
-Vous disposez des droits suivants, que vous pouvez exercer auprès de votre médecin :
+Vous pouvez demander à votre médecin :
 
-| Droit | Qu'est-ce que ça signifie ? |
-|-------|---------------------------|
-| **Accès** | Vous pouvez demander une copie de toutes les données vous concernant |
-| **Rectification** | Vous pouvez faire corriger une donnée inexacte |
-| **Effacement** | Vous pouvez demander la suppression de vos données |
-| **Limitation** | Vous pouvez demander à ce que vos données ne soient plus utilisées |
-| **Opposition** | Vous pouvez vous opposer au traitement de vos données |
-| **Portabilité** | Vous pouvez récupérer vos données dans un format réutilisable |
+| Droit | En clair |
+|-------|----------|
+| **Voir** | Obtenir une copie de vos données |
+| **Corriger** | Faire rectifier une erreur |
+| **Effacer** | Demander la suppression |
+| **Limiter** | Demander l’arrêt de l’usage |
+| **S’opposer** | Refuser le traitement |
+| **Récupérer** | Recevoir un fichier réutilisable |
 
-## Combien de temps mes données sont-elles conservées ?
+---
 
-| Type de donnée | Durée |
-|----------------|-------|
-| Résultats de vos consultations | 3 ans |
-| Votre profil nutritionnel | 5 ans |
-| Journal des accès (sécurité) | 10 ans |
+## Combien de temps sont-elles gardées ?
 
-Après ces durées, les données sont automatiquement et définitivement supprimées.
+| Type | Durée prévue |
+|------|----------------|
+| Résultats des consultations | 3 ans |
+| Profil nutritionnel | 5 ans |
+| Journal de sécurité | 10 ans |
 
-## Est-ce que je dois donner mon accord ?
+Ensuite, les données sont supprimées.
 
-**Oui.** Functional Chef traite des données de santé. La loi (RGPD Article 9) exige votre consentement explicite. En signant ce document, vous acceptez que votre médecin utilise Functional Chef pour personnaliser vos conseils nutritionnels.
+Ces durées restent à **confirmer par un avocat**.
 
-## Cette information est-elle complète ?
+---
 
-Cette note résume l'essentiel. Pour plus de détails, vous pouvez consulter la **Politique de confidentialité** complète disponible sur le site de l'outil, ou demander à votre médecin de vous la remettre.
+## Dois-je dire oui ?
+
+**Oui**, si votre médecin utilise cet outil pour vous.
+
+La loi demande un accord clair pour les données de santé.
+
+Signer ce papier veut dire : vous acceptez que votre médecin s’en serve pour vos conseils alimentaires.
+
+Vous pouvez **refuser**. Les soins habituels continuent.
+
+Vous pouvez **changer d’avis** plus tard. Parlez-en à votre médecin.
+
+---
+
+## Cette note dit-elle tout ?
+
+Non. C’est un **résumé**.
+
+Pour le détail, demandez la politique de confidentialité, ou voyez la page `/privacy` du site.
 
 ---
 
@@ -73,17 +114,17 @@ Cette note résume l'essentiel. Pour plus de détails, vous pouvez consulter la 
 
 **Je, soussigné(e)** ________________________________________________________
 
-- [ ] **Accepte** que mes données biologiques et cliniques soient traitées par Functional Chef dans le cadre de ma prise en charge nutritionnelle par mon médecin.
-- [ ] **Accepte** que ces données pseudonymisées (chiffres uniquement, sans nom ni identifiant) soient transmises à un service d'intelligence artificielle pour la génération de recommandations culinaires.
-- [ ] **Confirme** avoir été informé(e) de mes droits (accès, rectification, effacement, limitation, opposition, portabilité).
+- [ ] **J’accepte** que mes données d’analyses et de digestion soient utilisées par Functional Chef, pour mes conseils alimentaires, par mon médecin.
+- [ ] **J’accepte** que des **chiffres seuls** (sans mon nom) soient envoyés à un service d’intelligence artificielle pour proposer des repas.
+- [ ] **J’ai compris** mes droits : voir, corriger, effacer, limiter, m’opposer, récupérer un fichier.
 
 Fait à ___________________________ , le ___ / ___ / ______
 
-Signature du patient : ___________________________ 
+Signature du patient : ___________________________
 
 Signature du médecin : ___________________________
 
 ---
 
-> Si vous souhaitez retirer votre consentement ou exercer vos droits, contactez votre médecin ou écrivez à : dpo@functional-chef.app  
-> **Version** : v1.0 — 14 juillet 2026
+> Pour retirer votre accord ou exercer vos droits : parlez à votre médecin, ou écrivez à dpo@functional-chef.app.  
+> **Version** : v1.1 — 10 septembre 2026 · **pending avocat/CS**

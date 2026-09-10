@@ -4,10 +4,27 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   // Skip auth for public pages
   if (request.nextUrl.pathname.startsWith('/prescription') ||
-      request.nextUrl.pathname.startsWith('/test-parser')) {
+      request.nextUrl.pathname.startsWith('/test-parser') ||
+      request.nextUrl.pathname.startsWith('/api/beta-waitlist')) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
   if (request.nextUrl.pathname.endsWith('/print')) {
+    return NextResponse.next({ request: { headers: request.headers } });
+  }
+
+  const supabaseUrl = process.env.NEXT_PUBLIC_SUPABASE_URL;
+  const supabaseAnon = process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY;
+  const supabaseReady =
+    Boolean(supabaseUrl && supabaseAnon) && !supabaseUrl!.includes('YOUR_PROJECT');
+
+  const protectedPaths = ['/dashboard', '/consultation'];
+  const isProtected = protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
+
+  // Marketing + demo must stay up even if Auth is not configured yet.
+  if (!supabaseReady) {
+    if (isProtected) {
+      return NextResponse.redirect(new URL('/auth', request.url));
+    }
     return NextResponse.next({ request: { headers: request.headers } });
   }
 
@@ -37,10 +54,6 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
-  // Protected routes
-  const protectedPaths = ['/dashboard', '/consultation'];
-  const isProtected = protectedPaths.some(path => request.nextUrl.pathname.startsWith(path));
-
   if (isProtected && !user) {
     return NextResponse.redirect(new URL('/auth', request.url));
   }
@@ -55,6 +68,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify|api/compose|auth).*)',
+    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify|api/compose|api/beta-waitlist|auth).*)',
   ],
 };

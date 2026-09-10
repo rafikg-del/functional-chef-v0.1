@@ -1,6 +1,7 @@
 /**
  * Canonical SHA-256 helpers for consultation export / physician seal (LIV-65).
- * Uses Web Crypto when available, Node `crypto` otherwise.
+ * Uses Web Crypto (available in browsers and Node 20+). Do not import `node:crypto`
+ * from this module — it is loaded by client dashboard pages.
  */
 
 export function stableStringify(value: unknown): string {
@@ -30,14 +31,12 @@ function bufferToHex(buffer: ArrayBuffer | Uint8Array): string {
 
 export async function sha256Hex(input: string): Promise<string> {
   const subtle = globalThis.crypto?.subtle;
-  if (subtle) {
-    const encoded = new TextEncoder().encode(input);
-    const digest = await subtle.digest('SHA-256', encoded);
-    return bufferToHex(digest);
+  if (!subtle) {
+    throw new Error('Web Crypto SHA-256 is unavailable in this runtime');
   }
-
-  const { createHash } = await import('node:crypto');
-  return createHash('sha256').update(input, 'utf8').digest('hex');
+  const encoded = new TextEncoder().encode(input);
+  const digest = await subtle.digest('SHA-256', encoded);
+  return bufferToHex(digest);
 }
 
 /** Fields hashed for medico-legal traceability. Excludes volatile export timestamps. */

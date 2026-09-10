@@ -9,11 +9,13 @@
  *
  * Usage:
  *   import { generateConsultationPdf } from '@/lib/pdf/generate-consultation-pdf';
- *   const pdf = generateConsultationPdf(consultation);
- *   pdf.save('consultation-xxx.pdf');
+ *   const { doc, contentHash } = await generateConsultationPdf(consultation);
+ *   doc.save('consultation-xxx.pdf');
  */
 
 import jsPDF from 'jspdf';
+import { hashConsultationContent } from '@/lib/security/content-hash';
+import { ENGINE_VERSION } from '@/lib/engine-version';
 
 // ─── Types ────────────────────────────────────────────────────────────
 
@@ -56,24 +58,17 @@ function formatDate(iso: string): string {
   });
 }
 
-function computeContentHash(obj: any): string {
-  // Simple SHA-256-like hash for traceability (not cryptographic-grade)
-  const str = JSON.stringify(obj, Object.keys(obj).sort());
-  let hash = 0;
-  for (let i = 0; i < str.length; i++) {
-    const char = str.charCodeAt(i);
-    hash = ((hash << 5) - hash) + char;
-    hash = hash & hash; // Convert to 32-bit integer
-  }
-  return 'FC-' + Math.abs(hash).toString(16).padStart(8, '0') + '-' + Date.now().toString(36);
-}
+export type GeneratedConsultationPdf = {
+  doc: jsPDF;
+  contentHash: string;
+};
 
 // ─── PDF Generator ────────────────────────────────────────────────────
 
-export function generateConsultationPdf(
+export async function generateConsultationPdf(
   consultation: ConsultationForPdf,
   professionalName?: string
-): jsPDF {
+): Promise<GeneratedConsultationPdf> {
   const doc = new jsPDF({ format: 'a4', unit: 'mm' });
   const pageW = 210;
   const margin = 20;
@@ -364,8 +359,9 @@ export function generateConsultationPdf(
     doc.setTextColor(45, 106, 79);
     doc.text(`✓ Validée le ${formatDate(consultation.validated_at)}`, margin, y);
     y += 5;
-    if (consultation.validated_by) {
-      doc.text(`Par : ${consultation.validated_by}`, margin, y);
+    const signer = consultation.validated_by || professionalName;
+    if (signer) {
+      doc.text(`Par : ${signer}`, margin, y);
       y += 5;
     }
     if (consultation.validation_notes) {
@@ -381,12 +377,19 @@ export function generateConsultationPdf(
   y = Math.max(y, 255);
   checkPageBreak(15);
   divider();
-  const hash = computeContentHash(consultation);
+  const contentHash = await hashConsultationContent({
+    ...consultation,
+    engine_version: consultation.engine_version ?? ENGINE_VERSION,
+  });
   setFont(6);
   doc.setTextColor(180, 175, 165);
-  doc.text(`Document généré par Functional Chef · ID: ${consultation.id?.slice(0, 12) || '—'} · ${consultation.engine_version || 'v0.2'} · Empreinte: ${hash}`, margin, y);
+  doc.text(
+    `Document généré par Functional Chef · ID: ${consultation.id?.slice(0, 12) || '—'} · ${consultation.engine_version || ENGINE_VERSION} · SHA-256: ${contentHash}`,
+    margin,
+    y
+  );
   y += 3.5;
   doc.text(`Date de génération : ${new Date().toISOString()} · Ce document n'est pas un dispositif médical. Validation médicale humaine requise avant transmission patient.`, margin, y);
 
-  return doc;
+  return { doc, contentHash };
 }

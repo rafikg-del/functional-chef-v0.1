@@ -89,7 +89,7 @@ export default function PrivacyPage() {
             <ul>
               <li><strong>Droit d'accès</strong> (Article 15) — obtenir une copie des données</li>
               <li><strong>Droit de rectification</strong> (Article 16) — corriger les données inexactes</li>
-              <li><strong>Droit à l'effacement</strong> (Article 17) — supprimer le compte et les données via la fonctionnalité dédiée</li>
+              <li><strong>Droit à l'effacement</strong> (Article 17) — supprimer le compte via <Link href="/dashboard/settings" className="text-saffron-700 hover:underline">Paramètres</Link> ou <code>POST /api/account/delete</code></li>
               <li><strong>Droit à la limitation</strong> (Article 18)</li>
               <li><strong>Droit à la portabilité</strong> (Article 20)</li>
             </ul>

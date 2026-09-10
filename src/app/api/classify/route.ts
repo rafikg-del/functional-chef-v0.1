@@ -15,6 +15,8 @@ import { z } from 'zod';
 import { createServiceClient } from '@/lib/supabase/server';
 import { classifyBottlenecks } from '@/lib/reasoning/bottleneck-classifier';
 import type { Bottleneck, BiomarkerThreshold, PatientProfile } from '@/lib/reasoning/types';
+import { getSessionActor } from '@/lib/security/actor';
+import { writeAuditLog } from '@/lib/security/audit';
 
 const PatientSchema = z.object({
   age: z.number().int().min(0).max(120).optional(),
@@ -80,6 +82,21 @@ export async function POST(req: NextRequest) {
     bottlenecks as Bottleneck[],
     thresholds as BiomarkerThreshold[]
   );
+
+  const actor = await getSessionActor();
+  if (actor.user) {
+    await writeAuditLog(supabase, {
+      professional_id: actor.professional?.id ?? null,
+      user_id: actor.user.id,
+      action: 'classify.run',
+      entity_type: 'classification',
+      metadata: {
+        dominant: result.dominant,
+        co_dominant: result.co_dominant,
+        triggered: result.scores.filter((s) => s.triggered).map((s) => s.bottleneck_id),
+      },
+    });
+  }
 
   return NextResponse.json(result);
 }

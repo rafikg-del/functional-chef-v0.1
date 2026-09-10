@@ -14,6 +14,7 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:cases": "tsx scripts/test-validation-cases.ts",
+    "liv25:concordance": "tsx scripts/run-liv25-concordance.ts",
     "pdf:extract": "tsx scripts/extract-pdf.ts"
   },
   "dependencies": {

@@ -36,7 +36,7 @@ Les valeurs biologiques nécessaires à la classification sont autorisées **uni
 
 **Écart connu** : un seul cas à dominant digestif (DYSBIOSE 1/3). Le pack est un **LIV-25 partiel** en attendant au moins deux dossiers supplémentaires à primauté intestinale. On ne complète **pas** avec un fixture synthétique.
 
-Détail : [`EXTRACTION_NOTES.md`](EXTRACTION_NOTES.md) · inventaire : [`manifest.json`](manifest.json).
+Détail : [`EXTRACTION_NOTES.md`](EXTRACTION_NOTES.md) · inventaire : [`manifest.json`](manifest.json) · désaccords LIV-26 : [`LIV26_NOTE.md`](LIV26_NOTE.md).
 
 ## Contenu
 
@@ -44,6 +44,7 @@ Détail : [`EXTRACTION_NOTES.md`](EXTRACTION_NOTES.md) · inventaire : [`manifes
 docs/validation/liv25/
   README.md
   EXTRACTION_NOTES.md
+  LIV26_NOTE.md
   manifest.json
   cases/ZOI-VAL-01.json … ZOI-VAL-10.json
 ```

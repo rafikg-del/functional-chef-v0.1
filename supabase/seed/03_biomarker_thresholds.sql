@@ -57,6 +57,8 @@ INSERT INTO biomarker_thresholds (bottleneck_id, biomarker_id, functional_target
 ('DYSBIOSE', 'PPI_CHRONIC',       NULL,  NULL, NULL,  NULL,  'positive', 'moderate', 'IPP >6 mois sans indication forte'),
 ('DYSBIOSE', 'FIBER_INTAKE',      25,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible >25g/j. Alerte <15g/j'),
 ('DYSBIOSE', 'PLANT_DIVERSITY',   30,    NULL, 15,    NULL,  NULL,       'moderate', 'Cible ≥30/sem. Alerte <15/sem'),
+-- GLP-1 : HOMA / insuline écrasés — le flag se substitue à un majeur HOMA non interprétable
+('IR', 'GLP1_ACTIVE',       NULL,  NULL, NULL,  NULL,  'positive', 'major',    'HOMA et insulinémie non interprétables sous GLP-1. Compte comme majeur de substitution si le flag est documenté (positive/positif).'),
 -- Enrichissement SOPK/péri-ménopause pour IR
 ('IR', 'SHBG',              50,    NULL, 30,    NULL,  NULL,       'moderate', 'SHBG basse <30 nmol/L = marqueur d\'hyperinsulinémie. Surtout chez F. Active la priorisation SOPK.'),
 -- Enrichissement blocage fonctionnel du fer pour INFLAM

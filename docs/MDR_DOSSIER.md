@@ -332,6 +332,9 @@ Praticien (saisie dans l'UI)
 
 ## 8. Matrice d'écart
 
+> **Document vivant (LIV-02)** : [`docs/quality/MDR_GAP_MATRIX.md`](quality/MDR_GAP_MATRIX.md) — version 1.1, **brouillon — signature humaine requise**.  
+> En cas de conflit de statut avec le tableau ci-dessous (v1.0, 14 juillet 2026, trop optimiste sur plusieurs ✅), **la matrice autonome prévaut**.
+
 ### 8.1 Exigences MDR applicables
 
 | Annexe/Article | Exigence | Statut | Commentaire |
@@ -384,7 +387,7 @@ Praticien (saisie dans l'UI)
 | C | Spécification des seeds (63 leviers) | ✅ |
 | D | Politique de confidentialité RGPD | ✅ |
 | E | Schéma de la base de données | ✅ |
-| F | Historique des versions du logiciel | 🔶 Partiel (git log) |
+| F | Historique des versions du logiciel | 🔶 Partiel (git log) — [LIV-14](quality/LIV-14_REGISTRE_LOGICIEL.md) ; **aucun tag `vX.Y.Z`** |
 
 ---
 

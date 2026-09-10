@@ -74,6 +74,8 @@ functional-chef/
 ├── next.config.js
 ├── tailwind.config.ts
 ├── .env.example                       # Variables d'env requises
+├── docs/PRODUCTION_READINESS.md       # Go/No-Go Phase 2 (NO-GO au 2026-09-10)
+├── docs/quality/                      # LIV-11..17 SMQ — brouillon, signature humaine requise
 │
 ├── supabase/
 │   ├── migrations/

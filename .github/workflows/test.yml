@@ -1,3 +1,7 @@
+# LIV-43 — tests automatisés sur push/PR vers main.
+# LIV-14 — le registre logiciel n'est PAS généré ici : voir
+#   .github/workflows/release-register.yml (déclenché sur tags vX.Y.Z)
+#   docs/quality/LIV-14_REGISTRE_LOGICIEL.md
 name: Test
 
 on:

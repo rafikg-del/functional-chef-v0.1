@@ -1,7 +1,7 @@
 # Phase 1 — Pré-commercialisation (Objectif : J-90 à J+180)
 
-> **Statut** : Plan de travail — Mis à jour avec l'analyse de marché (juillet 2026)
-> **Version** : 1.1
+> **Statut** : Plan de travail — Mis à jour avec le pack qualité LIV-11..17 (septembre 2026)
+> **Version** : 1.2
 > **Objectif** : Atteindre un niveau de maturité réglementaire, clinique et technique suffisant pour ouvrir une beta clinique contrôlée (Phase 2), sans exposition juridique ou réputationnelle.
 
 ---
@@ -73,7 +73,7 @@ Déterminer la classe MDR exacte, rédiger le dossier technique, et établir la 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
 | **LIV-01** | Rapport d'audit MDR préliminaire | PDF (<20 pages) | Classification confirmée (I, IIa, ou IIb) + checklist des exigences applicables | 🔴 Critique |
-| **LIV-02** | Matrice d'écart MDR (« gap analysis ») | Tableur ou Markdown | Chaque annexe MDR listée avec statut : ✅ conforme / 🔶 partiel / ❌ manquant | 🔴 Critique |
+| **LIV-02** | Matrice d'écart MDR (« gap analysis ») — [matrice autonome](quality/MDR_GAP_MATRIX.md) | Markdown contrôlé | Chaque annexe MDR listée avec statut : ✅ / 🔶 / ❌ **honnête** ; **brouillon, non signé** | 🔴 Critique |
 | **LIV-03** | Note de positionnement « DM ou non DM » | PDF (<5 pages) | Argumentaire juridique justifiant la classification retenue | 🔴 Critique |
 
 **Note** : ces 3 livrables peuvent être rédigés par IA (moi) et soumis à un expert MDR pour relecture-signature (1 500-3 000 € au lieu de 5-8k€).
@@ -106,18 +106,18 @@ Mettre en place le squelette ISO 13485 adapté à un logiciel de santé (taille 
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-11** | Manuel qualité v1.0 (politique qualité, périmètre, responsabilités) | PDF signé | Revue par un consultant qualité | 🟡 Important |
-| **LIV-12** | Procédure de maîtrise des documents (création, revue, approbation, archivage) | Document contrôlé | Applicable au repo GitHub (PRs, approvals, tags) | 🟡 Important |
-| **LIV-13** | Procédure de gestion des non-conformités (signalement, analyse, CAPA) | Document contrôlé | Template CAPA prêt à l'emploi | 🟡 Important |
-| **LIV-14** | Registre des modifications logicielles (lié au git log) | Script CI/CD | Automatiquement mis à jour à chaque release | 🟢 Nice-to-have |
+| **LIV-11** | Manuel qualité v1.0 (politique qualité, périmètre, responsabilités) — [brouillon](quality/LIV-11_MANUEL_QUALITE.md) | Markdown contrôlé (PDF après signature) | Revue par un consultant qualité — **signature humaine requise** | 🟡 Important |
+| **LIV-12** | Procédure de maîtrise des documents (création, revue, approbation, archivage) — [brouillon](quality/LIV-12_MAITRISE_DOCUMENTS.md) | Document contrôlé | Applicable au repo GitHub (PRs, approvals, tags) | 🟡 Important |
+| **LIV-13** | Procédure de gestion des non-conformités (signalement, analyse, CAPA) — [brouillon](quality/LIV-13_NON_CONFORMITES_CAPA.md) · [template](quality/templates/CAPA.md) | Document contrôlé | Template CAPA prêt à l'emploi | 🟡 Important |
+| **LIV-14** | Registre des modifications logicielles (lié aux tags git) — [procédure](quality/LIV-14_REGISTRE_LOGICIEL.md) · [snapshot](quality/REGISTRE_RELEASES.md) · `npm run changelog:software` | Script + CI tag | **Léger** : tags `vX.Y.Z` → registre ; **aucun tag à ce jour** | 🟢 Nice-to-have |
 
 ### J31-J44 — Procédure revue des tiers EBM
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-15** | Procédure d'ajout / modification d'un levier culinaire | Document contrôlé | Tout changement de tier passe par : rédaction → revue par ≥1 médecin CS → validation → déploiement | 🟡 Important |
-| **LIV-16** | Template de fiche de revue de levier | Formulaire PDF | Champs : PMID, tier proposé, tier validé, reviewer, date, réévaluation | 🟡 Important |
-| **LIV-17** | Changelog EBM (traçabilité de chaque modification de tier) | Fichier Markdown dans le repo | Historique complet des tiers depuis v0.1 | 🟢 Nice-to-have |
+| **LIV-15** | Procédure d'ajout / modification d'un levier culinaire — [brouillon](quality/LIV-15_PROCEDURE_LEVIER_CULINAIRE.md) | Document contrôlé | Tout changement de tier passe par : rédaction → revue par ≥1 médecin CS → validation → déploiement. **CS non constitué : procédure non exécutable pour T1/T2** | 🟡 Important |
+| **LIV-16** | Template de fiche de revue de levier — [formulaire](quality/LIV-16_FICHE_REVUE_LEVIER.md) · [dossiers remplis](quality/reviews/) | Markdown (PDF après signature) | Champs : PMID, tier proposé, tier validé, reviewer, date, réévaluation. **0 fiche signée** | 🟡 Important |
+| **LIV-17** | Changelog EBM (traçabilité de chaque modification de tier) — [snapshot](quality/LIV-17_CHANGELOG_EBM.md) · `npm run changelog:ebm` | Markdown généré depuis le seed | Historique initial v0.1+v0.2 : **63 leviers chargeables**, 0 revue CS ; tuples orphelins listés à part | 🟢 Nice-to-have |
 
 ---
 
@@ -304,6 +304,10 @@ Produire les artefacts nécessaires pour ouvrir un pilote clinique contrôlé de
 ---
 
 ## Critères de passage en Phase 2
+
+Checklist opérationnelle (DONE / DRAFT_NEEDS_EXPERT / BLOCKED_HUMAN) : **[`docs/PRODUCTION_READINESS.md`](PRODUCTION_READINESS.md)** — décision au 2026-09-10 : **NO-GO**.
+
+Pack qualité (LIV-11..17, LIV-02) : [`docs/quality/`](quality/).
 
 Avant d'ouvrir la beta clinique (Phase 2 — 20 patients), ces **checkpoints obligatoires** doivent être ✅ :
 

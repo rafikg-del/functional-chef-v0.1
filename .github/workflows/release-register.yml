@@ -1,0 +1,38 @@
+# LIV-14 — génération du registre sur tag
+# Ne constitue PAS une approbation de release (pas de signature).
+# Procédure : docs/quality/LIV-14_REGISTRE_LOGICIEL.md
+
+name: Release register
+
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+      - 'liv-*-v*'
+
+jobs:
+  register:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'npm'
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Generate software changelog (LIV-14)
+        run: npm run changelog:software
+
+      - name: Reminder
+        run: |
+          echo "Tag détecté : ${GITHUB_REF_NAME}"
+          echo "Le registre docs/quality/REGISTRE_RELEASES.md a été régénéré dans ce job."
+          echo "Il n'est PAS commité automatiquement : ouvrir une PR de registre (LIV-12)."
+          echo "Ce workflow n'est pas une signature qualité."

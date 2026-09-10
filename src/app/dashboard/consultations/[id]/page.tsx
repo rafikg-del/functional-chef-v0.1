@@ -2,99 +2,70 @@
 
 import { useState, useEffect } from 'react';
 import { createClient } from '@/lib/supabase/client';
-import { useParams, useRouter } from 'next/navigation';
+import { useParams } from 'next/navigation';
 import Link from 'next/link';
 import { EBMBadge } from '@/components/EBMBadge';
 import { generateConsultationPdf } from '@/lib/pdf/generate-consultation-pdf';
-
-const MOCK_DETAIL: Record<string, any> = {
-  'mock-001': {
-    id: 'mock-001',
-    intent: 'Dîner anti-IR ciblé, post-charge glucidique du matin',
-    meal_type: 'dinner',
-    detected_bottlenecks: {
-      scores: [
-        { bottleneck_id: 'IR', score: 9, major_hits: 3, moderate_hits: 1, triggered: true, is_dominant: true },
-        { bottleneck_id: 'INFLAM', score: 2, major_hits: 0, moderate_hits: 1, triggered: false },
-        { bottleneck_id: 'DYSBIOSE', score: 0, major_hits: 0, moderate_hits: 0, triggered: false },
-      ],
-      dominant: 'IR',
-      co_dominant: null,
-      rationale: 'Bottleneck dominant unique: IR (score 9, 3 majeurs).',
-    },
-    selected_levers: [
-      { lever_id: 'L_EVOO_PRIMARY', name_fr: 'Huile olive EVOO', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'universal_star', expected_effect: 'Anti-inflammatory', rationale: 'PREDIMED secondary analysis' },
-      { lever_id: 'L_VINEGAR_PRE_PRANDIAL', name_fr: 'Vinaigre pré-prandial', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'targeted', expected_effect: '-20% AUC glucose', rationale: 'Levier T1 ciblé IR' },
-      { lever_id: 'L_FOOD_SEQUENCE', name_fr: 'Séquence alimentaire', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'targeted', expected_effect: '-29% pic glucose', rationale: 'Levier T1 ciblé IR' },
-      { lever_id: 'L_POSTPRANDIAL_WALK', name_fr: 'Marche postprandiale', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'targeted', expected_effect: '-20% pic glucose', rationale: 'Levier T1 ciblé IR' },
-      { lever_id: 'L_LEGUMINOUSES_REGULAR', name_fr: 'Légumineuses', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'universal_star', expected_effect: 'HbA1c -0.48%', rationale: 'Sievenpiper méta' },
-      { lever_id: 'L_RESISTANT_STARCH', name_fr: 'Amidon résistant', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'universal_star', expected_effect: '↓ AUC glucose', rationale: 'Sonia 2015' },
-      { lever_id: 'L_NUTS_MIX_30G', name_fr: 'Oléagineux', ebm_tier: 'T1', tier_for_active_bottleneck: 'T1', role: 'universal_star', expected_effect: '↓ LDL', rationale: 'Afshin 2014' },
-    ],
-    output_dish: {
-      title: 'Bol méditerranéen anti-IR aux légumineuses, vinaigrette au vinaigre de cidre',
-      description: 'Dîner ciblant l\'insulinorésistance fonctionnelle. Architecture 50/25/25 avec séquence alimentaire intégrée. 6 leviers T1 mobilisés.',
-      architecture: { vegetables_pct: 50, protein_pct: 25, lipid_pct: 25 },
-      servings: 2, total_time_min: 35,
-      ebm_summary: { T1_count: 6, T2_count: 1, T3_count: 0 },
-      expected_effects: {
-        postprandial_2_4h: '↓ pic glycémique -29% (séquence). ↓ AUC glucose 2h -20% (vinaigre pré-prandial). ↑ GLP-1 (légumineuses et séquence).',
-        short_term_4_weeks: '↓ HOMA-IR -0.5 attendu. ↓ triglycérides postprandiaux. Stabilisation glycémique inter-repas.',
-        long_term_12_weeks: '↓ HbA1c -0.3 à -0.5% si cohérence 3 mois. ↓ TG/HDL ratio. Amélioration sensibilité insulinique.',
-      },
-      ingredients: [
-        { name: 'Lentilles vertes cuites', quantity: '200g', notes: 'Cuites la veille, refroidies 24h' },
-        { name: 'Poivron rouge grillé', quantity: '1 pièce' },
-        { name: 'Concombre', quantity: '½ pièce' },
-        { name: 'Tomates cerises', quantity: '150g' },
-        { name: 'Feta de brebis', quantity: '60g', notes: 'Optionnel. Remplacer par avocat si vegan' },
-        { name: 'Huile d\'olive EVOO', quantity: '2 c.s.', notes: 'Dont 1 c.s. à cru en finition' },
-        { name: 'Vinaigre de cidre', quantity: '1 c.s.', notes: 'Dilué dans eau, 10 min avant repas' },
-        { name: 'Mélange d\'herbes fraîches', quantity: '1 poignée' },
-      ],
-      warnings: [],
-    },
-    warnings: [],
-    excluded_levers: [],
-    llm_meta: { model: 'claude-sonnet-4-20250514', input_tokens: 2850, output_tokens: 1240, latency_ms: 12400 },
-    created_at: '2026-07-14T14:30:00Z',
-    validated_at: null,
-  },
-};
+import { isExplicitMockDataEnabled } from '@/lib/security/mock-mode';
+import { MOCK_DETAIL } from '@/lib/dashboard/mock-data';
+import {
+  asDetectedBottlenecks,
+  getEbmSummary,
+  getLlmMeta,
+} from '@/lib/dashboard/consultation-shape';
+import { DataErrorBanner, MockDataBanner } from '@/components/DataStatusBanners';
+import { canonicalConsultationPayload } from '@/lib/security/content-hash';
 
 export default function ConsultationDetailPage() {
   const params = useParams();
-  const router = useRouter();
   const [consultation, setConsultation] = useState<any>(null);
   const [profile, setProfile] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [validating, setValidating] = useState(false);
+  const [exporting, setExporting] = useState(false);
   const [validationNote, setValidationNote] = useState('');
   const [usingMock, setUsingMock] = useState(false);
+  const [loadError, setLoadError] = useState<string | null>(null);
+  const [actionError, setActionError] = useState<string | null>(null);
 
   useEffect(() => {
     async function load() {
       const id = params.id as string;
+
+      if (isExplicitMockDataEnabled()) {
+        const mock = MOCK_DETAIL[id];
+        if (mock) {
+          setConsultation(mock);
+          setUsingMock(true);
+        } else {
+          setLoadError('Consultation de démonstration introuvable.');
+        }
+        setLoading(false);
+        return;
+      }
+
       const supabase = createClient();
-      const { data: profData } = await supabase
-        .from('professional_profiles')
-        .select('*')
-        .eq('user_id', (await supabase.auth.getUser()).data.user?.id)
-        .maybeSingle();
-      setProfile(profData);
+      const { data: { user } } = await supabase.auth.getUser();
+      if (user) {
+        const { data: profData } = await supabase
+          .from('professional_profiles')
+          .select('*')
+          .eq('user_id', user.id)
+          .maybeSingle();
+        setProfile(profData);
+      }
 
       const { data, error } = await supabase
         .from('consultations')
         .select('*')
         .eq('id', id)
-        .single();
+        .maybeSingle();
 
-      if (error || !data) {
-        const mock = MOCK_DETAIL[id];
-        if (mock) {
-          setConsultation(mock);
-          setUsingMock(true);
-        }
+      if (error) {
+        setLoadError(error.message);
+      } else if (!data) {
+        setLoadError(null);
+        setConsultation(null);
       } else {
         setConsultation(data);
       }
@@ -105,34 +76,99 @@ export default function ConsultationDetailPage() {
 
   async function handleValidate() {
     setValidating(true);
-    const supabase = createClient();
-    const { error } = await supabase
-      .from('consultations')
-      .update({
-        validated_at: new Date().toISOString(),
-        validated_by: profile?.full_name || 'Dr confirmé',
-        validation_notes: validationNote || null,
-      })
-      .eq('id', params.id);
+    setActionError(null);
 
-    if (error) {
-      // Mock mode — just update locally
-      setConsultation({ ...consultation, validated_at: new Date().toISOString(), validated_by: profile?.full_name || 'Dr Test' });
-    } else {
-      setConsultation({ ...consultation, validated_at: new Date().toISOString(), validated_by: profile?.full_name || 'Dr Test' });
+    if (usingMock) {
+      setConsultation({
+        ...consultation,
+        validated_at: new Date().toISOString(),
+        validated_by: profile?.full_name || 'Dr démo',
+        validation_notes: validationNote || null,
+      });
+      setValidating(false);
+      return;
     }
+
+    const res = await fetch(`/api/consultations/${params.id}/validate`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ note: validationNote || null }),
+    });
+    const body = await res.json().catch(() => ({}));
+    if (!res.ok) {
+      setActionError(body.error || 'La validation a échoué — aucun tampon local n’a été appliqué.');
+      setValidating(false);
+      return;
+    }
+    setConsultation(body.consultation);
     setValidating(false);
   }
 
-  function handleDownloadPdf() {
-    const doc = generateConsultationPdf(consultation, profile?.full_name);
-    doc.save(`functional-chef-${consultation.id?.slice(0, 8) || 'consultation'}.pdf`);
+  async function persistExportHash(contentHash: string) {
+    if (usingMock) return;
+    await fetch(`/api/consultations/${params.id}/content-hash`, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ content_hash: contentHash }),
+    });
+  }
+
+  async function handleDownloadPdf() {
+    setExporting(true);
+    setActionError(null);
+    try {
+      const { doc, contentHash } = await generateConsultationPdf(consultation, profile?.full_name);
+      doc.save(`functional-chef-${consultation.id?.slice(0, 8) || 'consultation'}.pdf`);
+      await persistExportHash(contentHash);
+      setConsultation({ ...consultation, content_hash: contentHash });
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Export PDF impossible');
+    } finally {
+      setExporting(false);
+    }
+  }
+
+  async function handleDownloadJson() {
+    setExporting(true);
+    setActionError(null);
+    try {
+      const { hashConsultationContent } = await import('@/lib/security/content-hash');
+      const payload = canonicalConsultationPayload(consultation);
+      const contentHash = await hashConsultationContent(consultation);
+      const blob = new Blob(
+        [JSON.stringify({ ...payload, content_hash: contentHash }, null, 2)],
+        { type: 'application/json' }
+      );
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = `functional-chef-${consultation.id?.slice(0, 8) || 'consultation'}.json`;
+      a.click();
+      URL.revokeObjectURL(url);
+      await persistExportHash(contentHash);
+      setConsultation({ ...consultation, content_hash: contentHash });
+    } catch (err) {
+      setActionError(err instanceof Error ? err.message : 'Export JSON impossible');
+    } finally {
+      setExporting(false);
+    }
   }
 
   if (loading) {
     return (
       <div className="text-center py-20">
         <p className="text-sm text-ink-500">Chargement...</p>
+      </div>
+    );
+  }
+
+  if (loadError) {
+    return (
+      <div>
+        <Link href="/dashboard/consultations" className="text-xs text-ink-500 hover:text-ink-700 transition-colors flex items-center gap-1 mb-6">
+          ← Retour aux consultations
+        </Link>
+        <DataErrorBanner title="Consultation inaccessible" message={loadError} />
       </div>
     );
   }
@@ -149,17 +185,17 @@ export default function ConsultationDetailPage() {
   }
 
   const c = consultation;
-  const bn = c.detected_bottlenecks;
+  const bn = asDetectedBottlenecks(c.detected_bottlenecks);
   const validated = !!c.validated_at;
+  const llmMeta = getLlmMeta(c);
+  const ebm = getEbmSummary(c);
 
   return (
     <div>
-      {/* Back */}
       <Link href="/dashboard/consultations" className="text-xs text-ink-500 hover:text-ink-700 transition-colors flex items-center gap-1 mb-6">
         ← Retour aux consultations
       </Link>
 
-      {/* Header */}
       <div className="flex items-start justify-between mb-8">
         <div className="flex-1">
           <div className="flex items-center gap-3 mb-2">
@@ -172,18 +208,20 @@ export default function ConsultationDetailPage() {
           </div>
           <h1 className="font-serif text-2xl text-ink-900 tracking-editorial">{c.intent}</h1>
           <div className="flex items-center gap-4 mt-2 text-xs text-ink-500">
-            <span>{new Date(c.created_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</span>
+            <span>{c.created_at ? new Date(c.created_at).toLocaleDateString('fr-FR', { dateStyle: 'long' }) : '—'}</span>
             <span>·</span>
             <span>{c.meal_type === 'breakfast' ? 'Petit-déjeuner' : c.meal_type === 'lunch' ? 'Déjeuner' : c.meal_type === 'dinner' ? 'Dîner' : c.meal_type}</span>
-            {c.llm_meta?.model && <><span>·</span><span className="font-mono">{c.llm_meta.model}</span></>}
+            {llmMeta?.model && <><span>·</span><span className="font-mono">{llmMeta.model}</span></>}
           </div>
         </div>
 
-        {/* Validation + Export buttons */}
         {!validated && (
           <div className="shrink-0 ml-6 space-y-2">
             <div className="flex gap-2">
-              <button onClick={handleDownloadPdf} className="btn-ghost !py-2.5 !px-4 text-sm">
+              <button onClick={handleDownloadJson} disabled={exporting} className="btn-ghost !py-2.5 !px-4 text-sm">
+                JSON
+              </button>
+              <button onClick={handleDownloadPdf} disabled={exporting} className="btn-ghost !py-2.5 !px-4 text-sm">
                 📄 Export PDF
               </button>
               <button
@@ -206,7 +244,10 @@ export default function ConsultationDetailPage() {
         {validated && (
           <div className="shrink-0 ml-6 text-right space-y-2">
             <div className="flex gap-2">
-              <button onClick={handleDownloadPdf} className="btn-ghost !py-2 !px-4 text-sm">
+              <button onClick={handleDownloadJson} disabled={exporting} className="btn-ghost !py-2 !px-4 text-sm">
+                JSON
+              </button>
+              <button onClick={handleDownloadPdf} disabled={exporting} className="btn-ghost !py-2 !px-4 text-sm">
                 📄 Export PDF
               </button>
               <Link href={`/prescription/${params.id}`} className="btn-primary !py-2 !px-5 text-sm">
@@ -217,11 +258,21 @@ export default function ConsultationDetailPage() {
             <p className="text-xs text-ink-600">{new Date(c.validated_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
             {c.validated_by && <p className="text-xs text-ink-500">par {c.validated_by}</p>}
             {c.validation_notes && <p className="text-xs text-ink-500 mt-1 italic">{c.validation_notes}</p>}
+            {c.content_hash && (
+              <p className="text-[10px] font-mono text-ink-400 break-all max-w-xs ml-auto">
+                SHA-256 {c.content_hash.slice(0, 16)}…
+              </p>
+            )}
           </div>
         )}
       </div>
 
-      {/* Classification */}
+      {actionError && (
+        <div className="mb-6">
+          <DataErrorBanner title="Action refusée" message={actionError} />
+        </div>
+      )}
+
       {bn && (
         <section className="mb-8">
           <p className="label">Classification</p>
@@ -252,7 +303,6 @@ export default function ConsultationDetailPage() {
         </section>
       )}
 
-      {/* Levers selected */}
       {c.selected_levers?.length > 0 && (
         <section className="mb-8">
           <p className="label">Leviers sélectionnés</p>
@@ -275,16 +325,15 @@ export default function ConsultationDetailPage() {
             ))}
           </div>
           <div className="flex gap-2 mt-3">
-            <span className="text-[10px] bg-tier-t1/10 text-tier-t1 font-bold px-2 py-0.5 rounded-sm">T1×{c.output_dish?.ebm_summary?.T1_count || '?'}</span>
-            <span className="text-[10px] bg-tier-t2/10 text-tier-t2 font-bold px-2 py-0.5 rounded-sm">T2×{c.output_dish?.ebm_summary?.T2_count || '?'}</span>
-            {(c.output_dish?.ebm_summary?.T3_count || 0) > 0 && (
-              <span className="text-[10px] bg-tier-t3/10 text-tier-t3 font-bold px-2 py-0.5 rounded-sm">T3×{c.output_dish?.ebm_summary?.T3_count}</span>
+            <span className="text-[10px] bg-tier-t1/10 text-tier-t1 font-bold px-2 py-0.5 rounded-sm">T1×{ebm?.T1_count ?? '?'}</span>
+            <span className="text-[10px] bg-tier-t2/10 text-tier-t2 font-bold px-2 py-0.5 rounded-sm">T2×{ebm?.T2_count ?? '?'}</span>
+            {(ebm?.T3_count || 0) > 0 && (
+              <span className="text-[10px] bg-tier-t3/10 text-tier-t3 font-bold px-2 py-0.5 rounded-sm">T3×{ebm?.T3_count}</span>
             )}
           </div>
         </section>
       )}
 
-      {/* Dish */}
       {c.output_dish && (
         <section className="mb-8">
           <p className="label">Plat composé</p>
@@ -300,19 +349,17 @@ export default function ConsultationDetailPage() {
               )}
             </div>
 
-            {/* Expected effects */}
             <div className="grid grid-cols-3 gap-4 mt-6">
               {['postprandial_2_4h', 'short_term_4_weeks', 'long_term_12_weeks'].map((period) => (
                 <div key={period} className="bg-ink-50/50 p-3 rounded-sm">
                   <p className="text-[10px] uppercase tracking-wider text-saffron-700 mb-1 font-medium">
                     {period === 'postprandial_2_4h' ? '2-4h' : period === 'short_term_4_weeks' ? '4 sem' : '12 sem'}
                   </p>
-                  <p className="text-xs text-ink-700 leading-relaxed">{c.output_dish.expected_effects[period]}</p>
+                  <p className="text-xs text-ink-700 leading-relaxed">{c.output_dish.expected_effects?.[period]}</p>
                 </div>
               ))}
             </div>
 
-            {/* Ingredients */}
             <div className="mt-6">
               <p className="text-[10px] uppercase tracking-wider text-ink-500 mb-2 font-medium">Ingrédients</p>
               <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
@@ -328,7 +375,6 @@ export default function ConsultationDetailPage() {
         </section>
       )}
 
-      {/* Warnings */}
       {c.warnings?.length > 0 && (
         <section className="mb-8 p-4 bg-tier-t3/5 border border-tier-t3/20 rounded-sm">
           <p className="text-xs text-tier-t3 font-medium mb-2">⚠️ Avertissements</p>
@@ -340,23 +386,16 @@ export default function ConsultationDetailPage() {
         </section>
       )}
 
-      {/* LLM meta */}
-      {c.llm_meta && (
+      {llmMeta && (
         <div className="text-[10px] text-ink-400 font-mono mt-8 pt-4 border-t border-ink-200">
-          <span>{c.llm_meta.model} · in: {c.llm_meta.input_tokens}t · out: {c.llm_meta.output_tokens}t · {c.llm_meta.latency_ms}ms</span>
+          <span>{llmMeta.model} · in: {llmMeta.input_tokens}t · out: {llmMeta.output_tokens}t · {llmMeta.latency_ms}ms</span>
           <span className="ml-4">id: {c.id?.slice(0, 12)}…</span>
           {c.engine_version && <span className="ml-4">engine: {c.engine_version}</span>}
+          {c.content_hash && <span className="ml-4">sha256: {c.content_hash.slice(0, 12)}…</span>}
         </div>
       )}
 
-      {usingMock && (
-        <div className="mt-6 p-4 bg-amber-50/50 border border-amber-200 rounded-sm">
-          <p className="text-xs text-amber-800 font-medium mb-1">⚠️ Données de démonstration</p>
-          <p className="text-[11px] text-amber-700">
-            Connectez Supabase pour voir les vraies consultations et pouvoir les valider avec signature tracée.
-          </p>
-        </div>
-      )}
+      {usingMock && <MockDataBanner />}
     </div>
   );
 }

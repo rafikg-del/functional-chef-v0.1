@@ -39,11 +39,19 @@ export default function ConsentPage() {
       return;
     }
 
-    // Log consent in audit trail
+    // Log consent in audit trail (no PHI)
+    const { data: prof } = await supabase
+      .from('professional_profiles')
+      .select('id')
+      .eq('user_id', user.id)
+      .maybeSingle();
+
     await supabase.from('audit_log').insert({
       user_id: user.id,
+      professional_id: prof?.id ?? null,
       action: 'consent.accept',
       entity_type: 'professional_profile',
+      entity_id: prof?.id ?? null,
       metadata: { version: 'v1.0-20260714' },
     });
 

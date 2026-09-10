@@ -27,6 +27,9 @@ import type {
   PatientProfile,
   ConsultationResult,
 } from '@/lib/reasoning/types';
+import { getSessionActor } from '@/lib/security/actor';
+import { writeAuditLog } from '@/lib/security/audit';
+import { ENGINE_VERSION } from '@/lib/engine-version';
 
 export const maxDuration = 60; // Vercel — Claude API can take up to 30-45s for Opus
 
@@ -179,40 +182,75 @@ export async function POST(req: NextRequest) {
     );
   }
 
-  // 5. Persist consultation
+  // 5. Persist consultation (only when a professional session exists)
   const allWarnings = [
     ...safety.warnings,
     ...selection.warnings,
     ...composerOutput.dish.warnings,
   ];
 
-  const { data: persisted, error: persistErr } = await supabase
-    .from('consultations')
-    .insert({
-      intent,
-      meal_type,
-      detected_bottlenecks: classification.scores,
-      selected_levers: selection.selected,
-      output_dish: composerOutput.dish,
-      ebm_summary: composerOutput.dish.ebm_summary,
-      expected_effects: composerOutput.dish.expected_effects,
-      warnings: allWarnings,
-      excluded_levers: safety.excluded,
-      llm_model: composerOutput.meta.model,
-      llm_input_tokens: composerOutput.meta.input_tokens,
-      llm_output_tokens: composerOutput.meta.output_tokens,
-      llm_latency_ms: composerOutput.meta.latency_ms,
-    })
-    .select('id')
-    .single();
+  const actor = await getSessionActor();
+  let persistedId: string | undefined;
 
-  if (persistErr) {
-    // Persist failure is logged but doesn't block response
-    console.error('[compose] persist error:', persistErr);
+  if (actor.professional) {
+    const { data: persisted, error: persistErr } = await supabase
+      .from('consultations')
+      .insert({
+        intent,
+        meal_type,
+        detected_bottlenecks: classification,
+        selected_levers: selection.selected,
+        output_dish: composerOutput.dish,
+        ebm_summary: composerOutput.dish.ebm_summary,
+        expected_effects: composerOutput.dish.expected_effects,
+        warnings: allWarnings,
+        excluded_levers: safety.excluded,
+        llm_model: composerOutput.meta.model,
+        llm_input_tokens: composerOutput.meta.input_tokens,
+        llm_output_tokens: composerOutput.meta.output_tokens,
+        llm_latency_ms: composerOutput.meta.latency_ms,
+        professional_id: actor.professional.id,
+        engine_version: ENGINE_VERSION,
+      })
+      .select('id')
+      .single();
+
+    if (persistErr) {
+      console.error('[compose] persist error:', persistErr);
+      allWarnings.push(`Persistance consultation échouée: ${persistErr.message}`);
+    } else {
+      persistedId = persisted?.id;
+    }
+
+    await writeAuditLog(supabase, {
+      professional_id: actor.professional.id,
+      user_id: actor.user?.id ?? null,
+      action: 'compose.run',
+      entity_type: 'consultation',
+      entity_id: persistedId ?? null,
+      metadata: {
+        dominant: classification.dominant,
+        co_dominant: classification.co_dominant,
+        meal_type,
+        persisted: Boolean(persistedId),
+      },
+    });
+  } else if (actor.user) {
+    await writeAuditLog(supabase, {
+      professional_id: null,
+      user_id: actor.user.id,
+      action: 'compose.run',
+      entity_type: 'consultation',
+      metadata: {
+        dominant: classification.dominant,
+        persisted: false,
+        reason: 'no_professional_profile',
+      },
+    });
   }
 
   const result: ConsultationResult = {
-    consultation_id: persisted?.id,
+    consultation_id: persistedId,
     intent,
     meal_type,
     classification,

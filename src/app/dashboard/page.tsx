@@ -99,6 +99,9 @@ export default function DashboardPage() {
               <Link href="/consent" className="text-xs text-saffron-700 hover:underline mt-2 inline-block">
                 Voir mes consentements →
               </Link>
+              <Link href="/dashboard/settings" className="text-xs text-saffron-700 hover:underline mt-1 block">
+                Paramètres & droit à l’oubli →
+              </Link>
             </div>
             <div className="card !p-5">
               <p className="text-[10px] uppercase tracking-wider text-ink-500 mb-2 font-medium">Lien rapide</p>

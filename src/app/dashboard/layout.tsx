@@ -46,6 +46,8 @@ export default function DashboardLayout({ children }: { children: React.ReactNod
     { href: '/dashboard', label: 'Accueil', icon: '◉' },
     { href: '/dashboard/consultations', label: 'Consultations', icon: '📋' },
     { href: '/dashboard/stats', label: 'Statistiques', icon: '📊' },
+    { href: '/dashboard/audit', label: 'Audit', icon: '📜' },
+    { href: '/dashboard/settings', label: 'Paramètres', icon: '⚙' },
   ];
 
   return (

@@ -9,7 +9,7 @@ export default function LoginPage() {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [mode, setMode] = useState<'login' | 'register' | 'magic'>('login');
+  const [mode, setMode] = useState<'login' | 'register' | 'magic' | 'reset'>('login');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [magicSent, setMagicSent] = useState(false);
@@ -29,6 +29,15 @@ export default function LoginPage() {
         return;
       }
 
+      if (mode === 'reset') {
+        const { error } = await supabase.auth.resetPasswordForEmail(email, {
+          redirectTo: `${window.location.origin}/auth/callback?next=/dashboard/settings`,
+        });
+        if (error) throw error;
+        setMagicSent(true);
+        return;
+      }
+
       if (mode === 'register') {
         const { error } = await supabase.auth.signUp({
           email,
@@ -38,11 +47,10 @@ export default function LoginPage() {
           },
         });
         if (error) throw error;
-        setMagicSent(true); // Shows "check your email"
+        setMagicSent(true);
         return;
       }
 
-      // Login
       const { error } = await supabase.auth.signInWithPassword({ email, password });
       if (error) throw error;
       router.push('/dashboard');
@@ -50,6 +58,22 @@ export default function LoginPage() {
     } catch (err) {
       setError(err instanceof Error ? err.message : 'Une erreur est survenue');
     } finally {
+      setLoading(false);
+    }
+  }
+
+  async function handleGoogle() {
+    setError('');
+    setLoading(true);
+    const supabase = createClient();
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: 'google',
+        options: { redirectTo: `${window.location.origin}/auth/callback` },
+      });
+      if (error) throw error;
+    } catch (err) {
+      setError(err instanceof Error ? err.message : 'Google SSO indisponible');
       setLoading(false);
     }
   }
@@ -63,7 +87,7 @@ export default function LoginPage() {
             Vérifiez votre email
           </h1>
           <p className="text-sm text-ink-600 mb-2">
-            Un lien de connexion vous a été envoyé à <strong>{email}</strong>.
+            Un lien vous a été envoyé à <strong>{email}</strong>.
           </p>
           <p className="text-xs text-ink-500 mb-8">
             Si vous ne le trouvez pas, vérifiez vos spams.
@@ -117,7 +141,7 @@ export default function LoginPage() {
               />
             </div>
 
-            {mode !== 'magic' && (
+            {mode !== 'magic' && mode !== 'reset' && (
               <div>
                 <label className="label" htmlFor="password">Mot de passe</label>
                 <input
@@ -150,9 +174,35 @@ export default function LoginPage() {
                 ? 'Se connecter'
                 : mode === 'register'
                 ? 'Créer un compte'
+                : mode === 'reset'
+                ? 'Envoyer le lien de réinitialisation'
                 : 'Envoyer le lien magique'}
             </button>
           </form>
+
+          {mode === 'login' && (
+            <button
+              type="button"
+              onClick={() => setMode('reset')}
+              className="text-[11px] text-ink-500 hover:text-ink-700 mt-3"
+            >
+              Mot de passe oublié ?
+            </button>
+          )}
+
+          <div className="mt-4 pt-4 border-t border-ink-200">
+            <button
+              type="button"
+              onClick={handleGoogle}
+              disabled={loading}
+              className="btn-ghost w-full !py-2.5 text-sm"
+            >
+              Continuer avec Google
+            </button>
+            <p className="text-[10px] text-ink-400 mt-2">
+              Google SSO nécessite d’activer le provider dans le projet Supabase Auth.
+            </p>
+          </div>
         </div>
 
         <p className="text-center text-xs text-ink-500 mt-6">

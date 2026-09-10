@@ -1,8 +1,13 @@
 # FAQ — Functional Chef
 
 > **Document** : LIV-68 — FAQ juridique et médicale
-> **Version** : v1.0 — 14 juillet 2026
-> **Relecture recommandée** : Avocat spécialisé RGPD + Comité scientifique
+> **Version** : v1.1 — 10 septembre 2026
+> **Relecture** : **pending avocat / CS** — aucune réponse ci-dessous n’est opposable.
+
+---
+
+> ⚖️ **Bandeau juridique**  
+> Les sections **1 (médical / MDR)** et **2 (RGPD, hébergement, assurance)** sont des **brouillons internes**. Elles n’ont pas été relues par un avocat ni par le comité scientifique. Ne pas les citer comme position officielle. Marquage : « pending avocat/CS ».
 
 ---
 
@@ -10,24 +15,30 @@
 
 ### Q1. Functional Chef est-il un dispositif médical ?
 
-Functional Chef interprète des biomarqueurs et génère des prescriptions culinaires personnalisées. Selon le Règlement (UE) 2017/745 (MDR), il est probablement classé **Classe IIa** (Règle 11 — logiciel fournissant des informations utilisées pour des décisions thérapeutiques). Le dossier technique MDR est en cours de finalisation et sera soumis à un organisme notifié pour confirmation.
+> **pending avocat/CS**
 
-**En attendant la certification** : l'outil est utilisé sous la responsabilité du praticien, qui valide médicalement chaque sortie avant transmission au patient.
+Functional Chef interprète des biomarqueurs et propose des prescriptions culinaires personnalisées. Selon le Règlement (UE) 2017/745 (MDR), une qualification **Classe IIa** (Règle 11) est une hypothèse de travail, **non confirmée**. Le dossier technique MDR n’est pas soumis à un organisme notifié.
+
+**En l’état** : l’outil est une aide sous la responsabilité du praticien. Toute sortie doit être validée avant transmission au patient. **Ne pas communiquer « dispositif médical » ni « certifié MDR ».**
 
 ### Q2. Un médecin peut-il être poursuivi pour avoir utilisé Functional Chef ?
 
-Comme pour tout outil d'aide à la décision médicale, la **responsabilité finale incombe au praticien**. Functional Chef est un outil d'aide, pas un substitut au jugement clinique. La validation horodatée et signée dans le système constitue une trace médico-légale.
+> **pending avocat/CS**
 
-**Recommandation** : Conservez une trace de votre validation (le PDF exporté avec l'empreinte numérique fait foi).
+Comme pour tout outil d'aide à la décision, la **responsabilité finale incombe au praticien**. Functional Chef n’est pas un substitut au jugement clinique. La validation horodatée dans le système est une trace interne — sa valeur médico-légale n’a pas été expertisée.
+
+**Recommandation opérationnelle (non juridique)** : conserver le PDF exporté.
 
 ### Q3. Les tiers EBM sont-ils fiables ?
 
-Chaque levier porte un tier EBM-F basé sur des références PubMed vérifiées :
+> **pending CS**
+
+Chaque levier porte un tier EBM-F basé sur des références PubMed :
 - **T1** : ≥1 méta-analyse de RCT humains
 - **T2** : RCT modeste ou cohorte solide
 - **T3** : Mécanistique ou observationnel
 
-Un audit indépendant des PMIDs a été réalisé en juillet 2026 (30 PMIDs vérifiés, 18 corrigés). Le comité scientifique valide les tiers avant mise en production.
+Un audit interne des PMIDs a été réalisé (juillet 2026). **Le comité scientifique n’a pas encore validé les tiers pour une mise en production élargie.**
 
 ### Q4. Que faire en cas de divergence avec mon jugement clinique ?
 
@@ -63,7 +74,9 @@ Non. Functional Chef n'a pas été testé ni validé pour une population pédiat
 
 ### Q8. Functional Chef est-il conforme au RGPD ?
 
-Oui, les mesures suivantes sont implémentées :
+> **pending avocat/CS**
+
+Mesures **techniques** présentes dans le code (à faire confirmer juridiquement) :
 - **Consentement explicite** du patient avant traitement des données de santé (Art. 7)
 - **Minimisation** : seules les données strictement nécessaires sont collectées
 - **RLS** : isolation totale entre praticiens (Art. 32)
@@ -73,11 +86,16 @@ Oui, les mesures suivantes sont implémentées :
 
 ### Q9. Où sont hébergées les données ?
 
-- **Base de données** : Supabase (PostgreSQL) — hébergement Union Européenne
-- **Chiffrement** : AES-256 au repos, TLS 1.3 en transit
-- **Backup** : Sauvegarde automatique quotidienne
+> **pending avocat/CS**
+
+- **Base de données** : Supabase (PostgreSQL) — viser une région Union Européenne
+- **Chiffrement** : AES-256 au repos, TLS 1.3 en transit (selon l’offre hébergeur)
+- **Backup** : à activer dans le projet Supabase (quotidien recommandé)
+- **HDS** : qualification hébergeur de données de santé **non tranchée** — voir runbook beta
 
 ### Q10. Les données sont-elles transmises aux États-Unis (appels LLM) ?
+
+> **pending avocat/CS**
 
 Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs situés aux États-Unis. Les données transmises sont :
 - **Pseudonymisées** : aucun nom, prénom, email ou adresse
@@ -85,6 +103,8 @@ Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs sit
 - **Encadrées par CCT** : clauses contractuelles types de la Commission européenne
 
 ### Q11. Quelle est la durée de conservation des données ?
+
+> **pending avocat/CS**
 
 | Type de données | Durée | Justification |
 |----------------|-------|---------------|
@@ -95,6 +115,8 @@ Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs sit
 
 ### Q12. Un patient peut-il demander la suppression de ses données ?
 
+> **pending avocat/CS**
+
 Oui. Le praticien peut :
 1. Supprimer le profil patient (données pseudonymisées conservées pour l'audit)
 2. Exercer le droit à l'effacement complet via la fonction `delete_patient_data()`
@@ -102,7 +124,9 @@ Oui. Le praticien peut :
 
 ### Q13. Functional Chef est-il assuré ?
 
-Une assurance responsabilité civile professionnelle et cyber sera souscrite avant l'ouverture de la beta clinique (Phase 2). En phase de développement actuelle, l'outil est utilisé sous la responsabilité exclusive du praticien.
+> **pending avocat/CS**
+
+Une assurance responsabilité civile professionnelle et cyber **n’est pas encore souscrite** (action humaine, voir `docs/BETA_LAUNCH_RUNBOOK.md`). En phase actuelle, l’outil est utilisé sous la responsabilité exclusive du praticien. **Ne pas affirmer « assuré » auprès des early adopters.**
 
 ---
 
@@ -196,7 +220,7 @@ Non. Aucune donnée patient n'est utilisée pour l'entraînement de modèles. Le
 
 ---
 
-> **Document révisé le** : 14 juillet 2026  
-> **Version** : v1.0  
-> **Prochaine révision** : 14 janvier 2027  
+> **Document** : v1.1 — 10 septembre 2026  
+> **Statut juridique** : pending avocat/CS  
+> **Prochaine révision** : après relecture avocat + CS  
 > **Contact** : support@functional-chef.app

@@ -4,6 +4,7 @@ import { useState } from 'react';
 import Link from 'next/link';
 import { IntentForm } from '@/components/IntentForm';
 import { DishOutput } from '@/components/DishOutput';
+import { NonDmNotice } from '@/components/NonDmNotice';
 import type { ConsultationResult } from '@/lib/reasoning/types';
 
 export default function ConsultationPage() {
@@ -34,9 +35,10 @@ export default function ConsultationPage() {
         {!result && !loading && (
           <>
             <p className="label">Nouvelle consultation</p>
-            <h1 className="font-serif text-4xl text-ink-900 leading-tight tracking-editorial mb-8">
+            <h1 className="font-serif text-4xl text-ink-900 leading-tight tracking-editorial mb-4">
               Profil patient & intent clinique
             </h1>
+            <NonDmNotice className="mb-8" />
             <IntentForm
               onResult={setResult}
               onError={setError}

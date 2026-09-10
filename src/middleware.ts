@@ -4,7 +4,8 @@ import { NextResponse, type NextRequest } from 'next/server';
 export async function middleware(request: NextRequest) {
   // Skip auth for public pages
   if (request.nextUrl.pathname.startsWith('/prescription') ||
-      request.nextUrl.pathname.startsWith('/test-parser')) {
+      request.nextUrl.pathname.startsWith('/test-parser') ||
+      request.nextUrl.pathname.startsWith('/api/beta-waitlist')) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
   if (request.nextUrl.pathname.endsWith('/print')) {
@@ -55,6 +56,6 @@ export async function middleware(request: NextRequest) {
 
 export const config = {
   matcher: [
-    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify|api/compose|auth).*)',
+    '/((?!_next/static|_next/image|favicon.ico|demo|beta|privacy|api/classify|api/compose|api/beta-waitlist|auth).*)',
   ],
 };

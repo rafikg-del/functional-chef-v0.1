@@ -206,7 +206,9 @@ export default function LoginPage() {
         </div>
 
         <p className="text-center text-xs text-ink-500 mt-6">
-          <Link href="/" className="hover:text-ink-700 transition-colors">← Retour à l'accueil</Link>
+          <Link href="/beta" className="hover:text-ink-700 transition-colors">Pré-inscription beta</Link>
+          {' · '}
+          <Link href="/" className="hover:text-ink-700 transition-colors">← Accueil</Link>
         </p>
       </div>
     </main>

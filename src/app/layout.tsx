@@ -22,9 +22,9 @@ const mono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: 'Functional Chef — aide à la prescription culinaire',
+  title: 'Functional Chef — Aide à la prescription nutritionnelle',
   description:
-    'Traduit des biomarqueurs en proposition culinaire, avec un niveau de preuve T1/T2/T3 sur chaque levier. Outil d’aide à valider par un praticien — pas un dispositif médical.',
+    'Prescrivez des plats, pas des aliments. Aide à la prescription nutritionnelle pour médecins fonctionnels et nutritionnels. Chaque sortie à valider par le praticien. Non dispositif médical.',
 };
 
 export default function RootLayout({

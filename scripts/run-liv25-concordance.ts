@@ -1,10 +1,14 @@
 /**
- * LIV-26 draft — concordance classifier vs clinicien (pack LIV-25).
+ * LIV-26 / LIV-27 — concordance classifier vs clinicien (pack LIV-25).
  *
  * Offline: real `classifyBottlenecks` + thresholds parsed from
  * `supabase/seed/03_biomarker_thresholds.sql`.
  * Classifier aliases pack keys (OMEGA3_INDEX ↔ OMEGA_INDEX, etc.).
  * `--alias-omega` remains a no-op sensitivity check (engine already aliases).
+ *
+ * LIV-27 metrics (stdout + `--json`): 4×4 dominant matrix, per-class
+ * Se/Sp/VPP/VPN (undefined when denominator is 0), Wilson 95 % CI on
+ * overall exact concordance only. Descriptive — not a powered study.
  *
  * Run: npx tsx scripts/run-liv25-concordance.ts
  *      npm run liv25:concordance
@@ -576,17 +580,170 @@ function concordance(rows: CaseRow[]): { matches: number; n: number; pct: number
   return { matches, n, pct: n === 0 ? 0 : Math.round((matches / n) * 1000) / 10 };
 }
 
-function confusion(rows: CaseRow[]): Record<string, Record<string, number>> {
-  const labels: ClinicianLabel[] = ['IR', 'INFLAM', 'DYSBIOSE', 'none'];
+const LIV27_LABELS: ClinicianLabel[] = ['IR', 'INFLAM', 'DYSBIOSE', 'none'];
+
+function confusion(rows: Array<Pick<CaseRow, 'clinician_dominant' | 'engine_dominant'>>): Record<
+  string,
+  Record<string, number>
+> {
   const matrix: Record<string, Record<string, number>> = {};
-  for (const c of labels) {
+  for (const c of LIV27_LABELS) {
     matrix[c] = {};
-    for (const e of labels) matrix[c][e] = 0;
+    for (const e of LIV27_LABELS) matrix[c][e] = 0;
   }
   for (const r of rows) {
     matrix[r.clinician_dominant][r.engine_dominant] += 1;
   }
   return matrix;
+}
+
+export interface Rate {
+  value: number | null;
+  numerator: number;
+  denominator: number;
+  defined: boolean;
+}
+
+export interface BinaryClassMetrics {
+  label: ClinicianLabel;
+  tp: number;
+  fn: number;
+  fp: number;
+  tn: number;
+  sensitivity: Rate;
+  specificity: Rate;
+  ppv: Rate;
+  npv: Rate;
+}
+
+export interface WilsonInterval {
+  low: number;
+  high: number;
+  z: number;
+  successes: number;
+  n: number;
+}
+
+function rate(numerator: number, denominator: number): Rate {
+  if (denominator === 0) {
+    return { value: null, numerator, denominator, defined: false };
+  }
+  return { value: numerator / denominator, numerator, denominator, defined: true };
+}
+
+/** Wilson score interval for a binomial proportion (LIV-24 §7.1 / §13.2). */
+export function wilsonScoreInterval(
+  successes: number,
+  n: number,
+  z = 1.959963984540054
+): WilsonInterval | null {
+  if (n <= 0 || successes < 0 || successes > n) return null;
+  const p = successes / n;
+  const z2 = z * z;
+  const denom = 1 + z2 / n;
+  const center = (p + z2 / (2 * n)) / denom;
+  const margin = (z * Math.sqrt((p * (1 - p)) / n + z2 / (4 * n * n))) / denom;
+  return {
+    low: Math.max(0, center - margin),
+    high: Math.min(1, center + margin),
+    z,
+    successes,
+    n,
+  };
+}
+
+/** One-vs-rest on exact dominant (clinicien = référence). */
+export function binaryClassMetrics(
+  rows: Array<Pick<CaseRow, 'clinician_dominant' | 'engine_dominant'>>,
+  label: ClinicianLabel
+): BinaryClassMetrics {
+  let tp = 0;
+  let fn = 0;
+  let fp = 0;
+  let tn = 0;
+  for (const r of rows) {
+    const clin = r.clinician_dominant === label;
+    const eng = r.engine_dominant === label;
+    if (clin && eng) tp += 1;
+    else if (clin && !eng) fn += 1;
+    else if (!clin && eng) fp += 1;
+    else tn += 1;
+  }
+  return {
+    label,
+    tp,
+    fn,
+    fp,
+    tn,
+    sensitivity: rate(tp, tp + fn),
+    specificity: rate(tn, tn + fp),
+    ppv: rate(tp, tp + fp),
+    npv: rate(tn, tn + fn),
+  };
+}
+
+function formatPct(r: Rate, digits = 1): string {
+  if (!r.defined || r.value === null) return 'non défini';
+  return `${(r.value * 100).toFixed(digits).replace('.', ',')} %`;
+}
+
+function formatRate(r: Rate): string {
+  if (!r.defined) return 'non défini (dénominateur 0)';
+  return `${r.numerator}/${r.denominator} (${formatPct(r)})`;
+}
+
+function formatWilsonPct(w: WilsonInterval): string {
+  const lo = (w.low * 100).toFixed(1).replace('.', ',');
+  const hi = (w.high * 100).toFixed(1).replace('.', ',');
+  return `${lo} % – ${hi} %`;
+}
+
+function printConfusion(matrix: Record<string, Record<string, number>>): void {
+  console.log('| Clinicien \\ Moteur | IR | INFLAM | DYSBIOSE | none | Total ligne |');
+  console.log('|--------------------|----|--------|----------|------|-------------|');
+  for (const c of LIV27_LABELS) {
+    const cells = LIV27_LABELS.map((e) => matrix[c][e]);
+    const total = cells.reduce((a, b) => a + b, 0);
+    console.log(`| ${c} | ${cells.join(' | ')} | ${total} |`);
+  }
+  const colTotals = LIV27_LABELS.map((e) => LIV27_LABELS.reduce((s, c) => s + matrix[c][e], 0));
+  const n = colTotals.reduce((a, b) => a + b, 0);
+  console.log(`| Total colonne | ${colTotals.join(' | ')} | ${n} |`);
+}
+
+function liv27Payload(rows: CaseRow[], agg: { matches: number; n: number; pct: number }) {
+  const matrix = confusion(rows);
+  const per_class = Object.fromEntries(LIV27_LABELS.map((l) => [l, binaryClassMetrics(rows, l)]));
+  const wilson = wilsonScoreInterval(agg.matches, agg.n);
+  return {
+    confusion_clinician_rows_engine_cols: matrix,
+    per_class,
+    concordance_dominant: {
+      ...agg,
+      wilson_95: wilson,
+    },
+  };
+}
+
+function printLiv27(rows: CaseRow[], agg: { matches: number; n: number; pct: number }): void {
+  const liv27 = liv27Payload(rows, agg);
+  console.log('');
+  console.log('## LIV-27 — matrice descriptive (dominant exact)');
+  console.log('');
+  printConfusion(liv27.confusion_clinician_rows_engine_cols);
+  console.log('');
+  console.log('| Classe | TP | FN | FP | TN | Sensibilité | Spécificité | VPP | VPN |');
+  console.log('|--------|----|----|----|----|-------------|-------------|-----|-----|');
+  for (const label of LIV27_LABELS) {
+    const m = liv27.per_class[label];
+    console.log(
+      `| ${m.label} | ${m.tp} | ${m.fn} | ${m.fp} | ${m.tn} | ${formatRate(m.sensitivity)} | ${formatRate(m.specificity)} | ${formatRate(m.ppv)} | ${formatRate(m.npv)} |`
+    );
+  }
+  console.log('');
+  const wilson = liv27.concordance_dominant.wilson_95;
+  const wilsonNote = wilson ? ` (IC Wilson 95 % : ${formatWilsonPct(wilson)})` : '';
+  console.log(`Concordance dominante exacte: ${agg.matches}/${agg.n} = ${agg.pct}%${wilsonNote}`);
 }
 
 function main(): void {
@@ -604,8 +761,9 @@ function main(): void {
 
   const rows = cases.map((c) => classifyCase(c, thresholds, applyAlias));
   const agg = concordance(rows);
+  const liv27 = liv27Payload(rows, agg);
   const payload = {
-    deliverable: 'LIV-26',
+    deliverable: 'LIV-26/LIV-27',
     status: 'brouillon',
     protocol: 'LIV-24 v0.1',
     pack: 'docs/validation/liv25',
@@ -621,7 +779,8 @@ function main(): void {
       matches: rows.filter((r) => r.co_dominant_match).length,
       n: rows.length,
     },
-    confusion_clinician_rows_engine_cols: confusion(rows),
+    confusion_clinician_rows_engine_cols: liv27.confusion_clinician_rows_engine_cols,
+    liv27,
     cases: rows,
   };
 
@@ -642,6 +801,7 @@ function main(): void {
   console.log(
     `Concordance co-dominant (présence+identité, null=none): ${payload.concordance_co_dominant.matches}/${payload.concordance_co_dominant.n}`
   );
+  printLiv27(rows, agg);
 }
 
 const isDirectRun =

@@ -109,5 +109,17 @@
       "ZOI-VAL-09": "IR",
       "ZOI-VAL-10": "INFLAM"
     }
+  },
+  "liv27_matrix": {
+    "status": "brouillon_descriptif",
+    "report_path": "docs/validation/liv25/LIV27_CONCORDANCE_MATRIX.md",
+    "cs_signed": false,
+    "run_command": "npm run liv25:concordance",
+    "engine_freeze": "7cf9734",
+    "c1_pursued": false,
+    "concordance_dominant": { "matches": 7, "n": 10, "pct": 70 },
+    "wilson_95_pct": { "low": 39.7, "high": 89.2 },
+    "dysbiose_ppv": "undefined",
+    "note": "Descriptive n=10. DYSBIOSE stratum 1/3. Do not invent cases. Not a CE performance study."
   }
 }

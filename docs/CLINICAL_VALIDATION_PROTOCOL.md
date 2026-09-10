@@ -759,8 +759,8 @@ Les écarts sont listés en annexe de LIV-26.
 | LIV-18 / 20 | Charte et composition CS | Approbateurs | Préalable |
 | **LIV-24** | Le présent protocole | — | Brouillon → approuvé CS |
 | **LIV-25** | 10 cas anonymisés (json + PDF) — [`docs/validation/liv25/`](validation/liv25/) | Protocole approuvé | **Pack partiel** — DYSBIOSE dominant **1/3 (NON ATTEINT)** ; 10 JSON anonymisés versés |
-| **LIV-26** | Rapport moteur vs clinicien | LIV-25 + run gelé | Après confrontation |
-| **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN | LIV-26 | Après confrontation |
+| **LIV-26** | Rapport moteur vs clinicien — [`docs/validation/liv25/LIV26_NOTE.md`](validation/liv25/LIV26_NOTE.md) | LIV-25 + run gelé | **Note technique** (3 désaccords) ; non signée CS |
+| **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN — [`docs/validation/liv25/LIV27_CONCORDANCE_MATRIX.md`](validation/liv25/LIV27_CONCORDANCE_MATRIX.md) | LIV-26 | **Brouillon descriptif** — 7/10 (70 %), VPP DYSBIOSE non définie ; non signé CS |
 | LIV-07 | Plan V&V MDR | Cible qualitative « 10 cas ZOI, concordance >80 % » | Aligné, non substitutif |
 | LIV-39–41 | Tests unitaires synthétiques | Indépendants | Restent la barrière CI |
 

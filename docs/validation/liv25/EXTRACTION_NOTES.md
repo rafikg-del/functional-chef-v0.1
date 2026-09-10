@@ -79,9 +79,8 @@ Cible LIV-24 §7.2 : **≥ 3 cas à dominant DYSBIOSE**.
 - [x] `case_id` au format `ZOI-VAL-0x`
 - [x] Scan noms propres sur le diff
 
-## 6. Hors périmètre
+## 6. Hors périmètre (pack)
 
-- Pas de modification du runtime (`bottleneck-classifier.ts`, seeds, UI).
-- Pas de run moteur (LIV-26) tant que LIV-24 n'est pas approuvé CS.
 - Pas de PDF par cas (critère roadmap « json + PDF » encore ouvert).
 - Unités non imputées : Bristol, calprotectine, test SIBO non faits → absents.
+- Investigation LIV-26 (concordance, alias oméga, flag GLP-1) : [`LIV26_NOTE.md`](LIV26_NOTE.md). VAL-02 n'a **pas** été enrichi par imputation.

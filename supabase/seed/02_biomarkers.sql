@@ -45,6 +45,8 @@ INSERT INTO biomarkers (id, name, unit, category, description, is_clinical) VALU
 ('PPI_CHRONIC', 'IPP chronique >6 mois', 'qualitative', 'clinical', 'Chronic proton pump inhibitor use', true),
 ('FIBER_INTAKE', 'Apport fibres estimé', 'g/day', 'clinical', 'Estimated daily fiber intake', true),
 ('PLANT_DIVERSITY', 'Diversité plantes/sem', 'count', 'clinical', 'Number of distinct plant species consumed weekly', true),
+('GLP1_ACTIVE', 'Agoniste GLP-1 actif', 'qualitative', 'clinical', 'HOMA et insulinémie non interprétables sous GLP-1. Flag de substitution, pas un labo.', true),
+('POST_BARIATRIC', 'Statut post-bariatrique', 'qualitative', 'clinical', 'Contexte de sécurité (S3). Ne déclenche pas IR à lui seul.', true),
 ('FRUCTOSE_INTAKE', 'Apport fructose libre estimé', 'g/day', 'clinical', 'Sucrose, HFCS, SSB. Seuil alerte populationnel >50 g/j', true),
 ('FREE_SUGAR_PCT_ENERGY', 'Sucres libres (% apport énergétique)', '%', 'clinical', 'Cible UK ≤5%, alerte >10% (EASL/US guidelines)', true),
 -- New v0.2 enrichment biomarkers — SOPK, iron blockade, leaky gut

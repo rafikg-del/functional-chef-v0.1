@@ -46,6 +46,8 @@ const THRESHOLDS: BiomarkerThreshold[] = [
   { id: 't11c', bottleneck_id: 'IR', biomarker_id: 'GGT', functional_target_min: null, functional_target_max: 30, alert_threshold_low: null, alert_threshold_high: 40, alert_categorical_value: null, weight: 'moderate' },
   // IR — SHBG (SOPK/pcos_adipose enrichment)
   { id: 't12', bottleneck_id: 'IR', biomarker_id: 'SHBG', functional_target_min: 50, functional_target_max: null, alert_threshold_low: 30, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
+  // IR — GLP-1 : HOMA/insuline non interprétables ; majeur de substitution
+  { id: 't14', bottleneck_id: 'IR', biomarker_id: 'GLP1_ACTIVE', functional_target_min: null, functional_target_max: null, alert_threshold_low: null, alert_threshold_high: null, alert_categorical_value: 'positive', weight: 'major' },
   // INFLAM — TSAT (functional iron blockade enrichment)
   { id: 't13', bottleneck_id: 'INFLAM', biomarker_id: 'TSAT', functional_target_min: 20, functional_target_max: null, alert_threshold_low: 20, alert_threshold_high: null, alert_categorical_value: null, weight: 'moderate' },
 
@@ -708,6 +710,134 @@ describe('bottleneck-classifier', () => {
       expect(['surveillance', 'probable']).toContain(result.suspicion_level);
     });
 
+    it('Alias OMEGA3_INDEX (pack) → seuil OMEGA_INDEX (seed) — même lecture', () => {
+      // Production seed uses OMEGA_INDEX; LIV-24 / pack use OMEGA3_INDEX.
+      const seedLike: BiomarkerThreshold[] = [
+        { id: 'omega-seed', bottleneck_id: 'INFLAM', biomarker_id: 'OMEGA_INDEX', functional_target_min: 8, functional_target_max: null, alert_threshold_low: 6, alert_threshold_high: null, alert_categorical_value: null, weight: 'major' },
+        { id: 'crp-seed', bottleneck_id: 'INFLAM', biomarker_id: 'CRP_US', functional_target_min: null, functional_target_max: 1, alert_threshold_low: null, alert_threshold_high: 1, alert_categorical_value: null, weight: 'major' },
+      ];
+      const patient: PatientProfile = {
+        biomarker_values: { CRP_US: 2.4, OMEGA3_INDEX: 5.0 },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+      const result = classifyBottlenecks(patient, BOTTLENECKS, seedLike);
+      expect(result.dominant).toBe('INFLAM');
+      const inflam = result.scores.find(s => s.bottleneck_id === 'INFLAM')!;
+      expect(inflam.evidence.some(e => e.biomarker_id === 'OMEGA_INDEX')).toBe(true);
+      expect(inflam.evidence.find(e => e.biomarker_id === 'OMEGA_INDEX')!.observed_value).toBe(5.0);
+    });
+
+    it('Categorical positif/positive — SIBO FR/EN équivalents', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { CALPROTECTIN: 55 },
+        clinical_signals: {
+          BRISTOL_SCORE: 6,
+          BLOATING_FREQUENCY: 4,
+          SIBO_BREATH_TEST: 'positive',
+          ABX_LIFETIME_COURSES: 4,
+          FIBER_INTAKE_G: 12,
+        },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(result.dominant).toBe('DYSBIOSE');
+      const dys = dysbioseScore(result);
+      expect(dys.evidence.some(e => e.biomarker_id === 'SIBO_BREATH')).toBe(true);
+    });
+  });
+
+  // =====================================
+  // GLP-1 — HOMA non interprétable
+  // =====================================
+
+  describe('GLP-1 actif (HOMA écrasé)', () => {
+    it('GLP1_ACTIVE seul ne déclenche pas IR', () => {
+      const patient: PatientProfile = {
+        biomarker_values: { HOMA_IR: 0.6, FASTING_INSULIN: 4 },
+        clinical_signals: { GLP1_ACTIVE: 'positive' },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(irScore(result).triggered).toBe(false);
+      expect(result.dominant).toBeNull();
+    });
+
+    it('GLP1_ACTIVE + 2 majeurs résiduels (TG/HDL, PDFF) → IR déclenché', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 0.63,
+          FASTING_INSULIN: 4.17,
+          TG_HDL_RATIO: 1.82,
+          LIVER_FAT_PDFF: 6.0,
+        },
+        clinical_signals: { GLP1_ACTIVE: 'positif' },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(result.dominant).toBe('IR');
+      const ir = irScore(result);
+      expect(ir.triggered).toBe(true);
+      expect(ir.major_hits).toBeGreaterThanOrEqual(3);
+      expect(ir.evidence.some(e => e.biomarker_id === 'GLP1_ACTIVE')).toBe(true);
+    });
+
+    it('VAL-03-like : IR et INFLAM déclenchés — score IR > INFLAM, pas de tweak HbA1c', () => {
+      // HOMA 1.55 + HbA1c 5.6 (seed >5.4) + TG/HDL 1.69 = 3 majeurs IR
+      // CRP 3.33 + AA/EPA 13.88 = INFLAM. Spec 2-triggered = highest score.
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 1.55,
+          HBA1C: 5.6,
+          TG_HDL_RATIO: 1.69,
+          CRP_US: 3.33,
+          AA_EPA_RATIO: 13.88,
+          NLR: 2.56,
+        },
+        clinical_signals: {},
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(irScore(result).triggered).toBe(true);
+      expect(inflamScore(result).triggered).toBe(true);
+      expect(result.dominant).toBe('IR');
+      expect(result.co_dominant).toBe('INFLAM');
+    });
+
+    it('VAL-10-like : IR se déclenche sous GLP-1 mais INFLAM reste dominant au score (cascade 2-voies, pas un tweak de seuil)', () => {
+      const patient: PatientProfile = {
+        biomarker_values: {
+          HOMA_IR: 0.63,
+          FASTING_INSULIN: 4.17,
+          FASTING_GLUCOSE: 0.72,
+          HBA1C: 4.9,
+          TG_HDL_RATIO: 1.82,
+          LIVER_FAT_PDFF: 6.0,
+          CRP_US: 11.14,
+          AA_EPA_RATIO: 18.97,
+          NLR: 3.24,
+          HOMOCYSTEINE: 23.0,
+          TSAT: 16.2,
+        },
+        clinical_signals: { GLP1_ACTIVE: 'positive', POST_BARIATRIC: 'positive' },
+        exclusions: {},
+        context: {},
+      };
+      const result = classify(patient);
+      expect(irScore(result).triggered).toBe(true);
+      expect(inflamScore(result).triggered).toBe(true);
+      // INFLAM score (CRP+AA/EPA+NLR+… ) > IR (TG/HDL+PDFF+GLP1) — spec 2-triggered = highest score
+      expect(result.dominant).toBe('INFLAM');
+      expect(result.co_dominant).toBe('IR');
+    });
+  });
+
+  describe('Suspicion clinique (suite)', () => {
     it('Aucune suspicion sans soft signals', () => {
       const patient: PatientProfile = {
         biomarker_values: { HOMA_IR: 1.0, CRP_US: 0.5 },

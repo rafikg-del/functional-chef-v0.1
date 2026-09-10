@@ -81,5 +81,33 @@
     "src/lib/reasoning/__tests__/patient-profiles.ts",
     "scripts/test-validation-cases.ts",
     "docs/BOTTLENECK_SPEC.md cas-pivot A/B/C"
-  ]
+  ],
+  "liv26_investigation": {
+    "status": "note_technique",
+    "report_path": "docs/validation/liv25/LIV26_NOTE.md",
+    "cs_signed": false,
+    "run_command": "npm run liv25:concordance",
+    "baseline_freeze": "f8d0acc",
+    "concordance_dominant_before": { "matches": 7, "n": 10, "pct": 70 },
+    "concordance_dominant_after": { "matches": 7, "n": 10, "pct": 70 },
+    "c1_met": false,
+    "thresholds_tweaked_for_c1": false,
+    "verdicts": {
+      "ZOI-VAL-02": "needs_more_data",
+      "ZOI-VAL-03": "accepted",
+      "ZOI-VAL-10": "partial_fix_then_accepted"
+    },
+    "engine_dominant_by_case": {
+      "ZOI-VAL-01": "INFLAM",
+      "ZOI-VAL-02": "none",
+      "ZOI-VAL-03": "IR",
+      "ZOI-VAL-04": "INFLAM",
+      "ZOI-VAL-05": "none",
+      "ZOI-VAL-06": "none",
+      "ZOI-VAL-07": "none",
+      "ZOI-VAL-08": "IR",
+      "ZOI-VAL-09": "IR",
+      "ZOI-VAL-10": "INFLAM"
+    }
+  }
 }

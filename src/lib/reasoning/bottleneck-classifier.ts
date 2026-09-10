@@ -49,6 +49,61 @@ const WEIGHT_POINTS: Record<ThresholdWeight, number> = {
   discriminant: 2,
 };
 
+/**
+ * Protocol / pack keys that must resolve to the same seed biomarker_id.
+ * Bidirectional: a threshold on either spelling reads the other pack key.
+ * Interface contract only — does not change numeric thresholds.
+ */
+const BIOMARKER_ID_ALIASES: Record<string, readonly string[]> = {
+  OMEGA_INDEX: ['OMEGA3_INDEX'],
+  OMEGA3_INDEX: ['OMEGA_INDEX'],
+  BLOATING_FREQ: ['BLOATING_FREQUENCY'],
+  BLOATING_FREQUENCY: ['BLOATING_FREQ'],
+  ABX_LIFETIME: ['ABX_LIFETIME_COURSES'],
+  ABX_LIFETIME_COURSES: ['ABX_LIFETIME'],
+  FIBER_INTAKE: ['FIBER_INTAKE_G'],
+  FIBER_INTAKE_G: ['FIBER_INTAKE'],
+  PLANT_DIVERSITY: ['PLANT_DIVERSITY_WEEK'],
+  PLANT_DIVERSITY_WEEK: ['PLANT_DIVERSITY'],
+  SIBO_BREATH: ['SIBO_BREATH_TEST'],
+  SIBO_BREATH_TEST: ['SIBO_BREATH'],
+};
+
+const CATEGORICAL_POSITIVE = new Set(['positive', 'positif', 'yes', 'oui', 'true', '1']);
+const CATEGORICAL_NEGATIVE = new Set(['negative', 'negatif', 'no', 'non', 'false', '0']);
+
+function normalizeCategorical(value: string): string {
+  return value
+    .trim()
+    .toLowerCase()
+    .normalize('NFD')
+    .replace(/\p{M}/gu, '');
+}
+
+/** Match FR/EN categorical flags (positive/positif, negative/négatif). */
+function categoricalEquals(observed: string, expected: string): boolean {
+  const a = normalizeCategorical(observed);
+  const b = normalizeCategorical(expected);
+  if (a === b) return true;
+  if (CATEGORICAL_POSITIVE.has(a) && CATEGORICAL_POSITIVE.has(b)) return true;
+  if (CATEGORICAL_NEGATIVE.has(a) && CATEGORICAL_NEGATIVE.has(b)) return true;
+  return false;
+}
+
+function lookupObserved(
+  biomarkerId: string,
+  patient: PatientProfile
+): number | string | undefined {
+  const keys = [biomarkerId, ...(BIOMARKER_ID_ALIASES[biomarkerId] ?? [])];
+  for (const key of keys) {
+    const numeric = patient.biomarker_values[key];
+    if (numeric !== undefined) return numeric;
+    const clinical = patient.clinical_signals[key];
+    if (clinical !== undefined && clinical !== null) return clinical;
+  }
+  return undefined;
+}
+
 // ───────────────────────────────────────────────────────────
 // Per-bottleneck classification rules
 // ───────────────────────────────────────────────────────────
@@ -211,15 +266,13 @@ function evaluateThreshold(
   patient: PatientProfile
 ): BottleneckEvidence | null {
   const biomarkerId = threshold.biomarker_id;
-  const numericValue = patient.biomarker_values[biomarkerId];
-  const clinicalValue = patient.clinical_signals[biomarkerId];
-  const observed = numericValue !== undefined ? numericValue : clinicalValue;
+  const observed = lookupObserved(biomarkerId, patient);
 
   if (observed === undefined || observed === null) return null;
 
-  // Categorical signal (e.g. SIBO breath test = 'positive')
+  // Categorical signal (e.g. SIBO breath test = 'positive' / 'positif')
   if (threshold.alert_categorical_value && typeof observed === 'string') {
-    if (observed.toLowerCase() === threshold.alert_categorical_value.toLowerCase()) {
+    if (categoricalEquals(observed, threshold.alert_categorical_value)) {
       return {
         biomarker_id: biomarkerId,
         observed_value: observed,

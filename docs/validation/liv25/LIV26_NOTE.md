@@ -83,3 +83,5 @@ npx tsx scripts/run-liv25-concordance.ts --json
 ```
 
 Les champs moteur ne sont pas écrits dans les JSON cas (lock dataset LIV-25).
+
+Matrice Se / Sp / VPP / VPN (LIV-27, descriptif) : [`LIV27_CONCORDANCE_MATRIX.md`](LIV27_CONCORDANCE_MATRIX.md).

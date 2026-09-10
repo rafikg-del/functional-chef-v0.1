@@ -84,3 +84,4 @@ Cible LIV-24 §7.2 : **≥ 3 cas à dominant DYSBIOSE**.
 - Pas de PDF par cas (critère roadmap « json + PDF » encore ouvert).
 - Unités non imputées : Bristol, calprotectine, test SIBO non faits → absents.
 - Investigation LIV-26 (concordance, alias oméga, flag GLP-1) : [`LIV26_NOTE.md`](LIV26_NOTE.md). VAL-02 n'a **pas** été enrichi par imputation.
+- Matrice descriptive LIV-27 : [`LIV27_CONCORDANCE_MATRIX.md`](LIV27_CONCORDANCE_MATRIX.md).

@@ -352,7 +352,7 @@ function stripFences(text: string): string {
 async function defaultComposeLiveWeek(input: BuildWeekPlanInput): Promise<RawWeekPlan> {
   const model = MODELS.PRIMARY;
   const exclusions = input.dietaryExclusions?.filter(Boolean).join(', ') || 'aucune';
-  const biomarkerKeys = Object.keys(input.biomarkers).join(', ') || 'non renseignés';
+  const biomarkerSummary = JSON.stringify(input.biomarkers);
   const response = await getAnthropicClient().messages.create({
     model,
     max_tokens: 4096,
@@ -365,7 +365,7 @@ async function defaultComposeLiveWeek(input: BuildWeekPlanInput): Promise<RawWee
       {
         role: 'user',
         content:
-          `Problème: ${input.problemText}\nObjectifs: ${input.goalsText}\nExclusions: ${exclusions}\nBiomarqueurs saisis (clés): ${biomarkerKeys}\n` +
+          `Problème: ${input.problemText}\nObjectifs: ${input.goalsText}\nExclusions: ${exclusions}\nBiomarqueurs (usage interne, ne pas citer dans les titres): ${biomarkerSummary}\n` +
           `JSON attendu: {"days":[{"day":1,"label":"Lundi","meals":[{"slot":"breakfast","title":"...","summary":"..."},{"slot":"lunch","title":"...","summary":"..."},{"slot":"dinner","title":"...","summary":"..."}]}],"grocery_list":[{"aisle":"Légumes","items":["..."]}]} ` +
           '7 jours, labels Lundi à Dimanche.',
       },

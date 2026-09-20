@@ -9,7 +9,7 @@ const MANUAL_REQUIRED = {
   manual_required: true as const,
 };
 
-export function extractionToBiomarkerMap(extraction: SynlabExtraction): BiomarkerMap {
+function extractionToBiomarkerMap(extraction: SynlabExtraction): BiomarkerMap {
   const map: BiomarkerMap = {};
   for (const bm of extraction.biomarkers) {
     if (bm.result === '' || bm.result === undefined) continue;

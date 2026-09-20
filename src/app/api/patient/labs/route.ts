@@ -20,7 +20,7 @@ function asBiomarkerMap(value: unknown): BiomarkerMap {
   return map;
 }
 
-export function inferLabSource(parsed: BiomarkerMap, editedSubmitted: BiomarkerMap): PatientLabSource {
+function inferLabSource(parsed: BiomarkerMap, editedSubmitted: BiomarkerMap): PatientLabSource {
   const hasParsed = Object.keys(parsed).length > 0;
   const hasEditedOverlay = Object.keys(editedSubmitted).some((key) => editedSubmitted[key] !== '');
   if (hasParsed && hasEditedOverlay) return 'pdf_edited';

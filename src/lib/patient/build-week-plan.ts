@@ -295,10 +295,10 @@ function asString(value: unknown, fallback = ''): string {
 }
 
 function parseLivePlan(raw: unknown, model: string): RawWeekPlan {
-  if (!isRecord(raw) || !Array.isArray(raw.days) || raw.days.length < 1) {
-    throw new Error('live week plan missing days');
+  if (!isRecord(raw) || !Array.isArray(raw.days) || raw.days.length !== 7) {
+    throw new Error('live week plan must include 7 days');
   }
-  const days = raw.days.slice(0, 7).map((day, index): PatientPlanDay => {
+  const days = raw.days.map((day, index): PatientPlanDay => {
     const rec = isRecord(day) ? day : {};
     const mealsRaw = Array.isArray(rec.meals) ? rec.meals : [];
     const meals: PatientPlanMeal[] = [];
@@ -313,16 +313,15 @@ function parseLivePlan(raw: unknown, model: string): RawWeekPlan {
       });
       if (meals.length >= 3) break;
     }
+    if (meals.length < 1) {
+      throw new Error('live week plan day missing meals');
+    }
     return {
       day: typeof rec.day === 'number' ? rec.day : index + 1,
       label: asString(rec.label, DAY_LABELS[index] ?? `J${index + 1}`),
       meals,
     };
   });
-  while (days.length < 7) {
-    const n = days.length + 1;
-    days.push({ day: n, label: DAY_LABELS[n - 1] ?? `J${n}`, meals: [] });
-  }
 
   const groceryRaw = Array.isArray(raw.grocery_list) ? raw.grocery_list : [];
   const grocery_list: PatientGroceryAisle[] = groceryRaw.map((aisle) => {
@@ -331,15 +330,47 @@ function parseLivePlan(raw: unknown, model: string): RawWeekPlan {
     return { aisle: asString(rec.aisle), items };
   });
 
-  if (grocery_list.every((aisle) => aisle.items.length === 0)) {
-    throw new Error('live week plan missing grocery list');
-  }
-
-  return {
+  return assertUsableCulinaryWeek({
     days,
     grocery_list,
     generation_meta: { source: 'live', model },
-  };
+  });
+}
+
+const LIVE_COMPOSE_TIMEOUT_MS = 20_000;
+
+async function withTimeout<T>(promise: Promise<T>, ms: number): Promise<T> {
+  let timer: ReturnType<typeof setTimeout> | undefined;
+  try {
+    return await Promise.race([
+      promise,
+      new Promise<T>((_, reject) => {
+        timer = setTimeout(() => reject(new Error('week compose timeout')), ms);
+      }),
+    ]);
+  } finally {
+    if (timer) clearTimeout(timer);
+  }
+}
+
+function clientVisibleHasLeak(plan: Pick<RawWeekPlan, 'days' | 'grocery_list'>): boolean {
+  return TITLE_LEAK.test(JSON.stringify({ days: plan.days, grocery_list: plan.grocery_list }));
+}
+
+function assertUsableCulinaryWeek(plan: RawWeekPlan): RawWeekPlan {
+  if (plan.days.length !== 7) {
+    throw new Error('week must have 7 days');
+  }
+  if (plan.days.some((day) => day.meals.length < 1)) {
+    throw new Error('each day needs meals');
+  }
+  if (!plan.grocery_list.some((aisle) => aisle.items.length > 0)) {
+    throw new Error('grocery empty');
+  }
+  if (clientVisibleHasLeak(plan)) {
+    throw new Error('method leak in culinary week');
+  }
+  return plan;
 }
 
 function stripFences(text: string): string {
@@ -353,7 +384,8 @@ async function defaultComposeLiveWeek(input: BuildWeekPlanInput): Promise<RawWee
   const model = MODELS.PRIMARY;
   const exclusions = input.dietaryExclusions?.filter(Boolean).join(', ') || 'aucune';
   const biomarkerSummary = JSON.stringify(input.biomarkers);
-  const response = await getAnthropicClient().messages.create({
+  const response = await withTimeout(
+    getAnthropicClient().messages.create({
     model,
     max_tokens: 4096,
     system:
@@ -370,7 +402,9 @@ async function defaultComposeLiveWeek(input: BuildWeekPlanInput): Promise<RawWee
           '7 jours, labels Lundi à Dimanche.',
       },
     ],
-  });
+  }),
+    LIVE_COMPOSE_TIMEOUT_MS
+  );
   const block = response.content.find((part) => part.type === 'text');
   if (!block || block.type !== 'text') {
     throw new Error('live week plan empty');
@@ -395,7 +429,7 @@ export async function buildWeekPlan(
 
   try {
     const compose = options.composeLiveWeek ?? defaultComposeLiveWeek;
-    return await compose(input);
+    return assertUsableCulinaryWeek(await compose(input));
   } catch {
     return fixture;
   }

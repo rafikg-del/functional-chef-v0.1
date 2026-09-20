@@ -1,19 +1,16 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { patientAuthFailed } from '@/lib/patient/http';
 import { requirePatientUser } from '@/lib/patient/require-patient';
 import { createPatientPlansDb } from '@/lib/patient/plans-db';
 import { handleGetPlan } from '@/lib/patient/plans-handler';
-
-function authFailed(result: { ok: false; status: 401 | 403; error: string }) {
-  return NextResponse.json({ error: result.error }, { status: result.status });
-}
 
 export async function GET(
   _request: Request,
   { params }: { params: { id: string } }
 ) {
   const auth = await requirePatientUser();
-  if (!auth.ok) return authFailed(auth);
+  if (!auth.ok) return patientAuthFailed(auth);
 
   const db = createPatientPlansDb(createClient(), auth.user.id);
   const result = await handleGetPlan({

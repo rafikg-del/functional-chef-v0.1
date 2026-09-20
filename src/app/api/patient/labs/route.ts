@@ -1,12 +1,9 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
 import { mergeBiomarkers } from '@/lib/patient/merge-biomarkers';
+import { patientAuthFailed } from '@/lib/patient/http';
 import { requirePatientUser } from '@/lib/patient/require-patient';
 import type { BiomarkerMap, PatientLabSource } from '@/lib/patient/types';
-
-function authFailed(result: { ok: false; status: 401 | 403; error: string }) {
-  return NextResponse.json({ error: result.error }, { status: result.status });
-}
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -33,7 +30,7 @@ export function inferLabSource(parsed: BiomarkerMap, editedSubmitted: BiomarkerM
 
 export async function POST(request: NextRequest) {
   const auth = await requirePatientUser();
-  if (!auth.ok) return authFailed(auth);
+  if (!auth.ok) return patientAuthFailed(auth);
 
   let payload: unknown;
   try {

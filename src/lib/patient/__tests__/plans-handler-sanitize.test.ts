@@ -104,7 +104,7 @@ describe('handleCreatePlan', () => {
 
   it('blocks generation when no biomarker remains after merge', async () => {
     const { handleCreatePlan } = await import('../plans-handler');
-    const result = await handleCreatePlan({
+    const emptyString = await handleCreatePlan({
       userId: 'pat-1',
       body: {
         problem_text: 'x',
@@ -115,8 +115,24 @@ describe('handleCreatePlan', () => {
       insertIntake: vi.fn(),
       insertPlan: vi.fn(),
     });
-    expect(result.status).toBe(400);
-    expect(String((result.body as { error: string }).error)).toMatch(/biomarqueur/i);
+    expect(emptyString.status).toBe(400);
+    expect(String((emptyString.body as { error: string }).error)).toMatch(/biomarqueur/i);
+
+    const onlyNull = await handleCreatePlan({
+      userId: 'pat-1',
+      body: { problem_text: 'x', goals_text: 'y', edited_biomarkers: { homa_ir: null } },
+      insertIntake: vi.fn(),
+      insertPlan: vi.fn(),
+    });
+    expect(onlyNull.status).toBe(400);
+
+    const onlyWhitespace = await handleCreatePlan({
+      userId: 'pat-1',
+      body: { problem_text: 'x', goals_text: 'y', edited_biomarkers: { note: '   ' } },
+      insertIntake: vi.fn(),
+      insertPlan: vi.fn(),
+    });
+    expect(onlyWhitespace.status).toBe(400);
   });
 });
 
@@ -187,5 +203,19 @@ describe('handleGetPlan / handleRegeneratePlan', () => {
         generation_meta: { source: 'fixture', model: undefined },
       })
     );
+  });
+});
+
+describe('handleListPlans', () => {
+  it('returns 500 with a French error when the database read fails', async () => {
+    const { handleListPlans } = await import('../plans-handler');
+    const result = await handleListPlans({
+      userId: 'pat-1',
+      listPlans: async () => {
+        throw new Error('db down');
+      },
+    });
+    expect(result.status).toBe(500);
+    expect(String((result.body as { error: string }).error)).toMatch(/menus/i);
   });
 });

@@ -1,19 +1,18 @@
 import { NextResponse } from 'next/server';
 import { createClient } from '@/lib/supabase/server';
+import { patientAuthFailed } from '@/lib/patient/http';
 import { requirePatientUser } from '@/lib/patient/require-patient';
 import { createPatientPlansDb } from '@/lib/patient/plans-db';
 import { handleRegeneratePlan } from '@/lib/patient/plans-handler';
 
-function authFailed(result: { ok: false; status: 401 | 403; error: string }) {
-  return NextResponse.json({ error: result.error }, { status: result.status });
-}
+export const maxDuration = 60;
 
 export async function POST(
   _request: Request,
   { params }: { params: { id: string } }
 ) {
   const auth = await requirePatientUser();
-  if (!auth.ok) return authFailed(auth);
+  if (!auth.ok) return patientAuthFailed(auth);
 
   const db = createPatientPlansDb(createClient(), auth.user.id);
   try {

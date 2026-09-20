@@ -41,6 +41,8 @@ export interface PlanListItem {
 
 const EMPTY_BIOMARKERS =
   'Indiquez au moins un biomarqueur pour générer un menu.';
+const LIST_READ_ERROR = 'Impossible de charger vos menus.';
+const PLAN_READ_ERROR = 'Impossible de charger ce menu.';
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === 'object' && value !== null && !Array.isArray(value);
@@ -59,6 +61,14 @@ function asBiomarkerMap(value: unknown): BiomarkerMap {
     }
   }
   return map;
+}
+
+function hasUsableBiomarker(map: BiomarkerMap): boolean {
+  return Object.values(map).some((value) => {
+    if (value === null) return false;
+    if (typeof value === 'string') return value.trim().length > 0;
+    return typeof value === 'number' && Number.isFinite(value);
+  });
 }
 
 function asStringArray(value: unknown): string[] {
@@ -141,7 +151,7 @@ export async function handleCreatePlan(opts: {
   }
 
   const biomarkers = mergeBiomarkers(parsed, editedOverlay);
-  if (Object.keys(biomarkers).length === 0) {
+  if (!hasUsableBiomarker(biomarkers)) {
     return { status: 400, body: { error: EMPTY_BIOMARKERS } };
   }
 
@@ -193,17 +203,21 @@ export async function handleListPlans(opts: {
   userId: string;
   listPlans: (userId: string) => Promise<PlanListItem[]>;
 }): Promise<HandlerResult> {
-  const plans = await opts.listPlans(opts.userId);
-  return {
-    status: 200,
-    body: {
-      plans: plans.map((plan) => ({
-        id: plan.id,
-        created_at: plan.created_at,
-        status: plan.status,
-      })),
-    },
-  };
+  try {
+    const plans = await opts.listPlans(opts.userId);
+    return {
+      status: 200,
+      body: {
+        plans: plans.map((plan) => ({
+          id: plan.id,
+          created_at: plan.created_at,
+          status: plan.status,
+        })),
+      },
+    };
+  } catch {
+    return { status: 500, body: { error: LIST_READ_ERROR } };
+  }
 }
 
 export async function handleGetPlan(opts: {
@@ -211,11 +225,15 @@ export async function handleGetPlan(opts: {
   planId: string;
   loadPlan: (userId: string, planId: string) => Promise<StoredPlanRow | null>;
 }): Promise<HandlerResult> {
-  const row = await opts.loadPlan(opts.userId, opts.planId);
-  if (!row || row.user_id !== opts.userId) {
-    return { status: 404, body: { error: 'Plan introuvable.' } };
+  try {
+    const row = await opts.loadPlan(opts.userId, opts.planId);
+    if (!row || row.user_id !== opts.userId) {
+      return { status: 404, body: { error: 'Plan introuvable.' } };
+    }
+    return { status: 200, body: toClientPlan(row.id, row.menu_7d, row.grocery_list) };
+  } catch {
+    return { status: 500, body: { error: PLAN_READ_ERROR } };
   }
-  return { status: 200, body: toClientPlan(row.id, row.menu_7d, row.grocery_list) };
 }
 
 export async function handleRegeneratePlan(opts: {
@@ -235,50 +253,54 @@ export async function handleRegeneratePlan(opts: {
   }) => Promise<{ id: string } | null>;
   buildWeekPlan?: typeof buildWeekPlan;
 }): Promise<HandlerResult> {
-  const existing = await opts.loadPlan(opts.userId, opts.planId);
-  if (!existing || existing.user_id !== opts.userId) {
-    return { status: 404, body: { error: 'Plan introuvable.' } };
-  }
-
-  const intake = await opts.loadIntake(existing.intake_id);
-  if (!intake || intake.user_id !== opts.userId) {
-    return { status: 404, body: { error: 'Plan introuvable.' } };
-  }
-
-  let parsed: BiomarkerMap = {};
-  let edited: BiomarkerMap = {};
-  if (intake.lab_id && opts.loadLab) {
-    const lab = await opts.loadLab(intake.lab_id);
-    if (lab) {
-      parsed = asBiomarkerMap(lab.parsed_biomarkers);
-      edited = asBiomarkerMap(lab.edited_biomarkers);
+  try {
+    const existing = await opts.loadPlan(opts.userId, opts.planId);
+    if (!existing || existing.user_id !== opts.userId) {
+      return { status: 404, body: { error: 'Plan introuvable.' } };
     }
-  }
-  const biomarkers = mergeBiomarkers(parsed, edited);
-  if (Object.keys(biomarkers).length === 0) {
-    return { status: 400, body: { error: EMPTY_BIOMARKERS } };
-  }
 
-  const dietaryExclusions = (await opts.loadDietaryExclusions?.()) ?? [];
-  const compose = opts.buildWeekPlan ?? buildWeekPlan;
-  const raw = await compose({
-    biomarkers,
-    problemText: intake.problem_text,
-    goalsText: intake.goals_text,
-    dietaryExclusions,
-  });
+    const intake = await opts.loadIntake(existing.intake_id);
+    if (!intake || intake.user_id !== opts.userId) {
+      return { status: 404, body: { error: 'Plan introuvable.' } };
+    }
 
-  const updated = await opts.updatePlan({
-    id: existing.id,
-    user_id: opts.userId,
-    status: 'ready',
-    menu_7d: raw.days,
-    grocery_list: raw.grocery_list,
-    generation_meta: generationMetaOnly(raw),
-  });
-  if (!updated) {
-    return { status: 500, body: { error: 'Enregistrement du plan impossible.' } };
+    let parsed: BiomarkerMap = {};
+    let edited: BiomarkerMap = {};
+    if (intake.lab_id && opts.loadLab) {
+      const lab = await opts.loadLab(intake.lab_id);
+      if (lab) {
+        parsed = asBiomarkerMap(lab.parsed_biomarkers);
+        edited = asBiomarkerMap(lab.edited_biomarkers);
+      }
+    }
+    const biomarkers = mergeBiomarkers(parsed, edited);
+    if (!hasUsableBiomarker(biomarkers)) {
+      return { status: 400, body: { error: EMPTY_BIOMARKERS } };
+    }
+
+    const dietaryExclusions = (await opts.loadDietaryExclusions?.()) ?? [];
+    const compose = opts.buildWeekPlan ?? buildWeekPlan;
+    const raw = await compose({
+      biomarkers,
+      problemText: intake.problem_text,
+      goalsText: intake.goals_text,
+      dietaryExclusions,
+    });
+
+    const updated = await opts.updatePlan({
+      id: existing.id,
+      user_id: opts.userId,
+      status: 'ready',
+      menu_7d: raw.days,
+      grocery_list: raw.grocery_list,
+      generation_meta: generationMetaOnly(raw),
+    });
+    if (!updated) {
+      return { status: 500, body: { error: 'Enregistrement du plan impossible.' } };
+    }
+
+    return { status: 200, body: clientBody(updated.id, raw) };
+  } catch {
+    return { status: 500, body: { error: PLAN_READ_ERROR } };
   }
-
-  return { status: 200, body: clientBody(updated.id, raw) };
 }

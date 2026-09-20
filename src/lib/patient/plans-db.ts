@@ -70,7 +70,10 @@ export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
         .eq('id', labId)
         .eq('user_id', userId)
         .maybeSingle();
-      if (error || !data) return null;
+      if (error) {
+        throw new Error(error.message);
+      }
+      if (!data) return null;
       return {
         parsed_biomarkers: (data.parsed_biomarkers ?? {}) as BiomarkerMap,
         edited_biomarkers: (data.edited_biomarkers ?? {}) as BiomarkerMap,
@@ -78,11 +81,14 @@ export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
     },
 
     async loadDietaryExclusions(): Promise<string[]> {
-      const { data } = await supabase
+      const { data, error } = await supabase
         .from('patient_profiles')
         .select('dietary_exclusions')
         .eq('user_id', userId)
         .maybeSingle();
+      if (error) {
+        throw new Error(error.message);
+      }
       return asStringArray(data?.dietary_exclusions);
     },
 
@@ -93,8 +99,10 @@ export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
         .eq('user_id', userId)
         .is('deleted_at', null)
         .order('created_at', { ascending: false });
-      if (error || !data) return [];
-      return data.map((row) => ({
+      if (error) {
+        throw new Error(error.message);
+      }
+      return (data ?? []).map((row) => ({
         id: row.id as string,
         created_at: (row.created_at as string | null) ?? null,
         status: row.status as string,
@@ -109,7 +117,10 @@ export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
         .eq('user_id', userId)
         .is('deleted_at', null)
         .maybeSingle();
-      if (error || !data) return null;
+      if (error) {
+        throw new Error(error.message);
+      }
+      if (!data) return null;
       return data as StoredPlanRow;
     },
 
@@ -120,7 +131,10 @@ export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
         .eq('id', intakeId)
         .eq('user_id', userId)
         .maybeSingle();
-      if (error || !data) return null;
+      if (error) {
+        throw new Error(error.message);
+      }
+      if (!data) return null;
       return data as StoredIntakeRow;
     },
 

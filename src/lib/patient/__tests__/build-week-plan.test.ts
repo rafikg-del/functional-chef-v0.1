@@ -63,4 +63,67 @@ describe('buildWeekPlan', () => {
     expect(raw.grocery_list.length).toBeGreaterThan(0);
     expect(JSON.stringify(sanitizePlanForClient({ id: 'p2', ...raw }))).not.toMatch(FORBIDDEN);
   });
+
+  it('falls back when live output leaks method language in summaries', async () => {
+    process.env.ANTHROPIC_API_KEY = 'sk-test-not-used';
+    const { buildWeekPlan } = await import('../build-week-plan');
+
+    const raw = await buildWeekPlan(
+      {
+        biomarkers: { homa_ir: 2 },
+        problemText: 'Fatigue',
+        goalsText: 'Légumes',
+      },
+      {
+        composeLiveWeek: async () => ({
+          days: Array.from({ length: 7 }, (_, i) => ({
+            day: i + 1,
+            label: `J${i + 1}`,
+            meals: [
+              {
+                slot: 'lunch',
+                title: 'Bol',
+                summary: 'Cible IR / bottleneck classification T1',
+              },
+            ],
+          })),
+          grocery_list: [{ aisle: 'Légumes', items: ['Courgette'] }],
+          generation_meta: { source: 'live', model: 'test' },
+        }),
+      }
+    );
+
+    expect(raw.generation_meta.source).toBe('fixture');
+    expect(JSON.stringify(sanitizePlanForClient({ id: 'p3', ...raw }))).not.toMatch(FORBIDDEN);
+  });
+
+  it('falls back when live output is a partial week', async () => {
+    process.env.ANTHROPIC_API_KEY = 'sk-test-not-used';
+    const { buildWeekPlan } = await import('../build-week-plan');
+
+    const raw = await buildWeekPlan(
+      {
+        biomarkers: { homa_ir: 2 },
+        problemText: 'Fatigue',
+        goalsText: 'Légumes',
+      },
+      {
+        composeLiveWeek: async () => ({
+          days: [
+            {
+              day: 1,
+              label: 'Lundi',
+              meals: [{ slot: 'lunch', title: 'Bol', summary: 'légumes' }],
+            },
+          ],
+          grocery_list: [{ aisle: 'Légumes', items: ['Courgette'] }],
+          generation_meta: { source: 'live', model: 'test' },
+        }),
+      }
+    );
+
+    expect(raw.days).toHaveLength(7);
+    expect(raw.generation_meta.source).toBe('fixture');
+    expect(raw.days.every((day) => day.meals.length > 0)).toBe(true);
+  });
 });

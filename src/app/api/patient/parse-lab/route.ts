@@ -1,5 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { parseSynlabPDF, type SynlabExtraction } from '@/lib/synlab-pdf-parser';
+import { patientAuthFailed } from '@/lib/patient/http';
 import { requirePatientUser } from '@/lib/patient/require-patient';
 import type { BiomarkerMap } from '@/lib/patient/types';
 
@@ -7,10 +8,6 @@ const MANUAL_REQUIRED = {
   error: 'Impossible de lire ce PDF. Saisissez vos biomarqueurs manuellement.',
   manual_required: true as const,
 };
-
-function authFailed(result: { ok: false; status: 401 | 403; error: string }) {
-  return NextResponse.json({ error: result.error }, { status: result.status });
-}
 
 export function extractionToBiomarkerMap(extraction: SynlabExtraction): BiomarkerMap {
   const map: BiomarkerMap = {};
@@ -23,7 +20,7 @@ export function extractionToBiomarkerMap(extraction: SynlabExtraction): Biomarke
 
 export async function POST(request: NextRequest) {
   const auth = await requirePatientUser();
-  if (!auth.ok) return authFailed(auth);
+  if (!auth.ok) return patientAuthFailed(auth);
 
   let file: File | null = null;
   try {

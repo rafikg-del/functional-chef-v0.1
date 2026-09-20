@@ -194,4 +194,6 @@ Jamais de succès simulé (pas de localStorage comme source de vérité).
 
 - [x] Design sections approved in chat (2026-09-20)
 - [ ] User review of this written spec
-- [ ] Then: Superpowers `writing-plans` → implementation
+- [x] Superpowers `writing-plans` → `docs/superpowers/plans/2026-09-20-patient-b2c.md`
+- [x] Lots 1–2 merged (lib, migration 005, APIs)
+- [ ] Lot 3 UI / ops (`/patient` shell + wizard) — PR in review

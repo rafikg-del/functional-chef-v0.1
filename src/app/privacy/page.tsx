@@ -87,7 +87,19 @@ export default function PrivacyPage() {
           </section>
 
           <section>
-            <h2 className="font-serif text-xl text-ink-900">6. Droits des personnes (RGPD Articles 15-22)</h2>
+            <h2 className="font-serif text-xl text-ink-900">5 bis. Parcours patient autonome</h2>
+            <p>
+              Un espace distinct (<Link href="/patient" className="text-saffron-700 hover:underline">/patient</Link>)
+              permet à une personne de créer un compte, déposer une analyse et
+              recevoir un menu culinaire 7 jours. Ces données (biomarqueurs,
+              allergies, objectifs) sont isolées par compte (<code>auth.uid() = user_id</code>).
+              Un praticien ne lit pas les lignes patient B2C, et inversement.
+              Consentement explicite avant génération. Ce n’est pas un
+              dispositif médical.
+            </p>
+          </section>
+
+          <section>
             <p>Vous disposez des droits suivants :</p>
             <ul>
               <li><strong>Droit d'accès</strong> (Article 15) — obtenir une copie des données</li>

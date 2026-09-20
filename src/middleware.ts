@@ -1,15 +1,23 @@
 import { createServerClient, type CookieOptions } from '@supabase/ssr';
 import { NextResponse, type NextRequest } from 'next/server';
+import {
+  isProtectedPatientPath,
+  isPublicPatientPath,
+  patientAuthRedirectPath,
+  safeInternalPath,
+} from '@/lib/patient/patient-paths';
 
 export async function middleware(request: NextRequest) {
+  const pathname = request.nextUrl.pathname;
+
   // Skip auth for public pages
-  if (request.nextUrl.pathname.startsWith('/prescription') ||
-      request.nextUrl.pathname.startsWith('/test-parser') ||
-      request.nextUrl.pathname.startsWith('/api/beta-waitlist') ||
-      request.nextUrl.pathname.startsWith('/api/demo-compose')) {
+  if (pathname.startsWith('/prescription') ||
+      pathname.startsWith('/test-parser') ||
+      pathname.startsWith('/api/beta-waitlist') ||
+      pathname.startsWith('/api/demo-compose')) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
-  if (request.nextUrl.pathname.endsWith('/print')) {
+  if (pathname.endsWith('/print')) {
     return NextResponse.next({ request: { headers: request.headers } });
   }
 
@@ -19,10 +27,15 @@ export async function middleware(request: NextRequest) {
     Boolean(supabaseUrl && supabaseAnon) && !supabaseUrl!.includes('YOUR_PROJECT');
 
   const protectedPaths = ['/dashboard', '/consultation'];
-  const isProtected = protectedPaths.some((path) => request.nextUrl.pathname.startsWith(path));
+  const isProtected = protectedPaths.some((path) => pathname.startsWith(path));
+  // Public patient routes: /patient and /patient/auth. All other /patient/* require a session.
+  const patientProtected = isProtectedPatientPath(pathname);
 
   // Marketing + demo must stay up even if Auth is not configured yet.
   if (!supabaseReady) {
+    if (patientProtected) {
+      return NextResponse.redirect(new URL(patientAuthRedirectPath(pathname), request.url));
+    }
     if (isProtected) {
       return NextResponse.redirect(new URL('/auth', request.url));
     }
@@ -55,12 +68,22 @@ export async function middleware(request: NextRequest) {
 
   const { data: { user } } = await supabase.auth.getUser();
 
+  if (patientProtected && !user) {
+    return NextResponse.redirect(new URL(patientAuthRedirectPath(pathname), request.url));
+  }
+
+  if (isPublicPatientPath(pathname) && pathname.includes('/auth') && user) {
+    const next = safeInternalPath(request.nextUrl.searchParams.get('next'), '/patient/plans');
+    const dest = next.startsWith('/patient') ? next : '/patient/plans';
+    return NextResponse.redirect(new URL(dest, request.url));
+  }
+
   if (isProtected && !user) {
     return NextResponse.redirect(new URL('/auth', request.url));
   }
 
   // Auth page redirect if already logged in
-  if (request.nextUrl.pathname.startsWith('/auth') && user) {
+  if (pathname.startsWith('/auth') && user) {
     return NextResponse.redirect(new URL('/dashboard', request.url));
   }
 

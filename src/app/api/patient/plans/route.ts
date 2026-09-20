@@ -36,6 +36,7 @@ export async function POST(request: NextRequest) {
     const result = await handleCreatePlan({
       userId: auth.user.id,
       body: payload,
+      insertLab: (row) => db.insertLab(row),
       insertIntake: (row) => db.insertIntake(row),
       insertPlan: (row) => db.insertPlan(row),
       loadLab: (labId) => db.loadLab(labId),

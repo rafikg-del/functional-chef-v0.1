@@ -88,6 +88,12 @@ function clientBody(id: string, raw: RawWeekPlan): PatientPlanClient {
 export async function handleCreatePlan(opts: {
   userId: string;
   body: unknown;
+  insertLab?: (row: {
+    user_id: string;
+    source: 'manual';
+    parsed_biomarkers: BiomarkerMap;
+    edited_biomarkers: BiomarkerMap;
+  }) => Promise<{ id: string }>;
   insertIntake: (row: {
     user_id: string;
     lab_id: string | null;
@@ -111,7 +117,7 @@ export async function handleCreatePlan(opts: {
   const problem_text = asString(body.problem_text);
   const goals_text = asString(body.goals_text);
   const goal_tags = asStringArray(body.goal_tags);
-  const lab_id = asString(body.lab_id) || null;
+  let lab_id = asString(body.lab_id) || null;
 
   let parsed = asBiomarkerMap(body.parsed_biomarkers);
   let editedOverlay = asBiomarkerMap(body.edited_biomarkers);
@@ -137,6 +143,16 @@ export async function handleCreatePlan(opts: {
   const biomarkers = mergeBiomarkers(parsed, editedOverlay);
   if (Object.keys(biomarkers).length === 0) {
     return { status: 400, body: { error: EMPTY_BIOMARKERS } };
+  }
+
+  if (!lab_id && opts.insertLab) {
+    const lab = await opts.insertLab({
+      user_id: opts.userId,
+      source: 'manual',
+      parsed_biomarkers: parsed,
+      edited_biomarkers: biomarkers,
+    });
+    lab_id = lab.id;
   }
 
   const fromBody = asStringArray(body.dietary_exclusions);

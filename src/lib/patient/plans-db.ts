@@ -9,6 +9,23 @@ function asStringArray(value: unknown): string[] {
 
 export function createPatientPlansDb(supabase: SupabaseClient, userId: string) {
   return {
+    async insertLab(row: {
+      user_id: string;
+      source: 'manual';
+      parsed_biomarkers: BiomarkerMap;
+      edited_biomarkers: BiomarkerMap;
+    }): Promise<{ id: string }> {
+      const { data, error } = await supabase
+        .from('patient_labs')
+        .insert(row)
+        .select('id')
+        .single();
+      if (error || !data) {
+        throw new Error(error?.message ?? 'lab insert failed');
+      }
+      return data;
+    },
+
     async insertIntake(row: {
       user_id: string;
       lab_id: string | null;

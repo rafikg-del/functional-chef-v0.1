@@ -72,6 +72,36 @@ describe('handleCreatePlan', () => {
     expect(stored).not.toHaveProperty('bottleneck_id');
   });
 
+  it('stores a manual lab when creating from inline biomarkers', async () => {
+    const { handleCreatePlan } = await import('../plans-handler');
+    const insertLab = vi.fn().mockResolvedValue({ id: 'lab-auto' });
+    const insertIntake = vi.fn().mockResolvedValue({ id: 'intake-1' });
+    const insertPlan = vi.fn().mockResolvedValue({ id: 'plan-1' });
+
+    const result = await handleCreatePlan({
+      userId: 'pat-1',
+      body: {
+        problem_text: 'Fatigue',
+        goals_text: 'Légumes',
+        edited_biomarkers: { homa_ir: 2.2 },
+      },
+      insertLab,
+      insertIntake,
+      insertPlan,
+      buildWeekPlan: async () => leakyWeek(),
+    });
+
+    expect(result.status).toBe(200);
+    expect(insertLab).toHaveBeenCalledWith(
+      expect.objectContaining({
+        user_id: 'pat-1',
+        source: 'manual',
+        edited_biomarkers: { homa_ir: 2.2 },
+      })
+    );
+    expect(insertIntake).toHaveBeenCalledWith(expect.objectContaining({ lab_id: 'lab-auto' }));
+  });
+
   it('blocks generation when no biomarker remains after merge', async () => {
     const { handleCreatePlan } = await import('../plans-handler');
     const result = await handleCreatePlan({

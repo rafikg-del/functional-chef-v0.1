@@ -12,6 +12,8 @@ describe('public landing copy', () => {
     expect(landing).toContain('NonDmNotice');
     expect(landing).toContain('href="/beta"');
     expect(landing).toContain('href="/demo"');
+    expect(landing).toContain('href="/patient"');
+    expect(landing).toContain('Espace patient');
     expect(landing).toMatch(/Essayer la démo sans compte/);
     expect(landing).toContain('Aide à la prescription nutritionnelle');
     expect(landing).toContain('Prescrivez des plats');

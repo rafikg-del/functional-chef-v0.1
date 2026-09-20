@@ -193,6 +193,9 @@ export default function HomePage() {
             <Link href="/auth" className="hover:text-ink-700 transition-colors">
               Connexion
             </Link>
+            <Link href="/patient" className="hover:text-ink-700 transition-colors">
+              Espace patient
+            </Link>
             <a
               href="https://github.com/rafikg-del/functional-chef-v0.1/blob/main/docs/FAQ.md"
               className="hover:text-ink-700 transition-colors"

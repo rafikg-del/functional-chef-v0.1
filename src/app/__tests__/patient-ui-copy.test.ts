@@ -2,10 +2,10 @@ import { readdirSync, readFileSync, statSync } from 'node:fs';
 import { join, resolve } from 'node:path';
 import { describe, expect, it } from 'vitest';
 
-const PATIENT_APP = resolve(__dirname, '..');
-const PATIENT_COMPONENTS = resolve(__dirname, '../../../components/patient');
-const MIDDLEWARE = resolve(__dirname, '../../../middleware.ts');
-const LANDING = resolve(__dirname, '../../page.tsx');
+const PATIENT_APP = resolve(__dirname, '../patient');
+const PATIENT_COMPONENTS = resolve(__dirname, '../../components/patient');
+const MIDDLEWARE = resolve(__dirname, '../../middleware.ts');
+const LANDING = resolve(__dirname, '../page.tsx');
 
 const FORBIDDEN = [
   'bottleneck',

@@ -24,6 +24,15 @@ export function patientAuthRedirectPath(from: string): string {
   return `/patient/auth?next=${encodeURIComponent(from)}`;
 }
 
+/** 401 → login. 403 is a role mismatch and must not bounce back to auth. */
+export function redirectForPatientApiStatus(
+  status: number,
+  from: string
+): string | null {
+  if (status === 401) return patientAuthRedirectPath(from);
+  return null;
+}
+
 export function safeInternalPath(raw: string | null | undefined, fallback: string): string {
   if (!raw) return fallback;
   if (!raw.startsWith('/') || raw.startsWith('//') || raw.includes('://')) return fallback;

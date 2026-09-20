@@ -34,3 +34,13 @@ describe('patient path gates', () => {
     );
   });
 });
+
+describe('redirectForPatientApiStatus', () => {
+  it('sends 401 to auth and keeps 403 on the current page', async () => {
+    const { redirectForPatientApiStatus } = await import('../patient-paths');
+    expect(redirectForPatientApiStatus(401, '/patient/plans')).toBe(
+      '/patient/auth?next=%2Fpatient%2Fplans'
+    );
+    expect(redirectForPatientApiStatus(403, '/patient/plans')).toBeNull();
+  });
+});

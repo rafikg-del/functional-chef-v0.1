@@ -73,9 +73,12 @@ export async function middleware(request: NextRequest) {
   }
 
   if (isPublicPatientPath(pathname) && pathname.includes('/auth') && user) {
-    const next = safeInternalPath(request.nextUrl.searchParams.get('next'), '/patient/plans');
-    const dest = next.startsWith('/patient') ? next : '/patient/plans';
-    return NextResponse.redirect(new URL(dest, request.url));
+    const role = user.app_metadata?.role;
+    if (role === 'patient') {
+      const next = safeInternalPath(request.nextUrl.searchParams.get('next'), '/patient/plans');
+      const dest = next.startsWith('/patient') ? next : '/patient/plans';
+      return NextResponse.redirect(new URL(dest, request.url));
+    }
   }
 
   if (isProtected && !user) {

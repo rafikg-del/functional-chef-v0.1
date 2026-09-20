@@ -3,7 +3,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { createClient } from '@/lib/supabase/client';
-import { PatientNotice, PatientShell } from '@/components/patient/PatientShell';
+import { PatientNotice, PatientShell, WrongAccountNotice } from '@/components/patient/PatientShell';
+import { redirectForPatientApiStatus } from '@/lib/patient/patient-paths';
 
 const EXCLUSION_OPTIONS = [
   'gluten',
@@ -32,11 +33,22 @@ export default function PatientOnboardingPage() {
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
   const [ready, setReady] = useState(false);
+  const [forbidden, setForbidden] = useState(false);
 
   useEffect(() => {
     const supabase = createClient();
     void (async () => {
-      await fetch('/api/patient/claim-role', { method: 'POST' });
+      const claim = await fetch('/api/patient/claim-role', { method: 'POST' });
+      if (claim.status === 403) {
+        setForbidden(true);
+        setReady(true);
+        return;
+      }
+      const dest = redirectForPatientApiStatus(claim.status, '/patient/onboarding');
+      if (dest) {
+        router.push(dest);
+        return;
+      }
       await supabase.auth.refreshSession();
       const {
         data: { user },
@@ -131,91 +143,97 @@ export default function PatientOnboardingPage() {
 
   return (
     <PatientShell email={email}>
-      <p className="label">Profil</p>
-      <h1 className="font-serif text-3xl text-ink-900 tracking-editorial mb-2">
-        Vos préférences culinaires
-      </h1>
-      <p className="text-sm text-ink-600 mb-6">
-        Allergies et exclusions alimentaires — pour composer des menus
-        cuisinables chez vous. Rien de médical.
-      </p>
-      <PatientNotice className="mb-6" />
-
-      <form onSubmit={handleSubmit} className="space-y-6">
-        <div>
-          <label className="label" htmlFor="display-name">
-            Comment vous appeler
-          </label>
-          <input
-            id="display-name"
-            value={displayName}
-            onChange={(e) => setDisplayName(e.target.value)}
-            className="input-field"
-            placeholder="Prénom"
-          />
-        </div>
-
-        <fieldset>
-          <legend className="label">Exclusions alimentaires</legend>
-          <div className="flex flex-wrap gap-2">
-            {EXCLUSION_OPTIONS.map((option) => {
-              const on = exclusions.includes(option);
-              return (
-                <button
-                  key={option}
-                  type="button"
-                  onClick={() => toggleExclusion(option)}
-                  className={`text-xs px-3 py-1.5 rounded-full border ${
-                    on
-                      ? 'bg-saffron-700 text-ink-50 border-saffron-700'
-                      : 'bg-white text-ink-700 border-ink-300'
-                  }`}
-                >
-                  {option}
-                </button>
-              );
-            })}
-          </div>
-        </fieldset>
-
-        <div>
-          <label className="label" htmlFor="allergies">
-            Allergies (séparées par une virgule)
-          </label>
-          <input
-            id="allergies"
-            value={allergiesText}
-            onChange={(e) => setAllergiesText(e.target.value)}
-            className="input-field"
-            placeholder="ex. noisettes, sésame"
-          />
-        </div>
-
-        <div>
-          <label className="label" htmlFor="household">
-            Nombre de personnes à table (optionnel)
-          </label>
-          <input
-            id="household"
-            type="number"
-            min={1}
-            value={householdSize}
-            onChange={(e) => setHouseholdSize(e.target.value)}
-            className="input-field"
-            placeholder="2"
-          />
-        </div>
-
-        {error && (
-          <p className="text-xs text-tier-t3 bg-tier-t3/10 border border-tier-t3/30 p-3 rounded-sm">
-            {error}
+      {forbidden ? (
+        <WrongAccountNotice />
+      ) : (
+        <>
+          <p className="label">Profil</p>
+          <h1 className="font-serif text-3xl text-ink-900 tracking-editorial mb-2">
+            Vos préférences culinaires
+          </h1>
+          <p className="text-sm text-ink-600 mb-6">
+            Allergies et exclusions alimentaires — pour composer des menus
+            cuisinables chez vous. Rien de médical.
           </p>
-        )}
+          <PatientNotice className="mb-6" />
 
-        <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto">
-          {loading ? 'Enregistrement…' : 'Continuer vers un menu'}
-        </button>
-      </form>
+          <form onSubmit={handleSubmit} className="space-y-6">
+            <div>
+              <label className="label" htmlFor="display-name">
+                Comment vous appeler
+              </label>
+              <input
+                id="display-name"
+                value={displayName}
+                onChange={(e) => setDisplayName(e.target.value)}
+                className="input-field"
+                placeholder="Prénom"
+              />
+            </div>
+
+            <fieldset>
+              <legend className="label">Exclusions alimentaires</legend>
+              <div className="flex flex-wrap gap-2">
+                {EXCLUSION_OPTIONS.map((option) => {
+                  const on = exclusions.includes(option);
+                  return (
+                    <button
+                      key={option}
+                      type="button"
+                      onClick={() => toggleExclusion(option)}
+                      className={`text-xs px-3 py-1.5 rounded-full border ${
+                        on
+                          ? 'bg-saffron-700 text-ink-50 border-saffron-700'
+                          : 'bg-white text-ink-700 border-ink-300'
+                      }`}
+                    >
+                      {option}
+                    </button>
+                  );
+                })}
+              </div>
+            </fieldset>
+
+            <div>
+              <label className="label" htmlFor="allergies">
+                Allergies (séparées par une virgule)
+              </label>
+              <input
+                id="allergies"
+                value={allergiesText}
+                onChange={(e) => setAllergiesText(e.target.value)}
+                className="input-field"
+                placeholder="ex. noisettes, sésame"
+              />
+            </div>
+
+            <div>
+              <label className="label" htmlFor="household">
+                Nombre de personnes à table (optionnel)
+              </label>
+              <input
+                id="household"
+                type="number"
+                min={1}
+                value={householdSize}
+                onChange={(e) => setHouseholdSize(e.target.value)}
+                className="input-field"
+                placeholder="2"
+              />
+            </div>
+
+            {error && (
+              <p className="text-xs text-tier-t3 bg-tier-t3/10 border border-tier-t3/30 p-3 rounded-sm">
+                {error}
+              </p>
+            )}
+
+            <button type="submit" disabled={loading} className="btn-primary w-full sm:w-auto">
+              {loading ? 'Enregistrement…' : 'Continuer vers un menu'}
+            </button>
+          </form>
+        </>
+      )}
     </PatientShell>
   );
 }

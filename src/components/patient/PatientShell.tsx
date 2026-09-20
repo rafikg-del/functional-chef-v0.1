@@ -55,7 +55,7 @@ export function PatientShell({
 
   return (
     <div className="min-h-screen flex flex-col">
-      <header className="border-b border-ink-200 bg-ink-50/95 backdrop-blur-sm sticky top-0 z-50">
+      <header className="border-b border-ink-200 bg-ink-50/95 backdrop-blur-sm sticky top-0 z-50 print:hidden">
         <div className="max-w-3xl mx-auto px-4 py-3 flex items-center justify-between gap-3">
           <Link href="/patient/plans" className="font-serif text-lg tracking-tight text-ink-900 shrink-0">
             Functional Chef
@@ -82,6 +82,29 @@ export function PatientShell({
         ) : null}
       </header>
       <div className="flex-1 max-w-3xl mx-auto w-full px-4 py-8">{children}</div>
+    </div>
+  );
+}
+
+export function WrongAccountNotice({ message }: { message?: string }) {
+  const router = useRouter();
+
+  async function handleLogout() {
+    const supabase = createClient();
+    await supabase.auth.signOut();
+    router.push('/patient/auth');
+    router.refresh();
+  }
+
+  return (
+    <div className="card !p-5 space-y-3">
+      <p className="text-sm text-ink-700">
+        {message ??
+          'Ce compte n’est pas un compte patient. Déconnectez-vous, puis créez ou utilisez un compte dédié à l’espace patient.'}
+      </p>
+      <button type="button" className="btn-primary text-sm" onClick={() => void handleLogout()}>
+        Changer de compte
+      </button>
     </div>
   );
 }

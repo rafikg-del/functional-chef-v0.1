@@ -60,6 +60,28 @@ describe('patient B2C UI copy', () => {
     expect(onboarding).toMatch(/exclusion/i);
   });
 
+  it('ships the 3-step wizard and plan views', () => {
+    const wizard = read(join(PATIENT_APP, 'new/page.tsx'));
+    expect(wizard).toMatch(/consentement|J’accepte|J'accepte/i);
+    expect(wizard).toContain('/api/patient/plans');
+    expect(wizard).toContain('BiomarkerEditor');
+
+    const editor = read(join(PATIENT_COMPONENTS, 'BiomarkerEditor.tsx'));
+    expect(editor).toMatch(/biomarqueur/i);
+
+    const week = read(join(PATIENT_COMPONENTS, 'WeekPlanView.tsx'));
+    expect(week).toMatch(/Petit-déjeuner|Déjeuner|Dîner/);
+
+    const grocery = read(join(PATIENT_COMPONENTS, 'GroceryListView.tsx'));
+    expect(grocery).toMatch(/courses/i);
+
+    const history = read(join(PATIENT_APP, 'plans/page.tsx'));
+    expect(history).toMatch(/historique|Menus/i);
+
+    const detail = read(join(PATIENT_APP, 'plans/[id]/page.tsx'));
+    expect(detail).toMatch(/[Rr]égénér/);
+  });
+
   it('never leaks method internals in patient UI', () => {
     const files = [
       ...walkTsx(PATIENT_APP),

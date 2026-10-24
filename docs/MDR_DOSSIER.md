@@ -4,6 +4,7 @@
 > **Version** : 1.0 — 14 juillet 2026
 > **Statut** : Brouillon — à soumettre à un expert réglementaire MDR pour relecture et signature
 > **Classification proposée** : Dispositif Médical Classe IIa (MDR Règle 11)
+> **Gouvernance scientifique (2026-10-24)** : pas de comité scientifique. **Garant scientifique : Rafik Gounane**. LIV-18..21 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Ce dossier n’est pas signé. L’indépendance de la revue unique est une limitation connue, à discuter avec l’expert MDR ; elle n’est pas présentée comme acceptable au sens réglementaire.
 
 ---
 

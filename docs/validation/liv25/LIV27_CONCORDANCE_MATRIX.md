@@ -4,8 +4,8 @@
 > **Protocole** : [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](../../CLINICAL_VALIDATION_PROTOCOL.md) §7.1, §13.2, §15.2 (LIV-24 v0.1)  
 > **Pack** : LIV-25 — [`docs/validation/liv25/`](./) (n=10 JSON anonymisés)  
 > **Investigation cas** : [`LIV26_NOTE.md`](LIV26_NOTE.md)  
-> **Statut** : **brouillon descriptif, non signé CS**. Hors claim de performance.  
-> **Cible C1 (80 %)** : **non poursuivie** à ce stade — le CS a accepté **~70 %** en attendant des dossiers DYSBIOSE supplémentaires.
+> **Statut** : **brouillon descriptif, non signé par le garant scientifique (Rafik Gounane)**. Hors claim de performance.  
+> **Cible C1 (80 %)** : **non poursuivie** à ce stade, en attendant des dossiers DYSBIOSE supplémentaires. Le taux observé est **~70 %**. Cette lecture n'est **pas** une acceptation signée.
 
 ---
 
@@ -25,7 +25,7 @@
 | Indicateurs | Sensibilité, spécificité, VPP, VPN **descriptifs** (binarisation one-vs-rest par classe). Cellule **non définie** si le dénominateur vaut 0. |
 | IC | Wilson 95 % **uniquement** sur la concordance globale 7/10 — intervalle **large**, indicatif. Pas d'IC par classe. |
 | Pack | **LIV-25 partiel** : stratum DYSBIOSE dominant **1/3 (NON ATTEINT)**. On n'invente **pas** de cas. |
-| Protocole | LIV-24 **brouillon**, en attente d'approbation CS. |
+| Protocole | LIV-24 **brouillon**, en attente de signature du garant scientifique. |
 | Hors-périmètre | Étude de performance CE / MDR Art. 62 ; fixtures synthétiques (`patient-profiles.ts`) ; ajustement de seuils pour gonfler C1. |
 | PHI | Aucune (identifiants `ZOI-VAL-xx` uniquement). |
 
@@ -134,7 +134,7 @@ Kappa de Cohen : non calculé (optionnel §13.2 ; peu informatif à n=10 avec st
 2. **DYSBIOSE** n'est pas évaluable comme classe positive moteur. Un seul gold-standard (VAL-02), sans socle §6.1 saisi → FN + VPP indéfinie. La spécificité 100 % est tautologique (le moteur ne dit jamais DYSBIOSE).
 3. **none** est bien reconnu (3/3) ; le seul FP est VAL-02 (clinicien DYSBIOSE, moteur none).
 4. Le **70 %** est le taux attendu après LIV-26 (freeze `f8d0acc` puis correctifs d'interface PR #16). Aucun seuil HbA1c / HOMA / CRP n'a été déplacé pour ce livrable.
-5. Ce document **ne clôture pas** le checkpoint « évidence clinique » : signatures CS (R7) et strate DYSBIOSE (R3 / §7.2) restent ouvertes.
+5. Ce document **ne clôture pas** le checkpoint « évidence clinique » : signature du garant scientifique (R7) et strate DYSBIOSE (R3 / §7.2) restent ouvertes.
 
 ---
 
@@ -143,7 +143,7 @@ Kappa de Cohen : non calculé (optionnel §13.2 ; peu informatif à n=10 avec st
 | Item | Action | Hors-scope LIV-27 |
 |------|--------|-------------------|
 | **2 dossiers DYSBIOSE** à primauté intestinale (socle Bristol / ballonnements / calprotectine / SIBO / ABX-IPP / fibres) | Compléter LIV-25 ; re-run LIV-26/27 | Ne pas imputer VAL-02 ; pas de fixture synthétique |
-| **Revue / signature CS** (LIV-24 + LIV-26 + LIV-27) | Décision R / C, acceptation éventuelle de l'écart de strate | — |
+| **Revue / signature du garant scientifique** (LIV-24 + LIV-26 + LIV-27) | Décision R / C, acceptation éventuelle de l'écart de strate. Non signé | — |
 | Cible C1 80 % | Revisitée **après** les 2 cas digestifs, pas par tweak de seuil | Interdit : déplacer HbA1c 5,4 → 5,7 pour VAL-03 |
 | S2 (pertinence leviers) / S3 (sécurité) | Hors cette matrice | — |
 | PDF par cas (critère roadmap json + PDF) | Encore ouvert (EXTRACTION_NOTES §6) | — |

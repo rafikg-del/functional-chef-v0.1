@@ -63,10 +63,12 @@ Notes (limites, hétérogénéité, formulation culinaire vs supplément) :
 | Allergènes | |
 | Couverture `safety-filters.ts` | déjà / à ajouter (issue) / N/A |
 
-## 4. Décision CS
+## 4. Décision du garant scientifique
 
-| Champ | Avant | Proposé | **Validé CS** |
-|-------|-------|---------|----------------|
+Signataire prévu : **Garant scientifique : Rafik Gounane**. Ne pas pré-remplir la décision, la date ni la signature.
+
+| Champ | Avant | Proposé | **Validé par le garant scientifique** |
+|-------|-------|---------|----------------------------------------|
 | Tier global | | | |
 | IR | | | |
 | INFLAM | | | |
@@ -78,7 +80,7 @@ Décision :
 - [ ] Approuvé tel quel
 - [ ] Approuvé sous réserve (préciser)
 - [ ] Refusé (rester au tier actuel / ne pas insérer)
-- [ ] Reporté — CS non disponible (**défaut actuel du projet**)
+- [ ] Reporté — revue non signée (**défaut actuel : 0/63**)
 
 Date de **réévaluation** (≤ 6 mois) : ____ / ____ / ________
 
@@ -87,8 +89,8 @@ Date de **réévaluation** (≤ 6 mois) : ____ / ____ / ________
 | Rôle | Nom | Date | Décision | Signature / paraphe |
 |------|-----|------|----------|---------------------|
 | Rédacteur fiche | | | | |
-| Reviewer CS — médecin | | | Approuvé / sous réserve / refusé | |
-| 2ᵉ reviewer CS (si T1 nouveau) | | | | |
+| Garant scientifique : Rafik Gounane | | | Approuvé / sous réserve / refusé | |
+| Second relecteur de comité | | | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** | |
 | Responsable seed / merge | | | Prise d’acte | |
 
 Réserves :

@@ -418,7 +418,7 @@ function generate(): string {
   lines.push(`> **SHA git** : \`${sha}\``);
   lines.push('> **Sources** : `supabase/seed/04_culinary_levers.sql`, `supabase/seed/05_lever_bottleneck_map.sql`');
   lines.push('> **Génération** : `npm run changelog:ebm` (`scripts/generate-ebm-changelog.ts`)');
-  lines.push('> **Ne pas signer ce fichier tel quel** : les tiers sont auto-déclarés ; **0 fiche LIV-16 signée CS**.');
+  lines.push('> **Ne pas signer ce fichier tel quel** : les tiers sont auto-déclarés ; **0 fiche LIV-16 signée par le garant scientifique (Rafik Gounane)**.');
   lines.push('');
   lines.push('---');
   lines.push('');
@@ -428,8 +428,8 @@ function generate(): string {
   lines.push('|-------|--------|');
   lines.push('| Nature | Registre de traçabilité des tiers EBM-F |');
   lines.push('| Périmètre | Leviers **chargeables** via `INSERT INTO culinary_levers` uniquement |');
-  lines.push('| Hors-périmètre | Tuples SQL orphelins après le 2ᵉ INSERT (non exécutables) ; PMIDs inventés ; signatures CS fictives |');
-  lines.push('| Revue CS | **Aucune** à la date du snapshot |');
+  lines.push('| Hors-périmètre | Tuples SQL orphelins après le 2ᵉ INSERT (non exécutables) ; PMIDs inventés ; signatures fictives du garant scientifique |');
+  lines.push('| Revue du garant scientifique | **Aucune** à la date du snapshot. Signataire prévu : Rafik Gounane. LIV-18..21 supprimés (2026-10-24) |');
   lines.push('| Réévaluation | Tous les 6 mois ou à chaque modification de tier (LIV-15) |');
   lines.push('');
   lines.push('### 1.1 Signatures (vacantes)');
@@ -437,7 +437,7 @@ function generate(): string {
   lines.push('| Rôle | Nom | Date | Décision | Signature |');
   lines.push('|------|-----|------|----------|-----------|');
   lines.push('| Rédacteur technique | | | Prise d’acte du snapshot | |');
-  lines.push('| Membre CS | | | Revue de l’historique | |');
+  lines.push('| Garant scientifique : Rafik Gounane | | | Revue de l’historique | |');
   lines.push('| Fabricant | | | Approbation du registre | |');
   lines.push('');
   lines.push('---');
@@ -485,7 +485,7 @@ function generate(): string {
   lines.push('');
   lines.push('## 4. Historique des versions du référentiel');
   lines.push('');
-  lines.push('| Version | Date | Nature | Leviers concernés | Preuve | Signature CS |');
+  lines.push('| Version | Date | Nature | Leviers concernés | Preuve | Signature du garant scientifique |');
   lines.push('|---------|------|--------|-------------------|--------|--------------|');
   lines.push(`| v0.1 baseline | 2026-07 (seed) | Création INSERT #1 | ${v01.map((l) => l.id).join(', ')} | \`04_culinary_levers.sql\` | **Non** |`);
   lines.push(`| v0.2 extension | 2026-07 (seed) | Ajout INSERT #2 (catalogue LIV-47) | ${v02.map((l) => l.id).join(', ')} | LIV-47 + seed | **Non** |`);
@@ -527,7 +527,7 @@ function generate(): string {
   lines.push('');
   lines.push('Tiers **globaux** = `culinary_levers.ebm_tier`. Tiers bottleneck = `lever_bottleneck_map.tier_for_bottleneck`.');
   lines.push('');
-  lines.push('| ID | Nom FR | Cat. | Tier | Star | PMIDs | Mapping | Revue CS |');
+  lines.push('| ID | Nom FR | Cat. | Tier | Star | PMIDs | Mapping | Revue garant |');
   lines.push('|----|--------|------|------|------|-------|---------|----------|');
   for (const l of levers) {
     const pmids = l.pubmed_ids.length ? l.pubmed_ids.join(', ') : '—';
@@ -604,7 +604,7 @@ function generate(): string {
   lines.push('');
   lines.push('Table à renseigner à chaque évolution (LIV-15). Aucune modification de tier n’est enregistrée à ce jour.');
   lines.push('');
-  lines.push('| Date | Levier | Tier avant | Tier après | PMID ajouté/retiré | Fiche LIV-16 | Reviewer CS | SHA |');
+  lines.push('| Date | Levier | Tier avant | Tier après | PMID ajouté/retiré | Fiche LIV-16 | Garant scientifique | SHA |');
   lines.push('|------|--------|------------|------------|--------------------|--------------|-------------|-----|');
   lines.push('| — | — | — | — | — | — | — | — |');
   lines.push('');
@@ -612,7 +612,7 @@ function generate(): string {
   lines.push('');
   lines.push('## 10. Disclaimer');
   lines.push('');
-  lines.push('Les badges T1/T2/T3 de ce snapshot sont des **déclarations d’auteur** dans le seed. Ils ne constituent pas une validation scientifique externe. L’engagement produit ([`docs/EBM_TIERING.md`](../EBM_TIERING.md)) : *aucun T1 sans validation d’au moins un médecin du CS* — **non tenu** à ce jour.');
+  lines.push('Les badges T1/T2/T3 de ce snapshot sont des **déclarations d’auteur** dans le seed. Ils ne constituent pas une validation par le garant scientifique. L’engagement produit ([`docs/EBM_TIERING.md`](../EBM_TIERING.md)) : *aucun T1 sans validation du garant scientifique (Rafik Gounane)* — **non tenu** à ce jour (0/63). Le comité scientifique est supprimé (décision fabricant 2026-10-24).');
   lines.push('');
   lines.push('> Document généré automatiquement. Toute édition manuelle de la section 6 sera écrasée au prochain `npm run changelog:ebm`. Éditer les sections 1 (signatures) et 9 (journal) via PR, ou étendre le générateur.');
   lines.push('');

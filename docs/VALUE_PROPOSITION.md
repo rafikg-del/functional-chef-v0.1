@@ -200,7 +200,7 @@ Pour 100 consultations/mois : **~0.20 €/mois** de coût LLM.
 | Phase | Période | Jalons |
 |-------|---------|--------|
 | **Phase 1** (pré-commerciale) | J+0 à J+180 | ✅ Tests, PMIDs, 63 leviers, sécurité, MDR, dashboard, PDF |
-| **Phase 2** (beta clinique) | J+180 à J+360 | 20 praticiens beta, validation clinique, comité scientifique |
+| **Phase 2** (beta clinique) | J+180 à J+360 | 20 praticiens beta, validation clinique, garant scientifique (Rafik Gounane) |
 | **Phase 3** (scale) | J+360+ | USA, FDA 510(k), pricing US |
 
 ### Phase 1 — Statut actuel : 90% complété

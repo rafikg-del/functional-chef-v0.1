@@ -62,7 +62,7 @@ Causes contributives :
 
 Critère d’efficacité (mesurable) :
 
-Résultat (date, méthode : test, re-run `npm test`, `npm run liv25:concordance`, revue CS) :
+Résultat (date, méthode : test, re-run `npm test`, `npm run liv25:concordance`, revue du garant scientifique) :
 
 - [ ] Efficace — clôture proposée
 - [ ] Partiellement efficace — actions supplémentaires
@@ -83,5 +83,5 @@ Résultat (date, méthode : test, re-run `npm test`, `npm run liv25:concordance`
 |------|-----|------|----------|-----------|
 | Instructeur CAPA | | | | |
 | Fabricant | | | Clôture / refus | |
-| CS (si S1/S2 clinique ou EBM) | | | | |
+| Garant scientifique : Rafik Gounane (si S1/S2 clinique ou EBM) | | | | |
 | Qualité (si mandatée) | | | | |

@@ -2,7 +2,7 @@
 
 > **Document** : LIV-69 — Information patient (texte simple)
 > **Version** : v1.1 — 10 septembre 2026
-> **Statut** : brouillon — **pending avocat/CS**
+> **Statut** : brouillon — **pending avocat / garant scientifique**
 > **Remis par** : Dr ___________________ le ___ / ___ / ______
 > **Patient** : ___________________
 
@@ -127,4 +127,4 @@ Signature du médecin : ___________________________
 ---
 
 > Pour retirer votre accord ou exercer vos droits : parlez à votre médecin, ou écrivez à dpo@functional-chef.app.  
-> **Version** : v1.1 — 10 septembre 2026 · **pending avocat/CS**
+> **Version** : v1.1 — 10 septembre 2026 · **pending avocat / garant scientifique**

@@ -2,12 +2,12 @@
 
 > **Document** : LIV-68 — FAQ juridique et médicale
 > **Version** : v1.1 — 10 septembre 2026
-> **Relecture** : **pending avocat / CS** — aucune réponse ci-dessous n’est opposable.
+> **Relecture** : **pending avocat / garant scientifique** — aucune réponse ci-dessous n’est opposable. Garant scientifique : Rafik Gounane (décision 2026-10-24). Pas de comité scientifique. Signature non apposée.
 
 ---
 
 > ⚖️ **Bandeau juridique**  
-> Les sections **1 (médical / MDR)** et **2 (RGPD, hébergement, assurance)** sont des **brouillons internes**. Elles n’ont pas été relues par un avocat ni par le comité scientifique. Ne pas les citer comme position officielle. Marquage : « pending avocat/CS ».
+> Les sections **1 (médical / MDR)** et **2 (RGPD, hébergement, assurance)** sont des **brouillons internes**. Elles n’ont pas été relues par un avocat ni par le garant scientifique (Rafik Gounane). Il n’y a pas de comité scientifique. Ne pas les citer comme position officielle. Marquage : « pending avocat / garant scientifique ».
 
 ---
 
@@ -15,7 +15,7 @@
 
 ### Q1. Functional Chef est-il un dispositif médical ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Functional Chef interprète des biomarqueurs et propose des prescriptions culinaires personnalisées. Selon le Règlement (UE) 2017/745 (MDR), une qualification **Classe IIa** (Règle 11) est une hypothèse de travail, **non confirmée**. Le dossier technique MDR n’est pas soumis à un organisme notifié.
 
@@ -23,7 +23,7 @@ Functional Chef interprète des biomarqueurs et propose des prescriptions culina
 
 ### Q2. Un médecin peut-il être poursuivi pour avoir utilisé Functional Chef ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Comme pour tout outil d'aide à la décision, la **responsabilité finale incombe au praticien**. Functional Chef n’est pas un substitut au jugement clinique. La validation horodatée dans le système est une trace interne — sa valeur médico-légale n’a pas été expertisée.
 
@@ -31,14 +31,14 @@ Comme pour tout outil d'aide à la décision, la **responsabilité finale incomb
 
 ### Q3. Les tiers EBM sont-ils fiables ?
 
-> **pending CS**
+> **pending garant scientifique**
 
 Chaque levier porte un tier EBM-F basé sur des références PubMed :
 - **T1** : ≥1 méta-analyse de RCT humains
 - **T2** : RCT modeste ou cohorte solide
 - **T3** : Mécanistique ou observationnel
 
-Un audit interne des PMIDs a été réalisé (juillet 2026). **Le comité scientifique n’a pas encore validé les tiers pour une mise en production élargie.**
+Un audit interne des PMIDs a été réalisé (juillet 2026). **Le garant scientifique (Rafik Gounane) n’a pas encore signé les tiers pour une mise en production élargie.** Il n’y a pas de comité scientifique.
 
 ### Q4. Que faire en cas de divergence avec mon jugement clinique ?
 
@@ -46,7 +46,7 @@ Le jugement clinique prime toujours. Functional Chef est un outil d'aide :
 1. Vérifiez les biomarqueurs saisis
 2. Consultez la rationale détaillée du moteur (evidence array)
 3. Ajustez manuellement si nécessaire
-4. Signalez toute divergence au comité scientifique pour amélioration du modèle
+4. Signalez toute divergence au garant scientifique (Rafik Gounane) pour amélioration du modèle
 
 ### Q5. Puis-je utiliser Functional Chef pour des patients diabétiques sous insuline ?
 
@@ -74,7 +74,7 @@ Non. Functional Chef n'a pas été testé ni validé pour une population pédiat
 
 ### Q8. Functional Chef est-il conforme au RGPD ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Mesures **techniques** présentes dans le code (à faire confirmer juridiquement) :
 - **Consentement explicite** du patient avant traitement des données de santé (Art. 7)
@@ -86,7 +86,7 @@ Mesures **techniques** présentes dans le code (à faire confirmer juridiquement
 
 ### Q9. Où sont hébergées les données ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 - **Base de données** : Supabase (PostgreSQL) — viser une région Union Européenne
 - **Chiffrement** : AES-256 au repos, TLS 1.3 en transit (selon l’offre hébergeur)
@@ -95,7 +95,7 @@ Mesures **techniques** présentes dans le code (à faire confirmer juridiquement
 
 ### Q10. Les données sont-elles transmises aux États-Unis (appels LLM) ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs situés aux États-Unis. Les données transmises sont :
 - **Pseudonymisées** : aucun nom, prénom, email ou adresse
@@ -104,7 +104,7 @@ Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs sit
 
 ### Q11. Quelle est la durée de conservation des données ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 | Type de données | Durée | Justification |
 |----------------|-------|---------------|
@@ -115,7 +115,7 @@ Oui, les appels à l'API Anthropic/OpenAI peuvent transiter par des serveurs sit
 
 ### Q12. Un patient peut-il demander la suppression de ses données ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Oui. Le praticien peut :
 1. Supprimer le profil patient (données pseudonymisées conservées pour l'audit)
@@ -124,7 +124,7 @@ Oui. Le praticien peut :
 
 ### Q13. Functional Chef est-il assuré ?
 
-> **pending avocat/CS**
+> **pending avocat / garant scientifique**
 
 Une assurance responsabilité civile professionnelle et cyber **n’est pas encore souscrite** (action humaine, voir `docs/BETA_LAUNCH_RUNBOOK.md`). En phase actuelle, l’outil est utilisé sous la responsabilité exclusive du praticien. **Ne pas affirmer « assuré » auprès des early adopters.**
 
@@ -221,6 +221,6 @@ Non. Aucune donnée patient n'est utilisée pour l'entraînement de modèles. Le
 ---
 
 > **Document** : v1.1 — 10 septembre 2026  
-> **Statut juridique** : pending avocat/CS  
-> **Prochaine révision** : après relecture avocat + CS  
+> **Statut juridique** : pending avocat / garant scientifique  
+> **Prochaine révision** : après relecture avocat + garant scientifique  
 > **Contact** : support@functional-chef.app

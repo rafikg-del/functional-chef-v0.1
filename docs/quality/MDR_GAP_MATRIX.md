@@ -42,7 +42,7 @@ Classification IIa Règle 11 = **hypothèse**, pas une décision d’ON.
 | 1.2 | Rapport bénéfice/risque favorable | 🔶 | Texte MDR_DOSSIER §5.3. FMEA **10 scénarios** seulement (critère Phase 1 : ≥ 30). Non signé. |
 | 1.3 | Performance conforme à la destination | 🔶 | Cas-pivot A/B/C unitaires. Destination « aide praticien » non figée juridiquement (LIV-03). |
 | 1.4 | Risques réduits au minimum | 🔶 | Mitigations code (filtres, tests). R-06 allergènes : warning UI renforcé **non démontré**. FMEA incomplète. |
-| 1.5 | Précautions d’emploi | 🔶 | [GUIDE_UTILISATION](../GUIDE_UTILISATION.md), [FAQ](../FAQ.md), [NOTE_PATIENT](../NOTE_PATIENT.md) rédigés, **non relus** avocat/CS/early adopter. |
+| 1.5 | Précautions d’emploi | 🔶 | [GUIDE_UTILISATION](../GUIDE_UTILISATION.md), [FAQ](../FAQ.md), [NOTE_PATIENT](../NOTE_PATIENT.md) rédigés, **non relus** avocat / garant scientifique / early adopter. |
 
 ---
 
@@ -57,7 +57,7 @@ Classification IIa Règle 11 = **hypothèse**, pas une décision d’ON.
 | 10.4.5 | Logiciel : sécurité IT | 🔶 | RLS SQL (migration 002). **Pas de pentest.** `/api/classify` et `/api/compose` utilisent **service role** (bypass RLS) ; persist consultation **sans** `professional_id`. Middleware n’applique pas l’auth aux routes API. |
 | 14.2 | Dispositifs contenant des logiciels | 🔶 | Architecture documentée ; SMQ LIV-11 brouillon ; pas de plan IEC 62304 |
 | 17.1 | Accès non autorisés | 🔶 | Auth dashboard. API moteur non authentifiée au niveau middleware. Service role côté serveur. |
-| 17.2 | Fiabilité des algorithmes | 🔶 | Moteur déterministe testé. Concordance clinicien 70 %, VPP DYSBIOSE **non définie**. CS non signé. |
+| 17.2 | Fiabilité des algorithmes | 🔶 | Moteur déterministe testé. Concordance clinicien 70 %, VPP DYSBIOSE **non définie**. Garant scientifique non signé. |
 
 ---
 
@@ -72,7 +72,7 @@ Classification IIa Règle 11 = **hypothèse**, pas une décision d’ON.
 | Art. 10(10) | Enregistrement fabricant (EUDAMED) | ❌ | |
 | Art. 15 | PRRC | ❌ | Non désigné |
 | Art. 32 | SSCP | ❌ | |
-| Art. 61 / 62 | Évaluation / investigation clinique | 🔶 | LIV-24..27 = preuve interne, **hors Art. 62**, non signé CS, n=10 de faisabilité |
+| Art. 61 / 62 | Évaluation / investigation clinique | 🔶 | LIV-24..27 = preuve interne, **hors Art. 62**, non signé par le garant scientifique, n=10 de faisabilité |
 | Art. 83–86 | PMS / PSUR | ❌ | Pas de mise sur le marché |
 | Art. 87+ | Vigilance | ❌ | Canal NC LIV-13 brouillon seulement |
 | Art. 56 | Organisme notifié | ❌ | LIV-09 non démarré |
@@ -95,7 +95,7 @@ Classification IIa Règle 11 = **hypothèse**, pas une décision d’ON.
 
 | ID | Écart | Action | Acteur | Phase | Priorité |
 |----|-------|--------|--------|-------|----------|
-| PR-01 | Notice / précautions | Relecture LIV-67 + LIV-69 | Early adopter + CS | 1 | Haute |
+| PR-01 | Notice / précautions | Relecture LIV-67 + LIV-69 | Early adopter + garant scientifique | 1 | Haute |
 | PR-02 | Marquage CE | Après certificat | Fabricant | 2+ | Haute |
 | PR-03 | Étiquetage logiciel | Écran « à propos » : version tag, fabricant, classe | Dev | 2 | Haute |
 | PR-04 | Déclaration UE | Après ON | MDR | 2 | Haute |
@@ -104,10 +104,10 @@ Classification IIa Règle 11 = **hypothèse**, pas une décision d’ON.
 | PR-07 | ON | Pré-soumission LIV-09 | Expert MDR | 1 | Haute |
 | PR-08 | SMQ | Revue LIV-11..17 par consultant qualité | Qualité | 1 | Moyenne |
 | PR-09 | FMEA ≥ 30 | Compléter LIV-06 | Expert + fabricant | 1 | Haute |
-| PR-10 | CS + 100 % LIV-16 | Recrutement LIV-18..21 | Fabricant | 1 | Critique |
-| PR-11 | PMID ouverts | NC LIV-13, **pas** de PMID inventé | CS | 1 | Haute |
+| PR-10 | 100 % LIV-16 signées | Signature des 63 fiches par le garant scientifique. LIV-18..21 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** | Garant scientifique : Rafik Gounane | 1 | Critique |
+| PR-11 | PMID ouverts | NC LIV-13, **pas** de PMID inventé | Garant scientifique : Rafik Gounane | 1 | Haute |
 | PR-12 | API + RLS + audit | Auth API, fin service-role sur persist patient, `audit_log` classify/compose, pentest | Dev + sécu | 1 | Critique |
-| PR-13 | Pack LIV-25 DYSBIOSE | 2 cas intestinaux réels | ZOI / CS | 1 | Haute |
+| PR-13 | Pack LIV-25 DYSBIOSE | 2 cas intestinaux réels | ZOI ; acceptation d’écart : garant scientifique | 1 | Haute |
 | PR-14 | Avocat | Privacy + FAQ LIV-33/68 | Avocat | 1 | Haute |
 | PR-15 | Assurance | RC Pro + Cyber | Assureur | 1 | Haute |
 

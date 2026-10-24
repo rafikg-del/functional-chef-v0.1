@@ -1,7 +1,8 @@
 # Phase 1 — Pré-commercialisation (Objectif : J-90 à J+180)
 
-> **Statut** : Plan de travail — Mis à jour avec le pack qualité LIV-11..17 (septembre 2026)
-> **Version** : 1.2
+> **Statut** : Plan de travail — Mis à jour avec le pack qualité LIV-11..17 (septembre 2026) ; gouvernance scientifique annotée le 2026-10-24
+> **Version** : 1.3
+> **Gouvernance** : pas de comité scientifique. **Garant scientifique : Rafik Gounane**. LIV-18..21 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Signatures non pré-remplies.
 > **Objectif** : Atteindre un niveau de maturité réglementaire, clinique et technique suffisant pour ouvrir une beta clinique contrôlée (Phase 2), sans exposition juridique ou réputationnelle.
 
 ---
@@ -36,7 +37,7 @@ gantt
     Procédure revue tiers EBM        :b2, after b1, 14d
 
     section 3. Validation clinique
-    Comité scientifique (recrutement):c1, 2026-08-01, 30d
+    Comité scientifique — supprimé 2026-10-24 :c1, 2026-08-01, 30d
     Re-tiering 100% leviers          :c2, after c1, 21d
     Validation 10 cas ZOI            :c3, after c2, 30d
 
@@ -115,30 +116,32 @@ Mettre en place le squelette ISO 13485 adapté à un logiciel de santé (taille 
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-15** | Procédure d'ajout / modification d'un levier culinaire — [brouillon](quality/LIV-15_PROCEDURE_LEVIER_CULINAIRE.md) | Document contrôlé | Tout changement de tier passe par : rédaction → revue par ≥1 médecin CS → validation → déploiement. **CS non constitué : procédure non exécutable pour T1/T2** | 🟡 Important |
+| **LIV-15** | Procédure d'ajout / modification d'un levier culinaire — [brouillon](quality/LIV-15_PROCEDURE_LEVIER_CULINAIRE.md) | Document contrôlé | Tout changement de tier passe par : rédaction → revue du garant scientifique (Rafik Gounane) → validation → déploiement. **0/63 signées : T1/T2 non validés** | 🟡 Important |
 | **LIV-16** | Template de fiche de revue de levier — [formulaire](quality/LIV-16_FICHE_REVUE_LEVIER.md) · [dossiers remplis](quality/reviews/) | Markdown (PDF après signature) | Champs : PMID, tier proposé, tier validé, reviewer, date, réévaluation. **0 fiche signée** | 🟡 Important |
-| **LIV-17** | Changelog EBM (traçabilité de chaque modification de tier) — [snapshot](quality/LIV-17_CHANGELOG_EBM.md) · `npm run changelog:ebm` | Markdown généré depuis le seed | Historique initial v0.1+v0.2 : **63 leviers chargeables**, 0 revue CS ; tuples orphelins listés à part | 🟢 Nice-to-have |
+| **LIV-17** | Changelog EBM (traçabilité de chaque modification de tier) — [snapshot](quality/LIV-17_CHANGELOG_EBM.md) · `npm run changelog:ebm` | Markdown généré depuis le seed | Historique initial v0.1+v0.2 : **63 leviers chargeables**, 0 revue du garant scientifique ; tuples orphelins listés à part | 🟢 Nice-to-have |
 
 ---
 
 ## 3. Validation clinique — Crédibilité scientifique externe
 
 ### Objectif
-Passer de « tiers auto-déclarés » à « tiers validés par un comité scientifique », et produire une première évidence clinique sur cas réels.
+Passer de « tiers auto-déclarés » à « tiers validés par le garant scientifique (Rafik Gounane) », et produire une première évidence clinique sur cas réels.
 
-### J12-J41 — Recrutement comité scientifique
+### J12-J41 — Comité scientifique (historique, supprimé)
+
+Décision fabricant du 2026-10-24 : pas de recrutement. Le rôle d'approbation est celui du garant scientifique unique. Les lignes ci-dessous restent pour l'historique ; elles ne sont plus des préalables.
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-18** | Charte du comité scientifique (mission, membres, fréquence, rémunération) | PDF signé | ≥1 médecin nutritionnel + ≥1 chercheur en métabolisme | 🔴 Critique |
-| **LIV-19** | Convention de collaboration (propriété intellectuelle, confidentialité) | Contrat signé | Protège la PI du projet, pas de conflit d'intérêts | 🔴 Critique |
-| **LIV-20** | Comité constitué (min 2 membres) — CV + déclaration d'intérêts | Dossier RH | Vérification des références | 🔴 Critique |
+| **LIV-18** | Charte du comité scientifique (mission, membres, fréquence, rémunération) | PDF signé (historique) | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Ancien critère : ≥1 médecin nutritionnel + ≥1 chercheur en métabolisme | — |
+| **LIV-19** | Convention de collaboration (propriété intellectuelle, confidentialité) | Contrat signé (historique) | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Ancien critère : protège la PI, pas de conflit d'intérêts | — |
+| **LIV-20** | Comité constitué (min 2 membres) — CV + déclaration d'intérêts | Dossier RH (historique) | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Ancien critère : vérification des références | — |
 
 ### J42-J62 — Re-tiering complet (100% des leviers)
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-21** | Re-tiering de chaque levier existant par le CS | Fiches de revue (LIV-16) remplies | Chaque levier a au moins une signature CS | 🔴 Critique |
+| **LIV-21** | Re-tiering de chaque levier existant par le comité scientifique | Fiches de revue (historique) | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Le re-tiering, s'il a lieu, est la signature des fiches LIV-16 par le garant scientifique (**0/63**) | — |
 | **LIV-22** | Rapport de re-tiering : synthèse des modifications | PDF | Tiers modifiés listés avec justification | 🟡 Important |
 | **LIV-23** | Publication du tiers validé dans la base (mise à jour `culinary_levers.ebm_tier`) | Seed SQL + migration | Traçable dans le changelog EBM (LIV-17) | 🟡 Important |
 
@@ -146,16 +149,16 @@ Passer de « tiers auto-déclarés » à « tiers validés par un comité scient
 
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
-| **LIV-24** | [Protocole de validation](CLINICAL_VALIDATION_PROTOCOL.md) (critères d'inclusion, endpoints, méthode) | Document contrôlé | Approuvé par le CS | 🔴 Critique |
-| **LIV-25** | 10 cas cliniques réels anonymisés (ZOI ou patients du CS) — [pack](validation/liv25/) | JSON (+ PDF) | Pas de PHI, format structuré ; **DYSBIOSE 1/3 non atteint** (pack partiel) | 🔴 Critique |
-| **LIV-26** | Rapport de validation : résultats du moteur vs jugement clinique pour chaque cas | PDF | Concordance classifier vs médecin documentée pour chaque cas | 🔴 Critique |
-| **LIV-27** | Matrice de concordance : sensibilité, spécificité, VPP, VPN par bottleneck — [matrice](validation/liv25/LIV27_CONCORDANCE_MATRIX.md) | Tableau | Publiable (même en interne) ; **brouillon descriptif 7/10 (70 %)**, DYSBIOSE 1/3, non signé CS | 🟡 Important |
+| **LIV-24** | [Protocole de validation](CLINICAL_VALIDATION_PROTOCOL.md) (critères d'inclusion, endpoints, méthode) | Document contrôlé | Approuvé par le garant scientifique (Rafik Gounane) — signature encore vide | 🔴 Critique |
+| **LIV-25** | 10 cas cliniques réels anonymisés (réseau ZOI) — [pack](validation/liv25/) | JSON (+ PDF) | Pas de PHI, format structuré ; **DYSBIOSE 1/3 non atteint** (pack partiel). La patientèle d'un comité n'est plus une source | 🔴 Critique |
+| **LIV-26** | Rapport de validation : résultats du moteur vs jugement clinique pour chaque cas | PDF | Concordance classifier vs médecin documentée pour chaque cas ; signature du garant scientifique encore vide | 🔴 Critique |
+| **LIV-27** | Matrice de concordance : sensibilité, spécificité, VPP, VPN par bottleneck — [matrice](validation/liv25/LIV27_CONCORDANCE_MATRIX.md) | Tableau | Publiable (même en interne) ; **brouillon descriptif 7/10 (70 %)**, DYSBIOSE 1/3, non signé par le garant scientifique | 🟡 Important |
 
-**LIV-24** : brouillon contrôlé disponible — [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](CLINICAL_VALIDATION_PROTOCOL.md). Statut : en attente d'approbation CS. Les fixtures synthétiques (`patient-profiles.ts`, `test-validation-cases.ts`) ne constituent **pas** le set LIV-25.
+**LIV-24** : brouillon contrôlé disponible — [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](CLINICAL_VALIDATION_PROTOCOL.md). Statut : en attente de signature du garant scientifique. Les fixtures synthétiques (`patient-profiles.ts`, `test-validation-cases.ts`) ne constituent **pas** le set LIV-25.
 
 **LIV-25** : pack versé dans [`docs/validation/liv25/`](validation/liv25/) (README, manifeste, notes, 10 JSON). Pack **partiel** : stratum DYSBIOSE dominant **NON ATTEINT (1/3)** — il manque des cas à primauté intestinale. Aucun fixture synthétique ne complète le set.
 
-**LIV-26 / LIV-27** : note de désaccords [`LIV26_NOTE.md`](validation/liv25/LIV26_NOTE.md) et matrice descriptive [`LIV27_CONCORDANCE_MATRIX.md`](validation/liv25/LIV27_CONCORDANCE_MATRIX.md). Concordance dominante exacte **7/10 (70 %)** — cible C1 80 % non poursuivie à ce stade. Brouillons, non signés CS.
+**LIV-26 / LIV-27** : note de désaccords [`LIV26_NOTE.md`](validation/liv25/LIV26_NOTE.md) et matrice descriptive [`LIV27_CONCORDANCE_MATRIX.md`](validation/liv25/LIV27_CONCORDANCE_MATRIX.md). Concordance dominante exacte **7/10 (70 %)** — cible C1 80 % non poursuivie à ce stade. Brouillons, non signés par le garant scientifique. L'acceptation du taux observé n'est pas actée.
 
 ---
 
@@ -221,7 +224,7 @@ Consolider la fiabilité du moteur et étendre le référentiel pour tenir la pr
 |----------|-------------|--------|----------------------|----------|
 | **LIV-47** | Catalogue des 35 nouveaux leviers ciblés (doc de spécification avant implémentation) | Markdown | Chaque levier : catégorie, mécanisme, tier proposé, 1 reference pivot, contre-indications | 🟡 Important |
 | **LIV-48** | Nouveaux seeds SQL (35 leviers) + mapping + thresholds | SQL | Validation syntaxique + intégrité référentielle | 🟡 Important |
-| **LIV-49** | Nouveaux tiers validés par le comité scientifique | Fiches LIV-16 | Applicable si le CS est déjà constitué | 🟢 Nice-to-have |
+| **LIV-49** | Nouveaux tiers validés par le garant scientifique | Fiches LIV-16 | Signature de Rafik Gounane ; LIV-18..21 supprimés | 🟢 Nice-to-have |
 
 ---
 
@@ -284,7 +287,7 @@ Produire les artefacts nécessaires pour ouvrir un pilote clinique contrôlé de
 | Livrable | Description | Format | Critère d'acceptation | Priorité |
 |----------|-------------|--------|----------------------|----------|
 | **LIV-67** | Guide d'utilisation pour le praticien (prise en main, cas d'usage, limites) | PDF (<15 pages) | Relu par 1 early adopter | 🟡 Important |
-| **LIV-68** | FAQ juridique et médicale (responsabilité, confidentialité, MDR, RGPD) | Page web + PDF | Relue par avocat + comité scientifique | 🟡 Important |
+| **LIV-68** | FAQ juridique et médicale (responsabilité, confidentialité, MDR, RGPD) | Page web + PDF | Relue par avocat + garant scientifique (Rafik Gounane) — relecture non faite | 🟡 Important |
 | **LIV-69** | Note d'information patient (ce que fait Functional Chef, ce qu'il ne fait pas, consentement) | Page web + PDF imprimable | Niveau de lecture Flesch ≥60 | 🔴 Critique |
 
 ---
@@ -296,7 +299,7 @@ Produire les artefacts nécessaires pour ouvrir un pilote clinique contrôlé de
 | Consultant réglementaire MDR | 5 000 - 8 000 € | **1 500 - 3 000 €** (relecture + signature) | ~60% |
 | Consultant qualité ISO 13485 | 3 000 - 5 000 € | **1 000 - 2 000 €** (relecture procédures) | ~60% |
 | Avocat RGPD + contrats | 2 000 - 4 000 € | **1 000 - 2 000 €** (relecture politique) | ~50% |
-| Comité scientifique (2 médecins) | 3 000 - 5 000 € | **2 000 - 3 000 €** (invariant — signature requise) | ~30% |
+| Comité scientifique (2 médecins) | 3 000 - 5 000 € | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** (poste non engagé ; le total ci-dessous inclut encore l'enveloppe historique) | — |
 | Développement (auth, RLS, tests, PDF) | Temps dev (4-6 sem) | **Temps dev (moi)** — 0 € | 100% |
 | Assurance RC Pro + Cyber | 1 500 - 3 000 €/an | **1 500 - 3 000 €/an** (invariant) | 0% |
 | **Total Phase 1** | **15 000 - 25 000 €** | **~7 000 - 13 000 €** | **~50%** |
@@ -305,7 +308,7 @@ Produire les artefacts nécessaires pour ouvrir un pilote clinique contrôlé de
 
 ## Critères de passage en Phase 2
 
-Checklist opérationnelle (DONE / DRAFT_NEEDS_EXPERT / BLOCKED_HUMAN) : **[`docs/PRODUCTION_READINESS.md`](PRODUCTION_READINESS.md)** — décision au 2026-09-10 : **NO-GO**.
+Checklist opérationnelle (DONE / DRAFT_NEEDS_EXPERT / BLOCKED_HUMAN) : **[`docs/PRODUCTION_READINESS.md`](PRODUCTION_READINESS.md)** — décision **NO-GO** (annotation gouvernance 2026-10-24 : 1 DONE / 9 DRAFT_NEEDS_EXPERT / 2 BLOCKED_HUMAN).
 
 Pack qualité (LIV-11..17, LIV-02) : [`docs/quality/`](quality/).
 
@@ -314,7 +317,7 @@ Avant d'ouvrir la beta clinique (Phase 2 — 20 patients), ces **checkpoints obl
 - [ ] **LIV-03** : Classification MDR claire + note juridique favorable
 - [ ] **LIV-06** : Analyse des risques complète (≥30 scénarios)
 - [ ] **LIV-16** : Procédure de revue EBM appliquée à 100% des leviers
-- [ ] **LIV-24** : Protocole de validation clinique approuvé par le CS
+- [ ] **LIV-24** : Protocole de validation clinique approuvé par le garant scientifique (Rafik Gounane) — non signé
 - [ ] **LIV-29** : RLS Supabase activées et testées (test d'intrusion basique)
 - [ ] **LIV-33** : Politique de confidentialité publiée
 - [ ] **LIV-36** : Audit trail opérationnel
@@ -334,7 +337,8 @@ Avant d'ouvrir la beta clinique (Phase 2 — 20 patients), ces **checkpoints obl
 | DM | Dispositif Médical |
 | ON | Organisme Notifié |
 | RLS | Row-Level Security (Supabase) |
-| CS | Comité Scientifique |
+| Garant scientifique | Rafik Gounane, seul signataire scientifique et clinique (décision fabricant 2026-10-24) |
+| CS | Ancienne abréviation « comité scientifique » — rôle **supprimé** (LIV-18..21) |
 | CAPA | Corrective And Preventive Action |
 | FMEA | Failure Mode and Effects Analysis |
 | PHI | Protected Health Information |

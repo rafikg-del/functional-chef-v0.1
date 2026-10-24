@@ -3,7 +3,8 @@
 > **Statut du pack** : **Brouillon — signature humaine requise**
 > **Date** : 2026-09-10
 > **Périmètre** : système qualité minimal (ISO 13485 adapté logiciel) + maîtrise EBM + registre logiciel
-> **Ne constitue pas** une certification, un marquage CE, ni une approbation CS / avocat / assureur / organisme notifié
+> **Ne constitue pas** une certification, un marquage CE, ni une approbation du garant scientifique / avocat / assureur / organisme notifié
+> **Gouvernance (2026-10-24)** : pas de comité scientifique. **Garant scientifique : Rafik Gounane**. LIV-18..21 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Aucune signature pré-remplie.
 
 Ce dossier rassemble les livrables **LIV-11 à LIV-17** et la matrice d’écart MDR autonome (LIV-02). Tous les documents sont des **brouillons contrôlés** destinés à une revue-signature humaine. Aucune case « approuvé » n’est pré-remplie.
 
@@ -35,5 +36,5 @@ npm run changelog:software   # LIV-14 snapshot
 ## Règle d’honnêteté
 
 - Pas de PMID inventé, pas de signature fantôme, pas de « ✅ conforme » sans preuve dans le repo.
-- Les tiers EBM du seed sont **auto-déclarés** jusqu’à revue CS (LIV-16 / LIV-21).
+- Les tiers EBM du seed sont **auto-déclarés** jusqu’à revue signée du garant scientifique (LIV-16). LIV-21 est supprimé.
 - Un document « v1.0 » ici signifie **version de brouillon**, pas « en vigueur ».

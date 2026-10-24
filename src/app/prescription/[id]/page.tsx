@@ -306,7 +306,7 @@ export default function PrescriptionPage() {
               <p className="font-medium text-neutral-700">{new Date(c.issued_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
             </div>
             <div className="bg-neutral-50 border rounded p-2">
-              <p className="text-[8px] uppercase tracking-wider text-neutral-500 font-medium">Valide jusqu'au</p>
+              <p className="text-[8px] uppercase tracking-wider text-neutral-500 font-medium">Valide jusqu&apos;au</p>
               <p className="font-medium text-neutral-700">{new Date(c.valid_until).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
             </div>
           </div>
@@ -578,7 +578,7 @@ export default function PrescriptionPage() {
                     <li key={i} className="text-[11px]">{cr}</li>
                   ))}
                 </ul>
-                <p className="font-medium text-blue-800 mt-2 mb-0.5">Critères d'escalade</p>
+                <p className="font-medium text-blue-800 mt-2 mb-0.5">Critères d&apos;escalade</p>
                 <ul className="list-disc list-inside space-y-0.5">
                   {c.follow_up.escalation_triggers.map((et: string, i: number) => (
                     <li key={i} className="text-[11px]">{et}</li>
@@ -630,7 +630,7 @@ export default function PrescriptionPage() {
               <div className="text-right">
                 <p className="text-[9px] uppercase tracking-wider text-neutral-500 font-medium mb-0.5">Date et validité</p>
                 <p className="font-medium">Émis le {new Date(c.issued_at).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
-                <p className="text-[11px] text-neutral-600">Valide jusqu'au {new Date(c.valid_until).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
+                <p className="text-[11px] text-neutral-600">Valide jusqu&apos;au {new Date(c.valid_until).toLocaleDateString('fr-FR', { dateStyle: 'long' })}</p>
                 <div className="mt-3 space-y-0.5">
                   <p className="text-[9px] text-neutral-400 font-mono">Doc: {c.document_id}</p>
                   <p className="text-[9px] text-neutral-400 font-mono">Engine: {c.engine_version}</p>

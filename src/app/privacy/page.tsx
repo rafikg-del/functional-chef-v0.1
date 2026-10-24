@@ -40,7 +40,7 @@ export default function PrivacyPage() {
             <h3 className="font-serif text-lg text-ink-900 mt-4">Données Praticien</h3>
             <ul>
               <li>Nom, email professionnel, numéro RPPS (optionnel)</li>
-              <li>Spécialité, structure d'exercice</li>
+              <li>Spécialité, structure d&apos;exercice</li>
               <li>Journal de connexion</li>
             </ul>
             <h3 className="font-serif text-lg text-ink-900 mt-4">Données Patient</h3>
@@ -52,7 +52,7 @@ export default function PrivacyPage() {
             </ul>
             <p className="text-xs text-ink-500 mt-2">
               <strong>Aucune donnée nominative directe</strong> (nom, prénom, adresse, 
-              numéro de sécurité sociale) n'est stockée dans le système.
+              numéro de sécurité sociale) n&apos;est stockée dans le système.
             </p>
           </section>
 
@@ -60,7 +60,7 @@ export default function PrivacyPage() {
             <h2 className="font-serif text-xl text-ink-900">3. Base légale du traitement</h2>
             <p>Le traitement des données repose sur :</p>
             <ul>
-              <li><strong>Pour les Praticiens</strong> : intérêt légitime + exécution de conditions d'utilisation</li>
+              <li><strong>Pour les Praticiens</strong> : intérêt légitime + exécution de conditions d&apos;utilisation</li>
               <li><strong>Pour les Patients</strong> : consentement explicite (Article 9.2.a RGPD — données de santé)</li>
             </ul>
           </section>
@@ -70,7 +70,7 @@ export default function PrivacyPage() {
             <ul>
               <li><strong>Hébergement</strong> : Supabase (PostgreSQL) — hébergement France/UE</li>
               <li><strong>Chiffrement</strong> : Chiffré au repos (AES-256) et en transit (TLS 1.3)</li>
-              <li><strong>Appels LLM</strong> : Les données transmises à l'API LLM (Anthropic/OpenAI) sont anonymisées. Aucun identifiant patient n'est inclus dans les prompts.</li>
+              <li><strong>Appels LLM</strong> : Les données transmises à l&apos;API LLM (Anthropic/OpenAI) sont anonymisées. Aucun identifiant patient n&apos;est inclus dans les prompts.</li>
               <li><strong>Authentification</strong> : Supabase Auth avec email + mot de passe ou Magic Link</li>
               <li><strong>RLS</strong> : Un praticien ne peut voir que ses propres patients et consultations</li>
             </ul>
@@ -81,8 +81,8 @@ export default function PrivacyPage() {
             <ul>
               <li>Consultations : <strong>3 ans</strong> après la création</li>
               <li>Profils patients : <strong>5 ans</strong> après la dernière consultation</li>
-              <li>Journal d'audit : <strong>10 ans</strong> (obligation médico-légale)</li>
-              <li>Données Praticien : jusqu'à suppression du compte</li>
+              <li>Journal d&apos;audit : <strong>10 ans</strong> (obligation médico-légale)</li>
+              <li>Données Praticien : jusqu&apos;à suppression du compte</li>
             </ul>
           </section>
 
@@ -102,9 +102,9 @@ export default function PrivacyPage() {
           <section>
             <p>Vous disposez des droits suivants :</p>
             <ul>
-              <li><strong>Droit d'accès</strong> (Article 15) — obtenir une copie des données</li>
+              <li><strong>Droit d&apos;accès</strong> (Article 15) — obtenir une copie des données</li>
               <li><strong>Droit de rectification</strong> (Article 16) — corriger les données inexactes</li>
-              <li><strong>Droit à l'effacement</strong> (Article 17) — supprimer le compte via <Link href="/dashboard/settings" className="text-saffron-700 hover:underline">Paramètres</Link> ou <code>POST /api/account/delete</code></li>
+              <li><strong>Droit à l&apos;effacement</strong> (Article 17) — supprimer le compte via <Link href="/dashboard/settings" className="text-saffron-700 hover:underline">Paramètres</Link> ou <code>POST /api/account/delete</code></li>
               <li><strong>Droit à la limitation</strong> (Article 18)</li>
               <li><strong>Droit à la portabilité</strong> (Article 20)</li>
             </ul>
@@ -118,7 +118,7 @@ export default function PrivacyPage() {
               vers les États-Unis. Ces transferts sont encadrés par les clauses contractuelles 
               types (CCT) de la Commission européenne. Les données transférées sont limitées 
               aux biomarqueurs et signaux cliniques anonymisés — aucune donnée nominative 
-              directe n'est transmise.
+              directe n&apos;est transmise.
             </p>
           </section>
 

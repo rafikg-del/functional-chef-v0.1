@@ -78,7 +78,7 @@ export default function DashboardPage() {
             <h2 className="font-serif text-xl text-ink-900 mb-2">Complétez votre profil</h2>
             <p className="text-sm text-ink-600 mb-4">
               Pour utiliser Functional Chef, vous devez renseigner votre profil professionnel 
-              et accepter les conditions d'utilisation.
+              et accepter les conditions d&apos;utilisation.
             </p>
             <Link href="/auth/profile" className="btn-primary text-sm">
               Compléter mon profil →
@@ -125,7 +125,7 @@ export default function DashboardPage() {
 
         <div className="mt-10 pt-6 border-t border-ink-200">
           <Link href="/" className="text-xs text-ink-500 hover:text-ink-700 transition-colors">
-            ← Retour à l'accueil
+            ← Retour à l&apos;accueil
           </Link>
         </div>
       </div>

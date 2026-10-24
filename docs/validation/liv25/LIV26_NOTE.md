@@ -1,6 +1,6 @@
 # LIV-26 — Note FR : désaccords de concordance (investigation)
 
-> **Statut** : note technique, non signée CS, hors claim de performance (LIV-24 §15.2).  
+> **Statut** : note technique, non signée par le garant scientifique (Rafik Gounane), hors claim de performance (LIV-24 §15.2).  
 > **Run** : `npm run liv25:concordance` — classifier réel + seed `03_biomarker_thresholds.sql`.  
 > **Freeze de référence** : `f8d0acc` (7/10). Cette note documente les 3 désaccords et ce qui a (ou n’a pas) été corrigé.
 

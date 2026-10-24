@@ -1,13 +1,13 @@
 # LIV-25 — Pack de validation clinique anonymisé (n=10)
 
-> **Livrable** : LIV-25 — 10 cas ZOI / CS, format JSON structuré  
+> **Livrable** : LIV-25 — 10 cas ZOI, format JSON structuré  
 > **Protocole** : [`docs/CLINICAL_VALIDATION_PROTOCOL.md`](../../CLINICAL_VALIDATION_PROTOCOL.md) (LIV-24)  
 > **Roadmap** : [`docs/PHASE1_ROADMAP.md`](../../PHASE1_ROADMAP.md) § J63-J92  
 > **Statut** : **Pack partiel** — stratum DYSBIOSE dominant **NON ATTEINT (1/3)**
 
 ## Qu'est-ce que LIV-25 ?
 
-LIV-25 est le **set clinique réel** du protocole LIV-24 : dix dossiers issus du réseau ZOI Analyse Patient et/ou de la patientèle du comité scientifique, **anonymisés**, destinés à mesurer la concordance entre le classifier Functional Chef et le jugement clinicien (LIV-26 / LIV-27).
+LIV-25 est le **set clinique réel** du protocole LIV-24 : dix dossiers issus du réseau ZOI Analyse Patient, **anonymisés**, destinés à mesurer la concordance entre le classifier Functional Chef et le jugement clinicien (LIV-26 / LIV-27). Il n'y a pas de comité scientifique (décision fabricant 2026-10-24). La signature du garant scientifique (Rafik Gounane) sur LIV-24 / LIV-26 / LIV-27 n'est pas apposée.
 
 Ce n'est **pas** le corpus synthétique (`patient-profiles.ts`, cas-pivot A/B/C, `test-validation-cases.ts`). Les deux jeux ne se mélangent jamais.
 

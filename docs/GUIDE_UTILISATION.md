@@ -10,7 +10,7 @@
 
 > **Functional Chef n’est pas un dispositif médical.**  
 > C’est un outil d’aide à la prescription nutritionnelle. Il ne pose pas de diagnostic. Il ne remplace pas un avis médical. Toute sortie (classification, leviers, plat, PDF) doit être **relue et validée par le praticien** avant transmission au patient.  
-> Périmètre v0.2 : 3 bottlenecks (IR, INFLAM, DYSBIOSE), usage adulte, pas de pédiatrie. Les tiers EBM (T1/T2/T3) sont auto-déclarés, en revue scientifique. Qualification MDR et relecture avocat : **en attente**.
+> Périmètre v0.2 : 3 bottlenecks (IR, INFLAM, DYSBIOSE), usage adulte, pas de pédiatrie. Les tiers EBM (T1/T2/T3) sont auto-déclarés. La revue du garant scientifique (Rafik Gounane) n’est pas signée. Il n’y a pas de comité scientifique. Qualification MDR et relecture avocat : **en attente**.
 
 ---
 
@@ -264,7 +264,7 @@ Voir aussi l’encadré **Limites / non DM** en tête de ce guide.
 - **3 bottlenecks seulement** en v0.2 — ne couvre pas l'intégralité de la médecine fonctionnelle
 - **Pas de gestion pédiatrique** — usage adulte uniquement
 - **Composition LLM** côté serveur (clé Anthropic) — `/demo` classifie sans
-- **Pas d'étude de validation clinique publiée** — les tiers EBM sont auto-déclarés (revue CS en cours)
+- **Pas d'étude de validation clinique publiée** — les tiers EBM sont auto-déclarés (revue du garant scientifique non signée ; pas de comité scientifique)
 - **Waitlist ≠ compte** — `/beta` n’ouvre pas `/dashboard`
 
 ---
@@ -297,7 +297,7 @@ Voir aussi l’encadré **Limites / non DM** en tête de ce guide.
 | Canal | Adresse |
 |-------|---------|
 | **Guide** | `docs/GUIDE_UTILISATION.md` |
-| **FAQ** | `docs/FAQ.md` (mentions juridiques : pending avocat/CS) |
+| **FAQ** | `docs/FAQ.md` (mentions juridiques : pending avocat / garant scientifique) |
 | **Runbook beta** | `docs/BETA_LAUNCH_RUNBOOK.md` |
 | **GitHub** | [rafikg-del/functional-chef-v0.1](https://github.com/rafikg-del/functional-chef-v0.1) |
 | **Email support** | support@functional-chef.app |
@@ -306,6 +306,6 @@ Voir aussi l’encadré **Limites / non DM** en tête de ce guide.
 ---
 
 > **Version** : v1.1 — 10 septembre 2026  
-> **Prochaine révision** : après relecture avocat / CS  
+> **Prochaine révision** : après relecture avocat / garant scientifique  
 > **Rédaction** : Hermes Agent  
 > **Relecture clinique** : Dr Rafik Gounane

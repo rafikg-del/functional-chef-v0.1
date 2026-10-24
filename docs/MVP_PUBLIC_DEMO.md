@@ -2,7 +2,7 @@
 
 Parcours visiteur **sans compte praticien** : landing → démo → waitlist.
 
-Hors périmètre de ce MVP : dashboard auth, signatures MDR/CS, Phase 2 clinique, concordance, nouveaux cas DYSBIOSE, gaming de seuils.
+Hors périmètre de ce MVP : dashboard auth, signatures MDR / garant scientifique, Phase 2 clinique, concordance, nouveaux cas DYSBIOSE, gaming de seuils.
 
 ---
 
@@ -75,7 +75,7 @@ Détail runbook beta : `docs/BETA_LAUNCH_RUNBOOK.md`.
 
 ## Limites connues
 
-- L’aperçu culinaire A/B/C est un **fixture catalogue** (plus un plat déterministe pour le profil custom). Ce n’est pas un dossier patient, pas un export PDF, pas une validation CS.
+- L’aperçu culinaire A/B/C est un **fixture catalogue** (plus un plat déterministe pour le profil custom). Ce n’est pas un dossier patient, pas un export PDF, pas une validation du garant scientifique.
 - Les effets 2-4 h / 4 sem / 12 sem sont ceux de la **littérature des leviers**, pas une mesure sur le plat affiché.
 - Composition Claude publique seulement si la clé serveur est présente ; échec LLM → retour silencieux au fixture.
 - Waitlist prod : **appliquer 004** reste une action humaine. Le code ne crée pas la table tout seul.

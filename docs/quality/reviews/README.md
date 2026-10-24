@@ -3,7 +3,7 @@
 > **Statut** : dossier vide — **Brouillon — signature humaine requise**
 > **Procédure** : [LIV-15](../LIV-15_PROCEDURE_LEVIER_CULINAIRE.md) · [template](../LIV-16_FICHE_REVUE_LEVIER.md)
 
-Aucune fiche n’est versée à ce jour. **0 / 63** leviers chargeables ont une signature CS ([LIV-17](../LIV-17_CHANGELOG_EBM.md)).
+Aucune fiche n’est versée à ce jour. **0 / 63** leviers chargeables ont une signature du garant scientifique, Rafik Gounane ([LIV-17](../LIV-17_CHANGELOG_EBM.md)). Le comité scientifique n’existe pas (LIV-18..21 supprimés le 2026-10-24).
 
 Convention de nommage, après revue réelle :
 

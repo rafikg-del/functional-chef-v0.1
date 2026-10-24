@@ -67,7 +67,7 @@ Cible LIV-24 §7.2 : **≥ 3 cas à dominant DYSBIOSE**.
 1. LIV-25 reste **partiel**. Le livrable roadmap n'est pas clos.
 2. On **n'ajoute pas** de profil synthétique (`patient-profiles.ts` C1–C5, cas-pivot C).
 3. Suite : screener au moins **deux dossiers réels à primauté intestinale** (socle §6.1 : ≥2 signaux parmi Bristol, ballonnements, calprotectine, SIBO, ABX/IPP, fibres / diversité végétale), hors MICI en poussée (E11).
-4. Si le vivier ZOI/CS reste insuffisant : consigner l'écart, le CS décide (n<10, élargir la source, ou assouplir la strate) — LIV-24 §7.2.
+4. Si le vivier ZOI reste insuffisant : consigner l'écart, le garant scientifique (Rafik Gounane) décide (n<10, élargir la source, ou assouplir la strate) — LIV-24 §7.2. Cette décision n'est pas signée. Le comité scientifique est supprimé (2026-10-24). Les cibles de strate ne changent pas.
 
 ## 5. Checklist PHI (avant `git add`)
 

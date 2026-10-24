@@ -102,7 +102,7 @@ Ces items **ne sont pas** fermés par ce PR. Les bloquer explicitement avant d�
 | Action | Owner | Livrable | Bloquant beta élargie ? |
 |--------|-------|----------|-------------------------|
 | Relecture avocat (RGPD, CGU, qualification DM) | Avocat santé / data | FAQ + privacy tamponnés | Oui |
-| Relecture comité scientifique (tiers EBM, protocoles LIV-24+) | CS | Note de non-objection | Oui pour claims T1 |
+| Relecture du garant scientifique (tiers EBM, protocoles LIV-24+) — Rafik Gounane, signature non apposée | Garant scientifique : Rafik Gounane | Note de non-objection | Oui pour claims T1 |
 | Assurance RC pro + cyber | Courtier | Attestation | Oui avant patients réels hors cabinet fondateur |
 | Recrutement 5 early adopters (réseau ZOI / FM) | Dr Gounane | 5 emails + 1 call démo chacun | Objectif GTM, pas un gate technique |
 | Hébergement données de santé (HDS) si la qualification l’exige | Ops | Contrat / région | À trancher avec l’avocat |
@@ -135,4 +135,4 @@ Jusqu’à ces relectures : **pas de claim thérapeutique**, pas de « dispositi
 ---
 
 > **Version** : v1.0 — 10 septembre 2026  
-> **Prochaine révision** : après relecture avocat / CS
+> **Prochaine révision** : après relecture avocat / garant scientifique

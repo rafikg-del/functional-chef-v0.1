@@ -41,7 +41,7 @@ Functional Chef vise à fournir aux professionnels de santé un **outil d’aide
 
 1. **Sûr** : filtres de contre-indication déterministes avant toute composition LLM ; le praticien valide avant transmission patient.
 2. **Traçable** : chaque sortie moteur doit pouvoir être reliée à une version logicielle, un jeu de leviers et un jeu de seuils.
-3. **Honnête sur la preuve** : les leviers portent un tier EBM-F (T1/T2/T3) ; **aucun T1 n’est considéré validé** tant qu’un membre du comité scientifique (CS) n’a pas signé la fiche LIV-16.
+3. **Honnête sur la preuve** : les leviers portent un tier EBM-F (T1/T2/T3) ; **aucun T1 n’est considéré validé** tant que le garant scientifique (Rafik Gounane) n’a pas signé la fiche LIV-16. Au 2026-10-24 : **0/63**.
 4. **Limité dans sa destination** : aide à la décision, **pas** un diagnostic autonome, **pas** un traitement, **pas** un substitut au jugement clinique.
 
 Cette politique s’applique dès la conception (approche « treat as DM ») même si la qualification MDR finale diffère — voir LIV-03 dans [`docs/MDR_DOSSIER.md`](../MDR_DOSSIER.md).
@@ -88,14 +88,22 @@ La classe IIa (Règle 11) est une **hypothèse de travail**. Tant que LIV-03 n�
 | **Fabricant** | Destination prévue, ressources, revue de direction, mise sur le marché | Dr Rafik Gounane (individuel) |
 | **PRRC** (MDR Art. 15) | Conformité permanente du SMQ et de la documentation technique | **Non désigné** — BLOCKED_HUMAN |
 | **Responsable technique logiciel** | Conception, CI, tags, registre LIV-14 | Assuré par le fabricant / contributeurs repo |
-| **Comité scientifique (CS)** | Revue des tiers EBM (LIV-15/16/21), protocole LIV-24 | **Non constitué** (LIV-18 à LIV-20 ouverts) |
+| **Garant scientifique : Rafik Gounane** | Revue des tiers EBM (LIV-15/16), protocole LIV-24, signature LIV-26/27 | Désigné. **Signatures encore vides** (0/63 fiches LIV-16 ; LIV-24 non signé) |
 | **Consultant qualité** | Revue de ce manuel et des SOP | **Non mandaté** |
 | **Expert MDR** | Classification, dossier technique, liaison ON | **Non mandaté** |
 | **Avocat** | RGPD, CGU, FAQ juridique | **Non mandaté** (LIV-33, LIV-68) |
 | **Organisme notifié** | Évaluation de conformité IIa | **Non sélectionné** (LIV-09) |
 | **Praticien utilisateur** | Validation clinique de chaque sortie, consentement patient | Hors organisation interne ; utilisateur du DM |
 
-En l’absence de CS et de PRRC, **aucune release « usage clinique réel » n’est autorisée** par ce manuel.
+En l’absence de PRRC, et tant que le garant scientifique n’a pas signé les fiches LIV-16 et le protocole LIV-24, **aucune release « usage clinique réel » n’est autorisée** par ce manuel.
+
+### 4.1 Garant scientifique unique — note du 2026-10-24
+
+Décision du fabricant, Rafik Gounane, le **2026-10-24** : il n’y a **pas** de comité scientifique. Le garant scientifique et clinique est **Rafik Gounane**, seul signataire prévu des revues de levier (LIV-16), du protocole (LIV-24) et des conclusions LIV-26/27.
+
+Les livrables LIV-18 à LIV-21 (charte, contrat, constitution du comité et déclarations d’intérêts, re-tiering par un comité) portent le statut **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. L’historique reste dans [`docs/PHASE1_ROADMAP.md`](../PHASE1_ROADMAP.md). Ils ne sont plus un préalable.
+
+**Limitation connue.** L’indépendance de la revue n’est pas organisée : le garant scientifique est aussi le fabricant. Ce point est à discuter avec l’expert MDR. Ce manuel **ne revendique pas** l’acceptabilité réglementaire de ce montage. Aucune signature n’est pré-remplie.
 
 ---
 
@@ -109,7 +117,7 @@ Politique (LIV-11)
     ├── Non-conformités / CAPA (LIV-13)
     ├── Conception & risques (MDR_DOSSIER LIV-04..06) — FMEA incomplète
     ├── Vérification (tests unitaires, CI LIV-43)
-    ├── Validation clinique interne (LIV-24..27) — pack partiel, non signé CS
+    ├── Validation clinique interne (LIV-24..27) — pack partiel, non signé par le garant scientifique
     └── Revue de direction (§9)
 ```
 
@@ -159,7 +167,7 @@ Ordre du jour type :
 
 1. Politique et périmètre (inchangés ?)
 2. Écarts MDR (matrice)
-3. Statut CS / PRRC / assurance
+3. Statut garant scientifique / PRRC / assurance
 4. NC / CAPA ouvertes
 5. Résultats de vérification (CI, LIV-25/26/27)
 6. Décision Go / No-Go Phase 2

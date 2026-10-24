@@ -76,4 +76,4 @@ Si un utilisateur (médecin) signale une référence obsolète ou une mauvaise g
 2. Re-tiering documenté avec changelog
 3. Notification aux consultations passées si la révision change le badge
 
-L'engagement est : **aucun T1 ne peut être attribué sans qu'au moins un médecin du conseil scientifique ait validé la référence pivot**. C'est le contrôle qualité fondamental.
+L'engagement est : **aucun T1 ne peut être attribué sans que le garant scientifique (Rafik Gounane) ait validé la référence pivot**. Décision fabricant du 2026-10-24 : il n'y a pas de comité scientifique (LIV-18..21 supprimés). L'indépendance de cette revue unique est une limitation connue, à discuter avec l'expert MDR ; elle n'est pas présentée comme acceptable au sens réglementaire. Au 2026-10-24, **0/63** fiches sont signées.

@@ -7,7 +7,7 @@
 > **SHA git** : `018a354`
 > **Sources** : `supabase/seed/04_culinary_levers.sql`, `supabase/seed/05_lever_bottleneck_map.sql`
 > **Génération** : `npm run changelog:ebm` (`scripts/generate-ebm-changelog.ts`)
-> **Ne pas signer ce fichier tel quel** : les tiers sont auto-déclarés ; **0 fiche LIV-16 signée CS**.
+> **Ne pas signer ce fichier tel quel** : les tiers sont auto-déclarés ; **0 fiche LIV-16 signée par le garant scientifique (Rafik Gounane)**.
 
 ---
 
@@ -17,8 +17,8 @@
 |-------|--------|
 | Nature | Registre de traçabilité des tiers EBM-F |
 | Périmètre | Leviers **chargeables** via `INSERT INTO culinary_levers` uniquement |
-| Hors-périmètre | Tuples SQL orphelins après le 2ᵉ INSERT (non exécutables) ; PMIDs inventés ; signatures CS fictives |
-| Revue CS | **Aucune** à la date du snapshot |
+| Hors-périmètre | Tuples SQL orphelins après le 2ᵉ INSERT (non exécutables) ; PMIDs inventés ; signatures fictives du garant scientifique |
+| Revue du garant scientifique | **Aucune** à la date du snapshot. Signataire prévu : Rafik Gounane. LIV-18..21 supprimés (2026-10-24) |
 | Réévaluation | Tous les 6 mois ou à chaque modification de tier (LIV-15) |
 
 ### 1.1 Signatures (vacantes)
@@ -26,7 +26,7 @@
 | Rôle | Nom | Date | Décision | Signature |
 |------|-----|------|----------|-----------|
 | Rédacteur technique | | | Prise d’acte du snapshot | |
-| Membre CS | | | Revue de l’historique | |
+| Garant scientifique : Rafik Gounane | | | Revue de l’historique | |
 | Fabricant | | | Approbation du registre | |
 
 ---
@@ -68,7 +68,7 @@ Ce document est un **historique initial** (état v0.1 + extension v0.2 du seed).
 
 ## 4. Historique des versions du référentiel
 
-| Version | Date | Nature | Leviers concernés | Preuve | Signature CS |
+| Version | Date | Nature | Leviers concernés | Preuve | Signature du garant scientifique |
 |---------|------|--------|-------------------|--------|--------------|
 | v0.1 baseline | 2026-07 (seed) | Création INSERT #1 | L_EVOO_PRIMARY, L_LEGUMINOUSES_REGULAR, L_RESISTANT_STARCH, L_PLANT_DIVERSITY_30, L_FERMENTED_DAILY, L_FATTY_FISH_2X, L_CRUCIFEROUS_STEAM, L_ANTHOCYANIN_BERRIES, L_VINEGAR_PRE_PRANDIAL, L_FOOD_SEQUENCE, L_WHEY_PRE_LOAD, L_LONG_FERMENTATION_BREAD, L_POSTPRANDIAL_WALK, L_WHOLE_GRAINS, L_TURMERIC_PIPERINE_LIPID, L_MED_DIET_FULL, L_REDUCE_RED_PROCESSED_MEAT, L_GREEN_TEA_DAILY, L_GENTLE_COOKING, L_PREBIOTIC_TARGETED, L_REDUCE_ULTRA_PROCESSED, L_FIBER_30G, L_AVOID_ARTIFICIAL_SWEETENERS, L_BONE_BROTH, L_FRUCTOSE_AVOIDANCE_50G, L_REDUCE_FREE_SUGAR_10PCT, L_SAT_FAT_REDUCTION, L_LOW_CARB_MODERATE | `04_culinary_levers.sql` | **Non** |
 | v0.2 extension | 2026-07 (seed) | Ajout INSERT #2 (catalogue LIV-47) | L_CINNAMON_POLYPHENOLS, L_FENUGREEK_SEEDS, L_CHIA_SEEDS, L_AVOCADO_DAILY, L_NUTS_MIX_30G, L_DARK_CHOCOLATE_20G, L_PROTEIN_DISTRIBUTION, L_LOW_GI_MEAL_PATTERN, L_GINGER_FRESH, L_GARLIC_RAW, L_POMEGRANATE_JUICE_WEEKLY, L_TART_CHERRY, L_COFFEE_FILTER, L_VITAMIN_D_FOODS, L_ROSEMARY_HERBS, L_MEDITERRANEAN_WEEKLY_MEAL, L_FRUIT_2_DAY, L_PSYLLIUM_FIBER, L_FLAX_SEEDS_GROUND, L_OATS_BETA_GLUCAN, L_GREEN_BANANA_FLOUR, L_MISO_FERMENTED, L_KIMCHI_SAUERKRAUT, L_KEFIR_WATER_DAIRY, L_COCONUT_YOGURT_PROBIOTIC, L_APPLE_PECTIN, L_DIVERSE_SALAD_RAW, L_MEAL_TIMING_12H, L_SLOW_EATING, L_HYDRATION_OPTIMAL, L_MUSHROOMS_WEEKLY, L_SEAWEED_WEEKLY, L_CITRUS_POLYPHENOLS, L_SATURATED_FAT_SWAP, L_EVOO_CRU_FINITION | LIV-47 + seed | **Non** |
@@ -95,7 +95,7 @@ Recoupement avec [`docs/PMIDS_AUDIT.md`](../PMIDS_AUDIT.md) (30 PMIDs du baselin
 
 Tiers **globaux** = `culinary_levers.ebm_tier`. Tiers bottleneck = `lever_bottleneck_map.tier_for_bottleneck`.
 
-| ID | Nom FR | Cat. | Tier | Star | PMIDs | Mapping | Revue CS |
+| ID | Nom FR | Cat. | Tier | Star | PMIDs | Mapping | Revue garant |
 |----|--------|------|------|------|-------|---------|----------|
 | `L_EVOO_PRIMARY` | Huile d'olive extra vierge en première intention | ingredient | **T1** | oui | 23432189, 29897866 | DYSBIOSE:T2, INFLAM:T1, IR:T1 | **non** |
 | `L_LEGUMINOUSES_REGULAR` | Légumineuses 3-4 portions/semaine | ingredient | **T1** | oui | 19465743, 23089999 ⚠️ audit | DYSBIOSE:T1, INFLAM:T2, IR:T1 | **non** |
@@ -306,7 +306,7 @@ Ces IDs ne reçoivent **pas** de tier opérationnel dans ce changelog.
 
 Table à renseigner à chaque évolution (LIV-15). Aucune modification de tier n’est enregistrée à ce jour.
 
-| Date | Levier | Tier avant | Tier après | PMID ajouté/retiré | Fiche LIV-16 | Reviewer CS | SHA |
+| Date | Levier | Tier avant | Tier après | PMID ajouté/retiré | Fiche LIV-16 | Garant scientifique | SHA |
 |------|--------|------------|------------|--------------------|--------------|-------------|-----|
 | — | — | — | — | — | — | — | — |
 
@@ -314,6 +314,6 @@ Table à renseigner à chaque évolution (LIV-15). Aucune modification de tier n
 
 ## 10. Disclaimer
 
-Les badges T1/T2/T3 de ce snapshot sont des **déclarations d’auteur** dans le seed. Ils ne constituent pas une validation scientifique externe. L’engagement produit ([`docs/EBM_TIERING.md`](../EBM_TIERING.md)) : *aucun T1 sans validation d’au moins un médecin du CS* — **non tenu** à ce jour.
+Les badges T1/T2/T3 de ce snapshot sont des **déclarations d’auteur** dans le seed. Ils ne constituent pas une validation par le garant scientifique. L’engagement produit ([`docs/EBM_TIERING.md`](../EBM_TIERING.md)) : *aucun T1 sans validation du garant scientifique (Rafik Gounane)* — **non tenu** à ce jour (0/63). Le comité scientifique est supprimé (décision fabricant 2026-10-24).
 
 > Document généré automatiquement. Toute édition manuelle de la section 6 sera écrasée au prochain `npm run changelog:ebm`. Éditer les sections 1 (signatures) et 9 (journal) via PR, ou étendre le générateur.

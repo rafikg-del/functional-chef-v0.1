@@ -4,7 +4,8 @@
 > **Version** : 1.0 (brouillon)
 > **Statut** : **Brouillon — signature humaine requise**
 > **Date** : 2026-09-10
-> **Critère roadmap** : tout changement de tier passe par rédaction → revue **≥ 1 médecin CS** → validation → déploiement
+> **Critère roadmap** : tout changement de tier passe par rédaction → revue du **garant scientifique (Rafik Gounane)** → validation → déploiement
+> **Gouvernance** : LIV-18..21 **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**
 > **Template** : [LIV-16](LIV-16_FICHE_REVUE_LEVIER.md)
 > **Registre** : [LIV-17](LIV-17_CHANGELOG_EBM.md)
 > **Méthode** : [`docs/EBM_TIERING.md`](../EBM_TIERING.md)
@@ -18,10 +19,10 @@
 | Rôle | Nom | Date | Décision | Signature |
 |------|-----|------|----------|-----------|
 | Rédacteur | | | Brouillon soumis | |
-| Membre CS | | | Approuvé / sous réserve / refusé | |
+| Garant scientifique : Rafik Gounane | | | Approuvé / sous réserve / refusé | |
 | Fabricant | | | Mise en application | |
 
-**Blocage** : le CS n’est pas constitué (LIV-18..20). Cette procédure **ne peut pas être exécutée** pour un T1/T2 nouveau ou modifié tant que LIV-20 n’est pas réel. Les 63 leviers chargeables restent **auto-déclarés**.
+**État** : le comité scientifique n’existe pas (LIV-18..21 **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**). La revue est portée par le garant scientifique. **Aucune fiche n’est signée** : les 63 leviers chargeables restent **auto-déclarés**. Un T1/T2 n’est pas validé tant que la fiche LIV-16 n’est pas signée. L’indépendance de cette revue unique est une limitation connue (LIV-11 §4.1) ; elle n’est pas présentée comme acceptable au sens MDR.
 
 ---
 
@@ -46,7 +47,7 @@ Les identifiants orphelins listés en LIV-17 §8 (suppléments, lifestyle, etc.)
 
 ## 4. Garde-fous (non négociables)
 
-1. **Pas de T1 sans signature CS** sur une fiche LIV-16 — engagement [`EBM_TIERING.md`](../EBM_TIERING.md). **Aujourd’hui : 0/63.**
+1. **Pas de T1 sans signature du garant scientifique** sur une fiche LIV-16 — engagement [`EBM_TIERING.md`](../EBM_TIERING.md). **Aujourd’hui : 0/63.**
 2. **Pas de PMID inventé.** Si la référence n’a pas de PMID vérifié : laisser `NULL` et le dire (ex. `L_REDUCE_FREE_SUGAR_10PCT`).
 3. **Pas d’inflation** mécanistique → T1 (bouillon d’os reste T3 tant que la littérature humaine ne change pas).
 4. Un levier **sans** `primary_reference` n’entre pas.
@@ -59,12 +60,12 @@ Les identifiants orphelins listés en LIV-17 §8 (suppléments, lifestyle, etc.)
 | Type | Exemples | Reviewers | Tag logiciel |
 |------|----------|-----------|--------------|
 | **A — Éditorial** | Typo nom FR, clarification précaution sans changer le sens | 1 reviewer repo | Non |
-| **B — Donnée clinique mineure** | Précision de dose, ajout précaution, PMID **additionnel vérifié** sans changer le tier | 1 CS **ou** reporté si CS absent (alors **interdire** le merge T1/T2) | Selon LIV-14 si seed en prod |
-| **C — Tier ou mapping** | T2→T1, T1→T2, ajout bottleneck, star universelle | **≥ 1 médecin CS** (2 si T1 nouveau) | Oui `vX.Y.Z` |
-| **D — Nouveau levier** | LIV-47 → INSERT | CS obligatoire avant `active=true` en usage réel | Oui |
-| **E — Retrait / `active=false`** | Sécurité, PMID rétracté | Fabricant + CS si T1 | Oui (hotfix possible S1) |
+| **B — Donnée clinique mineure** | Précision de dose, ajout précaution, PMID **additionnel vérifié** sans changer le tier | Garant scientifique. Sans sa signature : **interdire** le merge T1/T2 | Selon LIV-14 si seed en prod |
+| **C — Tier ou mapping** | T2→T1, T1→T2, ajout bottleneck, star universelle | **Garant scientifique : Rafik Gounane** (second relecteur de comité : supprimé, 2026-10-24) | Oui `vX.Y.Z` |
+| **D — Nouveau levier** | LIV-47 → INSERT | Signature du garant scientifique avant `active=true` en usage réel | Oui |
+| **E — Retrait / `active=false`** | Sécurité, PMID rétracté | Fabricant + garant scientifique si T1 | Oui (hotfix possible S1) |
 
-En l’absence de CS : seuls les types **A** et **E-S1** (désactivation de sécurité) sont autorisés sur `main`.
+Sans signature du garant scientifique : seuls les types **A** et **E-S1** (désactivation de sécurité) sont autorisés sur `main`.
 
 ---
 
@@ -76,7 +77,7 @@ En l’absence de CS : seuls les types **A** et **E-S1** (désactivation de séc
 3. Vérifier chaque PMID (PubMed : titre = référence déclarée)
 4. PR : seed 04/05 + fiche LIV-16 (signatures encore vides)
 5. Review code (intégrité SQL, CHECK category, mapping)
-6. Review CS : remplir LIV-16 (tier proposé vs validé)
+6. Revue du garant scientifique : remplir LIV-16 (tier proposé vs validé) — signature et date laissées vides tant qu’il n’a pas signé
 7. Merge
 8. npm run changelog:ebm  (journal §9 LIV-17)
 9. Tag selon LIV-14 si usage praticien
@@ -118,4 +119,4 @@ Si un badge T1 est rétrogradé : noter dans CAPA si les consultations déjà va
 
 ## 10. Disclaimer
 
-Exécuter le circuit sans CS et merger un T1 « validé » serait une **falsification d’enregistrement**. L’état réel est dans LIV-17 : revue CS = **non** pour chaque levier.
+Exécuter le circuit sans signature du garant scientifique et merger un T1 « validé » serait une **falsification d’enregistrement**. L’état réel est dans LIV-17 : revue du garant = **non** pour chaque levier.

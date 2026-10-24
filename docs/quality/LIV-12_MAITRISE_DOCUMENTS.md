@@ -52,9 +52,9 @@ Un merge sans review nommée **n’est pas** une approbation qualité. Un agent 
 |---------|-------------|---------------------|
 | Manuel & SOP qualité | `docs/quality/LIV-1[1-6]*`, templates | Fabricant + consultant qualité (quand mandaté) |
 | Dossier MDR LIV-01..08 | `docs/MDR_DOSSIER.md`, `docs/quality/MDR_GAP_MATRIX.md` | Expert MDR |
-| EBM / leviers | `docs/EBM_TIERING.md`, seeds `04`/`05`, LIV-15/16/17 | CS pour tout changement de tier |
-| Validation clinique | `docs/CLINICAL_VALIDATION_PROTOCOL.md`, `docs/validation/liv25/` | CS |
-| Information utilisateur | `docs/GUIDE_UTILISATION.md`, `docs/FAQ.md`, `docs/NOTE_PATIENT.md`, `src/app/privacy/page.tsx` | Avocat (FAQ/privacy/note) + CS (FAQ médicale) |
+| EBM / leviers | `docs/EBM_TIERING.md`, seeds `04`/`05`, LIV-15/16/17 | Garant scientifique : Rafik Gounane pour tout changement de tier |
+| Validation clinique | `docs/CLINICAL_VALIDATION_PROTOCOL.md`, `docs/validation/liv25/` | Garant scientifique : Rafik Gounane |
+| Information utilisateur | `docs/GUIDE_UTILISATION.md`, `docs/FAQ.md`, `docs/NOTE_PATIENT.md`, `src/app/privacy/page.tsx` | Avocat (FAQ/privacy/note) + garant scientifique (FAQ médicale) |
 | Go/No-Go | `docs/PRODUCTION_READINESS.md` | Fabricant |
 
 ### 3.2 Non contrôlés (hors SMQ)
@@ -131,10 +131,11 @@ Tenue dans ce tableau (mettre à jour à chaque création). Statut au 2026-09-10
 | LIV-17 | Changelog EBM | `docs/quality/LIV-17_CHANGELOG_EBM.md` | 0.1 snapshot | Brouillon généré |
 | LIV-02 | Matrice écart MDR | `docs/quality/MDR_GAP_MATRIX.md` | 1.1 | Brouillon |
 | LIV-01..08 | Dossier technique | `docs/MDR_DOSSIER.md` | 1.0 | Brouillon |
-| LIV-24 | Protocole validation | `docs/CLINICAL_VALIDATION_PROTOCOL.md` | 0.1 | Brouillon, attente CS |
-| LIV-25..27 | Pack / concordance | `docs/validation/liv25/` | partiel | Brouillon, DYSBIOSE 1/3 |
+| LIV-18..21 | Charte, contrat, comité, DOI, re-tiering comité | — | — | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** |
+| LIV-24 | Protocole validation | `docs/CLINICAL_VALIDATION_PROTOCOL.md` | 0.1 | Brouillon, attente signature du garant scientifique |
+| LIV-25..27 | Pack / concordance | `docs/validation/liv25/` | partiel | Brouillon, DYSBIOSE 1/3, non signé |
 | LIV-67 | Guide praticien | `docs/GUIDE_UTILISATION.md` | 1.0 | Brouillon |
-| LIV-68 | FAQ | `docs/FAQ.md` | 1.0 | Brouillon avocat+CS |
+| LIV-68 | FAQ | `docs/FAQ.md` | 1.0 | Brouillon avocat + garant scientifique |
 | LIV-69 | Note patient | `docs/NOTE_PATIENT.md` | 1.0 | Brouillon |
 | — | Go/No-Go Phase 2 | `docs/PRODUCTION_READINESS.md` | 1.0 | Brouillon |
 

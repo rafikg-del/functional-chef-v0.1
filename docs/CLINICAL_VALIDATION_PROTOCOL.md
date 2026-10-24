@@ -2,18 +2,19 @@
 
 > **Document** : LIV-24 — Document contrôlé
 > **Version** : 0.1
-> **Statut** : **Brouillon — en attente d'approbation du Comité Scientifique (CS)**
-> **Date** : 6 septembre 2026
+> **Statut** : **Brouillon — en attente de signature du garant scientifique (Rafik Gounane)**
+> **Date** : 6 septembre 2026 — annotation gouvernance **2026-10-24**
 > **Périmètre** : Phase 1 — J63-J92 (`docs/PHASE1_ROADMAP.md`)
 > **Classification** : Interne. Aucune donnée patient, aucun PHI.
-> **Destination** : revue et signature CS avant toute extraction de cas réels (LIV-25)
+> **Destination** : revue et signature du garant scientifique. Le pack LIV-25 déjà versé n'est pas signé.
+> **Gouvernance** : pas de comité scientifique. LIV-18..21 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. L'indépendance de la revue (garant = fabricant) est une limitation connue, à discuter avec l'expert MDR. Ce protocole ne revendique pas l'acceptabilité réglementaire de ce montage. Aucune signature n'est pré-remplie.
 
 | Champ | Valeur |
 |-------|--------|
 | Titre court | Concordance classifier vs jugement clinicien — n=10 |
 | Type d'étude | Rétrospective, observationnelle, non interventionnelle |
 | Produit évalué | Functional Chef — moteur d'aide à la décision (classifier + leviers + filtres sécurité) |
-| Population source | Patients ZOI Analyse Patient et/ou patients des membres du CS |
+| Population source | Patients ZOI Analyse Patient. La patientèle d'un comité scientifique n'est plus une source (comité supprimé le 2026-10-24) |
 | Taille d'échantillon | n=10 cas anonymisés (cible de stratification ci-dessous) |
 | Critère principal | Concordance du bottleneck dominant (moteur vs clinicien adjudicateur) |
 | Usage réglementaire | **Hors investigation clinique MDR Art. 62.** Preuve interne de crédibilité scientifique. Pas une étude de performance destinée à un marquage CE. |
@@ -49,33 +50,34 @@
 
 | Version | Date | Auteur | Nature | Statut |
 |---------|------|--------|--------|--------|
-| 0.1 | 2026-09-06 | Équipe produit (rédaction initiale) | Création — critères, endpoints, méthode | Brouillon, soumis au CS |
+| 0.1 | 2026-09-06 | Équipe produit (rédaction initiale) | Création — critères, endpoints, méthode | Brouillon. Soumis alors à un comité scientifique |
+| 0.1 | 2026-10-24 | Annotation fabricant | Gouvernance : comité supprimé. Approbateur = garant scientifique Rafik Gounane. Seuils et endpoints inchangés. Signatures vides | Brouillon, non signé |
 
-Toute évolution incrémente le numéro de version mineure (revue rédactionnelle) ou majeure (changement d'endpoints, de population ou de méthode). Un amendement majeur requiert une nouvelle approbation CS avant reprise de l'extraction.
+Toute évolution incrémente le numéro de version mineure (revue rédactionnelle) ou majeure (changement d'endpoints, de population ou de méthode). Un amendement majeur requiert une nouvelle approbation du garant scientifique avant reprise de l'extraction.
 
 ### 1.2 Circuit d'approbation
 
 | Étape | Acteur | Action | Preuve |
 |-------|--------|--------|--------|
 | 1 | Rédacteur | Diffuse le brouillon v0.1 | Présent document dans le repo |
-| 2 | CS (≥2 membres, LIV-18 / LIV-20) | Revue scientifique : population, endpoints, méthode, éthique | Commentaires écrits |
-| 3 | CS | Approbation ou demande de modification | Signatures §1.3 |
+| 2 | Garant scientifique : Rafik Gounane | Revue scientifique : population, endpoints, méthode, éthique. LIV-18 / LIV-20 : **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** | Commentaires écrits |
+| 3 | Garant scientifique : Rafik Gounane | Approbation ou demande de modification | Signature §1.3 (vide à ce jour) |
 | 4 | Investigateur | Gel du protocole (version approuvée taguée) | Tag git `liv-24-vX.Y` + PDF archivé |
 
-**Règle** : aucun cas réel (LIV-25) n'est extrait, saisi ou soumis au moteur tant que le CS n'a pas approuvé une version de ce protocole.
+**Règle** : une nouvelle extraction au-delà du pack partiel déjà versé n'est pas lancée tant que le garant scientifique n'a pas approuvé une version de ce protocole. Le pack LIV-25 existant reste un brouillon non signé.
 
 ### 1.3 Page de signatures (à compléter après revue)
 
 | Rôle | Nom | Date | Décision | Signature / paraphe |
 |------|-----|------|----------|---------------------|
-| Membre CS — nutrition / médecine fonctionnelle | | | Approuvé / Approuvé sous réserve / Refusé | |
-| Membre CS — métabolisme / recherche | | | Approuvé / Approuvé sous réserve / Refusé | |
+| Garant scientifique : Rafik Gounane | | | Approuvé / Approuvé sous réserve / Refusé | |
+| Second siège de comité (nutrition / métabolisme) | | | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** | |
 | Investigateur coordinateur | | | Prise d'acte | |
 | Référent technique moteur | | | Prise d'acte (gel de version) | |
 
 Réserves éventuelles (texte libre, pas de données patient) :
 
-> _À renseigner par le CS._
+> _À renseigner par le garant scientifique. Non signé._
 
 ---
 
@@ -103,9 +105,9 @@ Le clinicien est la **référence de jugement** pour cette étude (gold standard
 Ce protocole **ne vise pas** à :
 
 - démontrer un bénéfice clinique patient (pas de suivi, pas d'intervention) ;
-- valider les tiers EBM des leviers (couvert par LIV-21 à LIV-23) ;
+- valider les tiers EBM des leviers (couvert par les fiches LIV-16, puis LIV-22 / LIV-23 ; LIV-21 supprimé) ;
 - remplacer les tests de non-régression synthétiques (LIV-39 à LIV-41) ;
-- servir de dossier de performance clinique pour un organisme notifié, sauf amendement ultérieur (ISO 14155 / MDCG 2020-1) explicitement décidé par le CS et le référent MDR.
+- servir de dossier de performance clinique pour un organisme notifié, sauf amendement ultérieur (ISO 14155 / MDCG 2020-1) explicitement décidé par le garant scientifique et le référent MDR.
 
 ---
 
@@ -154,11 +156,11 @@ Deux corpus existent. Ils ne doivent **jamais** être fusionnés dans LIV-26 / L
 | Profils de régression (~30) | `src/lib/reasoning/__tests__/patient-profiles.ts` | **Synthétiques** | Tests unitaires (LIV-39, `clinical-validation.test.ts`) | Non |
 | Cas offline script | `scripts/test-validation-cases.ts` | **Synthétiques** | Smoke test `npm run test:cases` | Non |
 | Seuils / fixtures classifier | `__tests__/bottleneck-classifier.test.ts`, `safety-filters.test.ts`, `lever-selector.test.ts` | **Synthétiques** | Non-régression CI | Non |
-| **Set de validation clinique n=10** | Livrable LIV-25 — [`docs/validation/liv25/`](validation/liv25/) (json + PDF anonymisés) | **Cas réels** ZOI / CS | Concordance clinicien (ce protocole) | **Oui** |
+| **Set de validation clinique n=10** | Livrable LIV-25 — [`docs/validation/liv25/`](validation/liv25/) (json + PDF anonymisés) | **Cas réels** ZOI | Concordance clinicien (ce protocole) | **Oui** |
 
 **Règles de séparation :**
 
-1. Les identifiants du set clinique suivent le préfixe `ZOI-VAL-01` … `ZOI-VAL-10` (ou `CS-VAL-xx` si source CS exclusive). Ils n'utilisent jamais les ids `A1`, `B2`, `E6`, « Cas A/B/C ».
+1. Les identifiants du set clinique suivent le préfixe `ZOI-VAL-01` … `ZOI-VAL-10`. Le préfixe historique `CS-VAL-xx` n'est plus attribué (comité supprimé). Ils n'utilisent jamais les ids `A1`, `B2`, `E6`, « Cas A/B/C ».
 2. Un résultat de test Vitest **ne peut pas** être cité comme concordance clinique.
 3. LIV-26 doit ouvrir par un encadré rappelant que les fixtures synthétiques sont exclues du numérateur et du dénominateur.
 4. Si un cas réel ressemble à un cas-pivot, cela n'autorise pas à réutiliser les valeurs du fixture ; seules les valeurs du dossier source (anonymisées) sont saisies.
@@ -171,8 +173,9 @@ Deux corpus existent. Ils ne doivent **jamais** être fusionnés dans LIV-26 / L
 
 Adultes pris en charge dans :
 
-- le réseau **ZOI Analyse Patient** (pilot français Phase 1), et/ou
-- la patientèle des **membres du Comité Scientifique**,
+- le réseau **ZOI Analyse Patient** (pilot français Phase 1).
+
+La patientèle des membres d'un comité scientifique n'est plus une source (décision 2026-10-24). Un dossier issu de la patientèle du garant scientifique, s'il est un jour versé, suit les mêmes règles d'anonymisation ; il n'est pas codé comme source « comité ».
 
 pour lesquels un dossier comporte déjà des biomarqueurs et/ou signaux cliniques exploitables au regard de `docs/BOTTLENECK_SPEC.md`.
 
@@ -199,7 +202,7 @@ Un **cas** = un dossier à une date index T0 (bilan le plus complet, ≤ fenêtr
 ### 6.1 Inclusion (tous requis)
 
 1. Âge **≥ 18 ans** à T0.
-2. Dossier issu de ZOI Analyse Patient **ou** d'une patientèle CS, avec base légale de réutilisation (§15).
+2. Dossier issu de ZOI Analyse Patient, avec base légale de réutilisation (§15). La patientèle d'un comité scientifique n'est plus une source.
 3. Données suffisantes pour qu'un clinicien puisse porter un jugement de bottleneck dominant, selon le **socle minimal** :
 
    | Si le dossier est candidat… | Socle minimal |
@@ -268,7 +271,7 @@ La 10ᵉ place sert à équilibrer les strates ou à accueillir un cas limite / 
 
 **Ordre de remplissage recommandé :** d'abord les 3 dominants × 3, puis le cas co-dominant et/ou sécurité (ils peuvent se recouper : un cas IR+INFLAM sous AVK compte pour IR, co-dominant et sécurité).
 
-Si le vivier ZOI/CS ne permet pas d'atteindre une strate obligatoire après screening exhaustif, l'investigateur consigne un **écart** et le CS décide : clôturer à n<10, élargir la source, ou assouplir une strate. On ne « complète » **pas** avec un fixture synthétique.
+Si le vivier ZOI ne permet pas d'atteindre une strate obligatoire après screening exhaustif, l'investigateur consigne un **écart** et le garant scientifique décide : clôturer à n<10, élargir la source, ou assouplir une strate. On ne « complète » **pas** avec un fixture synthétique. Cette décision n'est pas signée à ce jour. Les seuils de strate (§7.2) ne changent pas.
 
 ### 7.3 Screening log (sans PHI)
 
@@ -285,7 +288,7 @@ Toutes les valeurs sont saisies dans un **JSON conforme** au `PatientProfile` ap
 | Champ | Format | Règle |
 |-------|--------|-------|
 | `case_id` | `ZOI-VAL-01` … | Attribué après anonymisation |
-| `source_pool` | `ZOI` / `CS` / `ZOI_CS` | Pas le nom du cabinet |
+| `source_pool` | `ZOI` (codes historiques `CS` / `ZOI_CS` : plus attribués, comité supprimé) | Pas le nom du cabinet |
 | `engine_git_sha` | hex | Rempli au run, pas à l'extraction |
 | `protocol_version` | `0.1` | Version LIV-24 gelée |
 | `t0_offset_days` | entier | Jours entre un ancrage interne et T0 — **pas de date civile** dans le json livrable |
@@ -392,7 +395,7 @@ Voir §10.2. Saisis par l'adjudicateur **après** révélation de la sortie levi
 
 ### 9.1 Principe
 
-Le livrable LIV-25 et tout fichier versé au repo, au CS ou à un outil d'analyse **ne contient aucune PHI**. On vise une **anonymisation de fait** pour le jeu livrable (irréversibilité raisonnable). La table de correspondance cas ↔ dossier source, si elle existe, reste chez l'investigateur / le prestataire ZOI, hors repo, hors cloud produit Functional Chef.
+Le livrable LIV-25 et tout fichier versé au repo, au garant scientifique ou à un outil d'analyse **ne contient aucune PHI**. On vise une **anonymisation de fait** pour le jeu livrable (irréversibilité raisonnable). La table de correspondance cas ↔ dossier source, si elle existe, reste chez l'investigateur / le prestataire ZOI, hors repo, hors cloud produit Functional Chef.
 
 ### 9.2 Identifiants et attributs interdits
 
@@ -412,7 +415,7 @@ Les **valeurs biologiques** nécessaires à la classification sont conservées (
 ### 9.3 Procédure d'anonymisation (honest broker)
 
 ```
-Dossier source (ZOI / CS)
+Dossier source (ZOI)
         │
         ▼
   Honest broker (investigateur ou référent ZOI habilité)
@@ -443,7 +446,7 @@ Checklist obligatoire (l'investigateur paraphe) :
 | Artefact | Lieu | Durée indicative |
 |----------|------|------------------|
 | Table de correspondance | Hors repo, accès investigateur / ZOI | Jusqu'à clôture LIV-26 + 12 mois, puis destruction |
-| JSON / PDF LIV-25 anonymisés | Canal CS +, si validé, repo interne | Selon politique projet (cible 3 ans pour traces d'étude) |
+| JSON / PDF LIV-25 anonymisés | Canal du garant scientifique +, si validé, repo interne | Selon politique projet (cible 3 ans pour traces d'étude) |
 | Sorties moteur + scores | Idem LIV-26 | Idem |
 | Screening log agrégé | Repo ou archive qualité | Durée du dossier Phase 1 |
 
@@ -494,8 +497,8 @@ où chaque côté ∈ {`IR`, `INFLAM`, `DYSBIOSE`, `none`}.
 
 ```mermaid
 flowchart TD
-  A[Approbation CS du protocole LIV-24] --> B[Gel version moteur]
-  B --> C[Screening dossiers ZOI / CS]
+  A[Approbation du garant scientifique LIV-24] --> B[Gel version moteur]
+  B --> C[Screening dossiers ZOI]
   C --> D[Anonymisation honest broker]
   D --> E[Lock dataset n=10 JSON]
   E --> F[Adjudication clinique en aveugle]
@@ -503,7 +506,7 @@ flowchart TD
   F --> H[Lock jugements]
   G --> H
   H --> I[Confrontation + scores S2/S3]
-  I --> J[Revue des désaccords par le CS]
+  I --> J[Revue des désaccords par le garant scientifique]
   J --> K[LIV-26 rapport + LIV-27 matrice]
 ```
 
@@ -511,10 +514,10 @@ Les branches F et G sont **indépendantes**. Ni l'adjudicateur ni l'opérateur n
 
 ### 11.2 Étapes détaillées
 
-**Étape 0 — Kick-off CS**
+**Étape 0 — Kick-off (garant scientifique)**
 
-- Approbation §1.3.
-- Désignation des personnes (investigateur, honest broker, adjudicateur, opérateur, relecteur CS).
+- Approbation §1.3 par Rafik Gounane (signature encore vide).
+- Désignation des personnes (investigateur, honest broker, adjudicateur, opérateur). Le relecteur scientifique est le garant scientifique.
 - L'adjudicateur reçoit `docs/BOTTLENECK_SPEC.md` (définitions, seuils, règles) comme **référentiel de jugement**, pas le code source. Il n'est pas tenu de reproduire l'algorithme point par point : on mesure l'accord avec un jugement clinique informé par la spec, pas l'auto-concordance du code.
 
 **Étape 1 — Gel moteur**
@@ -530,7 +533,7 @@ Les branches F et G sont **indépendantes**. Ni l'adjudicateur ni l'opérateur n
 
 **Étape 3 — Extraction et anonymisation**
 
-- Honest broker produit 10 JSON + 10 fiches PDF (même contenu, lisible CS).
+- Honest broker produit 10 JSON + 10 fiches PDF (même contenu, lisible par le garant scientifique).
 - Checklist §9.4.
 - **Lock dataset** : hash SHA-256 de l'archive json ; plus aucune modification des entrées.
 
@@ -553,30 +556,30 @@ Les branches F et G sont **indépendantes**. Ni l'adjudicateur ni l'opérateur n
 - L'adjudicateur (ou un second clinicien si l'on veut séparer pertinence et dominant) score S2 et S3 **sans modifier** le dominant verrouillé.
 - Chaque désaccord reçoit un code §13.3.
 
-**Étape 7 — Revue CS des désaccords**
+**Étape 7 — Revue des désaccords par le garant scientifique**
 
-- Le CS ne « corrige » pas le gold standard pour améliorer le taux. Il peut :
+- Le garant scientifique ne « corrige » pas le gold standard pour améliorer le taux. Il peut :
   - classer une erreur d'extraction (donnée mal saisie) → cas **non analysable** pour le primaire, à remplacer si possible ;
-  - recommander une évolution de spec / seuil (piste LIV-21 / changelog) ;
+  - recommander une évolution de spec / seuil (piste LIV-16 / changelog) ;
   - documenter un désaccord de principe (cascade, subjectivité DYSBIOSE).
 
 **Étape 8 — Rapport**
 
 - Rédaction LIV-26 et LIV-27.
-- Le CS signe les conclusions (y compris l'échec éventuel des critères de succès).
+- Le garant scientifique signe les conclusions (y compris l'échec éventuel des critères de succès). Cette signature n'est pas apposée.
 
 ### 11.3 Aveugle et contamination
 
 | Risque | Mitigation |
 |--------|------------|
-| Adjudicateur connaît le moteur (auteur / reviewer code) | Préférer un membre CS **non implémentateur**. S'il a lu la spec, c'est acceptable ; s'il a écrit le classifier, il ne peut pas être seul adjudicateur |
+| Adjudicateur connaît le moteur (auteur / reviewer code) | Préférer un clinicien adjudicateur qui n'a pas implémenté le classifier. S'il a lu la spec, c'est acceptable ; s'il a écrit le classifier, il ne peut pas être seul adjudicateur |
 | Ancrage sur les cas-pivot A/B/C | Consigne écrite : ne pas forcer le dossier réel dans un cas-pivot |
 | Modification des entrées après un premier run | Lock + hash ; tout changement = écart |
 | Double emploi d'un fixture | Contrôle des `case_id` |
 
-### 11.4 Double adjudication (option CS)
+### 11.4 Double adjudication (option du garant scientifique)
 
-Si le CS le demande, un **second** clinicien code le dominant sur tout ou partie des cas. On rapportera l'accord inter-observateurs (kappa) **en plus** de la concordance moteur, sans remplacer le gold standard : le CS désigne alors l'adjudicateur principal ou une règle de consensus **avant** le run.
+Si le garant scientifique le demande, un **second** clinicien code le dominant sur tout ou partie des cas. On rapportera l'accord inter-observateurs (kappa) **en plus** de la concordance moteur, sans remplacer le gold standard : le garant désigne alors l'adjudicateur principal ou une règle de consensus **avant** le run. Il n'y a pas de second membre de comité.
 
 ---
 
@@ -588,7 +591,7 @@ Si le CS le demande, un **second** clinicien code le dominant sur tout ou partie
 | **Honest broker** | Anonymisation, `case_id`, checklist PHI, garde de la table de correspondance | Pas d'adjudication sur les mêmes cas |
 | **Clinicien adjudicateur** | Jugement dominant / co-dominant / confiance / codes de rationale ; scores S2–S3 selon organisation | Pas d'accès à la sortie moteur avant lock ; pas opérateur |
 | **Opérateur technique** | Gel de version, run déterministe, archivage des sorties | Pas de jugement clinique ; pas d'ajustement de seuils « pour faire passer » |
-| **Comité Scientifique** | Approbation LIV-24, revue des désaccords, signature LIV-26/27, décision de succès / échec | Un membre CS implémentateur ne peut pas être unique signataire scientifique |
+| **Garant scientifique : Rafik Gounane** | Approbation LIV-24, revue des désaccords, signature LIV-26/27, décision de succès / échec | Garant unique (décision 2026-10-24). L'indépendance de la revue n'est pas assurée : le garant est aussi le fabricant. Limitation à discuter avec l'expert MDR. Ce rôle ne vaut pas acceptabilité réglementaire. L'auteur du classifier ne peut pas être le seul adjudicateur du gold standard (§11.3) |
 | **Référent ZOI** (si source ZOI) | Accès licite aux dossiers, contrat / DPA, confirmation de la base légale | N'écrit pas le rapport de concordance |
 | **Référent qualité / MDR** (si désigné) | Vérifie que les formulations de LIV-26 ne constituent pas une claim de performance CE | — |
 
@@ -655,7 +658,7 @@ Pour **chaque** `ZOI-VAL-xx` (sans PHI) :
 3. Concordance oui/non + codes de désaccord.
 4. Synthèse S2 (effectifs pertinent / discutable / non pertinent).
 5. Synthèse S3.
-6. Commentaire CS (optionnel).
+6. Commentaire du garant scientifique (optionnel, non signé).
 
 Puis une synthèse transversale, les limitations (n=10, pas de suivi, gold standard unique, seuils encore discutés dans `BOTTLENECK_EVALUATION.md`), et la décision §14.
 
@@ -669,19 +672,19 @@ Les pistes issues des désaccords (seuils, règle INFLAM, garde-fou DYSBIOSE, ca
 
 ## 14. Critères de succès
 
-Le CS déclare le run **LIV-24/25/26 recevable** si **tous** les critères R sont remplis. Les critères C sont des **cibles** ; leur échec n'invalide pas le protocole mais bloque le discours « validation clinique réussie » vers l'extérieur.
+Le garant scientifique déclare le run **LIV-24/25/26 recevable** si **tous** les critères R sont remplis. Les critères C sont des **cibles** ; leur échec n'invalide pas le protocole mais bloque le discours « validation clinique réussie » vers l'extérieur. Cette déclaration n'est pas signée.
 
 ### 14.1 Critères de recevabilité (R)
 
 | ID | Critère |
 |----|---------|
-| R1 | Protocole approuvé par le CS avant extraction |
-| R2 | n analysable = 10 **ou** écart accepté par le CS avec motif de vivier |
-| R3 | Stratification obligatoire atteinte **ou** écart accepté |
+| R1 | Protocole approuvé par le garant scientifique avant toute nouvelle extraction |
+| R2 | n analysable = 10 **ou** écart accepté par le garant scientifique avec motif de vivier |
+| R3 | Stratification obligatoire atteinte **ou** écart accepté par le garant scientifique |
 | R4 | Aucune PHI détectée dans LIV-25 / LIV-26 / repo |
 | R5 | Aveugle et locks (dataset, jugements, SHA moteur) documentés |
 | R6 | **Aucun faux négatif de sécurité (S3-FN)** sur une contre-indication documentée |
-| R7 | LIV-26 et LIV-27 rédigés et signés CS |
+| R7 | LIV-26 et LIV-27 rédigés et signés par le garant scientifique |
 
 ### 14.2 Cibles de concordance (C)
 
@@ -691,11 +694,11 @@ Le CS déclare le run **LIV-24/25/26 recevable** si **tous** les critères R son
 | C2 | Parmi les leviers évaluables, **≥ 70 %** notés `pertinent` au niveau cas moyen | Aide à la décision, pas efficacité |
 | C3 | Tous les warnings / exclusions attendus par l'adjudicateur sont présents (S3-FN = 0) — déjà R6 | Sécurité |
 
-Si C1 échoue alors que R1–R7 tiennent : le CS peut malgré tout **clôturer** LIV-26 comme rapport négatif ou mitigé, et exiger un correctif spec + un second run (protocole amendé). Ce n'est **pas** un feu vert Phase 2 sur le volet clinique.
+Si C1 échoue alors que R1–R7 tiennent : le garant scientifique peut malgré tout **clôturer** LIV-26 comme rapport négatif ou mitigé, et exiger un correctif spec + un second run (protocole amendé). Ce n'est **pas** un feu vert Phase 2 sur le volet clinique.
 
 ### 14.3 Lien Phase 2
 
-Le checkpoint roadmap « LIV-24 approuvé par le CS » est **ce document signé**, pas le taux de concordance. Le checkpoint « évidence clinique sur cas réels » requiert LIV-26/27 signés. Les autres checkpoints Phase 2 (MDR, RLS, FAQ, etc.) restent indépendants.
+Le checkpoint roadmap « LIV-24 approuvé par le garant scientifique » est **ce document signé**, pas le taux de concordance. Le checkpoint « évidence clinique sur cas réels » requiert LIV-26/27 signés. Les autres checkpoints Phase 2 (MDR, RLS, FAQ, etc.) restent indépendants. Aucune de ces signatures n'est apposée.
 
 ---
 
@@ -710,7 +713,7 @@ Le checkpoint roadmap « LIV-24 approuvé par le CS » est **ce document signé*
 | Étude de performance en vue d'une claim CE | **Non** — formulations interdites dans les communications |
 | Réutilisation de données de santé | **Oui** — soumise à base légale et minimisation |
 
-Si le positionnement MDR évolue (consultant, ON), le CS et le référent réglementaire décideront d'un amendement (avis CPP / CNIL, ISO 14155) **avant** tout usage promotionnel des chiffres.
+Si le positionnement MDR évolue (consultant, ON), le garant scientifique et le référent réglementaire décideront d'un amendement (avis CPP / CNIL, ISO 14155) **avant** tout usage promotionnel des chiffres.
 
 ### 15.2 Disclaimer (à reproduire en tête de LIV-26)
 
@@ -721,7 +724,7 @@ Si le positionnement MDR évolue (consultant, ON), le CS et le référent régle
 Cadre proposé pour validation par le conseil et ZOI ; **non prescriptif** tant qu'il n'est pas relu :
 
 1. **Données déjà collectées** dans un parcours de soin / bilan fonctionnel.
-2. **Base** : consentement explicite de réutilisation à des fins d'amélioration / évaluation de l'outil, **ou** autre base Art. 9 applicable documentée par le responsable de traitement source (ZOI / praticien CS).
+2. **Base** : consentement explicite de réutilisation à des fins d'amélioration / évaluation de l'outil, **ou** autre base Art. 9 applicable documentée par le responsable de traitement source (ZOI).
 3. **Minimisation** : seuls les champs §8 sortent du dossier source.
 4. **Pas de transfert** des JSON LIV-25 vers des LLM ou des tickets publics.
 5. **Information** : les patients concernés sont informés selon le dispositif ZOI / cabinet (note d'information existante LIV-69 à articuler si la réutilisation n'était pas prévue).
@@ -731,11 +734,11 @@ Ce brouillon **n'invente pas** un avis CNIL ni un numéro d'autorisation.
 
 ### 15.4 Conflits d'intérêts
 
-Les membres CS et l'investigateur déclarent leurs intérêts (LIV-20). Un conflit majeur (equity important + unique adjudicateur) est incompatible avec le rôle d'adjudicateur unique.
+LIV-20 (déclaration d'intérêts des membres d'un comité) est **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique**. Le garant scientifique est aussi le fabricant : l'indépendance de la revue est une limitation connue, à discuter avec l'expert MDR. Ce protocole ne la présente pas comme acceptable au sens réglementaire. Un auteur du classifier ne peut pas être le seul adjudicateur du gold standard (§11.3).
 
 ### 15.5 Communication externe
 
-Avant LIV-26 signé : **aucune** communication chiffrée (« 80 % de concordance », « validé cliniquement »). Après : uniquement les formulations approuvées par le CS, avec n, IC si calculé, et le disclaimer §15.2.
+Avant LIV-26 signé par le garant scientifique : **aucune** communication chiffrée (« 80 % de concordance », « validé cliniquement »). Après : uniquement les formulations qu'il a approuvées, avec n, IC si calculé, et le disclaimer §15.2.
 
 ---
 
@@ -744,9 +747,9 @@ Avant LIV-26 signé : **aucune** communication chiffrée (« 80 % de concordance
 | Type | Exemple | Conduite |
 |------|---------|----------|
 | Écart mineur | T0 à 4 mois au lieu de 3 | Noter sur la fiche ; cas conservé |
-| Écart majeur | Run sur une version moteur différente, rupture d'aveugle, PHI fuité | Stop, CAPA (LIV-13), information CS ; destruction / re-anonymisation si PHI |
-| Amendement mineur | Clarification rédactionnelle | Version 0.x, information CS |
-| Amendement majeur | Changement d'endpoint, d'exclusions, de n | Nouvelle approbation CS ; cas déjà runés : décider re-run |
+| Écart majeur | Run sur une version moteur différente, rupture d'aveugle, PHI fuité | Stop, CAPA (LIV-13), information du garant scientifique ; destruction / re-anonymisation si PHI |
+| Amendement mineur | Clarification rédactionnelle | Version 0.x, information du garant scientifique |
+| Amendement majeur | Changement d'endpoint, d'exclusions, de n | Nouvelle approbation du garant scientifique ; cas déjà runés : décider re-run |
 
 Les écarts sont listés en annexe de LIV-26.
 
@@ -756,11 +759,11 @@ Les écarts sont listés en annexe de LIV-26.
 
 | ID | Document | Dépend de LIV-24 | Statut visé |
 |----|----------|------------------|-------------|
-| LIV-18 / 20 | Charte et composition CS | Approbateurs | Préalable |
-| **LIV-24** | Le présent protocole | — | Brouillon → approuvé CS |
+| LIV-18..21 | Charte, contrat, comité, DOI, re-tiering par comité | — | **Supprimé — décision fabricant 2026-10-24 : garant scientifique unique** |
+| **LIV-24** | Le présent protocole | — | Brouillon → approuvé par le garant scientifique (non signé) |
 | **LIV-25** | 10 cas anonymisés (json + PDF) — [`docs/validation/liv25/`](validation/liv25/) | Protocole approuvé | **Pack partiel** — DYSBIOSE dominant **1/3 (NON ATTEINT)** ; 10 JSON anonymisés versés |
-| **LIV-26** | Rapport moteur vs clinicien — [`docs/validation/liv25/LIV26_NOTE.md`](validation/liv25/LIV26_NOTE.md) | LIV-25 + run gelé | **Note technique** (3 désaccords) ; non signée CS |
-| **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN — [`docs/validation/liv25/LIV27_CONCORDANCE_MATRIX.md`](validation/liv25/LIV27_CONCORDANCE_MATRIX.md) | LIV-26 | **Brouillon descriptif** — 7/10 (70 %), VPP DYSBIOSE non définie ; non signé CS |
+| **LIV-26** | Rapport moteur vs clinicien — [`docs/validation/liv25/LIV26_NOTE.md`](validation/liv25/LIV26_NOTE.md) | LIV-25 + run gelé | **Note technique** (3 désaccords) ; non signée par le garant scientifique |
+| **LIV-27** | Matrice sensibilité / spécificité / VPP / VPN — [`docs/validation/liv25/LIV27_CONCORDANCE_MATRIX.md`](validation/liv25/LIV27_CONCORDANCE_MATRIX.md) | LIV-26 | **Brouillon descriptif** — 7/10 (70 %), VPP DYSBIOSE non définie ; non signé par le garant scientifique |
 | LIV-07 | Plan V&V MDR | Cible qualitative « 10 cas ZOI, concordance >80 % » | Aligné, non substitutif |
 | LIV-39–41 | Tests unitaires synthétiques | Indépendants | Restent la barrière CI |
 
@@ -838,14 +841,16 @@ Les clés illustrent le contrat d'interface. **Ne pas** y insérer de valeurs in
 |-----------------------|-------------------|-----------------------------------------|--------|
 | | | | TP / FN / FP / NA |
 
-### Annexe E — Décision CS (page finale, version approuvée)
+### Annexe E — Décision du garant scientifique (page finale, version approuvée)
+
+Signataire prévu : **Garant scientifique : Rafik Gounane**. Cases, date et signature laissées vides.
 
 - [ ] Protocole approuvé sans réserve
 - [ ] Approuvé sous réserve (lister)
 - [ ] Refusé (motifs)
 
 Date : ____________  
-Membres signataires : ____________
+Signature : ____________
 
 ---
 

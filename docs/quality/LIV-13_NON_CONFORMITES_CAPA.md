@@ -39,7 +39,7 @@ Hors scope : demandes d’évolution sans écart (traitées en backlog produit, 
 
 1. Issue GitHub avec label `nc` / `capa` / `safety` / `complaint`
 2. Échec CI récurrent sur `main` (LIV-43)
-3. Désaccord clinique LIV-26/27 **non accepté** par le CS
+3. Désaccord clinique LIV-26/27 **non accepté** par le garant scientifique
 4. Écart PMID (audit) ou tier contesté
 5. Incident sécurité (accès croisé, fuite, clé service-role exposée)
 6. Revue de direction / audit interne
@@ -69,8 +69,8 @@ Signalement (issue)
     → Ouverture fiche CAPA (template)
       → Analyse de cause (5 pourquoi / Ishikawa léger)
         → Actions + responsables + échéances
-          → Vérification d’efficacité (preuve : test, re-run LIV-25, revue CS)
-            → Clôture (signature fabricant ; CS si EBM/clinique)
+          → Vérification d’efficacité (preuve : test, re-run LIV-25, revue du garant scientifique)
+            → Clôture (signature fabricant ; garant scientifique si EBM/clinique)
 ```
 
 Règles :

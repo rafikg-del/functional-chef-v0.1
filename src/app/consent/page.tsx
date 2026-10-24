@@ -99,21 +99,21 @@ export default function ConsentPage() {
           <p>
             En tant que professionnel de santé utilisant Functional Chef, vous êtes 
             responsable du traitement des données de santé de vos patients. Ce formulaire 
-            formalise votre consentement à utiliser l'outil dans le cadre de votre pratique.
+            formalise votre consentement à utiliser l&apos;outil dans le cadre de votre pratique.
           </p>
 
           <h3 className="font-serif text-lg text-ink-900 mt-6">Ce que vous acceptez</h3>
           <ul className="space-y-2">
             <li><strong>Traitement des données de santé</strong> — Les biomarqueurs et signaux cliniques que vous soumettez sont traités par Functional Chef pour générer des prescriptions culinaires personnalisées.</li>
             <li><strong>Hébergement sécurisé</strong> — Les données sont hébergées sur Supabase (PostgreSQL, chiffré au repos et en transit, hébergement France/UE).</li>
-            <li><strong>Non-partage</strong> — Aucune donnée patient n'est partagée avec des tiers. Les appels API LLM (Anthropic/OpenAI) sont anonymisés (pas de PHI dans les prompts).</li>
-            <li><strong>Traçabilité</strong> — Chaque consultation est horodatée et liée à votre compte. Une piste d'audit complète est conservée 10 ans (obligation médico-légale).</li>
-            <li><strong>Droit à l'oubli</strong> — Vous pouvez supprimer votre compte et toutes les données associées à tout moment.</li>
+            <li><strong>Non-partage</strong> — Aucune donnée patient n&apos;est partagée avec des tiers. Les appels API LLM (Anthropic/OpenAI) sont anonymisés (pas de PHI dans les prompts).</li>
+            <li><strong>Traçabilité</strong> — Chaque consultation est horodatée et liée à votre compte. Une piste d&apos;audit complète est conservée 10 ans (obligation médico-légale).</li>
+            <li><strong>Droit à l&apos;oubli</strong> — Vous pouvez supprimer votre compte et toutes les données associées à tout moment.</li>
           </ul>
 
           <h3 className="font-serif text-lg text-ink-900 mt-6">Vos obligations</h3>
           <ul className="space-y-2">
-            <li>Recueillir le consentement explicite de vos patients avant d'utiliser Functional Chef pour leur prescription.</li>
+            <li>Recueillir le consentement explicite de vos patients avant d&apos;utiliser Functional Chef pour leur prescription.</li>
             <li>Ne pas soumettre de données nominatives directes (nom, prénom, date de naissance) dans les champs libres.</li>
             <li>Valider médicalement chaque sortie avant transmission au patient.</li>
           </ul>
@@ -122,7 +122,7 @@ export default function ConsentPage() {
           <ul className="space-y-2">
             <li>Consultations : <strong>3 ans</strong></li>
             <li>Profils patients : <strong>5 ans</strong></li>
-            <li>Journal d'audit : <strong>10 ans</strong></li>
+            <li>Journal d&apos;audit : <strong>10 ans</strong></li>
           </ul>
 
           <p className="text-xs text-ink-500 mt-6">
@@ -145,7 +145,7 @@ export default function ConsentPage() {
               className="mt-1"
             />
             <span className="text-sm text-ink-700">
-              J'ai lu et j'accepte les conditions ci-dessus. Je comprends mes 
+              J&apos;ai lu et j&apos;accepte les conditions ci-dessus. Je comprends mes
               responsabilités en tant que professionnel de santé utilisateur de Functional Chef.
             </span>
           </label>

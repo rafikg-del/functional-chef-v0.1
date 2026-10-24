@@ -3,7 +3,7 @@
 > IA cuisinière EBM-driven — moteur de prescription nutritionnelle ciblée par bottleneck physiopathologique.
 
 **Statut** : scaffold v0.1 (foundation)
-**Stack** : Next.js 14 (App Router) · TypeScript · Supabase (Postgres + pgvector) · Anthropic API (Claude Sonnet 4 / Opus 4.7) · Tailwind CSS · Vercel
+**Stack** : Next.js 14 (App Router) · TypeScript · Supabase (Postgres + pgvector) · Anthropic API (`ANTHROPIC_MODEL_PRIMARY` par défaut Sonnet 4, `ANTHROPIC_MODEL_COMPLEX` par défaut Opus 4.7 pour triple co-dominance) · Tailwind CSS · Vercel
 **Auteur** : Dr Rafik Gounane × Claude
 
 ---
@@ -157,6 +157,18 @@ supabase db push
 npm run dev
 # → http://localhost:3000
 ```
+
+---
+
+## Déploiement
+
+### Vercel Hobby (free)
+Durée de fonction plafonnée à **60s** (`maxDuration` sur `/api/compose`, `/api/demo-compose`, `/api/patient/plans*`). Si le modèle configuré via `ANTHROPIC_MODEL_PRIMARY` ne termine pas de façon fiable dans cette fenêtre, soit passer au plan Pro, soit pointer `ANTHROPIC_MODEL_PRIMARY` vers un modèle plus rapide.
+
+### Vercel Pro, self-host, ou local dev
+Pas de plafond à 60s → garder la configuration par défaut (`ANTHROPIC_MODEL_PRIMARY` non défini = Sonnet 4, cf. `src/lib/anthropic/client.ts`).
+
+`ANTHROPIC_MODEL_COMPLEX` (Opus 4.7 par défaut) n'est utilisé que pour la triple co-dominance (rare ; cf. la logique `triggeredCount` dans `composeDish`, `src/lib/reasoning/dish-composer.ts`).
 
 ---
 

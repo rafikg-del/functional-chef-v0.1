@@ -15,7 +15,7 @@ const PRESET_CASES = {
     label: 'Cas A — IR isolée (F 48 ans)',
     age: 48,
     sex: 'F' as const,
-    biomarkers: { HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, ALT: 28, WAIST_HEIGHT_RATIO: 0.55, CRP_US: 0.8 },
+    biomarkers: { HOMA_IR: 2.1, TG_HDL_RATIO: 1.8, HBA1C: 5.5, ALT: 28, WAIST_HEIGHT_RATIO: 0.56, CRP_US: 0.8 },
     signals: {},
   },
   caseB: {
@@ -30,7 +30,7 @@ const PRESET_CASES = {
     age: 35,
     sex: 'F' as const,
     biomarkers: { CRP_US: 1.1, HOMA_IR: 1.4 },
-    signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 7, FIBER_INTAKE: 12, ABX_LIFETIME: 5 },
+    signals: { BRISTOL_SCORE: 6, BLOATING_FREQ: 8, FIBER_INTAKE: 12, ABX_LIFETIME: 5 },
   },
   caseD: {
     label: 'Cas D — IR phénotype hépatique MASLD (H 52 ans)',
